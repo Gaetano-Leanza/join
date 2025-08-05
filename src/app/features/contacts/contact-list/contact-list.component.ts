@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ContactService } from '../contact-service/contact.service';
 import { Contact } from '../contact-model/contact.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-contact-list',
@@ -16,6 +17,7 @@ export class ContactListComponent implements OnInit {
 
   contacts: Contact[] = [];
   groupedContacts: { [letter: string]: Contact[] } = {};
+  private subscription?: Subscription;
 
   constructor(private contactService: ContactService) {}
 
@@ -25,10 +27,14 @@ export class ContactListComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.contacts = this.contactService
-      .getContacts()
-      .sort((a, b) => a.name.localeCompare(b.name));
-    this.groupContacts();
+    this.subscription = this.contactService.getContacts().subscribe(contacts => {
+      this.contacts = contacts;  // Kontakte sind bereits sortiert per Firestore orderBy
+      this.groupContacts();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 
   getAvatarColor(name: string): string {
