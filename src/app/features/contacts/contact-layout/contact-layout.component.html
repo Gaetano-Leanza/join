@@ -10,9 +10,38 @@
       <p class="slogan">Better with a team</p>
     </div>
 
-    <!-- Sliding Detail View -->
+    <!-- Detail-Slide -->
     <div class="detail-slide" *ngIf="selectedContact" [@slideIn]>
-      <h2>{{ selectedContact.name }}</h2>
+      <div class="detail-header">
+        <!-- Avatar -->
+        <div
+          class="avatar"
+          [ngStyle]="{
+            'background-color': getAvatarColor(selectedContact.name)
+          }"
+        >
+          {{ getInitials(selectedContact.name) }}
+        </div>
+
+        <!-- Name + Buttons (vertikal) -->
+        <div class="name-and-actions">
+          <h2>{{ selectedContact.name }}</h2>
+
+          <!-- Edit/Delete Buttons (horizontal) -->
+          <div class="action-buttons">
+            <div class="action">
+              <img src="./img/edit.svg" alt="Edit Icon" />
+              <span>Edit</span>
+            </div>
+            <div class="action">
+              <img src="./img/delete.svg" alt="Delete Icon" />
+              <span>Delete</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kontaktdetails -->
       <p><strong>Email:</strong> {{ selectedContact.email }}</p>
       <p><strong>Telefon:</strong> {{ selectedContact.phone }}</p>
     </div>
