@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @font-face {
   font-family: 'Inter';
   src: url('/fonts/Inter/Inter-Regular.ttf') format('ttf');
@@ -22,3 +23,20 @@ a {
   text-decoration: none;
   cursor: pointer;
 }
+=======
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+}
+
+body {
+    height: 100vh;
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+>>>>>>> 7002410 (header and footer with  nav)

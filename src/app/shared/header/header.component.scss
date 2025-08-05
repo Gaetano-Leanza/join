@@ -1,0 +1,37 @@
+@import './../../../../public/styles/fonts.scss';
+
+#header {
+    position: absolute;
+    max-width: 1240px;
+    width: 100vw;
+    height: 96px;
+    margin: 0 auto;
+    left: 232px;
+    background-color: white;
+
+    #header_content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        p {
+            margin-left: 300px;
+            font-family: 'Inter', serif;
+            font-size: 20px;
+            margin-top: 20px;
+            color: #000000;
+        }
+
+        #header_left {
+            display: flex;
+            justify-content: center;
+            padding: 10px 30px;
+
+            #info {
+                padding-top: 10px;
+                padding-right: 10px;
+            }
+        }
+
+    }
+}
