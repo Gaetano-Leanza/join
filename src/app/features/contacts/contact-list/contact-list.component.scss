@@ -14,9 +14,8 @@ h3 {
 .divider {
   height: 2px;
   background-color: #ccc;
-  margin-bottom: 12px;
-  border: none;
   margin-bottom: 20px;
+  border: none;
 }
 
 .contact-item {
@@ -24,12 +23,7 @@ h3 {
   align-items: center;
   margin-top: 20px;
   margin-bottom: 30px;
-}
-
-.contact-link {
-  display: flex;
-  text-decoration: none;
-  color: inherit;
+  cursor: pointer;
 }
 
 .avatar {
@@ -59,24 +53,23 @@ h3 {
 
 .contact-layout {
   display: flex;
-  align-items: stretch;
+  height: calc(100vh - 96px);
   padding: 24px;
   justify-content: flex-start;
-  overflow-x: auto;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
-.contact-wrapper,
-.side-panel {
+.contact-wrapper {
   width: 400px;
   background-color: white;
   padding: 16px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
-}
-
-.contact-layout {
-  display: flex;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .side-panel {
@@ -84,8 +77,9 @@ h3 {
   position: relative;
   background: #f5f5f5;
   padding: 16px;
+  height: 100%;
   box-shadow: inset 6px 0 6px -4px rgba(0, 0, 0, 0.2),
-    inset 0 6px 6px -4px rgba(0, 0, 0, 0.2);
+              inset 0 6px 6px -4px rgba(0, 0, 0, 0.2);
 }
 
 .detail-slide {
