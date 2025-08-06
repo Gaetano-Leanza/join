@@ -29,6 +29,7 @@ import { ModalComponent } from '../modal/modal.component';
     ]),
   ],
 })
+
 export class ContactLayoutComponent {
   selectedContact: Contact | null = null;
   isModalVisible = false;

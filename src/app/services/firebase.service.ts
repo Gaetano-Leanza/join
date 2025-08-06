@@ -1,94 +1,64 @@
-import { Injectable, inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { 
-  Firestore, 
-  collection, 
-  collectionData, 
-  doc, 
+import { Injectable, inject, runInInjectionContext, Injector } from '@angular/core';
+import {
+  Firestore,
+  collection,
+  collectionData,
+  doc,
   docData,
   addDoc,
   updateDoc,
-  deleteDoc 
+  deleteDoc,
+  query,
+  orderBy,
+  DocumentData
 } from '@angular/fire/firestore';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
+  private injector = inject(Injector);
   private firestore = inject(Firestore);
-  private platformId = inject(PLATFORM_ID);
 
-  // Prüft, ob wir im Browser sind
-  private get isBrowser(): boolean {
-    return isPlatformBrowser(this.platformId);
+  private executeInContext<T>(fn: () => T): T {
+    return runInInjectionContext(this.injector, fn);
   }
 
-  // Collection Data laden
-  getCollectionData<T>(collectionName: string): Observable<T[]> {
-    if (!this.isBrowser) {
-      return of([]); // Leeres Array für SSR
-    }
-    
-    const collectionRef = collection(this.firestore, collectionName);
-    return collectionData(collectionRef, { idField: 'id' }) as Observable<T[]>;
+  getCollectionData<T>(collectionPath: string, orderField: string = 'name'): Observable<T[]> {
+    return this.executeInContext(() => {
+      const ref = collection(this.firestore, collectionPath);
+      const q = query(ref, orderBy(orderField, 'asc'));
+      return collectionData(q, { idField: 'id' }) as Observable<T[]>;
+    });
   }
 
-  // Einzelnes Dokument laden
-  getDocumentData<T>(collectionName: string, id: string): Observable<T | undefined> {
-    if (!this.isBrowser) {
-      return of(undefined);
-    }
-    
-    const docRef = doc(this.firestore, collectionName, id);
-    return docData(docRef) as Observable<T>;
+  getDocumentById<T>(collectionPath: string, id: string): Observable<T> {
+    return this.executeInContext(() => {
+      const ref = doc(this.firestore, collectionPath, id);
+      return docData(ref, { idField: 'id' }) as Observable<T>;
+    });
   }
 
-  // Dokument hinzufügen
-  async addDocument<T>(collectionName: string, data: T): Promise<string | null> {
-    if (!this.isBrowser) {
-      return null;
-    }
-    
-    try {
-      const collectionRef = collection(this.firestore, collectionName);
-      const docRef = await addDoc(collectionRef, data);
+  async addDocument<T extends DocumentData>(collectionPath: string, data: T): Promise<string> {
+    return this.executeInContext(async () => {
+      const ref = collection(this.firestore, collectionPath);
+      const docRef = await addDoc(ref, data);
       return docRef.id;
-    } catch (error) {
-      console.error('Error adding document:', error);
-      return null;
-    }
+    });
   }
 
-  // Dokument aktualisieren
-  async updateDocument<T>(collectionName: string, id: string, data: Partial<T>): Promise<boolean> {
-    if (!this.isBrowser) {
-      return false;
-    }
-    
-    try {
-      const docRef = doc(this.firestore, collectionName, id);
-      await updateDoc(docRef, data);
-      return true;
-    } catch (error) {
-      console.error('Error updating document:', error);
-      return false;
-    }
+  async updateDocument<T>(collectionPath: string, id: string, updates: Partial<T>): Promise<void> {
+    return this.executeInContext(async () => {
+      const ref = doc(this.firestore, collectionPath, id);
+      await updateDoc(ref, updates);
+    });
   }
 
-  // Dokument löschen
-  async deleteDocument(collectionName: string, id: string): Promise<boolean> {
-    if (!this.isBrowser) {
-      return false;
-    }
-    
-    try {
-      const docRef = doc(this.firestore, collectionName, id);
-      await deleteDoc(docRef);
-      return true;
-    } catch (error) {
-      console.error('Error deleting document:', error);
-      return false;
-    }
+  async deleteDocument(collectionPath: string, id: string): Promise<void> {
+    return this.executeInContext(async () => {
+      const ref = doc(this.firestore, collectionPath, id);
+      await deleteDoc(ref);
+    });
   }
 }

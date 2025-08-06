@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../app/shared/header/header.component';
 import { NavbarComponent } from '../app/shared/navbar/navbar.component';
@@ -9,14 +9,11 @@ import { NavbarComponent } from '../app/shared/navbar/navbar.component';
   standalone: true,
   imports: [
     RouterModule,
-    RouterOutlet,
     CommonModule,
     HeaderComponent,
     NavbarComponent,
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  styleUrls: ['./app.component.scss'], 
 })
-export class AppComponent {
-
-}
+export class AppComponent {}

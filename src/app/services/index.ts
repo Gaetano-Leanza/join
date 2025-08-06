@@ -1,5 +1,5 @@
 // Exportiert alle Services aus diesem Ordner
-export * from './firebase.service';
+// export * from './firebase.service';
 
 // Weitere Services (auskommentiert, bis sie erstellt werden):
 // export * from './auth.service';

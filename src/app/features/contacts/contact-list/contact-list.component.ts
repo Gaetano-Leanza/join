@@ -4,13 +4,16 @@ import {
   Output,
   EventEmitter,
   inject,
-  DestroyRef
+  DestroyRef,
+  PLATFORM_ID,
+  Inject
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ContactService } from '../contact-service/contact.service';
 import { Contact } from '../contact-model/contact.model';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-contact-list',
@@ -24,7 +27,7 @@ export class ContactListComponent implements OnInit {
 
   private contactService = inject(ContactService);
   private destroyRef = inject(DestroyRef);
-
+  
   contacts: Contact[] = [];
   groupedContacts: { [letter: string]: Contact[] } = {};
   loading = true;
@@ -35,66 +38,73 @@ export class ContactListComponent implements OnInit {
     '#009688', '#4CAF50', '#FFC107', '#FF9800', '#795548',
   ];
 
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
   ngOnInit(): void {
-    // ✅ isBrowser ist jetzt öffentlich zugänglich
-    if (this.contactService.isBrowser) {
-      this.loadContacts();
-    } else {
-      this.loading = false;
-      this.error = 'Kontakte können im Server-Kontext nicht geladen werden.';
+    if (!isPlatformBrowser(this.platformId)) {
+      this.handleServerContext();
+      return;
     }
+
+    setTimeout(() => {
+      this.loadContacts();
+    });
   }
 
   private loadContacts(): void {
     this.contactService.getContacts()
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        delay(0) // Kleiner Delay für stabileren Hydrationsprozess
+      )
       .subscribe({
         next: (contacts) => {
           this.contacts = contacts;
           this.groupContacts();
           this.loading = false;
-          this.error = null;
         },
         error: (error) => {
           console.error('Error loading contacts:', error);
-          this.error = 'Fehler beim Laden der Kontakte';
+          this.error = 'Failed to load contacts';
           this.loading = false;
         }
       });
   }
 
+  private handleServerContext(): void {
+    this.loading = false;
+    this.error = 'Contact loading requires browser context';
+    console.warn(this.error);
+  }
+
   getAvatarColor(name: string): string {
-    let hash = 0;
-    for (let i = 0; i < name.length; i++) {
-      hash = name.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    const index = Math.abs(hash) % this.avatarColors.length;
-    return this.avatarColors[index];
+    const hash = name.split('').reduce((acc, char) => {
+      return char.charCodeAt(0) + ((acc << 5) - acc);
+    }, 0);
+    return this.avatarColors[Math.abs(hash) % this.avatarColors.length];
   }
 
   getInitials(name: string): string {
-    const parts = name.split(' ');
-    const initials = parts.map((part) => part.charAt(0).toUpperCase());
-    return initials.slice(0, 2).join('');
+    return name.split(' ')
+              .map(part => part.charAt(0).toUpperCase())
+              .slice(0, 2)
+              .join('');
   }
 
   private groupContacts(): void {
-    this.groupedContacts = {};
-    for (const contact of this.contacts) {
+    this.groupedContacts = this.contacts.reduce((acc, contact) => {
       const letter = contact.name.charAt(0).toUpperCase();
-      if (!this.groupedContacts[letter]) {
-        this.groupedContacts[letter] = [];
-      }
-      this.groupedContacts[letter].push(contact);
-    }
+      acc[letter] = [...(acc[letter] || []), contact];
+      return acc;
+    }, {} as { [letter: string]: Contact[] });
   }
 
   onContactClick(contact: Contact): void {
-    console.log('Contact clicked:', contact);
     this.contactSelected.emit(contact);
   }
 
   get groupedContactsEntries(): [string, Contact[]][] {
-    return Object.entries(this.groupedContacts).sort(([a], [b]) => a.localeCompare(b));
+    return Object.entries(this.groupedContacts)
+                .sort(([a], [b]) => a.localeCompare(b));
   }
 }
