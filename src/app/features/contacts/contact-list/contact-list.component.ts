@@ -1,9 +1,16 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  inject,
+  DestroyRef
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ContactService } from '../contact-service/contact.service';
 import { Contact } from '../contact-model/contact.model';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-contact-list',
@@ -15,11 +22,13 @@ import { Subscription } from 'rxjs';
 export class ContactListComponent implements OnInit {
   @Output() contactSelected = new EventEmitter<Contact>();
 
+  private contactService = inject(ContactService);
+  private destroyRef = inject(DestroyRef);
+
   contacts: Contact[] = [];
   groupedContacts: { [letter: string]: Contact[] } = {};
-  private subscription?: Subscription;
-
-  constructor(private contactService: ContactService) {}
+  loading = true;
+  error: string | null = null;
 
   private avatarColors: string[] = [
     '#F44336', '#E91E63', '#9C27B0', '#3F51B5', '#03A9F4',
@@ -27,14 +36,31 @@ export class ContactListComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.subscription = this.contactService.getContacts().subscribe(contacts => {
-      this.contacts = contacts;  // Kontakte sind bereits sortiert per Firestore orderBy
-      this.groupContacts();
-    });
+    // ✅ isBrowser ist jetzt öffentlich zugänglich
+    if (this.contactService.isBrowser) {
+      this.loadContacts();
+    } else {
+      this.loading = false;
+      this.error = 'Kontakte können im Server-Kontext nicht geladen werden.';
+    }
   }
 
-  ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+  private loadContacts(): void {
+    this.contactService.getContacts()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (contacts) => {
+          this.contacts = contacts;
+          this.groupContacts();
+          this.loading = false;
+          this.error = null;
+        },
+        error: (error) => {
+          console.error('Error loading contacts:', error);
+          this.error = 'Fehler beim Laden der Kontakte';
+          this.loading = false;
+        }
+      });
   }
 
   getAvatarColor(name: string): string {
@@ -64,6 +90,11 @@ export class ContactListComponent implements OnInit {
   }
 
   onContactClick(contact: Contact): void {
+    console.log('Contact clicked:', contact);
     this.contactSelected.emit(contact);
+  }
+
+  get groupedContactsEntries(): [string, Contact[]][] {
+    return Object.entries(this.groupedContacts).sort(([a], [b]) => a.localeCompare(b));
   }
 }

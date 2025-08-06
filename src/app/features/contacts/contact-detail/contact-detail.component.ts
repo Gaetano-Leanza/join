@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { ContactService } from '../contact-service/contact.service';
 import { Contact } from '../contact-model/contact.model';
 
@@ -9,19 +10,23 @@ import { Contact } from '../contact-model/contact.model';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <ng-container *ngIf="contact">
+    <ng-container *ngIf="contact$ | async as contact; else noContact">
       <h2>{{ contact.name }}</h2>
       <p><strong>Email:</strong> {{ contact.email }}</p>
       <p><strong>Telefon:</strong> {{ contact.phone }}</p>
     </ng-container>
-    <p *ngIf="!contact">Kontakt nicht gefunden.</p>
+    <ng-template #noContact>
+      <p>Kontakt nicht gefunden.</p>
+    </ng-template>
   `
 })
 export class ContactDetailComponent {
-  contact: Contact | undefined;
+  contact$: Observable<Contact | undefined> | undefined;
 
   constructor(private route: ActivatedRoute, private contactService: ContactService) {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.contact = this.contactService.getContactById(id);
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.contact$ = this.contactService.getContactById(id);
+    }
   }
 }

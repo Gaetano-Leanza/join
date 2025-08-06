@@ -1,10 +1,10 @@
-<div class="contact-wrapper">
-  <ng-container *ngFor="let group of groupedContacts | keyvalue">
-    <h2 class="group-heading">{{ group.key }}</h2>
+<div class="contact-wrapper" *ngIf="groupedContactsEntries.length > 0; else loadingOrEmpty">
+  <ng-container *ngFor="let group of groupedContactsEntries">
+    <h2 class="group-heading">{{ group[0] }}</h2>
     <div class="divider"></div>
 
     <div
-      *ngFor="let contact of group.value"
+      *ngFor="let contact of group[1]"
       class="contact-item"
       (click)="onContactClick(contact)"
       style="cursor: pointer;"
@@ -22,3 +22,17 @@
     </div>
   </ng-container>
 </div>
+
+<ng-template #loadingOrEmpty>
+  <ng-container *ngIf="loading; else notLoading">
+    <div>Kontakte werden geladen...</div>
+  </ng-container>
+  <ng-template #notLoading>
+    <div *ngIf="error; else noContacts">
+      {{ error }}
+    </div>
+    <ng-template #noContacts>
+      <div>Keine Kontakte vorhanden.</div>
+    </ng-template>
+  </ng-template>
+</ng-template>

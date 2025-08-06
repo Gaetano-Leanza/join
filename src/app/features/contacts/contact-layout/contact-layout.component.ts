@@ -3,11 +3,12 @@ import { Contact } from '../contact-model/contact.model';
 import { ContactListComponent } from '../contact-list/contact-list.component';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-contact-layout',
   standalone: true,
-  imports: [CommonModule, ContactListComponent],
+  imports: [CommonModule, ContactListComponent, ModalComponent],
   templateUrl: './contact-layout.component.html',
   styleUrls: ['./contact-layout.component.scss'],
   animations: [
@@ -30,6 +31,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 })
 export class ContactLayoutComponent {
   selectedContact: Contact | null = null;
+  isModalVisible = false;
 
   selectContact(contact: Contact): void {
     console.log('selectContact aufgerufen mit:', contact);
@@ -51,5 +53,13 @@ export class ContactLayoutComponent {
       hash += name.charCodeAt(i);
     }
     return colors[hash % colors.length];
+  }
+
+  openModal() {
+    this.isModalVisible = true;
+  }
+
+  closeModal() {
+    this.isModalVisible = false;
   }
 }
