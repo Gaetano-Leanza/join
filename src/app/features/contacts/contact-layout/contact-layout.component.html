@@ -1,6 +1,8 @@
 <div class="contact-layout">
   <!-- Linke Spalte: Kontaktliste -->
-  <app-contact-list (contactSelected)="selectContact($event)"></app-contact-list>
+  <app-contact-list
+    (contactSelected)="selectContact($event)"
+  ></app-contact-list>
 
   <!-- Rechte Spalte: Side Panel -->
   <div class="side-panel">
@@ -42,8 +44,18 @@
       </div>
 
       <!-- Kontaktdetails -->
-      <p><strong>Email:</strong> {{ selectedContact.email }}</p>
-      <p><strong>Telefon:</strong> {{ selectedContact.phone }}</p>
+      <span>Contact Information</span>
+      <br />
+      <br />
+      <span>Email:</span>
+
+      <p>{{ selectedContact.email }}</p>
+      <br />
+      <br />
+
+      <span>Telefon:</span>
+
+      <p>{{ selectedContact.phone }}</p>
     </div>
   </div>
 </div>

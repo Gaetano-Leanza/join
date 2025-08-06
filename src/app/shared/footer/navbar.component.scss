@@ -1,4 +1,4 @@
-#footer {
+#navbar {
   position: absolute;
   left: 20px;
   top: 0;
@@ -7,7 +7,7 @@
   font-family: "Inter", serif;
   height: 100vh;
 
-  #footer_content {
+  #navbar_content {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
