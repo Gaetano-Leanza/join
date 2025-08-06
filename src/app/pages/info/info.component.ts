@@ -1,11 +1,19 @@
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-info',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './info.component.html',
   styleUrl: './info.component.scss'
 })
 export class InfoComponent {
 
+  constructor(private location: Location) {}
+
+  goBack(): void {
+    this.location.back();
+  }
 }
