@@ -16,10 +16,7 @@ import { NavbarComponent } from '../app/shared/navbar/navbar.component';
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  template: ` <router-outlet /> `,
 })
 export class AppComponent {
-  title(title: any) {
-    throw new Error('Method not implemented.');
-  }
+
 }
