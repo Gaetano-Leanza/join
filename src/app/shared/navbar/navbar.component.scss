@@ -4,7 +4,7 @@
   top: 0;
   background-color: #2a3647;
   width: 232px;
-  font-family: "Inter", serif;
+  font-family: 'Inter', sans-serif;
   height: 100vh;
 
   #navbar_content {
@@ -44,6 +44,10 @@
         margin-left: 50px;
       }
 
+      p {
+        margin-top: 5px;
+      }
+
       &:hover {
         background-color: #091931;
       }
@@ -55,13 +59,22 @@
     justify-content: start;
     flex-direction: column;
     margin-left: 60px;
-    gap: 10px;
+    gap: 20px;
     margin-top: calc(100vh - 80vh);
+
+    a:hover {
+
+      transition: transform 0.3s ease;
+      transform: scale(1.08);
+      color: #29ABE2;
+
+    }
   }
 
   a {
     color: #ffffff;
     font-size: 16px;
-    font-family: "Inter";
+    font-family: 'Inter', sans-serif;
+
   }
 }
