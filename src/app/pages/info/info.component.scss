@@ -3,6 +3,7 @@
   max-width: 800px;
   margin: 0 auto;
   font-family: 'Inter', sans-serif;
+
 }
 
 .info-header {
@@ -17,6 +18,12 @@
     margin: 0;
   }
 
+
+  a:hover {
+    transition: transform 0.3s ease;
+    transform: scale(1.2);
+  }
+
 }
 
 .info-content {
@@ -28,12 +35,14 @@
     margin-bottom: 1rem;
   }
 
-  p, li {
+  p,
+  li {
     color: #333;
   }
 
   ol {
     padding-left: 20px;
+
     li {
       margin-bottom: 1rem;
     }
