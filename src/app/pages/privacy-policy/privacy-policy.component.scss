@@ -3,6 +3,7 @@
   max-width: 800px;
   margin: 0 auto;
   font-family: 'Inter', sans-serif;
+  overflow-y: auto;
 }
 
 .privacy-header {
@@ -29,7 +30,8 @@
     margin-bottom: 1rem;
   }
 
-  p, li {
+  p,
+  li {
     color: #333;
   }
 

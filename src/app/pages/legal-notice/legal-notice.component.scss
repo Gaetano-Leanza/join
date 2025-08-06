@@ -3,6 +3,8 @@
   max-width: 800px;
   margin: 0 auto;
   font-family: 'Inter', sans-serif;
+  overflow-y: auto;
+
 }
 
 .legal-header {
@@ -34,7 +36,8 @@
     margin-top: 1.5rem;
   }
 
-  p, li {
+  p,
+  li {
     color: #333;
   }
 
@@ -42,4 +45,3 @@
     padding-left: 20px;
   }
 }
-
