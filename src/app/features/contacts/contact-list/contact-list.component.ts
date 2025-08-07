@@ -14,11 +14,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ContactService } from '../contact-service/contact.service';
 import { Contact } from '../contact-model/contact.model';
 import { delay } from 'rxjs/operators';
+import { ModalComponent } from "../modal/modal.component";
 
 @Component({
   selector: 'app-contact-list',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ModalComponent],
   templateUrl: './contact-list.component.html',
   styleUrls: ['./contact-list.component.scss'],
 })
@@ -32,6 +33,7 @@ export class ContactListComponent implements OnInit {
   groupedContacts: { [letter: string]: Contact[] } = {};
   loading = true;
   error: string | null = null;
+  isActive = false;
 
   private avatarColors: string[] = [
     '#F44336', '#E91E63', '#9C27B0', '#3F51B5', '#03A9F4',
@@ -49,6 +51,11 @@ export class ContactListComponent implements OnInit {
     setTimeout(() => {
       this.loadContacts();
     });
+  }
+
+
+  toggleOverlay(): void {
+    this.isActive = !this.isActive;
   }
 
   private loadContacts(): void {

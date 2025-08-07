@@ -2,6 +2,9 @@
   class="contact-wrapper"
   *ngIf="groupedContactsEntries.length > 0; else loadingOrEmpty"
 >
+
+<button (click)="toggleOverlay()">Add new Contact +</button>
+
   <ng-container *ngFor="let group of groupedContactsEntries">
     <h2 class="group-heading">{{ group[0] }}</h2>
     <div class="divider"></div>
@@ -39,3 +42,6 @@
     </ng-template>
   </ng-template>
 </ng-template>
+
+
+<app-modal [visible]="isActive" (closed)="toggleOverlay()"></app-modal>
