@@ -142,15 +142,15 @@ img {
 }
 
 .input-name {
-  background-image: url('/img/person.svg');
+  background-image: url("/img/person.svg");
 }
 
 .input-email {
-  background-image: url('/img/mail.svg');
+  background-image: url("/img/mail.svg");
 }
 
 .input-phone {
-  background-image: url('/img/call.svg');
+  background-image: url("/img/call.svg");
 }
 
 .input:not(:placeholder-shown) {
@@ -173,4 +173,24 @@ img {
   border: none;
   padding: 0;
   cursor: pointer;
+}
+
+.input {
+  background-color: white;
+  border: 1px solid #d1d1d1;
+  outline: none;
+
+  &:focus {
+    border-color: #29abe2;
+    box-shadow: 0 0 3px rgba(41, 171, 226, 0.5);
+  }
+
+  &.ng-invalid.ng-touched {
+    border-color: red;
+  }
+
+  &:invalid,
+  &:valid {
+    background-color: white;
+  }
 }

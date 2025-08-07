@@ -1,6 +1,10 @@
 <form #form="ngForm" (ngSubmit)="saveContact(form)">
   <div class="modal-backdrop" *ngIf="visible" (click)="handleBackdropClick()">
-    <div class="modal-content" [@slideInModal] (click)="$event.stopPropagation()">
+    <div
+      class="modal-content"
+      [@slideInModal]
+      (click)="$event.stopPropagation()"
+    >
       <div class="content-container">
         <div class="left-panel">
           <div class="wrapper">
@@ -19,7 +23,8 @@
             <div class="left-site">left</div>
             <div class="right-site">
               <div class="right-site-top">
-
+                
+                <!-- Name Input -->
                 <input
                   class="input input-name"
                   type="text"
@@ -27,11 +32,17 @@
                   name="name"
                   [(ngModel)]="name"
                   #nameRef="ngModel"
-                  required />
-                <div *ngIf="nameRef.invalid && nameRef.touched" class="error-text">
-                  Please enter a valid name.
+                  required
+                  pattern="^[A-Za-z\s\-]+$"
+                />
+                <div
+                  *ngIf="nameRef.invalid && nameRef.touched"
+                  class="error-text"
+                >
+                  Name must contain only letters.
                 </div>
 
+                <!-- Email Input -->
                 <input
                   class="input input-email"
                   type="email"
@@ -39,11 +50,17 @@
                   name="email"
                   [(ngModel)]="email"
                   #emailRef="ngModel"
-                  required />
-                <div *ngIf="emailRef.invalid && emailRef.touched" class="error-text">
+                  required
+                  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                />
+                <div
+                  *ngIf="emailRef.invalid && emailRef.touched"
+                  class="error-text"
+                >
                   Please enter a valid email address.
                 </div>
 
+                <!-- Phone Input -->
                 <input
                   class="input input-phone"
                   type="tel"
@@ -52,11 +69,14 @@
                   [(ngModel)]="phone"
                   #phoneRef="ngModel"
                   required
-                  pattern="^[0-9+\-\s]*$" />
-                <div *ngIf="phoneRef.invalid && phoneRef.touched" class="error-text">
+                  pattern="^\+?[0-9\s\-]{7,20}$"
+                />
+                <div
+                  *ngIf="phoneRef.invalid && phoneRef.touched"
+                  class="error-text"
+                >
                   Please enter a valid phone number.
                 </div>
-
               </div>
 
               <div class="right-site-bottom">
@@ -65,21 +85,22 @@
                     class="button-left"
                     src="/img/delete-button.svg"
                     alt="delete-button"
-                    (click)="resetForm()" />
+                    (click)="resetForm()"
+                  />
                 </div>
                 <div>
                   <button type="submit" class="save-button">
                     <img
                       class="button-right"
                       src="/img/save-button.svg"
-                      alt="save-button" />
+                      alt="save-button"
+                    />
                   </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
