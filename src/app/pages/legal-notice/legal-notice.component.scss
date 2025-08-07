@@ -1,9 +1,12 @@
 .legal-container {
   padding: 2rem;
   max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: none;
   margin: 0 auto;
   font-family: 'Inter', sans-serif;
-  overflow-y: auto;
+
 
 }
 

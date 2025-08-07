@@ -4,6 +4,10 @@
   margin: 0 auto;
   font-family: 'Inter', sans-serif;
   position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+
 }
 
 .join {
@@ -12,7 +16,7 @@
 
 .back-arrow {
   position: sticky;
-  left: 80%;
+  left: 100%;
   top: 32px;
   z-index: 10;
   background-color: white;

@@ -3,7 +3,9 @@
   max-width: 800px;
   margin: 0 auto;
   font-family: 'Inter', sans-serif;
+  max-height: 90vh;
   overflow-y: auto;
+  scrollbar-width: none;
 }
 
 .privacy-header {
