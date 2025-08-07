@@ -10,7 +10,7 @@ import { ModalComponent } from '../modal/modal.component';
   standalone: true,
   imports: [CommonModule, ContactListComponent, ModalComponent],
   templateUrl: './contact-layout.component.html',
-  styleUrls: ['./contact-layout.component.scss'],
+  styleUrls: ['./contact-layout.component.scss','./contact-layout.responsive.scss'],
   animations: [
     trigger('slideIn', [
       transition(':enter', [

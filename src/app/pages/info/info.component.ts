@@ -9,7 +9,7 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [CommonModule,RouterLink],
   templateUrl: './info.component.html',
-  styleUrl: './info.component.scss'
+  styleUrls: [ './info.component.scss','./info.responsive.scss']
 })
 export class InfoComponent {
 
