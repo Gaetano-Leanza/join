@@ -2,7 +2,6 @@
   <div class="modal-content" [@slideInModal] (click)="$event.stopPropagation()">
     <div class="content-container">
       <div class="left-panel">
-        <ng-content select=".left-content"></ng-content>
         <div class="wrapper">
           <div class="img-wrapper">
             <img src="/img/Capa 2.svg" alt="join-logo" />
@@ -13,23 +12,32 @@
           </div>
         </div>
       </div>
+
       <div class="right-panel">
-        <ng-content select=".right-content"></ng-content>
         <div class="input-wrapper">
           <div class="left-site">left</div>
           <div class="right-site">
             <div class="right-site-top">
-              <input class="input input-name" type="text" placeholder="Name" />
+              <input
+                class="input input-name"
+                type="text"
+                placeholder="Name"
+                [(ngModel)]="name"
+                name="name" />
+
               <input
                 class="input input-email"
-                type="text"
+                type="email"
                 placeholder="Email"
-              />
+                [(ngModel)]="email"
+                name="email" />
+
               <input
                 class="input input-phone"
-                type="text"
+                type="tel"
                 placeholder="Phone"
-              />
+                [(ngModel)]="phone"
+                name="phone" />
             </div>
 
             <div class="right-site-bottom">
@@ -38,19 +46,20 @@
                   class="button-left"
                   src="/img/delete-button.svg"
                   alt="delete-button"
-                />
+                  (click)="resetForm()" />
               </div>
               <div>
                 <img
                   class="button-right"
                   src="/img/save-button.svg"
                   alt="save-button"
-                />
+                  (click)="saveContact()" />
               </div>
             </div>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </div>
