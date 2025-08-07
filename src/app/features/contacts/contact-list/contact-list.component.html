@@ -1,4 +1,7 @@
-<div class="contact-wrapper" *ngIf="groupedContactsEntries.length > 0; else loadingOrEmpty">
+<div
+  class="contact-wrapper"
+  *ngIf="groupedContactsEntries.length > 0; else loadingOrEmpty"
+>
   <ng-container *ngFor="let group of groupedContactsEntries">
     <h2 class="group-heading">{{ group[0] }}</h2>
     <div class="divider"></div>
@@ -7,7 +10,7 @@
       *ngFor="let contact of group[1]"
       class="contact-item"
       (click)="onContactClick(contact)"
-      style="cursor: pointer;"
+      style="cursor: pointer"
     >
       <div
         class="avatar"

@@ -9,6 +9,7 @@ import { Contact } from '../contact-model/contact.model';
   providedIn: 'root'
 })
 export class ContactService {
+  isBrowser: any;
   constructor(private firebaseService: FirebaseService) {}
 
   getContacts(): Observable<Contact[]> {

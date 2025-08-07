@@ -13,14 +13,21 @@ import { slideInModal } from './modal.animations';
         [@slideInModal]
         (click)="$event.stopPropagation()"
       >
-        <ng-content></ng-content>
+        <div class="content-container">
+          <div class="left-panel">
+            <ng-content select=".left-content"></ng-content>
+            <img src="/img/Capa 2.svg" alt="join-logo" />
+          </div>
+          <div class="right-panel">
+            <ng-content select=".right-content"></ng-content>
+          </div>
+        </div>
       </div>
     </div>
   `,
   animations: [slideInModal],
-  styleUrls: ['./modal.component.scss'], // <-- Verweis auf ausgelagerte Datei
+  styleUrls: ['./modal.component.scss'],
 })
-
 export class ModalComponent {
   @Input() visible = false;
   @Output() closed = new EventEmitter<void>();
