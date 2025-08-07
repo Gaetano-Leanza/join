@@ -21,9 +21,19 @@ h3 {
 .contact-item {
   display: flex;
   align-items: center;
-  margin-top: 20px;
-  margin-bottom: 30px;
   cursor: pointer;
+  padding: 20px 0;
+}
+
+.contact-item:hover {
+
+  background-color: #2a3647;
+  color: white;
+  border-radius: 10px;
+  transition: transform 0.8s ease;
+  transform: scale(1.1);
+  margin-left: 10px;
+
 }
 
 .avatar {
@@ -78,7 +88,7 @@ h3 {
   padding: 16px;
   height: 100%;
   box-shadow: inset 6px 0 6px -4px rgba(0, 0, 0, 0.2),
-              inset 0 6px 6px -4px rgba(0, 0, 0, 0.2);
+    inset 0 6px 6px -4px rgba(0, 0, 0, 0.2);
 }
 
 .detail-slide {
