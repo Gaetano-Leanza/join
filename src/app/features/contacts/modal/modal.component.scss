@@ -141,7 +141,6 @@ img {
   background-size: 20px;
 }
 
-/* Individuelle Icons */
 .input-name {
   background-image: url('/img/person.svg');
 }
@@ -154,7 +153,24 @@ img {
   background-image: url('/img/call.svg');
 }
 
-/* Optional: Icon ausblenden, wenn Text eingegeben wird */
 .input:not(:placeholder-shown) {
   background-image: none;
+}
+
+.input.ng-invalid.ng-touched {
+  border: 2px solid red;
+}
+
+.error-text {
+  color: red;
+  font-size: 14px;
+  margin-top: -15px;
+  margin-bottom: 10px;
+}
+
+.save-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }

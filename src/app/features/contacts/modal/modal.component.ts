@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // wichtig für ngModel
+import { FormsModule, NgForm } from '@angular/forms';
 import { slideInModal } from './modal.animations';
 
 // 🔥 Firebase importieren
@@ -28,10 +28,7 @@ const db = getFirestore(app);
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss'],
   animations: [slideInModal],
-  imports: [
-    CommonModule,
-    FormsModule // Wichtig für [(ngModel)]
-  ]
+  imports: [CommonModule, FormsModule]
 })
 export class ModalComponent {
   @Input() visible = false;
@@ -51,15 +48,11 @@ export class ModalComponent {
     this.phone = '';
   }
 
-  async saveContact() {
-    if (!this.name.trim() || !this.email.trim() || !this.phone.trim()) {
-      alert('Bitte alle Felder ausfüllen.');
-      return;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(this.email)) {
-      alert('Bitte eine gültige E-Mail-Adresse eingeben.');
+  async saveContact(form: NgForm) {
+    if (form.invalid) {
+      Object.values(form.controls).forEach(control => {
+        control.markAsTouched();
+      });
       return;
     }
 
@@ -71,13 +64,13 @@ export class ModalComponent {
         createdAt: new Date()
       });
 
-      alert('Kontakt erfolgreich gespeichert!');
+      alert('Contact saved successfully!');
       this.resetForm();
       this.handleBackdropClick();
 
     } catch (error) {
-      console.error('Fehler beim Speichern:', error);
-      alert('Fehler beim Speichern des Kontakts.');
+      console.error('Error saving contact:', error);
+      alert('Error saving the contact.');
     }
   }
 }

@@ -1,65 +1,86 @@
-<div class="modal-backdrop" *ngIf="visible" (click)="handleBackdropClick()">
-  <div class="modal-content" [@slideInModal] (click)="$event.stopPropagation()">
-    <div class="content-container">
-      <div class="left-panel">
-        <div class="wrapper">
-          <div class="img-wrapper">
-            <img src="/img/Capa 2.svg" alt="join-logo" />
-          </div>
-          <p>Edit contact</p>
-          <div class="line-wrapper">
-            <div class="line"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="right-panel">
-        <div class="input-wrapper">
-          <div class="left-site">left</div>
-          <div class="right-site">
-            <div class="right-site-top">
-              <input
-                class="input input-name"
-                type="text"
-                placeholder="Name"
-                [(ngModel)]="name"
-                name="name" />
-
-              <input
-                class="input input-email"
-                type="email"
-                placeholder="Email"
-                [(ngModel)]="email"
-                name="email" />
-
-              <input
-                class="input input-phone"
-                type="tel"
-                placeholder="Phone"
-                [(ngModel)]="phone"
-                name="phone" />
+<form #form="ngForm" (ngSubmit)="saveContact(form)">
+  <div class="modal-backdrop" *ngIf="visible" (click)="handleBackdropClick()">
+    <div class="modal-content" [@slideInModal] (click)="$event.stopPropagation()">
+      <div class="content-container">
+        <div class="left-panel">
+          <div class="wrapper">
+            <div class="img-wrapper">
+              <img src="/img/Capa 2.svg" alt="join-logo" />
             </div>
-
-            <div class="right-site-bottom">
-              <div>
-                <img
-                  class="button-left"
-                  src="/img/delete-button.svg"
-                  alt="delete-button"
-                  (click)="resetForm()" />
-              </div>
-              <div>
-                <img
-                  class="button-right"
-                  src="/img/save-button.svg"
-                  alt="save-button"
-                  (click)="saveContact()" />
-              </div>
+            <p>Edit contact</p>
+            <div class="line-wrapper">
+              <div class="line"></div>
             </div>
           </div>
         </div>
-      </div>
 
+        <div class="right-panel">
+          <div class="input-wrapper">
+            <div class="left-site">left</div>
+            <div class="right-site">
+              <div class="right-site-top">
+
+                <input
+                  class="input input-name"
+                  type="text"
+                  placeholder="Name"
+                  name="name"
+                  [(ngModel)]="name"
+                  #nameRef="ngModel"
+                  required />
+                <div *ngIf="nameRef.invalid && nameRef.touched" class="error-text">
+                  Please enter a valid name.
+                </div>
+
+                <input
+                  class="input input-email"
+                  type="email"
+                  placeholder="Email"
+                  name="email"
+                  [(ngModel)]="email"
+                  #emailRef="ngModel"
+                  required />
+                <div *ngIf="emailRef.invalid && emailRef.touched" class="error-text">
+                  Please enter a valid email address.
+                </div>
+
+                <input
+                  class="input input-phone"
+                  type="tel"
+                  placeholder="Phone"
+                  name="phone"
+                  [(ngModel)]="phone"
+                  #phoneRef="ngModel"
+                  required
+                  pattern="^[0-9+\-\s]*$" />
+                <div *ngIf="phoneRef.invalid && phoneRef.touched" class="error-text">
+                  Please enter a valid phone number.
+                </div>
+
+              </div>
+
+              <div class="right-site-bottom">
+                <div>
+                  <img
+                    class="button-left"
+                    src="/img/delete-button.svg"
+                    alt="delete-button"
+                    (click)="resetForm()" />
+                </div>
+                <div>
+                  <button type="submit" class="save-button">
+                    <img
+                      class="button-right"
+                      src="/img/save-button.svg"
+                      alt="save-button" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
-</div>
+</form>
