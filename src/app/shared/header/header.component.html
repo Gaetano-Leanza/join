@@ -3,7 +3,7 @@
 
         <p>Kanban Project Management Tool</p>
         <div id="header_left">
-            <a routerLink="/info">
+            <a routerLink="/info" *ngIf="!isInfoPage()">
                 <img id="info" src="/img/help.svg" alt="Info">
             </a>
         </div>
