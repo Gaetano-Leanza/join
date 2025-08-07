@@ -1,1 +1,21 @@
-<p>modal works!</p>
+<div class="modal-backdrop" *ngIf="visible" (click)="handleBackdropClick()">
+  <div class="modal-content" [@slideInModal] (click)="$event.stopPropagation()">
+    <div class="content-container">
+      <div class="left-panel">
+        <ng-content select=".left-content"></ng-content>
+        <div class="wrapper">
+          <div class="img-wrapper">
+            <img src="/img/Capa 2.svg" alt="join-logo" />
+          </div>
+          <p>Edit contact</p>
+          <div class="line-wrapper">
+            <div class="line"></div>
+          </div>
+        </div>
+      </div>
+      <div class="right-panel">
+        <ng-content select=".right-content"></ng-content>
+      </div>
+    </div>
+  </div>
+</div>
