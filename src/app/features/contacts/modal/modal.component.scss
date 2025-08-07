@@ -132,7 +132,7 @@ img {
   width: 80%;
   border-radius: 8px;
   margin-bottom: 20px;
-  padding: 10px 40px 10px 10px; /* Platz rechts für Icon */
+  padding: 10px 40px 10px 10px;
   font-size: 20px;
   border: 1px solid #d1d1d1;
   box-sizing: border-box;
@@ -193,4 +193,38 @@ img {
   &:valid {
     background-color: white;
   }
+}
+
+.button-left {
+  height: 50px;
+  width: auto;
+  margin-right: 20px;
+  margin-top: 30px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    filter: brightness(0) saturate(100%) invert(31%) sepia(90%) saturate(3341%)
+      hue-rotate(178deg) brightness(93%) contrast(91%);
+  }
+}
+
+.save-button {
+  margin-top: 24px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.save-button:hover .button-background {
+  fill: #007bff;
+}
+
+.save-button .button-text,
+.save-button .button-checkmark {
+  fill: white;
 }
