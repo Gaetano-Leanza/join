@@ -11,6 +11,30 @@ h3 {
   font-weight: bold;
 }
 
+.add-kontakt-button {
+  width: 340px;
+  height: 80px;
+  background-color: #2a3647;
+  border-radius: 10px;
+  color: #FFFFFF;
+  font-size: 21px;
+  border: none;
+  padding-bottom: 20px;
+  margin-left: 10px;
+}
+
+.add-kontakt-button:hover {
+  background-color: #007cee;
+  border: none;
+
+}
+
+#contakt-icon {
+  width: 35px;
+  height: 35px;
+  margin-top: 10px;
+}
+
 .divider {
   height: 2px;
   background-color: #ccc;

@@ -1,24 +1,18 @@
-<div
-  class="contact-wrapper"
-  *ngIf="groupedContactsEntries.length > 0; else loadingOrEmpty"
->
+<div class="contact-wrapper" *ngIf="groupedContactsEntries.length > 0; else loadingOrEmpty">
 
-<button (click)="toggleOverlay()">Add new Contact +</button>
+
+  <button (click)="toggleOverlay()" class="add-kontakt-button">Add new Contact
+    <img id="contakt-icon" src="/img/person_add.svg" alt="Contakt Icon">
+  </button>
+
 
   <ng-container *ngFor="let group of groupedContactsEntries">
     <h2 class="group-heading">{{ group[0] }}</h2>
     <div class="divider"></div>
 
-    <div
-      *ngFor="let contact of group[1]"
-      class="contact-item"
-      (click)="onContactClick(contact)"
-      style="cursor: pointer"
-    >
-      <div
-        class="avatar"
-        [ngStyle]="{ 'background-color': getAvatarColor(contact.name) }"
-      >
+    <div *ngFor="let contact of group[1]" class="contact-item" (click)="onContactClick(contact)"
+      style="cursor: pointer">
+      <div class="avatar" [ngStyle]="{ 'background-color': getAvatarColor(contact.name) }">
         {{ getInitials(contact.name) }}
       </div>
       <div class="contact-info">
