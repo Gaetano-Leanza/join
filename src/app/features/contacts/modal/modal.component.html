@@ -15,6 +15,41 @@
       </div>
       <div class="right-panel">
         <ng-content select=".right-content"></ng-content>
+        <div class="input-wrapper">
+          <div class="left-site">left</div>
+          <div class="right-site">
+            <div class="right-site-top">
+              <input class="input input-name" type="text" placeholder="Name" />
+              <input
+                class="input input-email"
+                type="text"
+                placeholder="Email"
+              />
+              <input
+                class="input input-phone"
+                type="text"
+                placeholder="Phone"
+              />
+            </div>
+
+            <div class="right-site-bottom">
+              <div>
+                <img
+                  class="button-left"
+                  src="/img/delete-button.svg"
+                  alt="delete-button"
+                />
+              </div>
+              <div>
+                <img
+                  class="button-right"
+                  src="/img/save-button.svg"
+                  alt="save-button"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -78,13 +78,83 @@ img {
   height: 6px;
   margin-top: 16px;
   margin-left: 16px;
-  background-color: #29ABE2;
+  background-color: #29abe2;
 }
-
 
 .line-wrapper {
   width: 100%;
   height: 6px;
   display: flex;
   justify-content: flex-start;
+}
+
+.input-wrapper {
+  width: 100%;
+  height: 700px;
+  display: flex;
+  flex-direction: row;
+}
+
+.left-site {
+  width: 500px;
+  height: 700px;
+}
+
+.right-site {
+  width: 100%;
+  height: 700px;
+}
+
+.right-site-top {
+  width: 100%;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.right-site-bottom {
+  width: 100%;
+  height: 350px;
+  display: flex;
+  flex-direction: row;
+}
+
+.button-left,
+.button-right {
+  height: 50px;
+  width: auto;
+  margin-right: 20px;
+  margin-top: 30px;
+}
+.input {
+  height: 40px;
+  width: 80%;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  padding: 10px 40px 10px 10px; /* Platz rechts für Icon */
+  font-size: 20px;
+  border: 1px solid #d1d1d1;
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px;
+}
+
+/* Individuelle Icons */
+.input-name {
+  background-image: url('/img/person.svg');
+}
+
+.input-email {
+  background-image: url('/img/mail.svg');
+}
+
+.input-phone {
+  background-image: url('/img/call.svg');
+}
+
+/* Optional: Icon ausblenden, wenn Text eingegeben wird */
+.input:not(:placeholder-shown) {
+  background-image: none;
 }
