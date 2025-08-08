@@ -15,7 +15,7 @@ const firebaseConfig = {
   storageBucket: 'join-e1f64.appspot.com',
   messagingSenderId: '969006467578',
   appId: '1:969006467578:web:52d944e5ed232984783c43',
-  measurementId: 'G-Y12RXDEX3N'
+  measurementId: 'G-Y12RXDEX3N',
 };
 
 // Initialisiere Firebase & Firestore
@@ -28,7 +28,7 @@ const db = getFirestore(app);
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss'],
   animations: [slideInModal],
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule],
 })
 export class ModalComponent {
   @Input() visible = false;
@@ -50,7 +50,7 @@ export class ModalComponent {
 
   async saveContact(form: NgForm) {
     if (form.invalid) {
-      Object.values(form.controls).forEach(control => {
+      Object.values(form.controls).forEach((control) => {
         control.markAsTouched();
       });
       return;
@@ -61,16 +61,47 @@ export class ModalComponent {
         name: this.name.trim(),
         email: this.email.trim(),
         phone: this.phone.trim(),
-        createdAt: new Date()
+        createdAt: new Date(),
       });
 
       alert('Contact saved successfully!');
       this.resetForm();
       this.handleBackdropClick();
-
     } catch (error) {
       console.error('Error saving contact:', error);
       alert('Error saving the contact.');
     }
+  }
+
+  isValidName(name: string): boolean {
+    return /^[A-Za-z\s\-]+$/.test(name.trim());
+  }
+
+  getInitials(name: string): string {
+    return name
+      .split(' ')
+      .map((part) => part.charAt(0).toUpperCase())
+      .slice(0, 2)
+      .join('');
+  }
+
+  avatarColors: string[] = [
+    '#F44336',
+    '#E91E63',
+    '#9C27B0',
+    '#3F51B5',
+    '#03A9F4',
+    '#009688',
+    '#4CAF50',
+    '#FFC107',
+    '#FF9800',
+    '#795548',
+  ];
+
+  getAvatarColor(name: string): string {
+    const hash = name.split('').reduce((acc, char) => {
+      return char.charCodeAt(0) + ((acc << 5) - acc);
+    }, 0);
+    return this.avatarColors[Math.abs(hash) % this.avatarColors.length];
   }
 }

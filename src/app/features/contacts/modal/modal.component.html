@@ -20,7 +20,17 @@
 
         <div class="right-panel">
           <div class="input-wrapper">
-            <div class="left-site">left</div>
+            <div class="left-site">
+              <div class="avatar-preview" *ngIf="isValidName(name)">
+                <div
+                  class="avatar"
+                  [ngStyle]="{ 'background-color': getAvatarColor(name) }"
+                >
+                  {{ getInitials(name) }}
+                </div>
+              </div>
+            </div>
+
             <div class="right-site">
               <div class="right-site-top">
                 <!-- Name Input -->
@@ -29,17 +39,12 @@
                   type="text"
                   placeholder="Name"
                   name="name"
+                  autocomplete="name"
                   [(ngModel)]="name"
                   #nameRef="ngModel"
                   required
                   pattern="^[A-Za-z\s\-]+$"
                 />
-                <div
-                  *ngIf="nameRef.invalid && nameRef.touched"
-                  class="error-text"
-                >
-                  Name must contain only letters.
-                </div>
 
                 <!-- Email Input -->
                 <input
@@ -47,17 +52,12 @@
                   type="email"
                   placeholder="Email"
                   name="email"
+                  autocomplete="email"
                   [(ngModel)]="email"
                   #emailRef="ngModel"
                   required
                   pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                 />
-                <div
-                  *ngIf="emailRef.invalid && emailRef.touched"
-                  class="error-text"
-                >
-                  Please enter a valid email address.
-                </div>
 
                 <!-- Phone Input -->
                 <input
@@ -65,17 +65,12 @@
                   type="tel"
                   placeholder="Phone"
                   name="phone"
+                  autocomplete="tel"
                   [(ngModel)]="phone"
                   #phoneRef="ngModel"
                   required
                   pattern="^\+?[0-9\s\-]{7,20}$"
                 />
-                <div
-                  *ngIf="phoneRef.invalid && phoneRef.touched"
-                  class="error-text"
-                >
-                  Please enter a valid phone number.
-                </div>
               </div>
 
               <div class="right-site-bottom">

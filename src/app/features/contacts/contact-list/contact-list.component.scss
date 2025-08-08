@@ -11,7 +11,6 @@ h3 {
   font-weight: bold;
 }
 
-/* Option 2: Sanfter Übergang mit verschiedenen Blautönen */
 .add-kontakt-button {
   border: none;
   background: transparent;
@@ -20,7 +19,7 @@ h3 {
 }
 
 .add-kontakt-button:hover svg rect {
-  fill: #007cee !important; /* Heller Blauton */
+  fill: #007cee !important; 
   stroke: #007cee !important;
 }
 
