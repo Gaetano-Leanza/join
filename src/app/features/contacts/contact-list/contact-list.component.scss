@@ -19,7 +19,7 @@ h3 {
 }
 
 .add-kontakt-button:hover svg rect {
-  fill: #007cee !important; 
+  fill: #007cee !important;
   stroke: #007cee !important;
 }
 
@@ -39,11 +39,7 @@ h3 {
   stroke: #1976d2 !important;
 }
 
-#contakt-icon {
-  width: 35px;
-  height: 35px;
-  margin-top: 10px;
-}
+
 
 .divider {
   height: 2px;
@@ -59,12 +55,17 @@ h3 {
   padding: 20px 0;
 }
 
-.contact-item:hover {
+.contact-item.active {
   background-color: #2a3647;
   color: white;
+
+}
+
+.contact-item:hover:not(.active) {
+  background-color: #c0c0c0;
+  color: rgb(41, 41, 41);
   border-radius: 10px;
   transition: transform 0.8s ease;
-  margin-left: 10px;
 }
 
 .avatar {

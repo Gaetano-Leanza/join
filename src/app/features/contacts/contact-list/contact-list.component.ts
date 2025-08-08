@@ -107,6 +107,7 @@ export class ContactListComponent implements OnInit {
   }
 
   onContactClick(contact: Contact): void {
+    this.selectedContact = contact;
     this.contactSelected.emit(contact);
   }
 
@@ -114,4 +115,8 @@ export class ContactListComponent implements OnInit {
     return Object.entries(this.groupedContacts)
                 .sort(([a], [b]) => a.localeCompare(b));
   }
+
+  selectedContact: Contact | null = null;
+
+
 }
