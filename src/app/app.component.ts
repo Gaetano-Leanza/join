@@ -4,6 +4,10 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../app/shared/header/header.component';
 import { NavbarComponent } from '../app/shared/navbar/navbar.component';
 
+/**
+ * Root-Komponente der Anwendung.
+ * Lädt Header, Navbar und das Router-Modul.
+ */
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -14,6 +18,6 @@ import { NavbarComponent } from '../app/shared/navbar/navbar.component';
     NavbarComponent,
   ],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'], 
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {}

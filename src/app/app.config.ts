@@ -7,17 +7,25 @@ import {
 
 import { routes } from './app.routes';
 
+/**
+ * Client-spezifische Angular Application Configuration.
+ * Konfiguriert Change Detection, Routing und Client Hydration.
+ */
 export const appConfig: ApplicationConfig = {
   providers: [
+    /**
+     * Aktiviert Zone.js Change Detection mit Event-Koaleszenz für bessere Performance.
+     */
     provideZoneChangeDetection({ eventCoalescing: true }),
+
+    /**
+     * Stellt die Angular Router-Provider mit definierten Routen bereit.
+     */
     provideRouter(routes),
-    // Hydration mit Event Replay für bessere Performance
+
+    /**
+     * Aktiviert Client Hydration mit Event Replay für bessere UX bei SSR.
+     */
     provideClientHydration(withEventReplay()),
-
-    // Falls Hydration Probleme macht, temporär deaktivieren:
-    // provideClientHydration(withNoDomReuse())
-
-    // Oder komplett deaktivieren:
-    // (provideClientHydration() entfernen)
   ],
 };

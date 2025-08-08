@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+/**
+ * Komponente zur Anzeige der Datenschutzerklärung.
+ */
 @Component({
   selector: 'app-privacy-policy',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './privacy-policy.component.html',
-  styleUrls: ['./privacy-policy.component.scss','./privacy-policy.responsive.scss']
+  styleUrls: ['./privacy-policy.component.scss', './privacy-policy.responsive.scss']
 })
 export class PrivacyPolicyComponent {
 

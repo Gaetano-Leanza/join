@@ -28,6 +28,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+/**
+ * Modal-Komponente zur Anzeige und Bearbeitung eines Kontakts.
+ * 
+ * Unterstützt Animationen, Eingabevalidierung und speichert Daten in Firebase Firestore.
+ * Benutzt `OnChanges`, um Eingabewerte zu synchronisieren und das Formular zurückzusetzen.
+ */
 @Component({
   standalone: true,
   selector: 'app-modal',
@@ -37,45 +43,76 @@ const db = getFirestore(app);
   imports: [CommonModule, FormsModule],
 })
 export class ModalComponent implements OnChanges {
+  /**
+   * Gibt an, ob das Modal sichtbar ist.
+   */
   @Input() visible = false;
 
-  /** Kontakt, der vom Parent zum Editieren übergeben wird */
+  /**
+   * Kontakt, der zum Bearbeiten vom Parent übergeben wird.
+   */
   @Input() contactToEdit: { name: string; email: string; phone: string } | null = null;
 
-  /** Event, wenn das Modal geschlossen wird */
+  /**
+   * Event wird ausgelöst, wenn das Modal geschlossen wird.
+   */
   @Output() closed = new EventEmitter<void>();
 
-  /** Event, wenn ein Kontakt erfolgreich gespeichert wurde */
+  /**
+   * Event wird ausgelöst, wenn ein Kontakt erfolgreich gespeichert wurde.
+   */
   @Output() contactSaved = new EventEmitter<void>();
 
+  /** Eingabefeld: Name des Kontakts */
   name: string = '';
+
+  /** Eingabefeld: Email des Kontakts */
   email: string = '';
+
+  /** Eingabefeld: Telefonnummer des Kontakts */
   phone: string = '';
 
+  /**
+   * Lifecycle-Hook, um auf Änderungen der Inputs zu reagieren.
+   * Synchronisiert Formularfelder mit dem übergebenen Kontakt.
+   * Setzt Formular zurück, wenn Modal geschlossen wird.
+   * 
+   * @param changes - Objekt mit den beobachteten Änderungen.
+   */
   ngOnChanges(changes: SimpleChanges): void {
-    // Wenn sich der zu bearbeitende Kontakt ändert → Felder füllen
     if (changes['contactToEdit'] && this.contactToEdit) {
       this.name = this.contactToEdit.name || '';
       this.email = this.contactToEdit.email || '';
       this.phone = this.contactToEdit.phone || '';
     }
 
-    // Wenn Modal geschlossen wird → Felder leeren
     if (changes['visible'] && changes['visible'].currentValue === false) {
       this.resetForm();
     }
   }
 
+  /**
+   * Wird aufgerufen, wenn der Hintergrund (Backdrop) des Modals angeklickt wird.
+   * Löst das `closed` Event aus, um das Modal zu schließen.
+   */
   handleBackdropClick() {
     this.closed.emit();
   }
 
+  /**
+   * Setzt alle Eingabefelder zurück auf leere Strings.
+   */
   resetForm() {
     this.name = '';
     this.email = '';
     this.phone = '';
   }
 
+  /**
+   * Speichert den Kontakt in Firestore, wenn das Formular gültig ist.
+   * 
+   * @param form - Formularreferenz zur Validierung.
+   */
   async saveContact(form: NgForm) {
     if (form.invalid) {
       Object.values(form.controls).forEach((control) => {
@@ -104,10 +141,22 @@ export class ModalComponent implements OnChanges {
     }
   }
 
+  /**
+   * Validiert, ob ein Name nur Buchstaben, Leerzeichen und Bindestriche enthält.
+   * 
+   * @param name - Der zu validierende Name.
+   * @returns `true`, wenn der Name gültig ist, sonst `false`.
+   */
   isValidName(name: string): boolean {
     return /^[A-Za-z\s\-]+$/.test(name.trim());
   }
 
+  /**
+   * Erzeugt Initialen aus einem Namen (maximal zwei Buchstaben).
+   * 
+   * @param name - Vollständiger Name.
+   * @returns Die Großbuchstaben der ersten zwei Namensbestandteile.
+   */
   getInitials(name: string): string {
     return name
       .split(' ')
@@ -116,6 +165,9 @@ export class ModalComponent implements OnChanges {
       .join('');
   }
 
+  /**
+   * Liste der verfügbaren Avatar-Hintergrundfarben.
+   */
   avatarColors: string[] = [
     '#F44336',
     '#E91E63',
@@ -129,6 +181,12 @@ export class ModalComponent implements OnChanges {
     '#795548',
   ];
 
+  /**
+   * Berechnet eine Farbwahl basierend auf dem Hash des Namens.
+   * 
+   * @param name - Der Name, aus dem die Farbe bestimmt wird.
+   * @returns Ein Hex-Farbcode aus `avatarColors`.
+   */
   getAvatarColor(name: string): string {
     const hash = name.split('').reduce((acc, char) => {
       return char.charCodeAt(0) + ((acc << 5) - acc);

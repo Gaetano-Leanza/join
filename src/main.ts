@@ -9,6 +9,10 @@ import { setLogLevel, LogLevel } from '@angular/fire';
 import { AppComponent } from './app/app.component';
 import { appConfig } from './app/app.config';
 
+/**
+ * Firebase Konfigurationsobjekt mit API-Schlüsseln und Projektinformationen.
+ * @constant {object}
+ */
 const firebaseConfig = {
   apiKey: 'AIzaSyD1fse1ML6Ie-iFClg_2Ukr-G1FEeQUHac',
   authDomain: 'join-e1f64.firebaseapp.com',
@@ -19,9 +23,13 @@ const firebaseConfig = {
   measurementId: 'G-Y12RXDEX3N'
 };
 
-// 👉 Logging aktivieren (optional: LogLevel.DEBUG für weniger Output)
+// Setzt das Firebase-Logging-Level auf verbose für detaillierte Logs.
 setLogLevel(LogLevel.VERBOSE);
 
+/**
+ * Bootstrappt die Angular-Anwendung mit der Root-Komponente und konfigurierten Providern.
+ * Inklusive Animationen, Firebase App-Initialisierung und Firestore.
+ */
 bootstrapApplication(AppComponent, {
   ...appConfig,
   providers: [
