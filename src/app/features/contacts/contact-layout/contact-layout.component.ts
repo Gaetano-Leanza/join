@@ -5,6 +5,12 @@ import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { ModalComponent } from '../modal/modal.component';
 
+/**
+ * Layout-Komponente für die Anzeige und Auswahl von Kontakten.
+ * 
+ * Enthält eine Liste der Kontakte und zeigt Detailinformationen im Modal an.
+ * Unterstützt Animationen für das Ein- und Ausblenden von Elementen.
+ */
 @Component({
   selector: 'app-contact-layout',
   standalone: true,
@@ -29,16 +35,34 @@ import { ModalComponent } from '../modal/modal.component';
     ]),
   ],
 })
-
 export class ContactLayoutComponent {
+  /**
+   * Der aktuell ausgewählte Kontakt.
+   * Wird `null`, wenn kein Kontakt ausgewählt ist.
+   */
   selectedContact: Contact | null = null;
+
+  /**
+   * Flag, ob das Modal angezeigt wird oder nicht.
+   */
   isModalVisible = false;
 
+  /**
+   * Setzt den übergebenen Kontakt als aktuell ausgewählten Kontakt.
+   * 
+   * @param contact - Der Kontakt, der ausgewählt wird.
+   */
   selectContact(contact: Contact): void {
     console.log('selectContact aufgerufen mit:', contact);
     this.selectedContact = contact;
   }
 
+  /**
+   * Ermittelt die Initialen eines Namens.
+   * 
+   * @param name - Vollständiger Name des Kontakts.
+   * @returns Die Großbuchstaben der Anfangsbuchstaben aller Namensteile.
+   */
   getInitials(name: string): string {
     const names = name.split(' ');
     return names
@@ -47,6 +71,14 @@ export class ContactLayoutComponent {
       .toUpperCase();
   }
 
+  /**
+   * Bestimmt die Avatar-Farbe basierend auf dem Namen.
+   * 
+   * Die Farbe wird als Hex-Farbcode zurückgegeben.
+   * 
+   * @param name - Vollständiger Name des Kontakts.
+   * @returns Ein Hex-Farbcode für den Avatar-Hintergrund.
+   */
   getAvatarColor(name: string): string {
     const colors = ['#5c6bc0', '#007cee', '#4caf50', '#f44336', '#ff9800'];
     let hash = 0;
@@ -56,10 +88,16 @@ export class ContactLayoutComponent {
     return colors[hash % colors.length];
   }
 
+  /**
+   * Öffnet das Modal (setzt `isModalVisible` auf true).
+   */
   openModal() {
     this.isModalVisible = true;
   }
 
+  /**
+   * Schließt das Modal (setzt `isModalVisible` auf false).
+   */
   closeModal() {
     this.isModalVisible = false;
   }

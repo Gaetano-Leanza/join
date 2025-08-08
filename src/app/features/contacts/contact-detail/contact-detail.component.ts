@@ -5,6 +5,12 @@ import { Observable } from 'rxjs';
 import { ContactService } from '../contact-service/contact.service';
 import { Contact } from '../contact-model/contact.model';
 
+/**
+ * Komponente zur Anzeige der Detailinformationen eines Kontakts.
+ * 
+ * Die Komponente liest die Kontakt-ID aus der URL aus und lädt 
+ * den zugehörigen Kontakt über den ContactService.
+ */
 @Component({
   selector: 'app-contact-detail',
   standalone: true,
@@ -21,8 +27,18 @@ import { Contact } from '../contact-model/contact.model';
   `
 })
 export class ContactDetailComponent {
+  /**
+   * Observable, das den aktuell geladenen Kontakt liefert.
+   * Gibt `undefined` zurück, falls kein Kontakt gefunden wurde.
+   */
   contact$: Observable<Contact | undefined> | undefined;
 
+  /**
+   * Erstellt eine neue Instanz der ContactDetailComponent.
+   * 
+   * @param route - Zum Auslesen der URL-Parameter (insbesondere der Kontakt-ID).
+   * @param contactService - Service zur Kontaktverwaltung und -abfrage.
+   */
   constructor(private route: ActivatedRoute, private contactService: ContactService) {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {

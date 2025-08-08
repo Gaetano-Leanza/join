@@ -1,9 +1,16 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { slideInModal } from './modal.animations';
 
-// 🔥 Firebase importieren
+// 🔥 Firebase nur für Speichern nötig
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 
@@ -18,7 +25,6 @@ const firebaseConfig = {
   measurementId: 'G-Y12RXDEX3N',
 };
 
-// Initialisiere Firebase & Firestore
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
@@ -30,13 +36,35 @@ const db = getFirestore(app);
   animations: [slideInModal],
   imports: [CommonModule, FormsModule],
 })
-export class ModalComponent {
+export class ModalComponent implements OnChanges {
   @Input() visible = false;
+
+  /** Kontakt, der vom Parent zum Editieren übergeben wird */
+  @Input() contactToEdit: { name: string; email: string; phone: string } | null = null;
+
+  /** Event, wenn das Modal geschlossen wird */
   @Output() closed = new EventEmitter<void>();
+
+  /** Event, wenn ein Kontakt erfolgreich gespeichert wurde */
+  @Output() contactSaved = new EventEmitter<void>();
 
   name: string = '';
   email: string = '';
   phone: string = '';
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // Wenn sich der zu bearbeitende Kontakt ändert → Felder füllen
+    if (changes['contactToEdit'] && this.contactToEdit) {
+      this.name = this.contactToEdit.name || '';
+      this.email = this.contactToEdit.email || '';
+      this.phone = this.contactToEdit.phone || '';
+    }
+
+    // Wenn Modal geschlossen wird → Felder leeren
+    if (changes['visible'] && changes['visible'].currentValue === false) {
+      this.resetForm();
+    }
+  }
 
   handleBackdropClick() {
     this.closed.emit();
@@ -67,6 +95,9 @@ export class ModalComponent {
       alert('Contact saved successfully!');
       this.resetForm();
       this.handleBackdropClick();
+
+      // Event emittieren, dass Kontakt gespeichert wurde
+      this.contactSaved.emit();
     } catch (error) {
       console.error('Error saving contact:', error);
       alert('Error saving the contact.');
