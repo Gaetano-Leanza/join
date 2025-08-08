@@ -1,5 +1,5 @@
 <div class="contact-wrapper" *ngIf="groupedContactsEntries.length > 0; else loadingOrEmpty">
-  <button (click)="toggleOverlay()" class="add-kontakt-button">
+<button class= "add-kontakt-button"  (click)="openModal2()">
     <svg width="300" height="57" viewBox="0 0 352 57" fill="none" xmlns="http://www.w3.org/2000/svg"
       class="contact-icon">
       <rect x="0.5" y="1" width="351" height="55" rx="9.5" fill="#2A3647" />
@@ -50,4 +50,7 @@
   </ng-template>
 </ng-template>
 
-<app-modal [visible]="isActive" (closed)="toggleOverlay()"></app-modal>
+<app-modal2
+  [visible]="modal2Visible"
+  (closed)="closeModal2()"
+></app-modal2>
