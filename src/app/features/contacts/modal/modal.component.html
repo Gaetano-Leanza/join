@@ -20,16 +20,23 @@
 
         <div class="right-panel">
           <div class="input-wrapper">
-            <div class="left-site">
-              <div class="avatar-preview" *ngIf="isValidName(name)">
-                <div
-                  class="avatar"
-                  [ngStyle]="{ 'background-color': getAvatarColor(name) }"
-                >
-                  {{ getInitials(name) }}
-                </div>
-              </div>
-            </div>
+          <div class="left-site">
+  <!-- Placeholder anzeigen, solange Avatar noch nicht angezeigt wird -->
+  <div class="avatar-placeholder" *ngIf="!isValidName(name)">
+    <img src="/img/placeholder.svg" alt="Avatar Placeholder" />
+  </div>
+
+  <!-- Avatar anzeigen, wenn gültiger Name vorhanden ist -->
+  <div class="avatar-preview" *ngIf="isValidName(name)">
+    <div
+      class="avatar"
+      [ngStyle]="{ 'background-color': getAvatarColor(name) }"
+    >
+      {{ getInitials(name) }}
+    </div>
+  </div>
+</div>
+
 
             <div class="right-site">
               <div class="right-site-top">
