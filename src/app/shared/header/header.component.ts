@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [RouterLink, CommonModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
 
@@ -16,5 +16,16 @@ export class HeaderComponent {
   isInfoPage(): boolean {
     return this.router.url === '/info';
   }
+
+  isMenuOpen = false;
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+    console.log("funktioniert");
+  }
+  closeMenu(): void {
+    this.isMenuOpen = false;
+  }
+
+ 
 
 }

@@ -5,14 +5,15 @@
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
 }
 
+
 #header_content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 100%;         
-  max-width: 1240px;    
-  margin: 0 auto;       
-  padding: 0 1.5rem;    
+  height: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
 
 .headline {
@@ -25,12 +26,46 @@
 #header_left {
   display: flex;
   align-items: center;
-  gap: 1rem; 
+  gap: 1rem;
 }
 
 .mobile-header {
   display: none;
 }
+
+.user-icon {
+  cursor: pointer;
+}
+
+.hamburger-menu {
+  position: absolute;
+  top: 100px;
+  right: 30px;
+  background-color: #2A3647;
+  border-radius: 20px 0 20px 20px;
+  padding: 10px 0;
+  min-width: 160px;
+  z-index: 1000;
+
+
+
+}
+
+.hamburger-menu a {
+  display: block;
+  padding: 15px 15px;
+  color: white;
+  margin-left: 5px;
+  text-decoration: none;
+
+}
+
+.hamburger-menu a:hover {
+  background: #455974;
+  width: 150px;
+  height: 50px;
+}
+
 
 @media (max-width: 768px) {
 

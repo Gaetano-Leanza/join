@@ -4,17 +4,30 @@
       <p class="headline">Kanban Project Management Tool</p>
       <div id="header_left">
         <a routerLink="/info">
-          <img id="info" src="/img/help.svg" alt="Info">
+          <img id="info" src="/img/help.svg" alt="Info" *ngIf="!isMenuOpen">
         </a>
-        <img src="/img/Group 5.svg" alt="Group_5" class="user_logo">
+
+        <div class="user-icon">
+          <img src="/img/Group 5.svg" alt="Group_5" class="user_logo" *ngIf="!isMenuOpen" (click)="toggleMenu()">
+        </div>
+
+        <div class="hamburger-menu" *ngIf="isMenuOpen">
+          <a routerLink="/legal-notice" (click)="closeMenu()">Legal Notice </a>
+          <a routerLink="/privacy-policy" (click)="closeMenu()">Privacy Policy</a>
+          <a routerLink="/log-out">Log out</a>
+        </div>
       </div>
     </div>
   </section>
 </div>
 
+
+
 <div class="mobile-header">
-  <img class="mobile-logo" src="/img/mobile-logo.svg" alt="Join Logo">
+  <img class="mobile-logo" src="/img/mobile-logo.svg" alt="Join Logo" (click)="toggleMenu()">
   <div class="user-icon">
     <img src="/img/Group 5.svg" alt="User Icon">
   </div>
+
+
 </div>
