@@ -231,6 +231,14 @@ img {
   fill: white;
 }
 
+.avatar-placeholder img {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  margin-top: 150px;
+  margin-left: 58px;
+}
+
 .avatar-preview {
   display: flex;
   justify-content: center;
