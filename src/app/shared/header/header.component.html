@@ -1,12 +1,20 @@
-<section id="header">
+<div class="desktop-header">
+  <section id="header">
     <div id="header_content">
-
-        <p>Kanban Project Management Tool</p>
-        <div id="header_left">
-            <a routerLink="/info" *ngIf="!isInfoPage()">
-                <img id="info" src="/img/help.svg" alt="Info">
-            </a>
-        </div>
-
+      <p class="headline">Kanban Project Management Tool</p>
+      <div id="header_left">
+        <a routerLink="/info">
+          <img id="info" src="/img/help.svg" alt="Info">
+        </a>
+        <img src="/img/Group 5.svg" alt="Group_5" class="user_logo">
+      </div>
     </div>
-</section>
+  </section>
+</div>
+
+<div class="mobile-header">
+  <img class="mobile-logo" src="assets/img/mobile-logo.svg" alt="Join Logo">
+  <div class="user-icon">
+    <img src="assets/img/Group 5.svg" alt="User Icon">
+  </div>
+</div>

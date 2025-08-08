@@ -1,7 +1,9 @@
+.main-content {
+  margin-left: 230px;
+}
+
 @media (max-width: 768px) {
   .main-content {
     margin-left: 0;
-    // Platz am unteren Rand für die neue Navbar schaffen
-    padding-bottom: 80px;
   }
 }

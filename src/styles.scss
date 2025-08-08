@@ -22,3 +22,13 @@ a {
   text-decoration: none;
   cursor: pointer;
 }
+
+@media (max-width: 768px) {
+  app-header {
+    
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+}
