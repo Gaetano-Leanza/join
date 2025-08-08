@@ -11,22 +11,33 @@ h3 {
   font-weight: bold;
 }
 
+/* Option 2: Sanfter Übergang mit verschiedenen Blautönen */
 .add-kontakt-button {
-  width: 340px;
-  height: 80px;
-  background-color: #2a3647;
-  border-radius: 10px;
-  color: #FFFFFF;
-  font-size: 21px;
   border: none;
-  padding-bottom: 20px;
-  margin-left: 10px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.add-kontakt-button:hover {
-  background-color: #007cee;
-  border: none;
+.add-kontakt-button:hover svg rect {
+  fill: #007cee !important; /* Heller Blauton */
+  stroke: #007cee !important;
+}
 
+.add-kontakt-button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-kontakt-button svg {
+  transition: all 0.3s ease;
+}
+
+.add-kontakt-button:hover svg rect {
+  fill: #1976d2 !important;
+  stroke: #1976d2 !important;
 }
 
 #contakt-icon {
@@ -50,13 +61,11 @@ h3 {
 }
 
 .contact-item:hover {
-
   background-color: #2a3647;
   color: white;
   border-radius: 10px;
   transition: transform 0.8s ease;
   margin-left: 10px;
-
 }
 
 .avatar {
