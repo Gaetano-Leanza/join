@@ -188,8 +188,7 @@ export class ContactListComponent implements OnInit {
   this.contactSelected.emit(contact);
   console.log('Ausgewählter Kontakt:', contact);
   
-  // 🎯 NEU: Direkt Edit-Modal öffnen
-  this.editContact(contact.id.toString());
+
 }
   /**
    * Gibt die alphabetisch sortierten Gruppen von Kontakten als Tupel-Array zurück.
