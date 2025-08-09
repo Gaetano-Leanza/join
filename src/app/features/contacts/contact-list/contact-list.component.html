@@ -76,7 +76,7 @@
   </ng-template>
 </ng-template>
 
-<!-- 🎯 MODAL - Vereinfachte Version ohne Bedingungen -->
+
 <app-modal
   *ngIf="modal1Visible"
   [visible]="modal1Visible"
@@ -85,15 +85,5 @@
   (contactSaved)="onContactSaved()"
 >
 </app-modal>
-
-<!-- 🎯 ALTERNATIVE: Modal IMMER rendern, nur visibility steuern -->
-<!-- 
-<app-modal 
-  [visible]="modal1Visible"
-  [contactToEdit]="contactToEdit"
-  (closed)="closeModal1()"
-  (contactSaved)="onContactSaved()">
-</app-modal>
--->
 
 <app-modal2 [visible]="modal2Visible" (closed)="closeModal2()"></app-modal2>

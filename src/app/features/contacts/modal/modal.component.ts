@@ -48,6 +48,7 @@ export class ModalComponent implements OnChanges {
 
   /** Kontakt, der zum Bearbeiten vom Parent übergeben wird. */
   @Input() contactToEdit: {
+    id: string;
     name: string;
     email: string;
     phone: string;

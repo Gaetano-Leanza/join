@@ -3,7 +3,7 @@
  */
 export interface Contact {
   /** Eindeutige Identifikationsnummer des Kontakts. */
-  id: number;
+  id: string;
 
   /** Vollständiger Name des Kontakts. */
   name: string;

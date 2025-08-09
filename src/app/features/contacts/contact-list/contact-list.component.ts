@@ -12,10 +12,11 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ContactService } from '../contact-service/contact.service';
-import { Contact } from '../contact-model/contact.model';
+import { Contact } from '../contact-model/contact.model'; 
 import { delay } from 'rxjs/operators';
 import { ModalComponent } from '../modal/modal.component';
 import { Modal2Component } from '../modal2/modal2.component';
+
 
 /**
  * Komponente zur Anzeige einer alphabetisch gruppierten Kontaktliste.
@@ -183,45 +184,28 @@ export class ContactListComponent implements OnInit {
    * Setzt selektierten Kontakt und emittiert `contactSelected`.
    * @param contact Angeclickter Kontakt
    */
- onContactClick(contact: Contact): void {
-  this.selectedContact = contact;
-  this.contactSelected.emit(contact);
-  console.log('Ausgewählter Kontakt:', contact);
-  
+  onContactClick(contact: Contact): void {
+    this.selectedContact = contact;
+    this.contactSelected.emit(contact);
+    console.log('Ausgewählter Kontakt:', contact);
+  }
 
-}
-  /**
-   * Gibt die alphabetisch sortierten Gruppen von Kontakten als Tupel-Array zurück.
-   */
   get groupedContactsEntries(): [string, Contact[]][] {
     return Object.entries(this.groupedContacts).sort(([a], [b]) =>
       a.localeCompare(b)
     );
   }
 
-  /**
-   * Lädt Kontakt mit der angegebenen ID zum Bearbeiten und öffnet Modal.
-   * @param contactId ID des zu bearbeitenden Kontakts (als string)
-   */
-  /**
-   * Lädt Kontakt mit der angegebenen ID zum Bearbeiten und öffnet Modal.
-   * @param contactId ID des zu bearbeitenden Kontakts (als string)
-   */
   editContact(contactId: string) {
     console.log('🔍 editContact START mit ID:', contactId, typeof contactId);
 
-    // Service Call - aber Service erwartet vermutlich auch string
     this.contactService.getContactById(contactId).subscribe(
       (contact) => {
         console.log('📌 Kontakt vom Service erhalten:', contact);
 
         if (contact) {
-          // Contact Interface entsprechend - nur die 4 Properties
           this.contactToEdit = {
-            id:
-              typeof contact.id === 'string'
-                ? parseInt(contact.id, 10)
-                : contact.id,
+            id: contact.id, 
             name: contact.name,
             email: contact.email,
             phone: contact.phone,
@@ -247,7 +231,6 @@ export class ContactListComponent implements OnInit {
       }
     );
   }
-
 
   /**
    * Öffnet das erste Modal.
