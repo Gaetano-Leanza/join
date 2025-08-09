@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { Contact } from '../contact-model/contact.model';
-import { ContactListComponent } from '../contact-list/contact-list.component';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { Contact } from '../contact-model/contact.model';
+import { ContactListComponent } from '../contact-list/contact-list.component';
 import { ModalComponent } from '../modal/modal.component';
 
 /**
  * Layout-Komponente für die Anzeige und Auswahl von Kontakten.
- * 
+ *
  * Enthält eine Liste der Kontakte und zeigt Detailinformationen im Modal an.
  * Unterstützt Animationen für das Ein- und Ausblenden von Elementen.
  */
@@ -16,7 +16,10 @@ import { ModalComponent } from '../modal/modal.component';
   standalone: true,
   imports: [CommonModule, ContactListComponent, ModalComponent],
   templateUrl: './contact-layout.component.html',
-  styleUrls: ['./contact-layout.component.scss','./contact-layout.responsive.scss'],
+  styleUrls: [
+    './contact-layout.component.scss',
+    './contact-layout.responsive.scss',
+  ],
   animations: [
     trigger('slideIn', [
       transition(':enter', [
@@ -49,17 +52,16 @@ export class ContactLayoutComponent {
 
   /**
    * Setzt den übergebenen Kontakt als aktuell ausgewählten Kontakt.
-   * 
+   *
    * @param contact - Der Kontakt, der ausgewählt wird.
    */
   selectContact(contact: Contact): void {
-    console.log('selectContact aufgerufen mit:', contact);
     this.selectedContact = contact;
   }
 
   /**
    * Ermittelt die Initialen eines Namens.
-   * 
+   *
    * @param name - Vollständiger Name des Kontakts.
    * @returns Die Großbuchstaben der Anfangsbuchstaben aller Namensteile.
    */
@@ -73,19 +75,17 @@ export class ContactLayoutComponent {
 
   /**
    * Bestimmt die Avatar-Farbe basierend auf dem Namen.
-   * 
+   *
    * Die Farbe wird als Hex-Farbcode zurückgegeben.
-   * 
+   *
    * @param name - Vollständiger Name des Kontakts.
    * @returns Ein Hex-Farbcode für den Avatar-Hintergrund.
    */
   getAvatarColor(name: string): string {
     const colors = ['#5c6bc0', '#007cee', '#4caf50', '#f44336', '#ff9800'];
-    let hash = 0;
-    for (let i = 0; i < name.length; i++) {
-      hash += name.charCodeAt(i);
-    }
-    return colors[hash % colors.length];
+    if (!name) return colors[0]; // Fallback für leeren String
+    const firstCharCode = name.trim().charCodeAt(0);
+    return colors[firstCharCode % colors.length];
   }
 
   /**

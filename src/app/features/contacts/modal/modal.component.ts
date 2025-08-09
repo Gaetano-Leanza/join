@@ -30,7 +30,7 @@ const db = getFirestore(app);
 
 /**
  * Modal-Komponente zur Anzeige und Bearbeitung eines Kontakts.
- * 
+ *
  * Unterstützt Animationen, Eingabevalidierung und speichert Daten in Firebase Firestore.
  * Benutzt `OnChanges`, um Eingabewerte zu synchronisieren und das Formular zurückzusetzen.
  */
@@ -43,81 +43,101 @@ const db = getFirestore(app);
   imports: [CommonModule, FormsModule],
 })
 export class ModalComponent implements OnChanges {
-  /**
-   * Gibt an, ob das Modal sichtbar ist.
-   */
+  /** Gibt an, ob das Modal sichtbar ist. */
   @Input() visible = false;
 
-  /**
-   * Kontakt, der zum Bearbeiten vom Parent übergeben wird.
-   */
-  @Input() contactToEdit: { name: string; email: string; phone: string } | null = null;
+  /** Kontakt, der zum Bearbeiten vom Parent übergeben wird. */
+  @Input() contactToEdit: {
+    name: string;
+    email: string;
+    phone: string;
+  } | null = null;
 
-  /**
-   * Event wird ausgelöst, wenn das Modal geschlossen wird.
-   */
+  /** Event wird ausgelöst, wenn das Modal geschlossen wird. */
   @Output() closed = new EventEmitter<void>();
 
-  /**
-   * Event wird ausgelöst, wenn ein Kontakt erfolgreich gespeichert wurde.
-   */
+  /** Event wird ausgelöst, wenn ein Kontakt erfolgreich gespeichert wurde. */
   @Output() contactSaved = new EventEmitter<void>();
 
-  /** Eingabefeld: Name des Kontakts */
+  /** Eingabefelder */
   name: string = '';
-
-  /** Eingabefeld: Email des Kontakts */
   email: string = '';
-
-  /** Eingabefeld: Telefonnummer des Kontakts */
   phone: string = '';
 
-  /**
-   * Lifecycle-Hook, um auf Änderungen der Inputs zu reagieren.
-   * Synchronisiert Formularfelder mit dem übergebenen Kontakt.
-   * Setzt Formular zurück, wenn Modal geschlossen wird.
-   * 
-   * @param changes - Objekt mit den beobachteten Änderungen.
-   */
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['contactToEdit'] && this.contactToEdit) {
-      this.name = this.contactToEdit.name || '';
-      this.email = this.contactToEdit.email || '';
-      this.phone = this.contactToEdit.phone || '';
+    console.log('ngOnChanges - alle Änderungen:', changes);
+    console.log('Aktuelles visible:', this.visible);
+    console.log('Aktuelles contactToEdit:', this.contactToEdit);
+
+    // Prüfe contactToEdit Änderungen
+    if (changes['contactToEdit']) {
+      console.log('contactToEdit hat sich geändert:', changes['contactToEdit']);
+      const currentContact = changes['contactToEdit'].currentValue;
+      
+      if (currentContact) {
+        this.name = currentContact.name || '';
+        this.email = currentContact.email || '';
+        this.phone = currentContact.phone || '';
+        console.log('Formular mit Kontaktdaten gefüllt:', { name: this.name, email: this.email, phone: this.phone });
+      } else {
+        this.resetForm();
+        console.log('Formular zurückgesetzt (contactToEdit ist null)');
+      }
     }
 
-    if (changes['visible'] && changes['visible'].currentValue === false) {
-      this.resetForm();
+    // Prüfe visible Änderungen
+    if (changes['visible']) {
+      if (this.visible && this.contactToEdit) {
+        console.log('Modal geöffnet - Formular mit Kontaktdaten gesetzt');
+        // Zusätzliche Sicherung: Formular nochmals mit aktuellen Daten füllen
+        this.name = this.contactToEdit.name || '';
+        this.email = this.contactToEdit.email || '';
+        this.phone = this.contactToEdit.phone || '';
+      } else if (!this.visible) {
+        this.resetForm();
+        console.log('Modal geschlossen – Formular zurückgesetzt');
+      }
     }
   }
 
-  /**
-   * Wird aufgerufen, wenn der Hintergrund (Backdrop) des Modals angeklickt wird.
-   * Löst das `closed` Event aus, um das Modal zu schließen.
-   */
+  onInputChange(field: string, value: string) {
+    console.log(`Input changed - ${field}:`, value);
+  }
+
+  ngOnInit() {
+    console.log('Modal ngOnInit - contactToEdit:', this.contactToEdit);
+    
+    // Sicherheitsprüfung: Falls contactToEdit bereits beim Init vorhanden ist
+    if (this.contactToEdit) {
+      this.name = this.contactToEdit.name || '';
+      this.email = this.contactToEdit.email || '';
+      this.phone = this.contactToEdit.phone || '';
+      console.log('ngOnInit: Formular mit vorhandenen Daten gefüllt');
+    }
+  }
+
+  ngDoCheck() {
+    console.log('Modal ngDoCheck - contactToEdit:', this.contactToEdit);
+  }
+
+  /** Wird aufgerufen, wenn der Hintergrund des Modals angeklickt wird. */
   handleBackdropClick() {
     this.closed.emit();
   }
 
-  /**
-   * Setzt alle Eingabefelder zurück auf leere Strings.
-   */
+  /** Setzt alle Eingabefelder zurück. */
   resetForm() {
     this.name = '';
     this.email = '';
     this.phone = '';
   }
 
-  /**
-   * Speichert den Kontakt in Firestore, wenn das Formular gültig ist.
-   * 
-   * @param form - Formularreferenz zur Validierung.
-   */
+  /** Speichert den Kontakt in Firestore, wenn das Formular gültig ist. */
   async saveContact(form: NgForm) {
     if (form.invalid) {
-      Object.values(form.controls).forEach((control) => {
-        control.markAsTouched();
-      });
+      Object.values(form.controls).forEach((control) =>
+        control.markAsTouched()
+      );
       return;
     }
 
@@ -132,8 +152,6 @@ export class ModalComponent implements OnChanges {
       alert('Contact saved successfully!');
       this.resetForm();
       this.handleBackdropClick();
-
-      // Event emittieren, dass Kontakt gespeichert wurde
       this.contactSaved.emit();
     } catch (error) {
       console.error('Error saving contact:', error);
@@ -141,22 +159,12 @@ export class ModalComponent implements OnChanges {
     }
   }
 
-  /**
-   * Validiert, ob ein Name nur Buchstaben, Leerzeichen und Bindestriche enthält.
-   * 
-   * @param name - Der zu validierende Name.
-   * @returns `true`, wenn der Name gültig ist, sonst `false`.
-   */
+  /** Validiert Namen (nur Buchstaben, Leerzeichen, Bindestriche). */
   isValidName(name: string): boolean {
     return /^[A-Za-z\s\-]+$/.test(name.trim());
   }
 
-  /**
-   * Erzeugt Initialen aus einem Namen (maximal zwei Buchstaben).
-   * 
-   * @param name - Vollständiger Name.
-   * @returns Die Großbuchstaben der ersten zwei Namensbestandteile.
-   */
+  /** Erzeugt Initialen aus dem Namen. */
   getInitials(name: string): string {
     return name
       .split(' ')
@@ -165,9 +173,6 @@ export class ModalComponent implements OnChanges {
       .join('');
   }
 
-  /**
-   * Liste der verfügbaren Avatar-Hintergrundfarben.
-   */
   avatarColors: string[] = [
     '#F44336',
     '#E91E63',
@@ -181,16 +186,10 @@ export class ModalComponent implements OnChanges {
     '#795548',
   ];
 
-  /**
-   * Berechnet eine Farbwahl basierend auf dem Hash des Namens.
-   * 
-   * @param name - Der Name, aus dem die Farbe bestimmt wird.
-   * @returns Ein Hex-Farbcode aus `avatarColors`.
-   */
   getAvatarColor(name: string): string {
-    const hash = name.split('').reduce((acc, char) => {
-      return char.charCodeAt(0) + ((acc << 5) - acc);
-    }, 0);
+    const hash = name
+      .split('')
+      .reduce((acc, char) => char.charCodeAt(0) + ((acc << 5) - acc), 0);
     return this.avatarColors[Math.abs(hash) % this.avatarColors.length];
   }
 }

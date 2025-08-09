@@ -1,5 +1,7 @@
 <form #form="ngForm" (ngSubmit)="saveContact(form)">
+  <!-- Modal Backdrop, nur wenn visible=true -->
   <div class="modal-backdrop" *ngIf="visible" (click)="handleBackdropClick()">
+    <!-- Modal Content, Klicks stoppen, damit Backdrop-Klick nicht ausgelöst wird -->
     <div
       class="modal-content"
       [@slideInModal]
@@ -20,23 +22,22 @@
 
         <div class="right-panel">
           <div class="input-wrapper">
-          <div class="left-site">
-  <!-- Placeholder anzeigen, solange Avatar noch nicht angezeigt wird -->
-  <div class="avatar-placeholder" *ngIf="!isValidName(name)">
-    <img src="/img/placeholder.svg" alt="Avatar Placeholder" />
-  </div>
+            <div class="left-site">
+              <!-- Avatar Placeholder, wenn Name ungültig -->
+              <div class="avatar-placeholder" *ngIf="!isValidName(name)">
+                <img src="/img/placeholder.svg" alt="Avatar Placeholder" />
+              </div>
 
-  <!-- Avatar anzeigen, wenn gültiger Name vorhanden ist -->
-  <div class="avatar-preview" *ngIf="isValidName(name)">
-    <div
-      class="avatar"
-      [ngStyle]="{ 'background-color': getAvatarColor(name) }"
-    >
-      {{ getInitials(name) }}
-    </div>
-  </div>
-</div>
-
+              <!-- Avatar mit Initialen, wenn Name gültig -->
+              <div class="avatar-preview" *ngIf="isValidName(name)">
+                <div
+                  class="avatar"
+                  [ngStyle]="{ 'background-color': getAvatarColor(name) }"
+                >
+                  {{ getInitials(name) }}
+                </div>
+              </div>
+            </div>
 
             <div class="right-site">
               <div class="right-site-top">
@@ -51,6 +52,7 @@
                   #nameRef="ngModel"
                   required
                   pattern="^[A-Za-z\s\-]+$"
+                  (ngModelChange)="onInputChange('name', $event)"
                 />
                 <div
                   *ngIf="nameRef.invalid && nameRef.touched"
@@ -70,6 +72,7 @@
                   #emailRef="ngModel"
                   required
                   pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                  (ngModelChange)="onInputChange('email', $event)"
                 />
                 <div
                   *ngIf="emailRef.invalid && emailRef.touched"
@@ -89,6 +92,7 @@
                   #phoneRef="ngModel"
                   required
                   pattern="^\+?[0-9\s\-]{7,20}$"
+                  (ngModelChange)="onInputChange('phone', $event)"
                 />
                 <div
                   *ngIf="phoneRef.invalid && phoneRef.touched"
@@ -96,7 +100,7 @@
                 >
                   Please enter a valid phone number.
                 </div>
-                
+
                 <div class="right-site-bottom">
                   <div>
                     <img
