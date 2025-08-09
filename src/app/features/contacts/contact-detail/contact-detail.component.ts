@@ -7,8 +7,8 @@ import { Contact } from '../contact-model/contact.model';
 
 /**
  * Komponente zur Anzeige der Detailinformationen eines Kontakts.
- * 
- * Die Komponente liest die Kontakt-ID aus der URL aus und lädt 
+ *
+ * Die Komponente liest die Kontakt-ID aus der URL aus und lädt
  * den zugehörigen Kontakt über den ContactService.
  */
 @Component({
@@ -24,7 +24,7 @@ import { Contact } from '../contact-model/contact.model';
     <ng-template #noContact>
       <p>Kontakt nicht gefunden.</p>
     </ng-template>
-  `
+  `,
 })
 export class ContactDetailComponent {
   /**
@@ -35,11 +35,14 @@ export class ContactDetailComponent {
 
   /**
    * Erstellt eine neue Instanz der ContactDetailComponent.
-   * 
+   *
    * @param route - Zum Auslesen der URL-Parameter (insbesondere der Kontakt-ID).
    * @param contactService - Service zur Kontaktverwaltung und -abfrage.
    */
-  constructor(private route: ActivatedRoute, private contactService: ContactService) {
+  constructor(
+    private route: ActivatedRoute,
+    private contactService: ContactService
+  ) {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.contact$ = this.contactService.getContactById(id);

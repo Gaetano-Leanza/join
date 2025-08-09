@@ -5,16 +5,16 @@ import {
   EventEmitter,
   OnChanges,
   SimpleChanges,
+  OnInit
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { slideInModal } from './modal.animations';
+import { Contact } from '../contact-model/contact.model';
 
-// 🔥 Firebase nur für Speichern nötig
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 
-// 🔧 Firebase-Konfiguration
 const firebaseConfig = {
   apiKey: 'AIzaSyD1fse1ML6Ie-iFClg_2Ukr-G1FEeQUHac',
   authDomain: 'join-e1f64.firebaseapp.com',
@@ -28,12 +28,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-/**
- * Modal-Komponente zur Anzeige und Bearbeitung eines Kontakts.
- *
- * Unterstützt Animationen, Eingabevalidierung und speichert Daten in Firebase Firestore.
- * Benutzt `OnChanges`, um Eingabewerte zu synchronisieren und das Formular zurückzusetzen.
- */
 @Component({
   standalone: true,
   selector: 'app-modal',
@@ -42,98 +36,63 @@ const db = getFirestore(app);
   animations: [slideInModal],
   imports: [CommonModule, FormsModule],
 })
-export class ModalComponent implements OnChanges {
-  /** Gibt an, ob das Modal sichtbar ist. */
+export class ModalComponent implements OnChanges, OnInit {
+  @Input() contactToEdit: Contact | null = null;
   @Input() visible = false;
-
-  /** Kontakt, der zum Bearbeiten vom Parent übergeben wird. */
-  @Input() contactToEdit: {
-    id: string;
-    name: string;
-    email: string;
-    phone: string;
-  } | null = null;
-
-  /** Event wird ausgelöst, wenn das Modal geschlossen wird. */
   @Output() closed = new EventEmitter<void>();
-
-  /** Event wird ausgelöst, wenn ein Kontakt erfolgreich gespeichert wurde. */
   @Output() contactSaved = new EventEmitter<void>();
 
-  /** Eingabefelder */
   name: string = '';
   email: string = '';
   phone: string = '';
 
+  ngOnInit(): void {
+    this.loadFromLocalStorage();
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('ngOnChanges - alle Änderungen:', changes);
-    console.log('Aktuelles visible:', this.visible);
-    console.log('Aktuelles contactToEdit:', this.contactToEdit);
-
-    // Prüfe contactToEdit Änderungen
-    if (changes['contactToEdit']) {
-      console.log('contactToEdit hat sich geändert:', changes['contactToEdit']);
-      const currentContact = changes['contactToEdit'].currentValue;
-      
-      if (currentContact) {
-        this.name = currentContact.name || '';
-        this.email = currentContact.email || '';
-        this.phone = currentContact.phone || '';
-        console.log('Formular mit Kontaktdaten gefüllt:', { name: this.name, email: this.email, phone: this.phone });
-      } else {
-        this.resetForm();
-        console.log('Formular zurückgesetzt (contactToEdit ist null)');
-      }
+    if (changes['visible']?.currentValue === true) {
+      this.loadFromLocalStorage();
     }
 
-    // Prüfe visible Änderungen
-    if (changes['visible']) {
-      if (this.visible && this.contactToEdit) {
-        console.log('Modal geöffnet - Formular mit Kontaktdaten gesetzt');
-        // Zusätzliche Sicherung: Formular nochmals mit aktuellen Daten füllen
-        this.name = this.contactToEdit.name || '';
-        this.email = this.contactToEdit.email || '';
-        this.phone = this.contactToEdit.phone || '';
-      } else if (!this.visible) {
-        this.resetForm();
-        console.log('Modal geschlossen – Formular zurückgesetzt');
-      }
-    }
-  }
-
-  onInputChange(field: string, value: string) {
-    console.log(`Input changed - ${field}:`, value);
-  }
-
-  ngOnInit() {
-    console.log('Modal ngOnInit - contactToEdit:', this.contactToEdit);
-    
-    // Sicherheitsprüfung: Falls contactToEdit bereits beim Init vorhanden ist
     if (this.contactToEdit) {
       this.name = this.contactToEdit.name || '';
       this.email = this.contactToEdit.email || '';
       this.phone = this.contactToEdit.phone || '';
-      console.log('ngOnInit: Formular mit vorhandenen Daten gefüllt');
+    } else {
+      this.resetForm();
     }
   }
 
-  ngDoCheck() {
-    console.log('Modal ngDoCheck - contactToEdit:', this.contactToEdit);
+  private loadFromLocalStorage(): void {
+    try {
+      const stored = localStorage.getItem('selectedContact');
+      if (stored) {
+        const contact: Contact = JSON.parse(stored);
+        this.name = contact.name || '';
+        this.email = contact.email || '';
+        this.phone = contact.phone || '';
+        console.log('Kontakt aus Local Storage geladen:', contact);
+      }
+    } catch (error) {
+      console.error('Fehler beim Laden aus Local Storage:', error);
+    }
   }
 
-  /** Wird aufgerufen, wenn der Hintergrund des Modals angeklickt wird. */
+  onInputChange(field: string, value: string) {
+    console.log(`Eingabe geändert - ${field}:`, value);
+  }
+
   handleBackdropClick() {
     this.closed.emit();
   }
 
-  /** Setzt alle Eingabefelder zurück. */
   resetForm() {
     this.name = '';
     this.email = '';
     this.phone = '';
   }
 
-  /** Speichert den Kontakt in Firestore, wenn das Formular gültig ist. */
   async saveContact(form: NgForm) {
     if (form.invalid) {
       Object.values(form.controls).forEach((control) =>
@@ -150,22 +109,20 @@ export class ModalComponent implements OnChanges {
         createdAt: new Date(),
       });
 
-      alert('Contact saved successfully!');
+      alert('Kontakt erfolgreich gespeichert!');
       this.resetForm();
       this.handleBackdropClick();
       this.contactSaved.emit();
     } catch (error) {
-      console.error('Error saving contact:', error);
-      alert('Error saving the contact.');
+      console.error('Fehler beim Speichern:', error);
+      alert('Fehler beim Speichern des Kontakts.');
     }
   }
 
-  /** Validiert Namen (nur Buchstaben, Leerzeichen, Bindestriche). */
   isValidName(name: string): boolean {
     return /^[A-Za-z\s\-]+$/.test(name.trim());
   }
 
-  /** Erzeugt Initialen aus dem Namen. */
   getInitials(name: string): string {
     return name
       .split(' ')
@@ -175,22 +132,13 @@ export class ModalComponent implements OnChanges {
   }
 
   avatarColors: string[] = [
-    '#F44336',
-    '#E91E63',
-    '#9C27B0',
-    '#3F51B5',
-    '#03A9F4',
-    '#009688',
-    '#4CAF50',
-    '#FFC107',
-    '#FF9800',
-    '#795548',
+    '#F44336', '#E91E63', '#9C27B0', '#3F51B5', '#03A9F4',
+    '#009688', '#4CAF50', '#FFC107', '#FF9800', '#795548',
   ];
 
   getAvatarColor(name: string): string {
-    const hash = name
-      .split('')
-      .reduce((acc, char) => char.charCodeAt(0) + ((acc << 5) - acc), 0);
-    return this.avatarColors[Math.abs(hash) % this.avatarColors.length];
+    if (!name || name.trim().length === 0) return this.avatarColors[0];
+    const firstCharCode = name.trim().charCodeAt(0);
+    return this.avatarColors[firstCharCode % this.avatarColors.length];
   }
 }

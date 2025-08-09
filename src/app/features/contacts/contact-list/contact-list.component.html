@@ -42,7 +42,7 @@
     <div class="divider"></div>
 
     <div
-      *ngFor="let contact of group[1]"
+      *ngFor="let contact of group[1]; trackBy: trackContact"
       class="contact-item"
       [class.active]="selectedContact?.id === contact.id"
       (click)="onContactClick(contact)"
@@ -62,6 +62,16 @@
   </ng-container>
 </div>
 
+<app-modal
+  *ngIf="modal1Visible"
+  [visible]="modal1Visible"
+  [contactToEdit]="contactToEdit"
+  (closed)="closeModal1()"
+  (contactSaved)="onContactSaved()"
+></app-modal>
+
+<app-modal2 [visible]="modal2Visible" (closed)="closeModal2()"></app-modal2>
+
 <ng-template #loadingOrEmpty>
   <ng-container *ngIf="loading; else notLoading">
     <div>Kontakte werden geladen...</div>
@@ -75,15 +85,3 @@
     </ng-template>
   </ng-template>
 </ng-template>
-
-
-<app-modal
-  *ngIf="modal1Visible"
-  [visible]="modal1Visible"
-  [contactToEdit]="contactToEdit"
-  (closed)="closeModal1()"
-  (contactSaved)="onContactSaved()"
->
-</app-modal>
-
-<app-modal2 [visible]="modal2Visible" (closed)="closeModal2()"></app-modal2>

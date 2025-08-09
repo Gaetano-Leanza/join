@@ -12,17 +12,23 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ContactService } from '../contact-service/contact.service';
-import { Contact } from '../contact-model/contact.model'; 
+import { Contact } from '../contact-model/contact.model';
 import { delay } from 'rxjs/operators';
 import { ModalComponent } from '../modal/modal.component';
 import { Modal2Component } from '../modal2/modal2.component';
 
-
 /**
- * Komponente zur Anzeige einer alphabetisch gruppierten Kontaktliste.
- *
- * Lädt Kontakte vom ContactService, zeigt sie gruppiert an und ermöglicht das
- * Öffnen und Bearbeiten einzelner Kontakte in Modal-Fenstern.
+ * ContactListComponent - Hauptkomponente für die Kontaktlistenansicht
+ * 
+ * Verantwortlich für:
+ * - Laden und Gruppieren von Kontakten
+ * - Anzeige der alphabetisch gruppierten Kontaktliste
+ * - Öffnen der Detailansicht bei Kontaktauswahl
+ * - Bearbeiten von Kontakten über Modal-Dialog
+ * - Hinzufügen neuer Kontakte
+ * 
+ * @example
+ * <app-contact-list></app-contact-list>
  */
 @Component({
   selector: 'app-contact-list',
@@ -32,45 +38,43 @@ import { Modal2Component } from '../modal2/modal2.component';
   styleUrls: ['./contact-list.component.scss'],
 })
 export class ContactListComponent implements OnInit {
-  /**
-   * Event, das ausgelöst wird, wenn ein Kontakt ausgewählt wurde.
-   */
+  /** EventEmitter für ausgewählten Kontakt */
   @Output() contactSelected = new EventEmitter<Contact>();
-
-  /** Service für Kontakt-Datenzugriff (wird per `inject` eingebunden) */
+  
+  /** Service für Kontaktoperationen */
   private contactService = inject(ContactService);
-
-  /** Referenz zum Lifecycle-Destroy-Token für unsubscription */
+  
+  /** DestroyRef für RxJS Subscription Management */
   private destroyRef = inject(DestroyRef);
 
-  /** Alle geladenen Kontakte */
+  /** Array aller geladener Kontakte */
   contacts: Contact[] = [];
-
-  /** Kontakte gruppiert nach erstem Buchstaben des Namens */
+  
+  /** Gruppierte Kontakte nach Anfangsbuchstaben */
   groupedContacts: { [letter: string]: Contact[] } = {};
-
-  /** Zeigt Ladezustand an */
+  
+  /** Ladezustand der Komponente */
   loading = true;
-
-  /** Fehlermeldung bei Ladefehler */
+  
+  /** Fehlermeldung, falls vorhanden */
   error: string | null = null;
-
-  /** Steuert eine optionale UI-Overlay-Anzeige */
+  
+  /** Zustand für Overlay-Anzeige */
   isActive = false;
 
-  /** Aktuell selektierter Kontakt */
+  /** Aktuell ausgewählter Kontakt für Detailansicht */
   selectedContact: Contact | null = null;
 
-  /** Steuerung Sichtbarkeit des ersten Modals */
-  modal1Visible = false;
-
-  /** Steuerung Sichtbarkeit des zweiten Modals */
-  modal2Visible = false;
-
-  /** Kontakt, der im Modal zum Bearbeiten gesetzt wird */
+  /** Kontakt, der bearbeitet werden soll */
   contactToEdit: Contact | null = null;
 
-  /** Mögliche Farben für Avatar-Hintergründe */
+  /** Sichtbarkeit des Bearbeitungsmodals */
+  modal1Visible = false;
+  
+  /** Sichtbarkeit des Hinzufügen-Modals */
+  modal2Visible = false;
+
+  /** Farbpalette für Avatar-Hintergründe */
   private avatarColors: string[] = [
     '#F44336',
     '#E91E63',
@@ -85,14 +89,14 @@ export class ContactListComponent implements OnInit {
   ];
 
   /**
-   * Konstruktor mit Plattform-ID Injection, um Plattform-Kontext zu prüfen.
-   * @param platformId Plattform-Kontext (Browser / Server)
+   * Konstruktor der ContactListComponent
+   * @param platformId - ID der Plattform (Browser/Server)
    */
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   /**
-   * Lifecycle-Hook beim Initialisieren der Komponente.
-   * Prüft Plattform und lädt Kontakte im Browser-Kontext.
+   * Initialisierungslogik der Komponente
+   * Lädt Kontakte oder zeigt Server-Kontext-Fehler
    */
   ngOnInit(): void {
     if (!isPlatformBrowser(this.platformId)) {
@@ -105,28 +109,30 @@ export class ContactListComponent implements OnInit {
   }
 
   /**
-   * Umschalten eines Overlays in der UI.
+   * Schaltet den Overlay-Zustand um
    */
   toggleOverlay(): void {
     this.isActive = !this.isActive;
   }
 
   /**
-   * Lädt alle Kontakte vom Service und gruppiert sie alphabetisch.
-   * Handhabt Fehler und aktualisiert Ladezustand.
+   * Lädt Kontakte vom ContactService
+   * @throws Gibt Fehler aus wenn Laden fehlschlägt
    */
   loadContacts(): void {
+    console.log('Lade Kontakte...');
     this.contactService
       .getContacts()
       .pipe(takeUntilDestroyed(this.destroyRef), delay(0))
       .subscribe({
         next: (contacts) => {
+          console.log(`${contacts.length} Kontakte geladen`, contacts);
           this.contacts = contacts;
           this.groupContacts();
           this.loading = false;
         },
         error: (error) => {
-          console.error('Error loading contacts:', error);
+          console.error('Fehler beim Laden der Kontakte:', error);
           this.error = 'Failed to load contacts';
           this.loading = false;
         },
@@ -134,8 +140,8 @@ export class ContactListComponent implements OnInit {
   }
 
   /**
-   * Behandlung bei Ausführung im Server-Kontext (z.B. SSR).
-   * Setzt Ladezustand und Fehlerhinweis.
+   * Behandelt Server-Kontext (z.B. SSR)
+   * Setzt entsprechende Fehlermeldung
    */
   private handleServerContext(): void {
     this.loading = false;
@@ -144,21 +150,20 @@ export class ContactListComponent implements OnInit {
   }
 
   /**
-   * Bestimmt eine Avatar-Hintergrundfarbe basierend auf dem ersten Buchstaben des Namens.
-   * @param name Name des Kontakts
-   * @returns Hex-Farbcode für Avatar-Hintergrund
+   * Ermittelt die Avatar-Hintergrundfarbe basierend auf dem Namen
+   * @param name - Der Name des Kontakts
+   * @returns Hex-Farbcode für den Avatar
    */
   getAvatarColor(name: string): string {
-    const colors = ['#5c6bc0', '#007cee', '#4caf50', '#f44336', '#ff9800'];
-    if (!name) return colors[0];
+    if (!name) return this.avatarColors[0];
     const firstCharCode = name.trim().charCodeAt(0);
-    return colors[firstCharCode % colors.length];
+    return this.avatarColors[firstCharCode % this.avatarColors.length];
   }
 
   /**
-   * Extrahiert Initialen aus dem Namen (maximal 2 Buchstaben).
-   * @param name Vollständiger Name
-   * @returns Großbuchstaben der ersten zwei Namensbestandteile
+   * Generiert Initialen aus dem Namen
+   * @param name - Der vollständige Name
+   * @returns Initialen (max. 2 Buchstaben)
    */
   getInitials(name: string): string {
     return name
@@ -169,103 +174,100 @@ export class ContactListComponent implements OnInit {
   }
 
   /**
-   * Gruppiert die Kontakte alphabetisch nach dem ersten Buchstaben.
+   * Gruppiert Kontakte nach Anfangsbuchstaben
+   * @private
    */
   private groupContacts(): void {
+    console.log('Gruppiere Kontakte...');
     this.groupedContacts = this.contacts.reduce((acc, contact) => {
       const letter = contact.name.charAt(0).toUpperCase();
-      acc[letter] = [...(acc[letter] || []), contact];
+      if (!acc[letter]) {
+        acc[letter] = [];
+      }
+      acc[letter].push(contact);
       return acc;
     }, {} as { [letter: string]: Contact[] });
+    console.log('Gruppierte Kontakte:', this.groupedContacts);
   }
 
   /**
-   * Behandelt Klick auf einen Kontakt.
-   * Setzt selektierten Kontakt und emittiert `contactSelected`.
-   * @param contact Angeclickter Kontakt
+   * Handler für Kontaktauswahl
+   * @param contact - Der ausgewählte Kontakt
    */
   onContactClick(contact: Contact): void {
+    console.log('Kontakt geklickt - öffne Detail-Slider:', contact);
     this.selectedContact = contact;
     this.contactSelected.emit(contact);
-    console.log('Ausgewählter Kontakt:', contact);
   }
 
+  /**
+   * Öffnet das Bearbeitungsmodal
+   * @param contact - Der zu bearbeitende Kontakt
+   */
+  openEditModal(contact: Contact): void {
+    console.log('Öffne Bearbeitungsmodal für:', contact);
+    this.contactToEdit = contact;
+    this.modal1Visible = true;
+  }
+
+  /**
+   * Schließt die Detailansicht
+   */
+  closeDetailSlider(): void {
+    this.selectedContact = null;
+  }
+
+  /**
+   * Getter für gruppierte Kontakte als sortiertes Array
+   * @returns Sortiertes Array von [Buchstabe, Kontakte[]] Paaren
+   */
   get groupedContactsEntries(): [string, Contact[]][] {
     return Object.entries(this.groupedContacts).sort(([a], [b]) =>
       a.localeCompare(b)
     );
   }
 
-  editContact(contactId: string) {
-    console.log('🔍 editContact START mit ID:', contactId, typeof contactId);
-
-    this.contactService.getContactById(contactId).subscribe(
-      (contact) => {
-        console.log('📌 Kontakt vom Service erhalten:', contact);
-
-        if (contact) {
-          this.contactToEdit = {
-            id: contact.id, 
-            name: contact.name,
-            email: contact.email,
-            phone: contact.phone,
-          };
-
-          this.modal1Visible = true;
-
-          console.log('✅ Parent Werte korrekt gesetzt:', {
-            contactToEdit: this.contactToEdit,
-            modal1Visible: this.modal1Visible,
-            idType: typeof this.contactToEdit.id,
-          });
-        } else {
-          console.warn('⚠️ Kein Kontakt gefunden mit ID:', contactId);
-          this.contactToEdit = null;
-          this.modal1Visible = false;
-        }
-      },
-      (error) => {
-        console.error('❌ Fehler beim Laden des Kontakts:', error);
-        this.contactToEdit = null;
-        this.modal1Visible = false;
-      }
-    );
+  /**
+   * TrackBy-Funktion für die Kontaktliste
+   * @param index - Index des Elements
+   * @param contact - Kontaktobjekt
+   * @returns Eindeutige ID des Kontakts
+   */
+  trackContact(index: number, contact: Contact): string {
+    return contact.id;
   }
 
   /**
-   * Öffnet das erste Modal.
+   * Öffnet das Modal zum Hinzufügen neuer Kontakte
    */
-  openModal1() {
-    this.modal1Visible = true;
-  }
-
-  /**
-   * Öffnet das zweite Modal.
-   */
-  openModal2() {
+  openModal2(): void {
+    console.log('Öffne Modal für neuen Kontakt');
     this.modal2Visible = true;
   }
 
   /**
-   * Schließt das erste Modal und setzt den bearbeiteten Kontakt zurück. */
-
-  closeModal1() {
+   * Schließt das Bearbeitungsmodal
+   */
+  closeModal1(): void {
+    console.log('Schließe Bearbeitungsmodal');
     this.modal1Visible = false;
-    this.contactToEdit = null; // Kontakt zurücksetzen beim Schließen
+    this.contactToEdit = null;
   }
 
   /**
-   * Schließt das zweite Modal.
+   * Schließt das Hinzufügen-Modal
    */
-  closeModal2() {
+  closeModal2(): void {
+    console.log('Schließe Hinzufügen-Modal');
     this.modal2Visible = false;
   }
 
   /**
-   * Wird aufgerufen, wenn ein Kontakt im Modal erfolgreich gespeichert wurde.
-   * Lädt die Kontaktliste neu und schließt das Modal.
+   * Handler für gespeicherte Kontakte
+   * Lädt die Kontaktliste neu und schließt das Modal
    */
-  onContactSaved() {
+  onContactSaved(): void {
+    console.log('Kontakt gespeichert - Aktualisiere Liste');
     this.loadContacts();
     this.closeModal1();
   }
