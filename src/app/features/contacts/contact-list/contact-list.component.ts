@@ -20,7 +20,7 @@ import { Modal2Component } from '../modal2/modal2.component';
 @Component({
   selector: 'app-contact-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, ModalComponent, Modal2Component],
+  imports: [CommonModule, RouterModule, Modal2Component],
   templateUrl: './contact-list.component.html',
   styleUrls: ['./contact-list.component.scss'],
 })

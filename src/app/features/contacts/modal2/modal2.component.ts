@@ -30,7 +30,7 @@ const db = getFirestore(app);
 
 /**
  * Modal-Komponente zur Anzeige und Bearbeitung eines Kontakts.
- * 
+ *
  * Unterstützt Animationen, Eingabevalidierung und speichert Daten in Firebase Firestore.
  * Benutzt `OnChanges`, um Eingabewerte zu synchronisieren und das Formular zurückzusetzen.
  */
@@ -51,7 +51,11 @@ export class Modal2Component implements OnChanges {
   /**
    * Kontakt, der zum Bearbeiten vom Parent übergeben wird.
    */
-  @Input() contactToEdit: { name: string; email: string; phone: string } | null = null;
+  @Input() contactToEdit: {
+    name: string;
+    email: string;
+    phone: string;
+  } | null = null;
 
   /**
    * Event wird ausgelöst, wenn das Modal geschlossen wird.
@@ -76,7 +80,7 @@ export class Modal2Component implements OnChanges {
    * Lifecycle-Hook, um auf Änderungen der Inputs zu reagieren.
    * Synchronisiert Formularfelder mit dem übergebenen Kontakt.
    * Setzt Formular zurück, wenn Modal geschlossen wird.
-   * 
+   *
    * @param changes - Objekt mit den beobachteten Änderungen.
    */
   ngOnChanges(changes: SimpleChanges): void {
@@ -110,7 +114,7 @@ export class Modal2Component implements OnChanges {
 
   /**
    * Speichert den Kontakt in Firestore, wenn das Formular gültig ist.
-   * 
+   *
    * @param form - Formularreferenz zur Validierung.
    */
   async saveContact(form: NgForm) {
@@ -143,7 +147,7 @@ export class Modal2Component implements OnChanges {
 
   /**
    * Validiert, ob ein Name nur Buchstaben, Leerzeichen und Bindestriche enthält.
-   * 
+   *
    * @param name - Der zu validierende Name.
    * @returns `true`, wenn der Name gültig ist, sonst `false`.
    */
@@ -153,7 +157,7 @@ export class Modal2Component implements OnChanges {
 
   /**
    * Erzeugt Initialen aus einem Namen (maximal zwei Buchstaben).
-   * 
+   *
    * @param name - Vollständiger Name.
    * @returns Die Großbuchstaben der ersten zwei Namensbestandteile.
    */
@@ -183,7 +187,7 @@ export class Modal2Component implements OnChanges {
 
   /**
    * Berechnet eine Farbwahl basierend auf dem Hash des Namens.
-   * 
+   *
    * @param name - Der Name, aus dem die Farbe bestimmt wird.
    * @returns Ein Hex-Farbcode aus `avatarColors`.
    */

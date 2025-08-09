@@ -18,7 +18,7 @@ p {
 
 .modal-content {
   background: white;
-  width: 55vw;
+  width: 1100px;
   height: 60vh;
   border-radius: 24px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
@@ -33,7 +33,7 @@ p {
 }
 
 .left-panel {
-  flex: 3;
+  width: 400px;
   background-color: #091931;
   padding: 1rem;
   color: white;
@@ -43,7 +43,7 @@ p {
 }
 
 .right-panel {
-  flex: 7;
+  width: 700px;
   padding: 1rem;
   color: white;
   display: flex;
@@ -67,7 +67,7 @@ img {
 .img-wrapper {
   width: 100%;
   height: 100px;
-  margin-left: 40px;
+  margin-left: 65px;
   margin-bottom: 28px;
   display: flex;
   justify-content: flex-start;
@@ -77,7 +77,7 @@ img {
   width: 100px;
   height: 6px;
   margin-top: 16px;
-  margin-left: 16px;
+  margin-left: 34px;
   background-color: #29abe2;
 }
 
@@ -115,7 +115,7 @@ img {
 }
 
 .right-site-bottom {
-  width: 100%;
+  width: 400px;
   height: 350px;
   display: flex;
   flex-direction: row;
@@ -144,14 +144,17 @@ img {
 }
 
 .input-name {
+  width: 400px;
   background-image: url("/img/person.svg");
 }
 
 .input-email {
+  width: 400px;
   background-image: url("/img/mail.svg");
 }
 
 .input-phone {
+  width: 400px;
   background-image: url("/img/call.svg");
 }
 
@@ -168,13 +171,6 @@ img {
   font-size: 14px;
   margin-top: -15px;
   margin-bottom: 10px;
-}
-
-.save-button {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
 }
 
 .input {
@@ -214,7 +210,7 @@ img {
 }
 
 .save-button {
-  margin-top: 24px;
+  margin-top: 31px;
   background: none;
   border: none;
   padding: 0;
@@ -222,8 +218,9 @@ img {
   transition: all 0.3s ease;
 }
 
-.save-button:hover .button-background {
-  fill: #007bff;
+.save-button:hover svg rect {
+  fill: #1976d2 !important;
+  stroke: #1976d2 !important;
 }
 
 .save-button .button-text,
