@@ -31,7 +31,7 @@ import { ModalComponent } from "./modal/modal.component";
       ]),
     ]),
   ],
-  imports: [ModalComponent],
+  imports: [],
 })
 export class ContactsComponent {
   /** Instanz des ContactService für Datenzugriffe */

@@ -38,6 +38,9 @@ import { Modal2Component } from '../modal2/modal2.component';
   styleUrls: ['./contact-list.component.scss'],
 })
 export class ContactListComponent implements OnInit {
+onContactSelect(_t20: Contact) {
+throw new Error('Method not implemented.');
+}
   /** EventEmitter für ausgewählten Kontakt */
   @Output() contactSelected = new EventEmitter<Contact>();
   
