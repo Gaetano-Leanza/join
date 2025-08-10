@@ -8,7 +8,7 @@ import { Contact } from '../contact-model/contact.model';
 })
 export class ContactService {
   isBrowser: any;
-  private selectedContactId: string | null = null;  //Speichert die ausgewählte Kontakt-ID
+  private selectedContactId: string | null = null; 
 
   constructor(private firebaseService: FirebaseService) {}
 
