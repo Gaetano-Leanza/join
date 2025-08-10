@@ -4,20 +4,19 @@ import {
   Output,
   EventEmitter,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  OnInit,
+  inject
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { slideInModal } from './modal.animations';
 import { Contact } from '../contact-model/contact.model';
+import { ContactService } from '../contact-service/contact.service';
 
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, doc, updateDoc } from 'firebase/firestore';
 
-/**
- * Firebase-Konfigurationsobjekt für die App-Initialisierung
- * @constant {Object}
- */
 const firebaseConfig = {
   apiKey: 'AIzaSyD1fse1ML6Ie-iFClg_2Ukr-G1FEeQUHac',
   authDomain: 'join-e1f64.firebaseapp.com',
@@ -28,23 +27,9 @@ const firebaseConfig = {
   measurementId: 'G-Y12RXDEX3N',
 };
 
-/** Firebase App Instanz */
 const app = initializeApp(firebaseConfig);
-
-/** Firestore Datenbank Instanz */
 const db = getFirestore(app);
 
-/**
- * Modal-Komponente zum Erstellen und Bearbeiten von Kontakten
- * 
- * Diese Komponente stellt ein modales Dialogfenster bereit, in dem Benutzer
- * Kontaktinformationen eingeben oder bearbeiten können. Die Daten werden
- * in Firebase Firestore gespeichert.
- * 
- * @export
- * @class ModalComponent
- * @implements {OnChanges}
- */
 @Component({
   standalone: true,
   selector: 'app-modal',
@@ -53,140 +38,101 @@ const db = getFirestore(app);
   animations: [slideInModal],
   imports: [CommonModule, FormsModule],
 })
-export class ModalComponent implements OnChanges {
-  /**
-   * Kontakt-Objekt, das bearbeitet werden soll
-   * @type {Contact | null}
-   * @memberof ModalComponent
-   */
+export class ModalComponent implements OnChanges, OnInit {
+  private contactService = inject(ContactService);
+  
   @Input() contactToEdit: Contact | null = null;
-
-  /**
-   * Steuert die Sichtbarkeit des Modals
-   * @type {boolean}
-   * @memberof ModalComponent
-   */
   @Input() visible = false;
-
-  /**
-   * Event Emitter für das Schließen des Modals
-   * @type {EventEmitter<void>}
-   * @memberof ModalComponent
-   */
   @Output() closed = new EventEmitter<void>();
-
-  /**
-   * Event Emitter für erfolgreich gespeicherte Kontakte
-   * @type {EventEmitter<void>}
-   * @memberof ModalComponent
-   */
   @Output() contactSaved = new EventEmitter<void>();
 
-  /**
-   * Name des Kontakts
-   * @type {string}
-   * @memberof ModalComponent
-   */
   name: string = '';
-
-  /**
-   * E-Mail-Adresse des Kontakts
-   * @type {string}
-   * @memberof ModalComponent
-   */
   email: string = '';
-
-  /**
-   * Telefonnummer des Kontakts
-   * @type {string}
-   * @memberof ModalComponent
-   */
   phone: string = '';
+  isEditing = false;
+  currentContactId: string | null = null;
 
-  /**
-   * Array mit verfügbaren Avatar-Farben
-   * @type {string[]}
-   * @memberof ModalComponent
-   */
   avatarColors: string[] = [
     '#F44336', '#E91E63', '#9C27B0', '#3F51B5', '#03A9F4',
     '#009688', '#4CAF50', '#FFC107', '#FF9800', '#795548',
   ];
 
-  /**
-   * Lifecycle-Hook: Reagiert auf Änderungen der Input-Properties
-   * Lädt Kontaktdaten wenn ein Kontakt bearbeitet wird
-   * 
-   * @param {SimpleChanges} changes - Objekt mit geänderten Properties
-   * @memberof ModalComponent
-   */
+  ngOnInit(): void {
+    this.loadSelectedContact();
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.contactToEdit) {
-      this.name = this.contactToEdit.name || '';
-      this.email = this.contactToEdit.email || '';
-      this.phone = this.contactToEdit.phone || '';
-    } else {
-      this.resetForm();
+    if (changes['contactToEdit'] && this.contactToEdit) {
+      this.loadContactData(this.contactToEdit);
+      this.isEditing = true;
+    } else if (changes['visible'] && this.visible) {
+      this.loadSelectedContact();
     }
   }
 
-  /**
-   * Behandelt Änderungen in Eingabefeldern
-   * Loggt die Änderungen für Debugging-Zwecke
-   * 
-   * @param {string} field - Name des geänderten Feldes
-   * @param {string} value - Neuer Wert des Feldes
-   * @memberof ModalComponent
-   */
+  private loadSelectedContact(): void {
+    this.currentContactId = this.contactService.getSelectedContactId();
+    if (this.currentContactId) {
+      this.contactService.getContactById(this.currentContactId).subscribe({
+        next: (contact) => {
+          if (contact) {
+            this.loadContactData(contact);
+            this.isEditing = true;
+          }
+        },
+        error: (err) => {
+          console.error('Error loading contact:', err);
+        }
+      });
+    }
+  }
+
+  private loadContactData(contact: Contact): void {
+    this.name = contact.name || '';
+    this.email = contact.email || '';
+    this.phone = contact.phone || '';
+    this.currentContactId = contact.id;
+  }
+
   onInputChange(field: string, value: string) {
     console.log(`Eingabe geändert - ${field}:`, value);
   }
 
-  /**
-   * Behandelt Klicks auf den Hintergrund des Modals
-   * Schließt das Modal durch Emission des closed Events
-   * 
-   * @memberof ModalComponent
-   */
   handleBackdropClick() {
+    this.resetForm();
     this.closed.emit();
   }
 
-  /**
-   * Setzt alle Formularfelder zurück
-   * Leert Name, E-Mail und Telefonnummer
-   * 
-   * @memberof ModalComponent
-   */
   resetForm() {
     this.name = '';
     this.email = '';
     this.phone = '';
+    this.isEditing = false;
+    this.currentContactId = null;
   }
 
-  /**
-   * Speichert einen neuen Kontakt in Firebase Firestore
-   * Validiert das Formular vor dem Speichern und zeigt entsprechende Meldungen an
-   * 
-   * @param {NgForm} form - Angular Formulasr-Referenz für Validierung
-   * @returns {Promise<void>} Promise für asynchrone Speicheroperation
-   * @memberof ModalComponent
-   */
   async saveContact(form: NgForm) {
     if (form.invalid) {
-      Object.values(form.controls).forEach((control) =>
-        control.markAsTouched()
-      );
+      Object.values(form.controls).forEach(control => control.markAsTouched());
       return;
     }
 
     try {
-      await addDoc(collection(db, 'contacts'), {
+      const contactData = {
         name: this.name.trim(),
         email: this.email.trim(),
         phone: this.phone.trim(),
-        createdAt: new Date(),
-      });
+        updatedAt: new Date()
+      };
+
+      if (this.isEditing && this.currentContactId) {
+        await updateDoc(doc(db, 'contacts', this.currentContactId), contactData);
+      } else {
+        await addDoc(collection(db, 'contacts'), {
+          ...contactData,
+          createdAt: new Date()
+        });
+      }
 
       alert('Kontakt erfolgreich gespeichert!');
       this.resetForm();
@@ -198,26 +144,10 @@ export class ModalComponent implements OnChanges {
     }
   }
 
-  /**
-   * Validiert einen Namen mit Regex
-   * Erlaubt nur Buchstaben, Leerzeichen und Bindestriche
-   * 
-   * @param {string} name - Zu validierender Name
-   * @returns {boolean} true wenn der Name gültig ist
-   * @memberof ModalComponent
-   */
   isValidName(name: string): boolean {
     return /^[A-Za-z\s\-]+$/.test(name.trim());
   }
 
-  /**
-   * Generiert Initialen aus einem Namen
-   * Nimmt die ersten Buchstaben der ersten beiden Wörter
-   * 
-   * @param {string} name - Name für die Initialen-Generierung
-   * @returns {string} Initialen (maximal 2 Zeichen)
-   * @memberof ModalComponent
-   */
   getInitials(name: string): string {
     return name
       .split(' ')
@@ -226,14 +156,6 @@ export class ModalComponent implements OnChanges {
       .join('');
   }
 
-  /**
-   * Bestimmt eine Avatar-Farbe basierend auf dem Namen
-   * Verwendet den ASCII-Wert des ersten Zeichens für eine konsistente Farbauswahl
-   * 
-   * @param {string} name - Name für die Farbberechnung
-   * @returns {string} Hex-Farbcode für den Avatar
-   * @memberof ModalComponent
-   */
   getAvatarColor(name: string): string {
     if (!name || name.trim().length === 0) return this.avatarColors[0];
     const firstCharCode = name.trim().charCodeAt(0);
