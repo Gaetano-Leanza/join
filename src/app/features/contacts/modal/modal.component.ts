@@ -4,8 +4,7 @@ import {
   Output,
   EventEmitter,
   OnChanges,
-  SimpleChanges,
-  OnInit
+  SimpleChanges
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -40,12 +39,11 @@ const db = getFirestore(app);
  * 
  * Diese Komponente stellt ein modales Dialogfenster bereit, in dem Benutzer
  * Kontaktinformationen eingeben oder bearbeiten können. Die Daten werden
- * in Firebase Firestore gespeichert und können aus dem Local Storage geladen werden.
+ * in Firebase Firestore gespeichert.
  * 
  * @export
  * @class ModalComponent
  * @implements {OnChanges}
- * @implements {OnInit}
  */
 @Component({
   standalone: true,
@@ -55,7 +53,7 @@ const db = getFirestore(app);
   animations: [slideInModal],
   imports: [CommonModule, FormsModule],
 })
-export class ModalComponent implements OnChanges, OnInit {
+export class ModalComponent implements OnChanges {
   /**
    * Kontakt-Objekt, das bearbeitet werden soll
    * @type {Contact | null}
@@ -116,55 +114,19 @@ export class ModalComponent implements OnChanges, OnInit {
   ];
 
   /**
-   * Lifecycle-Hook: Wird beim Initialisieren der Komponente ausgeführt
-   * Lädt Daten aus dem Local Storage
-   * 
-   * @memberof ModalComponent
-   */
-  ngOnInit(): void {
-    this.loadFromLocalStorage();
-  }
-
-  /**
    * Lifecycle-Hook: Reagiert auf Änderungen der Input-Properties
-   * Lädt Kontaktdaten wenn das Modal sichtbar wird oder ein Kontakt bearbeitet wird
+   * Lädt Kontaktdaten wenn ein Kontakt bearbeitet wird
    * 
    * @param {SimpleChanges} changes - Objekt mit geänderten Properties
    * @memberof ModalComponent
    */
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['visible']?.currentValue === true) {
-      this.loadFromLocalStorage();
-    }
-
     if (this.contactToEdit) {
       this.name = this.contactToEdit.name || '';
       this.email = this.contactToEdit.email || '';
       this.phone = this.contactToEdit.phone || '';
     } else {
       this.resetForm();
-    }
-  }
-
-  /**
-   * Lädt Kontaktdaten aus dem Local Storage
-   * Versucht einen gespeicherten Kontakt unter dem Schlüssel 'selectedContact' zu laden
-   * 
-   * @private
-   * @memberof ModalComponent
-   */
-  private loadFromLocalStorage(): void {
-    try {
-      const stored = localStorage.getItem('selectedContact');
-      if (stored) {
-        const contact: Contact = JSON.parse(stored);
-        this.name = contact.name || '';
-        this.email = contact.email || '';
-        this.phone = contact.phone || '';
-        console.log('Kontakt aus Local Storage geladen:', contact);
-      }
-    } catch (error) {
-      console.error('Fehler beim Laden aus Local Storage:', error);
     }
   }
 

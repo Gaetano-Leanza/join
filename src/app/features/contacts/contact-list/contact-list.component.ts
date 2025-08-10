@@ -11,9 +11,9 @@ import {
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { delay } from 'rxjs/operators';
 import { ContactService } from '../contact-service/contact.service';
 import { Contact } from '../contact-model/contact.model';
-import { delay } from 'rxjs/operators';
 import { ModalComponent } from '../modal/modal.component';
 import { Modal2Component } from '../modal2/modal2.component';
 
