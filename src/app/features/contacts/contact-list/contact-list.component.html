@@ -34,103 +34,83 @@
     </svg>
   </button>
 
-
   <!-- Überprüft ob Kontakte vorhanden sind -->
 
   @if (groupedContactsEntries.length > 0) {
 
-    <!-- Iteriert über jede Kontaktgruppe -->
+  <!-- Iteriert über jede Kontaktgruppe -->
 
-    @for (group of groupedContactsEntries; track group[0]) {
+  @for (group of groupedContactsEntries; track group[0]) {
 
-      <!-- Überschrift der Gruppe (A, B, C, ...) -->
+  <!-- Überschrift der Gruppe (A, B, C, ...) -->
 
-      <h2 class="group-heading">{{ group[0] }}</h2>
+  <h2 class="group-heading">{{ group[0] }}</h2>
 
-      <!-- visuelle Trennlinie (weiß) -->
+  <!-- visuelle Trennlinie (weiß) -->
 
-      <div class="divider"></div>
+  <div class="divider"></div>
 
-      <!-- Iteriert über alle Kontakte in der Gruppe -->
+  <!-- Iteriert über alle Kontakte in der Gruppe -->
 
-      @for (contact of group[1]; track contact.id) {
+  @for (contact of group[1]; track contact.id) {
 
-        <!-- Kontakt-Container mit Interaktionen -->
-        <!-- Fügt "active"-Klasse hinzu, wenn dieser Kontakt ausgewählt ist -->
-        <!-- Ruft onContactClick() auf, wenn geklickt wird -->
+  <!-- Kontakt-Container mit Interaktionen -->
+  <!-- Fügt "active"-Klasse hinzu, wenn dieser Kontakt ausgewählt ist -->
+  <!-- Ruft onContactClick() auf, wenn geklickt wird -->
 
-        <div
-          class="contact-item"
-          [class.active]="selectedContact?.id === contact.id"
-          (click)="onContactClick(contact)"
-          style="cursor: pointer"
-        >
+  <div
+    class="contact-item"
+    [class.active]="selectedContact?.id === contact.id"
+    (click)="onContactClick(contact)"
+    style="cursor: pointer"
+  >
+    <!-- Erstellt Avatar mit Initialen -->
 
-        <!-- Erstellt Avatar mit Initialen -->
+    <div
+      class="avatar"
+      [ngStyle]="{ 'background-color': getAvatarColor(contact.name) }"
+    >
+      {{ getInitials(contact.name) }}
+    </div>
 
-          <div
-            class="avatar"
-            [ngStyle]="{ 'background-color': getAvatarColor(contact.name) }"
-          >
-            {{ getInitials(contact.name) }}
-          </div>
+    <!-- Kontakt-Info -->
 
-          <!-- Kontakt-Info -->
-
-          <div class="contact-info">
-            <strong>{{ contact.name }}</strong>
-            <small class="email">{{ contact.email }}</small>
-          </div>
-        </div>
-      }
-    }
+    <div class="contact-info">
+      <strong>{{ contact.name }}</strong>
+      <small class="email">{{ contact.email }}</small>
+    </div>
+  </div>
+  } }
 
   <!-- Fallback-Szenarien -->
 
   } @else {
 
-    <!-- Wenn keine Kontakte vorhanden sind -->
+  <!-- Wenn keine Kontakte vorhanden sind -->
 
-    <!-- Ladevorgang läuft -->
+  <!-- Ladevorgang läuft -->
 
-    @if (loading) {
-      <div>Kontakte werden geladen...</div>
+  @if (loading) {
+  <div>Kontakte werden geladen...</div>
 
-    <!-- Fehler aufgetreten -->
+  <!-- Fehler aufgetreten -->
 
-    } @else {
-      @if (error) {
-        <div>{{ error }}</div>
+  } @else { @if (error) {
+  <div>{{ error }}</div>
 
-      <!-- Keine Kontakte gefunden -->
+  <!-- Keine Kontakte gefunden -->
 
-      } @else {
-        <div>Keine Kontakte vorhanden.</div>
-      }
-    }
-  }
+  } @else {
+  <div>Keine Kontakte vorhanden.</div>
+  } } }
 </div>
 
+<!-- Übergibt das contactToEdit Objekt an die Modal-Component (Kontaktdaten) -->
 
-<!-- Modal wird nur gerendert wenn die Variable modal1Visible true ist -->
-
-@if (modal1Visible) {
-
-  <!-- app-modal Component wird gestartet -->
-
-  <!-- Übergibt den Wert von modal1Visible an die visible Input-Property oder Modal-Component  -->
-  <!-- Übergibt das contactToEdit Objekt an die Modal-Component (Kontaktdaten) -->
-
-  <app-modal
-    [visible]="modal1Visible"
-    [contactToEdit]="contactToEdit"
-    (closed)="closeModal1()"
-    (contactSaved)="onContactSaved()"
-  ></app-modal>
-}
+<app-modal [contactToEdit]="contactToEdit"></app-modal>
 
 <!-- Modal2 wird nur gerendert wenn die Variable modal1Visible true ist -->
 
 @if (modal2Visible) {
-  <app-modal2 [visible]="modal2Visible" (closed)="closeModal2()"></app-modal2>
+<app-modal2 [visible]="modal2Visible" (closed)="closeModal2()"></app-modal2>
 }

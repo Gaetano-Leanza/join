@@ -248,14 +248,6 @@ throw new Error('Method not implemented.');
     this.modal2Visible = true;
   }
 
-  /**
-   * Schließt das Bearbeitungsmodal
-   */
-  closeModal1(): void {
-    console.log('Schließe Bearbeitungsmodal');
-    this.modal1Visible = false;
-    this.contactToEdit = null;
-  }
 
   /**
    * Schließt das Hinzufügen-Modal
@@ -272,6 +264,5 @@ throw new Error('Method not implemented.');
   onContactSaved(): void {
     console.log('Kontakt gespeichert - Aktualisiere Liste');
     this.loadContacts();
-    this.closeModal1();
   }
 }
