@@ -82,7 +82,18 @@ export class ContactLayoutComponent {
    * @returns Ein Hex-Farbcode für den Avatar-Hintergrund.
    */
   getAvatarColor(name: string): string {
-    const colors = ['#5c6bc0', '#007cee', '#4caf50', '#f44336', '#ff9800'];
+    const colors = [
+      '#F44336',
+      '#E91E63',
+      '#9C27B0',
+      '#3F51B5',
+      '#03A9F4',
+      '#009688',
+      '#4CAF50',
+      '#FFC107',
+      '#FF9800',
+      '#795548',
+    ];
     if (!name) return colors[0]; // Fallback für leeren String
     const firstCharCode = name.trim().charCodeAt(0);
     return colors[firstCharCode % colors.length];
