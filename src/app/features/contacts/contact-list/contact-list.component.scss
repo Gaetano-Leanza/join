@@ -153,6 +153,10 @@ h3 {
   margin-top: 50px;
 }
 
+.add-contact-mobile {
+  display: none;
+}
+
 @media (max-width: 768px) {
 .contact-wrapper {
   width: 100%;
@@ -164,6 +168,41 @@ h3 {
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.add-contact-button {
+  display: none;
+}
+
+.add-contact-button-mobile {
+  position: absolute;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 570px;
+  margin-top: 960px;
+}
+
+.add-contact-button-mobile:hover svg rect {
+  fill: #007cee !important;
+  stroke: #007cee !important;
+}
+
+.add-contact-button-mobile {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-contact-button-mobile svg {
+  transition: all 0.3s ease;
+}
+
+.add-contact-button-mobile:hover svg rect {
+  fill: #1976d2 !important;
+  stroke: #1976d2 !important;
 }
 
 }
