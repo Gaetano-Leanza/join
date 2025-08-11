@@ -6,8 +6,11 @@
   <div class="side-panel">
     <div class="text-wrapper">
       <h3>Contacts</h3>
+      <div class="separation2">-</div>
+
       <p class="separation">|</p>
-      <p class="slogan">Better with a team</p>
+
+      <p class="slogan3">Better with a team</p>
     </div>
 
     <div class="detail-slide" *ngIf="selectedContact" [@slideIn]>
@@ -41,9 +44,9 @@
       <br />
       <br />
       <div class="email-phone">Email:</div>
-      <p>{{ selectedContact.email }}</p>
-      <br />
-      <br />
+      <p class="email-text">{{ selectedContact.email }}</p>
+      <br /><br />
+
       <div class="email-phone">Telefon:</div>
       <p>{{ selectedContact.phone }}</p>
     </div>
