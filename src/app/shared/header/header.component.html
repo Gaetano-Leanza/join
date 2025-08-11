@@ -4,11 +4,11 @@
       <p class="headline">Kanban Project Management Tool</p>
       <div id="header_left">
         <a routerLink="/info">
-          <img id="info" src="/img/help.svg" alt="Info" *ngIf="!isMenuOpen">
+          <img id="info" src="/img/help.svg" alt="Info" *ngIf="!isClicked">
         </a>
 
         <div class="user-icon">
-          <img src="/img/Group 5.svg" alt="Group_5" class="user_logo" *ngIf="!isMenuOpen" (click)="toggleMenu()">
+          <img src="/img/Group 5.svg" alt="Group_5" class="user_logo" *ngIf="!isClicked" (click)="toggleMenu()">
         </div>
 
         <div class="hamburger-menu" *ngIf="isMenuOpen">

@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { filter } from 'rxjs/operators';
 
-/**
- * Header-Komponente mit Navigationselementen.
- */
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -13,29 +11,36 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+  isClicked = false;   
+  isMenuOpen = false;  
 
-  /**
-   * @param router Angular Router zur Navigation und URL-Prüfung.
-   */
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+   
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        
+        if (
+          event.url !== '/privacy-policy' &&
+          event.url !== '/legal-notice'
+        ) {
+          this.isClicked = false;
+        }
+        
+        this.isMenuOpen = false;
+      });
+  }
 
-  /**
-   * Prüft, ob die aktuelle Route die Info-Seite ist.
-   * @returns true, wenn URL '/info' ist, sonst false.
-   */
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMenu(): void {
+    this.isMenuOpen = false;
+    this.isClicked = true; 
+  }
+
   isInfoPage(): boolean {
     return this.router.url === '/info';
   }
-
-  isMenuOpen = false;
-  toggleMenu(): void {
-    this.isMenuOpen = !this.isMenuOpen;
-    console.log("funktioniert");
-  }
-  closeMenu(): void {
-    this.isMenuOpen = false;
-  }
-
- 
-
 }

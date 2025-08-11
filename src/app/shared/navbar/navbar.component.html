@@ -10,7 +10,7 @@
         </div>
       </a>
 
-      <a routerLink="task" routerLinkActive="active">
+      <a routerLink="/task" routerLinkActive="active">
         <div>
           <img src="/img/Icons.svg" alt="Add Task" />
           <p>Add Task</p>
@@ -32,8 +32,8 @@
     </nav>
 
     <div id="privacy">
-      <a routerLink="/privacy-policy" routerLinkActive="active">Privacy Policy</a>
-      <a routerLink="/legal-notice" routerLinkActive="active">Legal notice</a>
+      <a routerLink="/privacy-policy" routerLinkActive="active" (click)="closeMenu()">Privacy Policy</a>
+      <a routerLink="/legal-notice" routerLinkActive="active" (click)="closeMenu()">Legal notice</a>
     </div>
   </div>
 </section>
