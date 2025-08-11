@@ -493,7 +493,7 @@ img {
     margin-top: 30px;
   }
 
- .save-button svg {
+  .save-button svg {
     width: 180px;
     height: 45px;
   }
@@ -502,6 +502,7 @@ img {
 @media (max-width: 768px) {
   p {
     font-size: 52px;
+    margin-left: 5px;
   }
 
   .error-text {
@@ -554,12 +555,11 @@ img {
     background-color: #29abe2;
   }
 
-  .avatar-placeholder img,
-  .avatar {
-    width: 100%;
+  .avatar-placeholder img {
     height: 140px;
     position: absolute;
-    left: -4.5%;
+    margin-left: 28px;
+    left: -45.5%;
     transform: translateX(-100%);
     transform: translateY(-170%);
   }
@@ -572,7 +572,6 @@ img {
     justify-content: center;
     align-items: flex-start;
     margin-top: 0px;
-    margin-left: 9px;
   }
 
   .right-site-bottom {
@@ -599,6 +598,20 @@ img {
     transform: translateY(-200%);
     width: 120px;
     height: 120px;
+  }
+
+  .input-name,
+  .input-email,
+  .input-phone {
+    width: 93%;
+  }
+
+  .button-left {
+    display: none;
+  }
+
+  .save-button {
+    margin-right: 32px;
   }
 }
 
