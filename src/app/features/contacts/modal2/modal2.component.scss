@@ -3,6 +3,12 @@ p {
   font-size: 51px;
 }
 
+.slogan {
+  font-weight: 400;
+  font-size: 23px;
+  margin-top: 20px;
+}
+
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -67,7 +73,7 @@ img {
 .img-wrapper {
   width: 100%;
   height: 100px;
-  margin-left: 65px;
+  margin-left: 70px;
   margin-bottom: 28px;
   display: flex;
   justify-content: flex-start;
@@ -128,6 +134,7 @@ img {
   margin-right: 20px;
   margin-top: 30px;
 }
+
 .input {
   height: 40px;
   width: 95%;
@@ -255,11 +262,14 @@ img {
   margin-top: 140px;
 }
 
-
 @media (max-width: 1180px) {
   p {
     font-weight: 700;
     font-size: 46px;
+  }
+
+  .slogan {
+    font-size: 21px;
   }
 
   .modal-content {
@@ -299,6 +309,11 @@ img {
   p {
     font-weight: 700;
     font-size: 43px;
+  }
+
+  .slogan {
+    font-size: 20px;
+    margin-left: 4px;
   }
 
   .modal-content {
@@ -349,14 +364,18 @@ img {
   }
 
   .avatar-placeholder img {
-    margin-left: 28px;
+    margin-left: 8px;
   }
 }
 
 @media (max-width: 950px) {
   p {
     font-weight: 700;
-    font-size: 35px;
+    font-size: 28px;
+  }
+
+  .slogan {
+    display: none;
   }
 
   .modal-content {
@@ -381,12 +400,12 @@ img {
   .img-wrapper {
     width: 100%;
     height: 100px;
-    margin-left: 26px;
-    margin-bottom: 28px;
+    margin-left: 8px;
+    margin-bottom: 18px;
   }
 
   .line {
-    margin-left: 6px;
+    margin-left: 3px;
   }
 
   .line-wrapper {
@@ -412,7 +431,7 @@ img {
   }
 
   .avatar-placeholder img {
-    margin-left: 28px;
+    margin-left: 6px;
   }
 }
 
@@ -451,27 +470,32 @@ img {
     margin-left: 2px;
   }
 
-  .line-wrapper {
-    width: 100%;
-    height: 6px;
-  }
-
-  .input-wrapper {
-    width: 100%;
-  }
-
-  .left-site {
-    width: 300px;
-  }
-
   .right-site {
     width: 100%;
+    margin-left: 15px;
   }
 
   .avatar-placeholder img {
-    width: 123px;
-    height: 130px;
-    margin-left: 28px;
+    margin-left: 8px;
+  }
+
+  .input-name,
+  .input-email,
+  .input-phone {
+    width: 300px;
+  }
+
+  .button-left,
+  .button-right {
+    height: 46px;
+    width: auto;
+    margin-right: 20px;
+    margin-top: 30px;
+  }
+
+ .save-button svg {
+    width: 180px;
+    height: 45px;
   }
 }
 
@@ -481,9 +505,8 @@ img {
   }
 
   .error-text {
-  margin-left: 5px;
-}
-
+    margin-left: 5px;
+  }
 
   .wrapper {
     display: flex;
@@ -715,7 +738,7 @@ img {
     transform: translateX(-100%);
     transform: translateY(-185%);
   }
-  
+
   .avatar {
     left: 35%;
     transform: translateX(-50%);
