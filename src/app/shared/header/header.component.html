@@ -9,12 +9,13 @@
 
         <div class="user-icon">
           <img src="/img/Group 5.svg" alt="Group_5" class="user_logo" *ngIf="!isClicked" (click)="toggleMenu()">
-        </div>
 
-        <div class="hamburger-menu" *ngIf="isMenuOpen">
-          <a routerLink="/legal-notice" (click)="closeMenu()">Legal Notice </a>
-          <a routerLink="/privacy-policy" (click)="closeMenu()">Privacy Policy</a>
-          <a routerLink="/log-out">Log out</a>
+
+          <div class="hamburger-menu" *ngIf="isMenuOpen">
+            <a routerLink="/legal-notice" (click)="closeMenu()">Legal Notice </a>
+            <a routerLink="/privacy-policy" (click)="closeMenu()">Privacy Policy</a>
+            <a routerLink="/log-out">Log out</a>
+          </div>
         </div>
       </div>
     </div>
