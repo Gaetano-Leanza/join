@@ -154,7 +154,7 @@ app-contact-list {
   .side-panel.active {
     transform: translateY(0);
   }
-  
+
   .text-wrapper {
     display: none;
   }
@@ -166,18 +166,18 @@ app-contact-list {
   }
 
   .detail-header {
-      align-items: center;
+    align-items: center;
   }
 
   .detail-slide .avatar {
-      width: 80px;
-      height: 80px;
-      font-size: 28px;
-      margin-right: 1rem;
+    width: 80px;
+    height: 80px;
+    font-size: 28px;
+    margin-right: 1rem;
   }
 
   .name-and-actions h2 {
-      font-size: 1.5rem;
+    font-size: 1.5rem;
   }
 
   .contact-layout {

@@ -24,7 +24,8 @@
   font-family: "Inter", serif;
   font-size: 20px;
   color: #000000;
-  margin-left: 70px;
+  margin-left: 40px;
+  display: flex;
   justify-content: flex-start;
   margin-right: auto;
 }
@@ -92,7 +93,7 @@
 
 @media (max-width: 1500px) {
   .headline {
-    margin-left: 0;
+    margin-left: 40px;
   }
 
 }
