@@ -4,13 +4,8 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { Contact } from '../contact-model/contact.model';
 import { ContactListComponent } from '../contact-list/contact-list.component';
 import { ModalComponent } from '../modal/modal.component';
+import { ContactService } from '../contact-service/contact.service';
 
-/**
- * Layout-Komponente für die Anzeige und Auswahl von Kontakten.
- *
- * Enthält eine Liste der Kontakte und zeigt Detailinformationen im Modal an.
- * Unterstützt Animationen für das Ein- und Ausblenden von Elementen.
- */
 @Component({
   selector: 'app-contact-layout',
   standalone: true,
@@ -50,6 +45,8 @@ export class ContactLayoutComponent {
    */
   isModalVisible = false;
 
+  constructor(private contactService: ContactService) {}
+
   /**
    * Setzt den übergebenen Kontakt als aktuell ausgewählten Kontakt.
    *
@@ -61,9 +58,6 @@ export class ContactLayoutComponent {
 
   /**
    * Ermittelt die Initialen eines Namens.
-   *
-   * @param name - Vollständiger Name des Kontakts.
-   * @returns Die Großbuchstaben der Anfangsbuchstaben aller Namensteile.
    */
   getInitials(name: string): string {
     const names = name.split(' ');
@@ -75,11 +69,6 @@ export class ContactLayoutComponent {
 
   /**
    * Bestimmt die Avatar-Farbe basierend auf dem Namen.
-   *
-   * Die Farbe wird als Hex-Farbcode zurückgegeben.
-   *
-   * @param name - Vollständiger Name des Kontakts.
-   * @returns Ein Hex-Farbcode für den Avatar-Hintergrund.
    */
   getAvatarColor(name: string): string {
     const colors = [
@@ -100,16 +89,43 @@ export class ContactLayoutComponent {
   }
 
   /**
-   * Öffnet das Modal (setzt `isModalVisible` auf true).
+   * Öffnet das Modal.
    */
   openModal() {
     this.isModalVisible = true;
   }
 
   /**
-   * Schließt das Modal (setzt `isModalVisible` auf false).
+   * Schließt das Modal.
    */
   closeModal() {
     this.isModalVisible = false;
+  }
+  /**
+   * Löscht den aktuell ausgewählten Kontakt aus Firebase.
+   */
+  async onDeleteContact(): Promise<void> {
+    console.log('onDeleteContact ausgelöst');
+    console.trace();
+
+    if (!this.selectedContact?.id) return;
+
+    const confirmed = confirm(
+      `Möchtest du den Kontakt "${this.selectedContact.name}" wirklich löschen?`
+    );
+
+    if (!confirmed) return;
+
+    const success = await this.contactService.deleteContact(
+      this.selectedContact.id
+    );
+
+    if (success) {
+      alert('Kontakt erfolgreich gelöscht.');
+      this.selectedContact = null;
+      this.contactService.setSelectedContact(null);
+    } else {
+      alert('Fehler beim Löschen des Kontakts.');
+    }
   }
 }
