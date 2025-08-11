@@ -51,7 +51,6 @@ h3 {
   height: 100px;
   margin-top: 50px;
   margin-left: 100px;
-  flex-shrink: 0;
 }
 
 .separation {
@@ -63,7 +62,11 @@ h3 {
   margin-bottom: 10px;
 }
 
-.slogan {
+.separation2 {
+  display: none;
+}
+
+.slogan3 {
   margin-top: 10px;
   font-size: 27px;
 }
@@ -125,13 +128,93 @@ h3 {
   margin-bottom: 20px;
 }
 
+.email-text {
+  color: #007cee;
+}
+
 app-contact-list {
   overflow-y: auto;
   flex-grow: 1;
   min-width: 400px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1330px) {
+  .text-wrapper {
+    margin-left: 50px;
+  }
+}
+
+@media (max-width: 1280px) {
+  h2 {
+    font-size: 43px;
+  }
+
+  h3 {
+    font-size: 49px;
+  }
+
+  .slogan3 {
+    font-size: 25px;
+  }
+
+  .text-wrapper {
+    margin-left: 38px;
+  }
+}
+
+@media (max-width: 1210px) {
+  h2 {
+    font-size: 40px;
+  }
+
+  .slogan3 {
+    font-size: 22px;
+  }
+
+  .text-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    flex-shrink: 0;
+    padding-right: 70px;
+  }
+
+  .separation {
+    display: none;
+  }
+
+  .separation2 {
+    display: flex;
+    background-color: #29abe2;
+    color: #29abe2;
+    width: 120px;
+    font-size: 5px;
+    margin-top: 5px;
+  }
+}
+
+@media (max-width: 1110px) {
+  .side-panel {
+    margin-left: 0px;
+  }
+
+  .avatar {
+    margin-right: 0px;
+  }
+
+  .detail-header {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 950px) {
+  .side-panel {
+    display: none;
+  }
+
   .side-panel {
     position: fixed;
     bottom: 0;
@@ -182,12 +265,5 @@ app-contact-list {
 
   .contact-layout {
     flex-direction: column;
-  }
-
-  app-contact-list {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 }
