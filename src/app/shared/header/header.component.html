@@ -25,10 +25,14 @@
 
 
 <div class="mobile-header">
-  <img class="mobile-logo" src="/img/mobile-logo.svg" alt="Join Logo" (click)="toggleMenu()">
+  <img class="mobile-logo" src="/img/mobile-logo.svg" alt="Join Logo">
   <div class="user-icon">
-    <img src="/img/Group 5.svg" alt="User Icon">
+    <img src="/img/Group 5.svg" alt="User Icon" (click)="toggleMenu()">
   </div>
 
-
+  <div class="hamburger-menu-mobile" *ngIf="isMenuOpen">
+    <a routerLink="/legal-notice" (click)="closeMenu()">Legal Notice </a>
+    <a routerLink="/privacy-policy" (click)="closeMenu()">Privacy Policy</a>
+    <a routerLink="/log-out">Log out</a>
+  </div>
 </div>
