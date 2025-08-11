@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 /**
  * Komponente zur Anzeige der Datenschutzerklärung.
@@ -7,7 +8,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-privacy-policy',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,RouterLink ],
   templateUrl: './privacy-policy.component.html',
   styleUrls: ['./privacy-policy.component.scss', './privacy-policy.responsive.scss']
 })

@@ -48,3 +48,23 @@
     padding-left: 20px;
   }
 }
+
+.back-arrow {
+  visibility: hidden;
+  position: sticky;
+  left: 100%;
+  top: 32px;
+  z-index: 10;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+
+  &:hover {
+    transition: transform 0.3s ease;
+    transform: scale(1.1);
+  }
+}
