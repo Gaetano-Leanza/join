@@ -11,30 +11,30 @@ h3 {
   font-weight: bold;
 }
 
-.add-kontakt-button {
+.add-contact-button {
   border: none;
   background: transparent;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
-.add-kontakt-button:hover svg rect {
+.add-contact-button:hover svg rect {
   fill: #007cee !important;
   stroke: #007cee !important;
 }
 
-.add-kontakt-button {
+.add-contact-button {
   border: none;
   background: transparent;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
-.add-kontakt-button svg {
+.add-contact-button svg {
   transition: all 0.3s ease;
 }
 
-.add-kontakt-button:hover svg rect {
+.add-contact-button:hover svg rect {
   fill: #1976d2 !important;
   stroke: #1976d2 !important;
 }
@@ -151,4 +151,10 @@ h3 {
   align-items: center;
   height: 100px;
   margin-top: 50px;
+}
+
+@media (max-width: 768px) {
+  .content-wrapper {
+    width: 100%;
+  }
 }

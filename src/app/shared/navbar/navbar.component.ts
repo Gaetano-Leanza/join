@@ -12,4 +12,14 @@ import { RouterModule } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']  // Korrektur: styleUrl → styleUrls
 })
-export class NavbarComponent {}
+export class NavbarComponent {
+
+ isMenuOpen = false; 
+isClicked=true;
+  closeMenu(): void {
+    this.isMenuOpen = false;
+    this.isClicked = true; 
+  }
+ 
+
+}
