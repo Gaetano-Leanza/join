@@ -111,7 +111,11 @@
       <br />
       <br />
       <div class="email-phone">Email:</div>
-      <p class="email-text">{{ selectedContact.email }}</p>
+      <p class="email-text">
+        <a [href]="'mailto:' + selectedContact.email">
+          {{ selectedContact.email }}
+        </a>
+      </p>
       <br /><br />
 
       <div class="email-phone">Telefon:</div>
