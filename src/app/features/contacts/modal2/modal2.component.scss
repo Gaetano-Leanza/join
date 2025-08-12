@@ -392,21 +392,20 @@ img {
 @media (max-width: 950px) {
   p {
     font-weight: 700;
-    font-size: 28px;
+    font-size: 32px;
   }
 
   .modal-content {
-    background: white;
     width: 800px;
     height: 55vh;
   }
 
   .left-panel {
-    width: 300px;
+    width: 350px;
   }
 
   .right-panel {
-    width: 600px;
+    width: 550px;
   }
 
   img {
@@ -448,17 +447,32 @@ img {
   }
 
   .avatar-placeholder img {
-    margin-left: 6px;
+    margin-left: 0px;
+    margin-right: 16px;
+  }
+
+  .input-name,
+  .input-email,
+  .input-phone {
+    width: 90%;
+  }
+
+  .wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 130px;
   }
 }
 
 @media (max-width: 850px) {
   p {
-    font-size: 32px;
+    font-size: 30px;
   }
 
   .modal-content {
-    background: white;
     width: 720px;
     height: 52vh;
   }
@@ -493,7 +507,8 @@ img {
   }
 
   .avatar-placeholder img {
-    margin-left: 8px;
+    margin-left: 0px;
+    margin-right: 6px;
   }
 
   .input-name,
@@ -520,6 +535,12 @@ img {
   p {
     font-size: 52px;
     margin-left: 5px;
+  }
+
+  .input-name,
+  .input-email,
+  .input-phone {
+    width: 93%;
   }
 
   .error-text {
@@ -615,12 +636,6 @@ img {
     transform: translateY(-200%);
     width: 120px;
     height: 120px;
-  }
-
-  .input-name,
-  .input-email,
-  .input-phone {
-    width: 93%;
   }
 
   .button-left {
