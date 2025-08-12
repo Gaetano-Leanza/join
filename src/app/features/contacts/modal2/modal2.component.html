@@ -1,11 +1,10 @@
 <form #form="ngForm" (ngSubmit)="saveContact(form)">
   <div class="modal-backdrop" *ngIf="visible" (click)="handleBackdropClick()">
-    <div
-      class="modal-content"
-      [@slideInModal]
-      (click)="$event.stopPropagation()"
-    >
-      <div class="content-container">
+ <div class="modal-content" [@slideInModal] (click)="$event.stopPropagation()">
+  <button class="close-button" (click)="handleBackdropClick()">✕</button>
+  <div class="content-container">
+    ...
+
         <div class="left-panel">
           <div class="wrapper">
             <div class="img-wrapper">
@@ -105,7 +104,7 @@
                       class="button-left"
                       src="/img/cancel-button.svg"
                       alt="cancel-button"
-                      (click)="resetForm()"
+                      (click)="handleBackdropClick()"
                     />
                   </div>
                   <div>

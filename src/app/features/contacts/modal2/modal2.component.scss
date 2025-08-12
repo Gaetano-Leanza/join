@@ -9,6 +9,25 @@ p {
   margin-top: 20px;
 }
 
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  color: #555;
+}
+
+.close-button:hover {
+  color: #000;
+}
+
+.modal-content {
+  position: relative;
+}
+
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -40,7 +59,7 @@ p {
 
 .left-panel {
   width: 400px;
-  background-color: #091931;
+  background-color: #2a3647;
   padding: 1rem;
   color: white;
   display: flex;
@@ -85,6 +104,7 @@ img {
   margin-top: 16px;
   margin-left: 34px;
   background-color: #29abe2;
+  border-radius: 10px;
 }
 
 .line-wrapper {

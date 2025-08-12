@@ -4,12 +4,15 @@
   @if (visible) {
     <!-- Modal Backdrop -->
     <div class="modal-backdrop" (click)="handleBackdropClick()">
+
       <!-- Modal Content, Klicks stoppen, damit Backdrop-Klick nicht ausgelöst wird -->
       <div
         class="modal-content"
         [@slideInModal]
         (click)="$event.stopPropagation()"
       >
+              <button class="close-button" (click)="handleBackdropClick()">✕</button>
+
         <div class="content-container">
           <div class="left-panel">
             <div class="wrapper">
