@@ -98,12 +98,28 @@ export class ModalComponent implements OnChanges, OnInit {
     console.log(`Eingabe geändert - ${field}:`, value);
   }
 
+  /** Wird aufgerufen, wenn außerhalb des Modals geklickt wird (Backdrop) */
   handleBackdropClick() {
-    this.resetForm();
+    // Nur Modal schließen ohne weitere Aktionen
     this.closed.emit();
   }
 
-  resetForm() {
+  /** Löscht den aktuellen Kontakt nach Bestätigung */
+  async resetForm(): Promise<void> {
+    if (this.currentContactId) {
+      const confirmed = confirm('Möchtest du diesen Kontakt wirklich löschen?');
+      if (!confirmed) return;
+
+      const success = await this.contactService.deleteContact(this.currentContactId);
+      if (success) {
+        alert('Kontakt erfolgreich gelöscht.');
+        this.contactService.setSelectedContact(null);
+      } else {
+        alert('Fehler beim Löschen des Kontakts.');
+      }
+    }
+
+    // Form-Felder leeren
     this.name = '';
     this.email = '';
     this.phone = '';
@@ -136,7 +152,7 @@ export class ModalComponent implements OnChanges, OnInit {
 
       alert('Kontakt erfolgreich gespeichert!');
       this.resetForm();
-      this.handleBackdropClick();
+      this.closed.emit();
       this.contactSaved.emit();
     } catch (error) {
       console.error('Fehler beim Speichern:', error);

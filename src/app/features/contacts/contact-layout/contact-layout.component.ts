@@ -1,4 +1,4 @@
-import { Component,HostListener } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Contact } from '../contact-model/contact.model';
@@ -10,7 +10,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-contact-layout',
   standalone: true,
-  imports: [CommonModule, ContactListComponent, ModalComponent,RouterLink],
+  imports: [CommonModule, ContactListComponent, ModalComponent, RouterLink],
   templateUrl: './contact-layout.component.html',
   styleUrls: [
     './contact-layout.component.scss',
@@ -20,34 +20,23 @@ import { RouterLink } from '@angular/router';
     trigger('slideIn', [
       transition(':enter', [
         style({ transform: 'translateX(100%)', opacity: 0 }),
-        animate(
-          '300ms ease-out',
-          style({ transform: 'translateX(0)', opacity: 1 })
-        ),
+        animate('300ms ease-out', style({ transform: 'translateX(0)', opacity: 1 })),
       ]),
       transition(':leave', [
-        animate(
-          '300ms ease-in',
-          style({ transform: 'translateX(100%)', opacity: 0 })
-        ),
+        animate('300ms ease-in', style({ transform: 'translateX(100%)', opacity: 0 })),
       ]),
     ]),
   ],
 })
 export class ContactLayoutComponent {
-  /**
-   * Der aktuell ausgewählte Kontakt.
-   * Wird `null`, wenn kein Kontakt ausgewählt ist.
-   */
   selectedContact: Contact | null = null;
-
-  /**
-   * Flag, ob das Modal angezeigt wird oder nicht.
-   */
   isModalVisible = false;
   isSmallScreen = false;
   sidePanelActive = false;
+  isMenuOpen = false;
+
   constructor(private contactService: ContactService) {}
+
   ngOnInit(): void {
     this.checkScreenSize();
   }
@@ -60,105 +49,75 @@ export class ContactLayoutComponent {
   private checkScreenSize() {
     this.isSmallScreen = window.innerWidth <= 950;
     if (!this.isSmallScreen) {
-      this.sidePanelActive = false; // сбрасываем при большом экране
+      this.sidePanelActive = false;
     }
   }
-  /**
-   * Setzt den übergebenen Kontakt als aktuell ausgewählten Kontakt.
-   *
-   * @param contact - Der Kontakt, der ausgewählt wird.
-   */
+
   selectContact(contact: Contact): void {
     this.selectedContact = contact;
-     if (this.isSmallScreen) {
-    this.sidePanelActive = true;
+    if (this.isSmallScreen) {
+      this.sidePanelActive = true;
+    }
   }
-  }
-   closeSidePanel() {
+
+  closeSidePanel() {
     this.sidePanelActive = false;
   }
 
-  isMenuOpen = false;
-
-toggleMenu() {
-  this.isMenuOpen = !this.isMenuOpen;
-}
-
-closeMenu() {
-  this.isMenuOpen = false;
-}
-  /**
-   * Ermittelt die Initialen eines Namens.
-   */
-  getInitials(name: string): string {
-    const names = name.split(' ');
-    return names
-      .map((n) => n[0])
-      .join('')
-      .toUpperCase();
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 
-  /**
-   * Bestimmt die Avatar-Farbe basierend auf dem Namen.
-   */
+  closeMenu() {
+    this.isMenuOpen = false;
+  }
+
+  getInitials(name: string): string {
+    return name.split(' ').map((n) => n[0]).join('').toUpperCase();
+  }
+
   getAvatarColor(name: string): string {
     const colors = [
-      '#F44336',
-      '#E91E63',
-      '#9C27B0',
-      '#3F51B5',
-      '#03A9F4',
-      '#009688',
-      '#4CAF50',
-      '#FFC107',
-      '#FF9800',
-      '#795548',
+      '#F44336', '#E91E63', '#9C27B0', '#3F51B5',
+      '#03A9F4', '#009688', '#4CAF50', '#FFC107',
+      '#FF9800', '#795548',
     ];
-    if (!name) return colors[0]; // Fallback für leeren String
+    if (!name) return colors[0];
     const firstCharCode = name.trim().charCodeAt(0);
     return colors[firstCharCode % colors.length];
   }
 
-  /**
-   * Öffnet das Modal.
-   */
   openModal() {
     this.isModalVisible = true;
   }
 
   /**
-   * Schließt das Modal.
+   * 🔹 Beim Schließen des Modals immer auch den Side-Panel schließen
    */
   closeModal() {
     this.isModalVisible = false;
+    this.selectedContact = null;   // Kontakt zurücksetzen
+    this.sidePanelActive = false;  // Side-Panel schließen
   }
-  /**
-   * Löscht den aktuell ausgewählten Kontakt aus Firebase.
-   */
-  async onDeleteContact(): Promise<void> {
-    console.log('onDeleteContact ausgelöst');
-    console.trace();
 
+  async onDeleteContact(): Promise<void> {
     if (!this.selectedContact?.id) return;
 
     const confirmed = confirm(
       `Möchtest du den Kontakt "${this.selectedContact.name}" wirklich löschen?`
     );
-
     if (!confirmed) return;
 
-    const success = await this.contactService.deleteContact(
-      this.selectedContact.id
-    );
+    const success = await this.contactService.deleteContact(this.selectedContact.id);
 
     if (success) {
       alert('Kontakt erfolgreich gelöscht.');
       this.selectedContact = null;
+      this.sidePanelActive = false;
       this.contactService.setSelectedContact(null);
+      this.isModalVisible = false;
     } else {
       alert('Fehler beim Löschen des Kontakts.');
     }
-
-    
   }
 }

@@ -1,13 +1,17 @@
 <div class="contact-layout">
-  <app-contact-list (contactSelected)="selectContact($event)"></app-contact-list>
+  <app-contact-list
+    (contactSelected)="selectContact($event)"
+  ></app-contact-list>
 
-  <div class="side-panel" [class.active]="sidePanelActive || !isSmallScreen" *ngIf="selectedContact">
-
-
+  <div
+    class="side-panel"
+    [class.active]="sidePanelActive || !isSmallScreen"
+    *ngIf="selectedContact"
+  >
     <div class="text-wrapper">
       <h3>Contacts</h3>
       <a class="back-arrow" routerLink="/contact-list">
-        <img src="/img/arrow-left.svg" class="arrow" alt="Back to contacts">
+        <img src="/img/arrow-left.svg" class="arrow" alt="Back to contacts" />
       </a>
       <div class="separation2">-</div>
 
@@ -18,9 +22,12 @@
 
     <div class="detail-slide" *ngIf="selectedContact" [@slideIn]>
       <div class="detail-header">
-        <div class="avatar" [ngStyle]="{
+        <div
+          class="avatar"
+          [ngStyle]="{
             'background-color': getAvatarColor(selectedContact.name)
-          }">
+          }"
+        >
           {{ getInitials(selectedContact.name) }}
         </div>
 
@@ -51,29 +58,28 @@
       <p>{{ selectedContact.phone }}</p>
 
       <a href="javascript:void(0)" (click)="toggleMenu()">
-        <img id="img-burger" src="/img/Property 1=Default (2).svg" alt=""> </a>
+        <img id="img-burger" src="/img/Property 1=Default (2).svg" alt="" />
+      </a>
 
       <div class="burger-menu" *ngIf="isMenuOpen">
         <a (click)="openModal()">
           <img src="./img/edit.svg" alt="Edit Icon" />
-          <span>Edit</span> </a>
+          <span>Edit</span>
+        </a>
         <a (click)="onDeleteContact()">
           <img src="./img/delete.svg" alt="Delete Icon" />
           <span>Delete</span>
         </a>
       </div>
-
-
-
-
-
-
-
     </div>
   </div>
 </div>
 
-<app-modal [visible]="isModalVisible" *ngIf="isModalVisible" (closed)="closeModal()">
+<app-modal
+  [visible]="isModalVisible"
+  *ngIf="isModalVisible"
+  (closed)="closeModal()"
+>
   <h2>Edit Contact</h2>
   <p>Hier kommt dein Formular oder dein Content rein.</p>
   <button (click)="closeModal()">Schließen</button>
