@@ -51,6 +51,7 @@ h3 {
 
 .contact-item.active {
   background-color: #2a3647;
+  border-radius: 10px;
   color: white;
 }
 
@@ -153,7 +154,6 @@ h3 {
   display: none;
 }
 
-
 @media (max-width: 950px) {
   .contact-wrapper {
     width: 100%;
@@ -165,7 +165,7 @@ h3 {
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-}
+  }
 }
 
 @media (max-width: 768px) {
@@ -212,6 +212,4 @@ h3 {
     fill: #007cee !important;
     stroke: #007cee !important;
   }
-
-
 }
