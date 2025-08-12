@@ -5,7 +5,6 @@ import { Contact } from '../contact-model/contact.model';
 import { ContactListComponent } from '../contact-list/contact-list.component';
 import { ModalComponent } from '../modal/modal.component';
 import { ContactService } from '../contact-service/contact.service';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-contact-layout',

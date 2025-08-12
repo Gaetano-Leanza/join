@@ -17,6 +17,7 @@ import { ContactService } from '../contact-service/contact.service';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc, doc, updateDoc } from 'firebase/firestore';
 
+/** Firebase configuration object */
 const firebaseConfig = {
   apiKey: 'AIzaSyD1fse1ML6Ie-iFClg_2Ukr-G1FEeQUHac',
   authDomain: 'join-e1f64.firebaseapp.com',
@@ -27,9 +28,16 @@ const firebaseConfig = {
   measurementId: 'G-Y12RXDEX3N',
 };
 
+/** Firebase app instance */
 const app = initializeApp(firebaseConfig);
+
+/** Firestore database instance */
 const db = getFirestore(app);
 
+/**
+ * Modal component for creating and editing contacts
+ * Provides form functionality with validation and Firebase integration
+ */
 @Component({
   standalone: true,
   selector: 'app-modal',
@@ -39,28 +47,55 @@ const db = getFirestore(app);
   imports: [CommonModule, FormsModule],
 })
 export class ModalComponent implements OnChanges, OnInit {
+  /** Injected contact service for data operations */
   private contactService = inject(ContactService);
   
+  /** Contact to edit, null for new contact creation */
   @Input() contactToEdit: Contact | null = null;
+  
+  /** Modal visibility state */
   @Input() visible = false;
+  
+  /** Event emitted when modal is closed */
   @Output() closed = new EventEmitter<void>();
+  
+  /** Event emitted when contact is saved successfully */
   @Output() contactSaved = new EventEmitter<void>();
 
+  /** Contact name input field value */
   name: string = '';
+  
+  /** Contact email input field value */
   email: string = '';
+  
+  /** Contact phone input field value */
   phone: string = '';
+  
+  /** Flag indicating if component is in edit mode */
   isEditing = false;
+  
+  /** ID of contact currently being edited */
   currentContactId: string | null = null;
 
+  /** Array of predefined avatar background colors */
   avatarColors: string[] = [
     '#F44336', '#E91E63', '#9C27B0', '#3F51B5', '#03A9F4',
     '#009688', '#4CAF50', '#FFC107', '#FF9800', '#795548',
   ];
 
+  /**
+   * Component initialization
+   * Loads selected contact if available
+   */
   ngOnInit(): void {
     this.loadSelectedContact();
   }
 
+  /**
+   * Handles input property changes
+   * Updates component state when contactToEdit or visible changes
+   * @param {SimpleChanges} changes - Object containing changed properties
+   */
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['contactToEdit'] && this.contactToEdit) {
       this.loadContactData(this.contactToEdit);
@@ -70,6 +105,10 @@ export class ModalComponent implements OnChanges, OnInit {
     }
   }
 
+  /**
+   * Loads the currently selected contact from service
+   * Sets editing mode if contact is found
+   */
   private loadSelectedContact(): void {
     this.currentContactId = this.contactService.getSelectedContactId();
     if (this.currentContactId) {
@@ -81,12 +120,16 @@ export class ModalComponent implements OnChanges, OnInit {
           }
         },
         error: (err) => {
-          console.error('Error loading contact:', err);
+          // Error handled silently - contact loading failed
         }
       });
     }
   }
 
+  /**
+   * Loads contact data into form fields
+   * @param {Contact} contact - Contact object to load
+   */
   private loadContactData(contact: Contact): void {
     this.name = contact.name || '';
     this.email = contact.email || '';
@@ -94,17 +137,28 @@ export class ModalComponent implements OnChanges, OnInit {
     this.currentContactId = contact.id;
   }
 
+  /**
+   * Handles input field changes (for debugging/logging purposes)
+   * @param {string} field - Name of the changed field
+   * @param {string} value - New value of the field
+   */
   onInputChange(field: string, value: string) {
-    console.log(`Eingabe geändert - ${field}:`, value);
+    // Input change handling - can be used for validation or logging
   }
 
-  /** Wird aufgerufen, wenn außerhalb des Modals geklickt wird (Backdrop) */
+  /**
+   * Handles backdrop click events
+   * Closes modal when user clicks outside of it
+   */
   handleBackdropClick() {
-    // Nur Modal schließen ohne weitere Aktionen
     this.closed.emit();
   }
 
-  /** Löscht den aktuellen Kontakt nach Bestätigung */
+  /**
+   * Resets form and optionally deletes current contact
+   * Shows confirmation dialog before deletion
+   * @returns {Promise<void>} Promise that resolves when operation completes
+   */
   async resetForm(): Promise<void> {
     if (this.currentContactId) {
       const confirmed = confirm('Möchtest du diesen Kontakt wirklich löschen?');
@@ -119,7 +173,7 @@ export class ModalComponent implements OnChanges, OnInit {
       }
     }
 
-    // Form-Felder leeren
+    // Clear form fields
     this.name = '';
     this.email = '';
     this.phone = '';
@@ -127,6 +181,12 @@ export class ModalComponent implements OnChanges, OnInit {
     this.currentContactId = null;
   }
 
+  /**
+   * Saves contact data to Firebase
+   * Updates existing contact or creates new one based on editing state
+   * @param {NgForm} form - Angular form reference for validation
+   * @returns {Promise<void>} Promise that resolves when save operation completes
+   */
   async saveContact(form: NgForm) {
     if (form.invalid) {
       Object.values(form.controls).forEach(control => control.markAsTouched());
@@ -155,15 +215,25 @@ export class ModalComponent implements OnChanges, OnInit {
       this.closed.emit();
       this.contactSaved.emit();
     } catch (error) {
-      console.error('Fehler beim Speichern:', error);
       alert('Fehler beim Speichern des Kontakts.');
     }
   }
 
+  /**
+   * Validates contact name format
+   * Allows only letters, spaces, and hyphens
+   * @param {string} name - Name string to validate
+   * @returns {boolean} True if name format is valid
+   */
   isValidName(name: string): boolean {
     return /^[A-Za-z\s\-]+$/.test(name.trim());
   }
 
+  /**
+   * Generates initials from contact name
+   * @param {string} name - Full name string
+   * @returns {string} Uppercase initials (maximum 2 characters)
+   */
   getInitials(name: string): string {
     return name
       .split(' ')
@@ -172,6 +242,12 @@ export class ModalComponent implements OnChanges, OnInit {
       .join('');
   }
 
+  /**
+   * Gets avatar background color based on contact name
+   * Uses first character of name to determine color from predefined palette
+   * @param {string} name - Contact name
+   * @returns {string} Hex color code for avatar background
+   */
   getAvatarColor(name: string): string {
     if (!name || name.trim().length === 0) return this.avatarColors[0];
     const firstCharCode = name.trim().charCodeAt(0);

@@ -140,21 +140,21 @@
   }
 
   .back-arrow {
-    position: fixed; 
-    top: 50px; 
+    position: fixed;
+    top: 50px;
     right: 220px;
     height: 40px;
     width: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000; 
+    z-index: 1000;
   }
 
   .burger-menu {
     position: fixed;
-    bottom: 110px;
-    right: 20px;
+    bottom: 100px;
+    right: 210px;
     width: 120px;
     height: 80px;
     background-color: white;
@@ -170,8 +170,8 @@
 
   #img-burger {
     position: fixed;
-    bottom: 130px;
-    right: 20px;
+    bottom: 100px;
+    right: 210px;
     height: 40px;
     width: 40px;
     display: flex;
@@ -236,6 +236,35 @@
     .back-arrow {
       position: fixed;
       top: 100px;
+      right: 20px;
+      height: 40px;
+      width: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .burger-menu {
+      position: fixed;
+      bottom: 110px;
+      right: 20px;
+      width: 120px;
+      height: 80px;
+      background-color: white;
+      box-shadow: 0 2px 3px gray;
+      border-radius: 0 0 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      justify-content: center;
+      align-items: center;
+      z-index: 1001;
+    }
+
+    #img-burger {
+      position: fixed;
+      bottom: 130px;
       right: 20px;
       height: 40px;
       width: 40px;
