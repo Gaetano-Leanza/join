@@ -42,7 +42,7 @@ p {
 }
 
 .modal-content {
-  background: white;
+  background-color: #2a3647;
   width: 1100px;
   height: 60vh;
   border-radius: 24px;
@@ -70,6 +70,7 @@ p {
 .right-panel {
   width: 700px;
   padding: 1rem;
+  background-color: white;
   color: white;
   display: flex;
   flex-direction: column;

@@ -9,12 +9,10 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { slideInModal } from './modal2.animations';
-
-// 🔥 Firebase nur für Speichern nötig
+import { deleteDoc, doc } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 
-// 🔧 Firebase-Konfiguration
 const firebaseConfig = {
   apiKey: 'AIzaSyD1fse1ML6Ie-iFClg_2Ukr-G1FEeQUHac',
   authDomain: 'join-e1f64.firebaseapp.com',
@@ -197,4 +195,7 @@ export class Modal2Component implements OnChanges {
       this.avatarColor = null;
     }
   }
+
+
+  
 }

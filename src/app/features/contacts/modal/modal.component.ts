@@ -6,7 +6,7 @@ import {
   OnChanges,
   SimpleChanges,
   OnInit,
-  inject
+  inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -15,7 +15,13 @@ import { Contact } from '../contact-model/contact.model';
 import { ContactService } from '../contact-service/contact.service';
 
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, addDoc, doc, updateDoc } from 'firebase/firestore';
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  doc,
+  updateDoc,
+} from 'firebase/firestore';
 
 /** Firebase configuration object */
 const firebaseConfig = {
@@ -49,38 +55,46 @@ const db = getFirestore(app);
 export class ModalComponent implements OnChanges, OnInit {
   /** Injected contact service for data operations */
   private contactService = inject(ContactService);
-  
+
   /** Contact to edit, null for new contact creation */
   @Input() contactToEdit: Contact | null = null;
-  
+
   /** Modal visibility state */
   @Input() visible = false;
-  
+
   /** Event emitted when modal is closed */
   @Output() closed = new EventEmitter<void>();
-  
+
   /** Event emitted when contact is saved successfully */
   @Output() contactSaved = new EventEmitter<void>();
 
   /** Contact name input field value */
   name: string = '';
-  
+
   /** Contact email input field value */
   email: string = '';
-  
+
   /** Contact phone input field value */
   phone: string = '';
-  
+
   /** Flag indicating if component is in edit mode */
   isEditing = false;
-  
+
   /** ID of contact currently being edited */
   currentContactId: string | null = null;
 
   /** Array of predefined avatar background colors */
   avatarColors: string[] = [
-    '#F44336', '#E91E63', '#9C27B0', '#3F51B5', '#03A9F4',
-    '#009688', '#4CAF50', '#FFC107', '#FF9800', '#795548',
+    '#F44336',
+    '#E91E63',
+    '#9C27B0',
+    '#3F51B5',
+    '#03A9F4',
+    '#009688',
+    '#4CAF50',
+    '#FFC107',
+    '#FF9800',
+    '#795548',
   ];
 
   /**
@@ -121,7 +135,7 @@ export class ModalComponent implements OnChanges, OnInit {
         },
         error: (err) => {
           // Error handled silently - contact loading failed
-        }
+        },
       });
     }
   }
@@ -154,26 +168,26 @@ export class ModalComponent implements OnChanges, OnInit {
     this.closed.emit();
   }
 
-  /**
-   * Resets form and optionally deletes current contact
-   * Shows confirmation dialog before deletion
-   * @returns {Promise<void>} Promise that resolves when operation completes
-   */
   async resetForm(): Promise<void> {
     if (this.currentContactId) {
       const confirmed = confirm('Möchtest du diesen Kontakt wirklich löschen?');
       if (!confirmed) return;
 
-      const success = await this.contactService.deleteContact(this.currentContactId);
+      const success = await this.contactService.deleteContact(
+        this.currentContactId
+      );
       if (success) {
         alert('Kontakt erfolgreich gelöscht.');
         this.contactService.setSelectedContact(null);
+
+        // Modal schließen
+        this.handleBackdropClick();
       } else {
         alert('Fehler beim Löschen des Kontakts.');
       }
     }
 
-    // Clear form fields
+    // Formularfelder leeren
     this.name = '';
     this.email = '';
     this.phone = '';
@@ -189,7 +203,9 @@ export class ModalComponent implements OnChanges, OnInit {
    */
   async saveContact(form: NgForm) {
     if (form.invalid) {
-      Object.values(form.controls).forEach(control => control.markAsTouched());
+      Object.values(form.controls).forEach((control) =>
+        control.markAsTouched()
+      );
       return;
     }
 
@@ -198,15 +214,18 @@ export class ModalComponent implements OnChanges, OnInit {
         name: this.name.trim(),
         email: this.email.trim(),
         phone: this.phone.trim(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       };
 
       if (this.isEditing && this.currentContactId) {
-        await updateDoc(doc(db, 'contacts', this.currentContactId), contactData);
+        await updateDoc(
+          doc(db, 'contacts', this.currentContactId),
+          contactData
+        );
       } else {
         await addDoc(collection(db, 'contacts'), {
           ...contactData,
-          createdAt: new Date()
+          createdAt: new Date(),
         });
       }
 
