@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
+import { Component,HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Contact } from '../contact-model/contact.model';
 import { ContactListComponent } from '../contact-list/contact-list.component';
 import { ModalComponent } from '../modal/modal.component';
 import { ContactService } from '../contact-service/contact.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-contact-layout',
   standalone: true,
-  imports: [CommonModule, ContactListComponent, ModalComponent],
+  imports: [CommonModule, ContactListComponent, ModalComponent,RouterLink],
   templateUrl: './contact-layout.component.html',
   styleUrls: [
     './contact-layout.component.scss',
@@ -44,9 +45,24 @@ export class ContactLayoutComponent {
    * Flag, ob das Modal angezeigt wird oder nicht.
    */
   isModalVisible = false;
-
+  isSmallScreen = false;
+  sidePanelActive = false;
   constructor(private contactService: ContactService) {}
+  ngOnInit(): void {
+    this.checkScreenSize();
+  }
 
+  @HostListener('window:resize')
+  onResize() {
+    this.checkScreenSize();
+  }
+
+  private checkScreenSize() {
+    this.isSmallScreen = window.innerWidth <= 950;
+    if (!this.isSmallScreen) {
+      this.sidePanelActive = false; // сбрасываем при большом экране
+    }
+  }
   /**
    * Setzt den übergebenen Kontakt als aktuell ausgewählten Kontakt.
    *
@@ -54,8 +70,23 @@ export class ContactLayoutComponent {
    */
   selectContact(contact: Contact): void {
     this.selectedContact = contact;
+     if (this.isSmallScreen) {
+    this.sidePanelActive = true;
+  }
+  }
+   closeSidePanel() {
+    this.sidePanelActive = false;
   }
 
+  isMenuOpen = false;
+
+toggleMenu() {
+  this.isMenuOpen = !this.isMenuOpen;
+}
+
+closeMenu() {
+  this.isMenuOpen = false;
+}
   /**
    * Ermittelt die Initialen eines Namens.
    */
@@ -127,5 +158,7 @@ export class ContactLayoutComponent {
     } else {
       alert('Fehler beim Löschen des Kontakts.');
     }
+
+    
   }
 }

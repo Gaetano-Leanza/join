@@ -19,4 +19,7 @@ export const routes: Routes = [
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'legal-notice', component: LegalNoticeComponent },
   { path: 'info', component: InfoComponent },
+  { path: 'contact-list', component: ContactLayoutComponent },
+
+
 ];
