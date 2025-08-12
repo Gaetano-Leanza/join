@@ -5,6 +5,7 @@ import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.co
 import { LegalNoticeComponent } from './pages/legal-notice/legal-notice.component';
 import { InfoComponent } from './pages/info/info.component';
 
+
 /**
  * Anwendungsrouten für das Angular-Routing-Modul.
  *
@@ -19,7 +20,6 @@ export const routes: Routes = [
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'legal-notice', component: LegalNoticeComponent },
   { path: 'info', component: InfoComponent },
-  { path: 'contact-list', component: ContactLayoutComponent },
 
 
 ];
