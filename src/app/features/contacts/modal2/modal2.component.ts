@@ -28,12 +28,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-/**
- * Modal-Komponente zur Anzeige und Bearbeitung eines Kontakts.
- *
- * Unterstützt Animationen, Eingabevalidierung und speichert Daten in Firebase Firestore.
- * Benutzt `OnChanges`, um Eingabewerte zu synchronisieren und das Formular zurückzusetzen.
- */
 @Component({
   standalone: true,
   selector: 'app-modal2',
@@ -43,79 +37,88 @@ const db = getFirestore(app);
   imports: [CommonModule, FormsModule],
 })
 export class Modal2Component implements OnChanges {
-  /**
-   * Gibt an, ob das Modal sichtbar ist.
-   */
+  /** Sichtbarkeit des Modals */
   @Input() visible = false;
 
-  /**
-   * Kontakt, der zum Bearbeiten vom Parent übergeben wird.
-   */
+  /** Kontakt, der ggf. zum Bearbeiten gesetzt wird */
   @Input() contactToEdit: {
     name: string;
     email: string;
     phone: string;
   } | null = null;
 
-  /**
-   * Event wird ausgelöst, wenn das Modal geschlossen wird.
-   */
+  /** Event, das ausgelöst wird, wenn das Modal geschlossen wird */
   @Output() closed = new EventEmitter<void>();
 
-  /**
-   * Event wird ausgelöst, wenn ein Kontakt erfolgreich gespeichert wurde.
-   */
+  /** Event, das ausgelöst wird, wenn ein Kontakt gespeichert wurde */
   @Output() contactSaved = new EventEmitter<void>();
 
-  /** Eingabefeld: Name des Kontakts */
+  /** Eingabefelder */
   name: string = '';
-
-  /** Eingabefeld: Email des Kontakts */
   email: string = '';
-
-  /** Eingabefeld: Telefonnummer des Kontakts */
   phone: string = '';
 
+  /** Avatar-Hintergrundfarbe, wird einmalig gesetzt */
+  avatarColor: string | null = null;
+
+  /** Farbpalette für Avatare */
+  avatarColors: string[] = [
+    '#F44336',
+    '#E91E63',
+    '#9C27B0',
+    '#3F51B5',
+    '#03A9F4',
+    '#009688',
+    '#4CAF50',
+    '#FFC107',
+    '#FF9800',
+    '#795548',
+  ];
+
   /**
-   * Lifecycle-Hook, um auf Änderungen der Inputs zu reagieren.
-   * Synchronisiert Formularfelder mit dem übergebenen Kontakt.
-   * Setzt Formular zurück, wenn Modal geschlossen wird.
-   *
-   * @param changes - Objekt mit den beobachteten Änderungen.
+   * Lifecycle-Hook: reagiert auf Input-Änderungen
+   * @param changes Änderungen
    */
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['contactToEdit'] && this.contactToEdit) {
       this.name = this.contactToEdit.name || '';
       this.email = this.contactToEdit.email || '';
       this.phone = this.contactToEdit.phone || '';
+
+      // Beim Laden eines Kontakts Farbe anhand des Namens bestimmen
+      if (this.name.length > 0) {
+        this.avatarColor = this.getAvatarColor(this.name);
+      } else {
+        this.avatarColor = null;
+      }
     }
 
+    // Beim Schließen Formular zurücksetzen
     if (changes['visible'] && changes['visible'].currentValue === false) {
       this.resetForm();
     }
   }
 
   /**
-   * Wird aufgerufen, wenn der Hintergrund (Backdrop) des Modals angeklickt wird.
-   * Löst das `closed` Event aus, um das Modal zu schließen.
+   * Handler für Klick auf den Hintergrund (schließt das Modal)
    */
   handleBackdropClick() {
     this.closed.emit();
   }
 
   /**
-   * Setzt alle Eingabefelder zurück auf leere Strings.
+   * Formularfelder zurücksetzen
    */
   resetForm() {
     this.name = '';
     this.email = '';
     this.phone = '';
+    this.avatarColor = null;
   }
 
   /**
-   * Speichert den Kontakt in Firestore, wenn das Formular gültig ist.
-   *
-   * @param form - Formularreferenz zur Validierung.
+   * Speichert Kontakt in Firestore, wenn Formular gültig ist
+   * @param form Formularreferenz
    */
   async saveContact(form: NgForm) {
     if (form.invalid) {
@@ -137,7 +140,6 @@ export class Modal2Component implements OnChanges {
       this.resetForm();
       this.handleBackdropClick();
 
-      // Event emittieren, dass Kontakt gespeichert wurde
       this.contactSaved.emit();
     } catch (error) {
       console.error('Error saving contact:', error);
@@ -146,20 +148,18 @@ export class Modal2Component implements OnChanges {
   }
 
   /**
-   * Validiert, ob ein Name nur Buchstaben, Leerzeichen und Bindestriche enthält.
-   *
-   * @param name - Der zu validierende Name.
-   * @returns `true`, wenn der Name gültig ist, sonst `false`.
+   * Validiert, ob der Name nur erlaubte Zeichen enthält
+   * @param name Eingabename
+   * @returns true wenn gültig
    */
   isValidName(name: string): boolean {
     return /^[A-Za-z\s\-]+$/.test(name.trim());
   }
 
   /**
-   * Erzeugt Initialen aus einem Namen (maximal zwei Buchstaben).
-   *
-   * @param name - Vollständiger Name.
-   * @returns Die Großbuchstaben der ersten zwei Namensbestandteile.
+   * Ermittelt Initialen aus einem Namen
+   * @param name Voller Name
+   * @returns Initialen (max. 2 Buchstaben)
    */
   getInitials(name: string): string {
     return name
@@ -170,31 +170,31 @@ export class Modal2Component implements OnChanges {
   }
 
   /**
-   * Liste der verfügbaren Avatar-Hintergrundfarben.
-   */
-  avatarColors: string[] = [
-    '#F44336',
-    '#E91E63',
-    '#9C27B0',
-    '#3F51B5',
-    '#03A9F4',
-    '#009688',
-    '#4CAF50',
-    '#FFC107',
-    '#FF9800',
-    '#795548',
-  ];
-
-  /**
-   * Berechnet eine Farbwahl basierend auf dem Hash des Namens.
-   *
-   * @param name - Der Name, aus dem die Farbe bestimmt wird.
-   * @returns Ein Hex-Farbcode aus `avatarColors`.
+   * Berechnet anhand des Namens eine Farbe aus der Farbpalette.
+   * Wird beim Laden eines Kontakts genutzt.
+   * @param name Name
+   * @returns Farbe als Hex-String
    */
   getAvatarColor(name: string): string {
     const hash = name.split('').reduce((acc, char) => {
       return char.charCodeAt(0) + ((acc << 5) - acc);
     }, 0);
     return this.avatarColors[Math.abs(hash) % this.avatarColors.length];
+  }
+
+  /**
+   * Wird beim Tippen im Namensfeld aufgerufen.
+   * Setzt beim ersten Buchstaben eine zufällige Farbe.
+   * Setzt Farbe zurück, wenn Name gelöscht wird.
+   */
+  onNameChange() {
+    if (this.name.length === 1 && this.avatarColor === null) {
+      const randomIndex = Math.floor(Math.random() * this.avatarColors.length);
+      this.avatarColor = this.avatarColors[randomIndex];
+    }
+
+    if (this.name.length === 0) {
+      this.avatarColor = null;
+    }
   }
 }

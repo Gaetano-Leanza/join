@@ -32,7 +32,7 @@
               <div class="avatar-preview" *ngIf="isValidName(name)">
                 <div
                   class="avatar"
-                  [ngStyle]="{ 'background-color': getAvatarColor(name) }"
+                  [ngStyle]="{ 'background-color': avatarColor }"
                 >
                   {{ getInitials(name) }}
                 </div>
@@ -49,6 +49,7 @@
                   name="name"
                   autocomplete="name"
                   [(ngModel)]="name"
+                  (input)="onNameChange()"
                   #nameRef="ngModel"
                   required
                   pattern="^[A-Za-z\s\-]+$"
