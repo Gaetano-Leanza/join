@@ -80,7 +80,8 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    margin-left: 49.5vw; /* 30% der Browserbreite */
+    margin-left: 49.5vw;
+    /* 30% der Browserbreite */
   }
 
   .separation {
@@ -273,5 +274,40 @@
       justify-content: center;
       z-index: 1000;
     }
+  }
+}
+
+@media (max-width: 360px) {
+
+  .side-panel {
+    margin-bottom: 50px;
+    margin-left: -10px;
+  }
+
+  .detail-slide .avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .detail-header {
+    flex-direction: row;
+  }
+
+  .avatar {
+    width: 40px;
+  }
+
+  #img-burger {
+    bottom: 40px;
+  }
+
+  .burger-menu {
+    bottom: 45px;
+  }
+
+  .back-arrow {
+    position: relative;
+    top: -80px;
+    left: 150px;
   }
 }
