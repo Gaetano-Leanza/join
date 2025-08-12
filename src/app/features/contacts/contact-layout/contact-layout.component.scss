@@ -68,17 +68,18 @@ h3 {
   margin-left: 516px;
 }
 
-.separation {
-  color: #29abe2;
-  font-weight: 900;
-  font-size: 50px;
-  margin-left: 30px;
-  margin-right: 30px;
-  margin-bottom: 10px;
+.separation2 {
+  height: 50px;                /* Dicke der Linie */
+  width: 4px;                /* Länge der Linie */
+  background-color: #29abe2;  /* Ihre blaue Farbe */
+  border-radius: 10px;        /* Das macht die Ecken rund! */
+  margin-left: 30px;          /* Abstand links */
+  margin-right: 30px;         /* Abstand rechts */
 }
 
-.separation2 {
-  display: none;
+/* Die alte Klasse wird nicht mehr gebraucht, wir können sie verstecken */
+.separation {
+    display: none;
 }
 
 .slogan3 {
