@@ -134,6 +134,26 @@ h3 {
   height: 20px;
 }
 
+.action svg path {
+  transition: fill 0.3s ease;
+  fill: #2a3647;
+}
+
+.action span {
+  transition: color 0.3s ease;
+  color: #2a3647;
+}
+
+.action:hover svg path {
+  fill: #007cee;
+}
+
+.action:hover span {
+  color: #007cee;
+}
+
+
+
 .email-phone {
   font-size: 16;
   font-weight: 700;
