@@ -30,7 +30,7 @@ const db = getFirestore(app);
   standalone: true,
   selector: 'app-modal2',
   templateUrl: './modal2.component.html',
-  styleUrls: ['./modal2.component.scss'],
+  styleUrls: ['./modal2.component.scss','./modal2.responsive.scss','./modal2.responsive2.scss'],
   animations: [slideInModal],
   imports: [CommonModule, FormsModule],
 })
