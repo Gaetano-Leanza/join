@@ -209,14 +209,15 @@
       </a>
 
       <div class="burger-menu" *ngIf="isMenuOpen" #burgerMenu>
-        <a (click)="openModal()">
+        <div class="button-wrapper" (click)="openModal()">
           <img src="./img/edit.svg" alt="Edit Icon" />
-          <span>Edit</span>
-        </a>
-        <a (click)="onDeleteContact()">
+          <div class="edit-delete">Edit</div>
+        </div>
+
+        <div class="button-wrapper" (click)="onDeleteContact()">
           <img src="./img/delete.svg" alt="Delete Icon" />
-          <span>Delete</span>
-        </a>
+          <div class="edit-delete">Delete</div>
+        </div>
       </div>
     </div>
   </div>
