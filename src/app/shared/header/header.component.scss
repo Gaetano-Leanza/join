@@ -17,6 +17,11 @@
 
 }
 
+#info:hover {
+  transition: transform ease 200ms;
+  transform: scale(1.2);
+}
+
 .headline {
   font-size: 20px;
   color: #000000;

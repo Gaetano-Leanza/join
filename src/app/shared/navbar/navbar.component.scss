@@ -60,9 +60,18 @@ nav a.active {
   background-color: #091931;
 }
 
+nav a:hover {
+
+  transition: transform ease-in 200ms;
+  transform: scale(1.02);
+  margin-left: 0;
+
+}
+
 nav a:hover:not(.active) {
   background-color: #485e82;
   color: white;
+
 }
 
 #privacy {
@@ -88,6 +97,11 @@ nav a:hover:not(.active) {
 }
 
 #privacy a:hover:not(.active) {
+  transition: transform ease-in 200ms;
+  transform: scale(1.1);
+}
+
+:not(.active) #privacy a:hover {
   color: #29abe2;
 }
 
