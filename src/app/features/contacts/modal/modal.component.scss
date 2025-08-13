@@ -762,7 +762,6 @@ img {
 @media (max-height: 700px) {
   .modal-content {
     min-height: 95vh; 
-    overflow-y: auto; 
   }
 
 .wrapper {
@@ -787,6 +786,7 @@ img {
 
   .left-panel {
     height: 230px;
+    overflow-y: hidden;
   }
 
   .right-panel {
@@ -836,7 +836,7 @@ img {
   .input-name,
   .input-email,
   .input-phone {
-    width: 90%;
+    width: 94%;
   }
 
   .wrapper {
@@ -845,7 +845,7 @@ img {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    margin-bottom: 130px;
+    margin-bottom: 100px;
   }
 
   .avatar-placeholder img {
@@ -862,6 +862,12 @@ img {
     left: 35.5%;
     transform: translateX(-50%);
     transform: translateY(-237%);
+  }
+
+    .right-site-bottom {
+    width: 100%;
+    height: 350px;
+    padding-right: 22px;
   }
 
 }
