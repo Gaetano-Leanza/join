@@ -53,7 +53,7 @@ p {
 
 .left-panel {
   width: 400px;
-  background-color: #2A3647;
+  background-color: #2a3647;
   padding: 1rem;
   color: white;
   display: flex;
@@ -176,10 +176,6 @@ img {
   background-image: url("/img/call.svg");
 }
 
-.input:not(:placeholder-shown) {
-  background-image: none;
-}
-
 .input.ng-invalid.ng-touched {
   border: 2px solid red;
 }
@@ -229,7 +225,8 @@ img {
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    filter: brightness(0) saturate(100%) invert(31%) sepia(90%) saturate(3341%) hue-rotate(178deg) brightness(93%) contrast(91%);
+    filter: brightness(0) saturate(100%) invert(31%) sepia(90%) saturate(3341%)
+      hue-rotate(178deg) brightness(93%) contrast(91%);
   }
 }
 
@@ -506,7 +503,6 @@ img {
     margin-left: 5px;
   }
 
-
   .wrapper {
     display: flex;
     flex-direction: column;
@@ -757,18 +753,16 @@ img {
   }
 }
 
-
-
 @media (max-height: 700px) {
   .modal-content {
-    min-height: 95vh; 
+    min-height: 95vh;
   }
 
-.wrapper {
-  margin-top: 60px;
-}
+  .wrapper {
+    margin-top: 60px;
+  }
 
-   p {
+  p {
     font-weight: 700;
     font-size: 43px;
   }
@@ -778,11 +772,10 @@ img {
     margin-left: 4px;
   }
 
- .input-wrapper {
+  .input-wrapper {
     width: 100%;
     height: 420px;
   }
-
 
   .left-panel {
     height: 230px;
@@ -790,8 +783,7 @@ img {
   }
 
   .right-panel {
-        height: 390px;
-
+    height: 390px;
   }
 
   img {
@@ -817,7 +809,6 @@ img {
     justify-content: flex-start;
   }
 
- 
   .left-site {
     width: 300px;
     height: 650px;
@@ -864,10 +855,9 @@ img {
     transform: translateY(-237%);
   }
 
-    .right-site-bottom {
+  .right-site-bottom {
     width: 100%;
     height: 350px;
     padding-right: 22px;
   }
-
 }
