@@ -762,7 +762,7 @@ img {
 @media (max-height: 700px) {
   .modal-content {
     min-height: 95vh; 
-    overflow-y: hidden; 
+    overflow-y: auto; 
   }
 
 .wrapper {
