@@ -186,10 +186,6 @@ img {
   background-image: url("/img/call.svg");
 }
 
-.input:not(:placeholder-shown) {
-  background-image: none;
-}
-
 .input.ng-invalid.ng-touched {
   border: 2px solid red;
 }
