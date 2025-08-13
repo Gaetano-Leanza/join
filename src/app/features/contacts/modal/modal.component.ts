@@ -169,23 +169,7 @@ export class ModalComponent implements OnChanges, OnInit {
   }
 
   async resetForm(): Promise<void> {
-    if (this.currentContactId) {
-      const confirmed = confirm('Möchtest du diesen Kontakt wirklich löschen?');
-      if (!confirmed) return;
-
-      const success = await this.contactService.deleteContact(
-        this.currentContactId
-      );
-      if (success) {
-        alert('Kontakt erfolgreich gelöscht.');
-        this.contactService.setSelectedContact(null);
-
-        // Modal schließen
-        this.handleBackdropClick();
-      } else {
-        alert('Fehler beim Löschen des Kontakts.');
-      }
-    }
+    if (this.currentContactId) 
 
     // Formularfelder leeren
     this.name = '';
@@ -229,13 +213,10 @@ export class ModalComponent implements OnChanges, OnInit {
         });
       }
 
-      alert('Kontakt erfolgreich gespeichert!');
       this.resetForm();
       this.closed.emit();
       this.contactSaved.emit();
-    } catch (error) {
-      alert('Fehler beim Speichern des Kontakts.');
-    }
+    } catch (error) {}
   }
 
   /**
