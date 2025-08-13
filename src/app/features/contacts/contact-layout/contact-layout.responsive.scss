@@ -81,7 +81,6 @@
     justify-content: flex-start;
     align-items: center;
     margin-left: 49.5vw;
-    /* 30% der Browserbreite */
   }
 
   .separation {
@@ -119,7 +118,7 @@
     bottom: 0;
     left: 22%;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     transform: translateY(100%);
     transition: transform 0.3s ease-in-out;
     background-color: white;
@@ -138,6 +137,7 @@
 
   .detail-slide {
     margin-top: 60px;
+    padding-bottom: 100px;
   }
 
   .back-arrow {
@@ -153,9 +153,8 @@
   }
 
   .burger-menu {
-    position: fixed;
-    bottom: 100px;
-    right: 210px;
+    position: sticky;
+    margin-left: 185px;
     width: 120px;
     height: 80px;
     background-color: white;
@@ -170,11 +169,11 @@
   }
 
   #img-burger {
-    position: fixed;
-    bottom: 100px;
-    right: 210px;
-    height: 40px;
-    width: 40px;
+    position: sticky;
+    bottom: 90px;
+    margin-left: 250px;
+    height: 50px;
+    width: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -272,8 +271,8 @@
     }
 
     .burger-menu {
-      position: fixed;
-      bottom: 110px;
+      position: sticky;
+      bottom: 90px;
       right: 20px;
       width: 120px;
       height: 80px;
@@ -289,11 +288,11 @@
     }
 
     #img-burger {
-      position: fixed;
-      bottom: 130px;
-      right: 20px;
-      height: 40px;
-      width: 40px;
+      position: sticky;
+      bottom: 90px;
+      margin-left: 250px;
+      height: 50px;
+      width: 50px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -303,7 +302,6 @@
 }
 
 @media (max-width: 360px) {
-
   .side-panel {
     margin-bottom: 50px;
     margin-left: -10px;
