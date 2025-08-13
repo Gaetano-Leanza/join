@@ -33,6 +33,7 @@ h3 {
   height: calc(100vh - 96px);
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 .detail-slide {
