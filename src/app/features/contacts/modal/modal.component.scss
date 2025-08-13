@@ -229,8 +229,7 @@ img {
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    filter: brightness(0) saturate(100%) invert(31%) sepia(90%) saturate(3341%)
-      hue-rotate(178deg) brightness(93%) contrast(91%);
+    filter: brightness(0) saturate(100%) invert(31%) sepia(90%) saturate(3341%) hue-rotate(178deg) brightness(93%) contrast(91%);
   }
 }
 
@@ -504,8 +503,8 @@ img {
   }
 
   .error-text {
-  margin-left: 5px;
-}
+    margin-left: 5px;
+  }
 
 
   .wrapper {
@@ -564,6 +563,10 @@ img {
     transform: translateY(-170%);
   }
 
+  .avatar {
+    border: 3px solid white;
+  }
+
   .right-site-top {
     width: 100%;
     height: 360px;
@@ -604,7 +607,7 @@ img {
 
 @media (max-width: 670px) {
   .avatar {
-    left: 39.5%;
+    left: 38.5%;
     transform: translateX(-50%);
     transform: translateY(-200%);
   }
@@ -723,7 +726,8 @@ img {
 
 @media (max-width: 360px) {
   p {
-    font-size: 43px;
+    font-size: 38px;
+    text-align: center;
   }
 
   .modal-content {
@@ -738,10 +742,126 @@ img {
     transform: translateX(-100%);
     transform: translateY(-185%);
   }
-  
+
   .avatar {
     left: 35%;
+    width: 80px;
+    height: 80px;
     transform: translateX(-50%);
-    transform: translateY(-212%);
+    transform: translateY(-252%);
+    font-size: 30px;
   }
+
+  .left-panel {
+    padding-bottom: 80px;
+  }
+}
+
+
+
+@media (max-height: 700px) {
+  .modal-content {
+    min-height: 95vh; 
+    overflow-y: hidden; 
+  }
+
+.wrapper {
+  margin-top: 60px;
+}
+
+   p {
+    font-weight: 700;
+    font-size: 43px;
+  }
+
+  .slogan {
+    font-size: 20px;
+    margin-left: 4px;
+  }
+
+ .input-wrapper {
+    width: 100%;
+    height: 420px;
+  }
+
+
+  .left-panel {
+    height: 230px;
+  }
+
+  .right-panel {
+        height: 390px;
+
+  }
+
+  img {
+    width: 54px;
+    height: auto;
+  }
+
+  .img-wrapper {
+    width: 100%;
+    height: 100px;
+    margin-left: 8px;
+    margin-bottom: 18px;
+  }
+
+  .line {
+    margin-left: 3px;
+  }
+
+  .line-wrapper {
+    width: 100%;
+    height: 6px;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+ 
+  .left-site {
+    width: 300px;
+    height: 650px;
+  }
+
+  .right-site {
+    width: 100%;
+    height: 650px;
+  }
+
+  .avatar-placeholder img {
+    margin-left: 0px;
+    margin-right: 16px;
+  }
+
+  .input-name,
+  .input-email,
+  .input-phone {
+    width: 90%;
+  }
+
+  .wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 130px;
+  }
+
+  .avatar-placeholder img {
+    width: 100%;
+    height: 105px;
+    left: -0%;
+    transform: translateX(-100%);
+    transform: translateY(-210%);
+  }
+
+  .avatar {
+    width: 95px;
+    height: 95px;
+    left: 35.5%;
+    transform: translateX(-50%);
+    transform: translateY(-237%);
+  }
+
 }
