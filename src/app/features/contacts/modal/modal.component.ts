@@ -14,7 +14,32 @@ import { slideInModal } from './modal.animations';
 import { Contact } from '../contact-model/contact.model';
 import { ContactService } from '../contact-service/contact.service';
 
-import { Firestore, collection, addDoc, doc, updateDoc } from '@angular/fire/firestore';
+import { initializeApp } from 'firebase/app';
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  doc,
+  updateDoc,
+  deleteDoc, // <-- hinzugefügt
+} from 'firebase/firestore';
+
+/** Firebase configuration object */
+const firebaseConfig = {
+  apiKey: 'AIzaSyD1fse1ML6Ie-iFClg_2Ukr-G1FEeQUHac',
+  authDomain: 'join-e1f64.firebaseapp.com',
+  projectId: 'join-e1f64',
+  storageBucket: 'join-e1f64.appspot.com',
+  messagingSenderId: '969006467578',
+  appId: '1:969006467578:web:52d944e5ed232984783c43',
+  measurementId: 'G-Y12RXDEX3N',
+};
+
+/** Firebase app instance */
+const app = initializeApp(firebaseConfig);
+
+/** Firestore database instance */
+const db = getFirestore(app);
 
 /**
  * Modal component for creating and editing contacts
@@ -31,9 +56,6 @@ import { Firestore, collection, addDoc, doc, updateDoc } from '@angular/fire/fir
 export class ModalComponent implements OnChanges, OnInit {
   /** Injected contact service for data operations */
   private contactService = inject(ContactService);
-
-  /** Injected Firestore instance from AngularFire */
-  private firestore = inject(Firestore);
 
   /** Contact to edit, null for new contact creation */
   @Input() contactToEdit: Contact | null = null;
@@ -100,7 +122,7 @@ export class ModalComponent implements OnChanges, OnInit {
           }
         },
         error: () => {
-          // silently ignore
+          // Error handled silently - contact loading failed
         },
       });
     }
@@ -121,12 +143,49 @@ export class ModalComponent implements OnChanges, OnInit {
     this.closed.emit();
   }
 
-  async resetForm(): Promise<void> {
+  /**
+   * Setzt nur die Formularfelder und den lokalen Zustand zurück (ohne Firebase, ohne Schließen).
+   * Diese Methode wird z. B. nach einem erfolgreichen Speichern verwendet,
+   * damit der gerade gespeicherte Kontakt nicht wieder gelöscht wird.
+   */
+  private clearFormOnly(): void {
     this.name = '';
     this.email = '';
     this.phone = '';
     this.isEditing = false;
     this.currentContactId = null;
+  }
+
+  /**
+   * Löscht den aktuell bearbeiteten Kontakt aus Firestore (falls vorhanden),
+   * setzt anschließend das Formular zurück und schließt das Modal.
+   *
+   * @async
+   * @function deleteContactAndClose
+   * @returns {Promise<void>} Promise, das nach Löschung (falls nötig),
+   *          Zurücksetzen und Schließen erfüllt wird.
+   *
+   * @description
+   * - Wenn `currentContactId` gesetzt ist, wird der entsprechende Kontakt aus der
+   *   Firestore-Collection `contacts` gelöscht.
+   * - Setzt anschließend alle Eingabefelder (`name`, `email`, `phone`) zurück,
+   *   deaktiviert den Bearbeitungsmodus und entfernt die aktuelle ID.
+   * - Emittiert das `closed`-Event, um das Modal zu schließen.
+   *
+   * @throws {Error} Falls die Löschung fehlschlägt, wird der Fehler protokolliert.
+   *         Das Formular wird dennoch zurückgesetzt und das Modal geschlossen.
+   */
+  async deleteContactAndClose(): Promise<void> {
+    try {
+      if (this.currentContactId) {
+        await deleteDoc(doc(db, 'contacts', this.currentContactId));
+      }
+    } catch (error) {
+      console.error('Fehler beim Löschen des Kontakts:', error);
+    } finally {
+      this.clearFormOnly();
+      this.closed.emit();
+    }
   }
 
   async saveContact(form: NgForm) {
@@ -146,22 +205,20 @@ export class ModalComponent implements OnChanges, OnInit {
       };
 
       if (this.isEditing && this.currentContactId) {
-        await updateDoc(
-          doc(this.firestore, 'contacts', this.currentContactId),
-          contactData
-        );
+        await updateDoc(doc(db, 'contacts', this.currentContactId), contactData);
       } else {
-        await addDoc(collection(this.firestore, 'contacts'), {
+        await addDoc(collection(db, 'contacts'), {
           ...contactData,
           createdAt: new Date(),
         });
       }
 
-      this.resetForm();
+      // Nur Formular leeren, nicht löschen
+      this.clearFormOnly();
       this.closed.emit();
       this.contactSaved.emit();
     } catch (error) {
-      console.error('Error saving contact:', error);
+      // optional: Fehlerhandling/Nutzerfeedback ergänzen
     }
   }
 
