@@ -134,14 +134,12 @@ export class Modal2Component implements OnChanges {
         createdAt: new Date(),
       });
 
-      alert('Contact saved successfully!');
+      
       this.resetForm();
       this.handleBackdropClick();
-
       this.contactSaved.emit();
     } catch (error) {
       console.error('Error saving contact:', error);
-      alert('Error saving the contact.');
     }
   }
 
