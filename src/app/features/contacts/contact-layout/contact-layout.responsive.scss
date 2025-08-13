@@ -317,7 +317,8 @@
   }
 
   .avatar {
-    width: 40px;
+    width: 3px;
+    padding-right: 0px;
   }
 
   #img-burger {
@@ -333,4 +334,10 @@
     top: -80px;
     left: 150px;
   }
+
+    .text-wrapper {
+      margin-left: 0px;
+      margin-top: 150px;
+      padding-right: 0px;
+    }
 }
