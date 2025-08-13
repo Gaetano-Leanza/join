@@ -14,31 +14,7 @@ import { slideInModal } from './modal.animations';
 import { Contact } from '../contact-model/contact.model';
 import { ContactService } from '../contact-service/contact.service';
 
-import { initializeApp } from 'firebase/app';
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  doc,
-  updateDoc,
-} from 'firebase/firestore';
-
-/** Firebase configuration object */
-const firebaseConfig = {
-  apiKey: 'AIzaSyD1fse1ML6Ie-iFClg_2Ukr-G1FEeQUHac',
-  authDomain: 'join-e1f64.firebaseapp.com',
-  projectId: 'join-e1f64',
-  storageBucket: 'join-e1f64.appspot.com',
-  messagingSenderId: '969006467578',
-  appId: '1:969006467578:web:52d944e5ed232984783c43',
-  measurementId: 'G-Y12RXDEX3N',
-};
-
-/** Firebase app instance */
-const app = initializeApp(firebaseConfig);
-
-/** Firestore database instance */
-const db = getFirestore(app);
+import { Firestore, collection, addDoc, doc, updateDoc } from '@angular/fire/firestore';
 
 /**
  * Modal component for creating and editing contacts
@@ -55,6 +31,9 @@ const db = getFirestore(app);
 export class ModalComponent implements OnChanges, OnInit {
   /** Injected contact service for data operations */
   private contactService = inject(ContactService);
+
+  /** Injected Firestore instance from AngularFire */
+  private firestore = inject(Firestore);
 
   /** Contact to edit, null for new contact creation */
   @Input() contactToEdit: Contact | null = null;
@@ -97,19 +76,10 @@ export class ModalComponent implements OnChanges, OnInit {
     '#795548',
   ];
 
-  /**
-   * Component initialization
-   * Loads selected contact if available
-   */
   ngOnInit(): void {
     this.loadSelectedContact();
   }
 
-  /**
-   * Handles input property changes
-   * Updates component state when contactToEdit or visible changes
-   * @param {SimpleChanges} changes - Object containing changed properties
-   */
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['contactToEdit'] && this.contactToEdit) {
       this.loadContactData(this.contactToEdit);
@@ -119,10 +89,6 @@ export class ModalComponent implements OnChanges, OnInit {
     }
   }
 
-  /**
-   * Loads the currently selected contact from service
-   * Sets editing mode if contact is found
-   */
   private loadSelectedContact(): void {
     this.currentContactId = this.contactService.getSelectedContactId();
     if (this.currentContactId) {
@@ -133,17 +99,13 @@ export class ModalComponent implements OnChanges, OnInit {
             this.isEditing = true;
           }
         },
-        error: (err) => {
-          // Error handled silently - contact loading failed
+        error: () => {
+          // silently ignore
         },
       });
     }
   }
 
-  /**
-   * Loads contact data into form fields
-   * @param {Contact} contact - Contact object to load
-   */
   private loadContactData(contact: Contact): void {
     this.name = contact.name || '';
     this.email = contact.email || '';
@@ -151,27 +113,15 @@ export class ModalComponent implements OnChanges, OnInit {
     this.currentContactId = contact.id;
   }
 
-  /**
-   * Handles input field changes (for debugging/logging purposes)
-   * @param {string} field - Name of the changed field
-   * @param {string} value - New value of the field
-   */
   onInputChange(field: string, value: string) {
-    // Input change handling - can be used for validation or logging
+    // optional: handle field changes
   }
 
-  /**
-   * Handles backdrop click events
-   * Closes modal when user clicks outside of it
-   */
   handleBackdropClick() {
     this.closed.emit();
   }
 
   async resetForm(): Promise<void> {
-    if (this.currentContactId) 
-
-    // Formularfelder leeren
     this.name = '';
     this.email = '';
     this.phone = '';
@@ -179,12 +129,6 @@ export class ModalComponent implements OnChanges, OnInit {
     this.currentContactId = null;
   }
 
-  /**
-   * Saves contact data to Firebase
-   * Updates existing contact or creates new one based on editing state
-   * @param {NgForm} form - Angular form reference for validation
-   * @returns {Promise<void>} Promise that resolves when save operation completes
-   */
   async saveContact(form: NgForm) {
     if (form.invalid) {
       Object.values(form.controls).forEach((control) =>
@@ -203,11 +147,11 @@ export class ModalComponent implements OnChanges, OnInit {
 
       if (this.isEditing && this.currentContactId) {
         await updateDoc(
-          doc(db, 'contacts', this.currentContactId),
+          doc(this.firestore, 'contacts', this.currentContactId),
           contactData
         );
       } else {
-        await addDoc(collection(db, 'contacts'), {
+        await addDoc(collection(this.firestore, 'contacts'), {
           ...contactData,
           createdAt: new Date(),
         });
@@ -216,24 +160,15 @@ export class ModalComponent implements OnChanges, OnInit {
       this.resetForm();
       this.closed.emit();
       this.contactSaved.emit();
-    } catch (error) {}
+    } catch (error) {
+      console.error('Error saving contact:', error);
+    }
   }
 
-  /**
-   * Validates contact name format
-   * Allows only letters, spaces, and hyphens
-   * @param {string} name - Name string to validate
-   * @returns {boolean} True if name format is valid
-   */
   isValidName(name: string): boolean {
     return /^[A-Za-z\s\-]+$/.test(name.trim());
   }
 
-  /**
-   * Generates initials from contact name
-   * @param {string} name - Full name string
-   * @returns {string} Uppercase initials (maximum 2 characters)
-   */
   getInitials(name: string): string {
     return name
       .split(' ')
@@ -242,12 +177,6 @@ export class ModalComponent implements OnChanges, OnInit {
       .join('');
   }
 
-  /**
-   * Gets avatar background color based on contact name
-   * Uses first character of name to determine color from predefined palette
-   * @param {string} name - Contact name
-   * @returns {string} Hex color code for avatar background
-   */
   getAvatarColor(name: string): string {
     if (!name || name.trim().length === 0) return this.avatarColors[0];
     const firstCharCode = name.trim().charCodeAt(0);
