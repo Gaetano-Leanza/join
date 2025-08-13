@@ -222,6 +222,31 @@
     display: none;
   }
 
+  .button-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 40px;
+    gap: 6px;
+    cursor: pointer;
+  }
+
+  .button-wrapper img,
+  .button-wrapper .edit-delete {
+    transition: filter 0.3s ease, color 0.3s ease;
+  }
+
+  .button-wrapper:hover img {
+    filter: brightness(0) saturate(100%) invert(33%) sepia(98%) saturate(1866%)
+      hue-rotate(182deg) brightness(94%) contrast(101%);
+  }
+
+  .button-wrapper:hover .edit-delete {
+    color: #007cee;
+  }
+
   @media (max-width: 768px) {
     .side-panel {
       left: 0%;
@@ -256,7 +281,7 @@
       border-radius: 0 0 0 20px;
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 0px;
       justify-content: center;
       align-items: center;
       z-index: 1001;
