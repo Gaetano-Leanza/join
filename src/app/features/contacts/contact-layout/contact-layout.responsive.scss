@@ -309,7 +309,8 @@
 
   .detail-slide .avatar {
     width: 80px;
-    height: 80px;
+    height: 60px;
+    margin-top: 20px;
   }
 
   .detail-header {
@@ -317,8 +318,7 @@
   }
 
   .avatar {
-    width: 3px;
-    padding-right: 0px;
+    width: 40px;
   }
 
   #img-burger {
@@ -335,9 +335,8 @@
     left: 150px;
   }
 
-    .text-wrapper {
-      margin-left: 0px;
-      margin-top: 150px;
-      padding-right: 0px;
-    }
+  .text-wrapper {
+    margin-top: 120px;
+  }
+
 }
