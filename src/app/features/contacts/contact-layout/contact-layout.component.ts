@@ -137,23 +137,15 @@ export class ContactLayoutComponent {
   async onDeleteContact(): Promise<void> {
     if (!this.selectedContact?.id) return;
 
-    const confirmed = confirm(
-      `Möchtest du den Kontakt "${this.selectedContact.name}" wirklich löschen?`
-    );
-    if (!confirmed) return;
-
     const success = await this.contactService.deleteContact(
       this.selectedContact.id
     );
 
     if (success) {
-      alert('Kontakt erfolgreich gelöscht.');
       this.selectedContact = null;
       this.sidePanelActive = false;
       this.contactService.setSelectedContact(null);
       this.isModalVisible = false;
-    } else {
-      alert('Fehler beim Löschen des Kontakts.');
     }
   }
 }
