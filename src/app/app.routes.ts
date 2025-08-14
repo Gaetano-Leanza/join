@@ -4,6 +4,7 @@ import { ContactDetailComponent } from './features/contacts/contact-detail/conta
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { LegalNoticeComponent } from './pages/legal-notice/legal-notice.component';
 import { InfoComponent } from './pages/info/info.component';
+import { AddTaskComponent } from './features/add-task/add-task.component';
 
 /**
  * Anwendungsrouten für das Angular-Routing-Modul.
@@ -14,6 +15,7 @@ import { InfoComponent } from './pages/info/info.component';
  */
 export const routes: Routes = [
   { path: '', redirectTo: '/contacts', pathMatch: 'full' },
+  { path: 'task', component: AddTaskComponent },  
   { path: 'contacts', component: ContactLayoutComponent },
   { path: 'contacts/:id', component: ContactDetailComponent },
   { path: 'privacy-policy', component: PrivacyPolicyComponent },

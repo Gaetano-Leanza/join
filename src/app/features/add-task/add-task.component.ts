@@ -1,11 +1,30 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-task',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './add-task.component.html',
-  styleUrl: './add-task.component.scss'
+  styleUrls: ['./add-task.component.scss']
 })
 export class AddTaskComponent {
 
+  // Beispiel-Daten / States
+  title: string = '';
+  description: string = '';
+
+  addTask() {
+    if (this.title.trim()) {
+      console.log('Neue Aufgabe:', {
+        title: this.title,
+        description: this.description
+      });
+      // Felder leeren
+      this.title = '';
+      this.description = '';
+    } else {
+      alert('Bitte gib einen Titel für die Aufgabe ein.');
+    }
+  }
 }
