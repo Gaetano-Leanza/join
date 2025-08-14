@@ -36,6 +36,13 @@ h1 {
 
 }
 
+#search:hover {
+    fill: #4589FF !important;
+    stroke: #4589FF !important;
+    cursor: pointer;
+
+}
+
 #task-search input {
     height: 48px;
     max-width: 312px;
