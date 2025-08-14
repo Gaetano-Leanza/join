@@ -176,6 +176,7 @@ h3 {
     width: 100%;
     background-color: white;
     padding: 16px;
+    padding-bottom: 80px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
@@ -214,5 +215,16 @@ h3 {
   .add-contact-button-mobile:hover svg .button-bg {
     fill: #007cee !important;
     stroke: #007cee !important;
+  }
+}
+
+@media (max-width: 350px) {
+  .contact-item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 20px 0;
+    margin-right: 20px;
+    max-width: 290px;
   }
 }
