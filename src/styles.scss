@@ -12,6 +12,12 @@
   padding: 0;
 }
 
+
+h1 {
+  font-family: 'Inter', sans-serif;
+
+}
+
 body {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
@@ -24,13 +30,18 @@ a {
 }
 
 @media (max-width: 768px) {
-  app-header {
-    
-  }
 
   .main-content {
     margin-left: 0;
   }
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
