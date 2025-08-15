@@ -79,3 +79,30 @@ h3 {
   width: 430px;
 }
 
+.placeholder5::placeholder {
+  color: white;
+  opacity: 1;
+}
+
+.placeholder5 {
+  background-color: #ffa800;
+  border: none;
+  font-family: "Inter", sans-serif;
+  font-size: 21px;
+  font-weight: 600;
+  text-align: center;
+}
+
+
+.placeholder7,
+.placeholder8,
+.placeholder9 {
+    padding-left: 8px; /* sorgt für Abstand bei normalem Text und Placeholder */
+}
+
+.placeholder7::placeholder,
+.placeholder8::placeholder,
+.placeholder9::placeholder {
+    color: gray; /* falls du auch die Farbe anpassen willst */
+    opacity: 1;
+}
