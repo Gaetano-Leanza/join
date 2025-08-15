@@ -1,7 +1,7 @@
 <div class="modal-backdrop" (click)="close.emit()">
-    <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-content" (click)="$event.stopPropagation()" @slideInModal>
         <button (click)="close.emit()"><span id="close">X </span></button>
-        <!-- Dein Modal-Inhalt -->
+        <!--  Modal-Inhalt -->
         <h2>Add Task</h2>
     </div>
 </div>
