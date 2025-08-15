@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common'; 
 
+import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
+import { ModalBoardComponent} from './modal-board/modal-board.component';
 /**
  * @interface Task
  * Definiert die Struktur für ein einzelnes Task-Objekt.
@@ -16,11 +18,14 @@ export interface Task {
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [CdkDropList, CdkDrag],
+  imports: [CdkDropList, CdkDrag,ModalBoardComponent,CommonModule],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss'
 })
 export class BoardComponent {
+
+showModal = false;
+
   /** @property {Task[]} todo - Array für Tasks im Status 'To do'. */
   todo: Task[] = [
     {
@@ -66,4 +71,6 @@ export class BoardComponent {
       );
     }
   }
+
+ 
 }

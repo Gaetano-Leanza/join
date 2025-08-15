@@ -158,14 +158,56 @@ h1 {
     color: white;
     font-size: 14px;
 }
-  
+
 .task-title {
     font-weight: bold;
     font-size: 16px;
     color: #2A3647;
 }
-  
+
 .task-description {
     font-size: 14px;
     color: #666;
+}
+
+.container-icon {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    width: 250px;
+    height: 60px;
+    cursor: pointer;
+}
+
+.container-icon svg:hover {
+    width: 24px;
+    height: 24px;
+    stroke: #4589FF;
+    stroke-linecap: round;
+    transition: transform 0.3s ease;
+}
+
+.icon-border {
+    stroke: #2A3647;
+
+}
+
+
+.container-icon:hover .icon-border {
+    stroke: #29ABE2;
+    transition: stroke 0.2s ease;
+
+
+}
+
+.icon-line {
+    stroke: #2A3647;
+
+}
+
+.container-icon:hover .icon-line {
+    stroke: #29ABE2 !important;
+    transition: stroke 0.2s ease;
+
+
 }
