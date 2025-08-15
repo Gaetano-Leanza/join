@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
 
-// Ein "Interface" beschreibt, wie ein einzelner Task aussieht.
-// Das sorgt für sauberen und sicheren Code.
+/**
+ * @interface Task
+ * Definiert die Struktur für ein einzelnes Task-Objekt.
+ */
 export interface Task {
   id: number;
   category: string;
   categoryColor: string;
   title: string;
   description: string;
-  // Hier könnten später noch zugewiesene Kontakte, Priorität etc. hinzukommen
 }
 
 @Component({
@@ -20,7 +21,7 @@ export interface Task {
   styleUrl: './board.component.scss'
 })
 export class BoardComponent {
-  // Jetzt nutzen wir unser neues "Task"-Interface
+  /** @property {Task[]} todo - Array für Tasks im Status 'To do'. */
   todo: Task[] = [
     {
       id: 1,
@@ -31,6 +32,7 @@ export class BoardComponent {
     }
   ];
 
+  /** @property {Task[]} inprogress - Array für Tasks im Status 'In progress'. */
   inprogress: Task[] = [
     {
       id: 2,
@@ -41,11 +43,18 @@ export class BoardComponent {
     }
   ];
 
+  /** @property {Task[]} awaitfeedback - Array für Tasks im Status 'Awaiting Feedback'. */
   awaitfeedback: Task[] = [];
 
+  /** @property {Task[]} done - Array für Tasks im Status 'Done'. */
   done: Task[] = [];
 
-  drop(event: CdkDragDrop<Task[]>) { // Hier auch den Typ anpassen
+  /**
+   * Behandelt das `drop`-Ereignis für die Drag-and-Drop-Funktionalität.
+   * Verschiebt ein Element entweder innerhalb seiner eigenen Liste oder transferiert es in eine neue Liste.
+   * @param {CdkDragDrop<Task[]>} event - Das Drop-Ereignis, das vom Angular CDK ausgelöst wird.
+   */
+  drop(event: CdkDragDrop<Task[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {

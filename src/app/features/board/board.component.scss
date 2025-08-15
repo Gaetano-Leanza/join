@@ -74,31 +74,30 @@ h1 {
     display: flex;
     justify-content: space-between;
     margin: 35px;
-    gap: 20px; /* Optional: Fügt einen festen Abstand zwischen den Spalten hinzu */
+    gap: 20px;
 }
 
 .example-container {
     margin-top: 20px;
-    flex: 1; /* Lässt die Spalten den verfügbaren Platz gleichmäßig füllen */
+    flex: 1;
     max-width: 100%;
-    display: flex; /* Geändert für bessere Ausrichtung */
-    flex-direction: column; /* Geändert für bessere Ausrichtung */
+    display: flex;
+    flex-direction: column;
     font-family: sans-serif;
 }
 
 .example-list {
-    border: none; /* Rahmen entfernt für cleaneres Design */
+    border: none;
     min-height: 60px;
-    background: #f5f5f5; /* Hintergrundfarbe für die Drop-Zone */
+    background: #f5f5f5;
     border-radius: 4px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    padding: 10px; /* Innenabstand für die Spalte */
-    flex-grow: 1; /* Sorgt dafür, dass die Liste den ganzen Platz in der Spalte einnimmt */
+    padding: 10px;
+    flex-grow: 1;
 }
 
-/* Original .example-box entfernt und durch neue Definition ersetzt */
 .example-box {
     padding: 16px;
     margin-bottom: 10px;
@@ -153,22 +152,20 @@ h1 {
     margin: 10px;
 }
 
-
-/* NEUE STYLES FÜR TASK-KARTEN */
 .task-category {
     padding: 4px 12px;
     border-radius: 6px;
     color: white;
     font-size: 14px;
-  }
+}
   
-  .task-title {
+.task-title {
     font-weight: bold;
     font-size: 16px;
-    color: #2A3647; /* Dunkle Schrift für besseren Kontrast */
-  }
+    color: #2A3647;
+}
   
-  .task-description {
+.task-description {
     font-size: 14px;
     color: #666;
-  }
+}
