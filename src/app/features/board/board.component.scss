@@ -7,7 +7,6 @@
     width: 90%;
     height: 80vh;
     margin: 20px auto;
-
 }
 
 #header {
@@ -18,8 +17,6 @@
     align-items: center;
     flex-direction: row;
     padding: 5px 20px;
-
-
 }
 
 h1 {
@@ -33,14 +30,12 @@ h1 {
     position: fixed;
     margin-left: -35px;
     margin-top: 5px;
-
 }
 
 #search:hover {
     fill: #4589FF !important;
     stroke: #4589FF !important;
     cursor: pointer;
-
 }
 
 #task-search input {
@@ -52,7 +47,6 @@ h1 {
     background: #fff;
     font-size: 16px;
     outline: none;
-
 }
 
 #header-left {
@@ -74,56 +68,48 @@ h1 {
 
 #add-task:hover {
     fill: #4589FF !important;
-
 }
 
 #board-content {
     display: flex;
     justify-content: space-between;
     margin: 35px;
+    gap: 20px;
 }
 
 .example-container {
     margin-top: 20px;
-    min-width: 200px;
+    flex: 1;
     max-width: 100%;
-    display: inline-block;
-    vertical-align: top;
+    display: flex;
+    flex-direction: column;
     font-family: sans-serif;
 }
 
 .example-list {
-    border: solid 1px #ccc;
+    border: none;
     min-height: 60px;
-    background: white;
+    background: #f5f5f5;
     border-radius: 4px;
     overflow: hidden;
     display: flex;
-    /* Чтобы элементы шли колонкой */
     flex-direction: column;
-    padding-bottom: 20px;
-    /* Зона для drop в конце */
+    padding: 10px;
+    flex-grow: 1;
 }
 
 .example-box {
-    padding: 20px 10px;
-    border-bottom: solid 1px #ccc;
-    color: rgba(0, 0, 0, 0.87);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    cursor: move;
+    padding: 16px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background: white;
-    font-size: 14px;
+    cursor: move;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
     font-family: sans-serif;
-}
-
-.example-box:last-child {
-    border: none;
-    margin-bottom: auto;
-    /* Чтобы drop-зона работала */
 }
 
 .cdk-drag-preview {
@@ -143,7 +129,7 @@ h1 {
 }
 
 .example-box:last-child {
-    border: none;
+    margin-bottom: 0;
 }
 
 .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
@@ -163,4 +149,23 @@ h1 {
     border-radius: 4px;
     background: #fafafa;
     pointer-events: none;
+    margin: 10px;
+}
+
+.task-category {
+    padding: 4px 12px;
+    border-radius: 6px;
+    color: white;
+    font-size: 14px;
+}
+  
+.task-title {
+    font-weight: bold;
+    font-size: 16px;
+    color: #2A3647;
+}
+  
+.task-description {
+    font-size: 14px;
+    color: #666;
 }
