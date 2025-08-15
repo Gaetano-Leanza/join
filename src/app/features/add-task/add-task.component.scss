@@ -106,3 +106,43 @@ h3 {
     color: gray; /* falls du auch die Farbe anpassen willst */
     opacity: 1;
 }
+
+.image-button-left {
+  width: 110px; 
+  height: 45px;
+  background-image: url('/img/button-left.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+
+.image-button-middle {
+  width: 110px;
+  height: 45px;
+  background-image: url('/img/button-middle.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.image-button-right {
+  width: 110px; 
+  height: 45px;
+  background-image: url('/img/button-right.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.content-bottom {
+  width: 100%;
+  height: 100px;
+  background-color: red;
+}

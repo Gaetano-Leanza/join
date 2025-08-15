@@ -6,9 +6,12 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './add-task.component.html',
-  styleUrls: ['./add-task.component.scss']
+  styleUrls: ['./add-task.component.scss'],
 })
 export class AddTaskComponent {
+  PlaceholderFunktion() {
+    throw new Error('Method not implemented.');
+  }
 
   // Beispiel-Daten / States
   title: string = '';
@@ -18,7 +21,7 @@ export class AddTaskComponent {
     if (this.title.trim()) {
       console.log('Neue Aufgabe:', {
         title: this.title,
-        description: this.description
+        description: this.description,
       });
       // Felder leeren
       this.title = '';
@@ -27,4 +30,8 @@ export class AddTaskComponent {
       alert('Bitte gib einen Titel für die Aufgabe ein.');
     }
   }
+}
+
+function PlaceholderFunktion() {
+  throw new Error('Function not implemented.');
 }
