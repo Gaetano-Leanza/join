@@ -105,6 +105,13 @@ export class ModalComponent implements OnChanges, OnInit {
     this.currentContactId = contact.id;
   }
 
+  /** Reagiert auf ngModelChange im Template */
+  onInputChange(field: string, value: string) {
+    if (field === 'name') this.name = value;
+    if (field === 'email') this.email = value;
+    if (field === 'phone') this.phone = value;
+  }
+
   handleBackdropClick() {
     this.closed.emit();
   }
@@ -128,16 +135,6 @@ export class ModalComponent implements OnChanges, OnInit {
       this.clearFormOnly();
       this.closed.emit();
     }
-  }
-
-  onInputChange(field: string, value: string) {
-    // Falls du später etwas damit machen willst:
-    console.log(`Feld geändert: ${field} = ${value}`);
-
-    // Beispiel: direkt den Wert setzen
-    if (field === 'name') this.name = value;
-    if (field === 'email') this.email = value;
-    if (field === 'phone') this.phone = value;
   }
 
   async saveContact(form: NgForm) {

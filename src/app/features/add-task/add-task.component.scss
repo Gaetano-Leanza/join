@@ -93,56 +93,96 @@ h3 {
   text-align: center;
 }
 
-
 .placeholder7,
 .placeholder8,
 .placeholder9 {
-    padding-left: 8px; /* sorgt für Abstand bei normalem Text und Placeholder */
+  padding-left: 8px;
 }
 
 .placeholder7::placeholder,
 .placeholder8::placeholder,
 .placeholder9::placeholder {
-    color: gray; /* falls du auch die Farbe anpassen willst */
-    opacity: 1;
-}
-
-.image-button-left {
-  width: 110px; 
-  height: 45px;
-  background-image: url('/img/button-left.svg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-
-.image-button-middle {
-  width: 110px;
-  height: 45px;
-  background-image: url('/img/button-middle.svg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.image-button-right {
-  width: 110px; 
-  height: 45px;
-  background-image: url('/img/button-right.svg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
+  color: gray;
+  opacity: 1;
 }
 
 .content-bottom {
   width: 100%;
   height: 100px;
-  background-color: red;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding-top: 20px;
+}
+
+.image-button-left,
+.image-button-right {
+  width: 119px;
+  background: none;
+  border: none;
+  border-left: 2px solid #ccc;
+  border-right: 2px solid #ccc;
+  border-bottom: 4px solid #999;
+  border-radius: 8px;
+  padding: 0;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease;
+}
+
+.image-button-middle {
+  width: 119px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.image-button-left:hover {
+  box-shadow: 2px 6px 8px -2px rgba(0, 0, 0, 0.4);
+}
+
+.image-button-right:hover {
+  box-shadow: 2px 6px 8px -2px rgba(0, 0, 0, 0.4);
+}
+
+.image-button-left svg {
+  transform: translateX(-15px) translateY(-3px);
+  height: 55px;
+}
+
+.image-button-middle svg {
+  transform: translateX(-8.5px) translateY(-0px);
+  height: 50px;
+}
+
+.image-button-right svg {
+  transform: translateX(-5px) translateY(-3px);
+  height: 55px;
+}
+
+.image-button-left {
+  svg {
+    path:not([fill="#FF3D00"]) {
+      stroke: currentColor;
+      stroke-width: 0.3px;
+      paint-order: stroke;
+    }
+
+    // Für den aktiven Zustand
+    &.active path:not([fill="white"]) {
+      stroke: white;
+    }
+  }
+}
+
+.image-button-left {
+  &.active svg {
+    path {
+      &[fill="white"] {
+        stroke: white;
+        stroke-width: 0.5px;
+        paint-order: stroke;
+        stroke-linejoin: round;
+      }
+    }
+  }
 }

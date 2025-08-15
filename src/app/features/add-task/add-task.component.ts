@@ -9,9 +9,13 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./add-task.component.scss'],
 })
 export class AddTaskComponent {
-  PlaceholderFunktion() {
-    throw new Error('Method not implemented.');
-  }
+  isActive = false; // Status des Buttons
+
+  toggleButton() {
+  this.isActive = !this.isActive; // Status umkehren
+  console.log('isActive:', this.isActive);
+}
+
 
   // Beispiel-Daten / States
   title: string = '';
