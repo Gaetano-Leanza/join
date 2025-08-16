@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core'; 
+import { Component, inject, OnInit } from '@angular/core'; 
 import { trigger, style, transition, animate } from '@angular/animations';
 import { Contact } from './contact-model/contact.model';
 import { ContactService } from './contact-service/contact.service';
-import { Observable } from 'rxjs';
+import { Observable, catchError, of, startWith } from 'rxjs';
+import { CommonModule } from '@angular/common';
 import { ModalComponent } from "./modal/modal.component";
 
 /**
@@ -12,6 +13,8 @@ import { ModalComponent } from "./modal/modal.component";
  */
 @Component({
   selector: 'app-contacts',
+  standalone: true,
+  imports: [CommonModule], // CommonModule für *ngIf, *ngFor etc.
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.scss'],
   animations: [
@@ -31,45 +34,61 @@ import { ModalComponent } from "./modal/modal.component";
       ]),
     ]),
   ],
-  imports: [],
 })
-export class ContactsComponent {
-  /** Instanz des ContactService für Datenzugriffe */
+export class ContactsComponent implements OnInit {
   private contactService = inject(ContactService);
 
-  /** Observable mit der Liste aller Kontakte */
-  contacts$: Observable<Contact[]> = this.contactService.getContacts();
-
-  /** Der aktuell ausgewählte Kontakt */
-  selectedContact?: Contact;
-
-  /** Status, ob das Modal geöffnet ist */
+  // Zustandsmanagement mit klareren Typen
+  contacts$!: Observable<Contact[]>;
+  selectedContact: Contact | null = null;
   modalOpen = false;
+  loading = true;
+  error: string | null = null;
+
+  ngOnInit(): void {
+    this.loadContacts();
+  }
 
   /**
-   * Öffnet das Modal zum Bearbeiten eines Kontakts.
-   * 
-   * @param contact - Der zu bearbeitende Kontakt.
+   * Lädt Kontakte mit Fehlerbehandlung und Ladeindikator
    */
-  editContact(contact: Contact) {
-    this.selectedContact = contact;
+  private loadContacts(): void {
+    this.loading = true;
+    this.error = null;
+    
+    this.contacts$ = this.contactService.getContacts().pipe(
+      startWith([]), // Vermeidet undefined beim ersten Laden
+      catchError((err) => {
+        console.error('Fehler beim Laden der Kontakte:', err);
+        this.error = 'Kontakte konnten nicht geladen werden';
+        return of([]);
+      })
+    );
+  }
+
+  /**
+   * Öffnet das Modal zum Bearbeiten eines Kontakts
+   */
+  editContact(contact: Contact): void {
+    this.selectedContact = { ...contact }; // Clone für Immutability
     this.modalOpen = true;
   }
 
   /**
-   * Wählt einen Kontakt aus der Liste aus.
-   * 
-   * @param contact - Der ausgewählte Kontakt.
+   * Wählt einen Kontakt aus
    */
-  selectContact(contact: Contact) {
+  selectContact(contact: Contact): void {
     this.selectedContact = contact;
   }
 
   /**
-   * Schließt das Modal und entfernt die Auswahl.
+   * Schließt das Modal und behandelt das Ergebnis
    */
-  closeModal() {
+  closeModal(success: boolean): void {
     this.modalOpen = false;
-    this.selectedContact = undefined;
+    if (success) {
+      this.loadContacts(); // Daten neu laden bei Änderungen
+    }
+    this.selectedContact = null;
   }
 }

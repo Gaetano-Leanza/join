@@ -27,40 +27,56 @@ import { ContactService } from '../contact-service/contact.service';
   imports: [CommonModule, FormsModule],
 })
 export class ModalComponent implements OnChanges, OnInit {
+  /** Service für CRUD-Operationen auf Kontakten */
   private contactService = inject(ContactService);
 
+  /** Kontakt, der bearbeitet werden soll */
   @Input() contactToEdit: Contact | null = null;
+
+  /** Steuert die Sichtbarkeit des Modals */
   @Input() visible = false;
+
+  /** Event: Modal wurde geschlossen */
   @Output() closed = new EventEmitter<void>();
+
+  /** Event: Kontakt wurde gespeichert oder gelöscht */
   @Output() contactSaved = new EventEmitter<void>();
 
+  /** Eingabefelder */
   name = '';
   email = '';
   phone = '';
+
+  /** True, wenn gerade ein Kontakt bearbeitet wird */
   isEditing = false;
+
+  /** ID des aktuellen Kontakts */
   currentContactId: string | null = null;
 
+  /** Farben für Avatare */
   private readonly avatarColors = [
-    '#F44336',
-    '#E91E63',
-    '#9C27B0',
-    '#3F51B5',
-    '#03A9F4',
-    '#009688',
-    '#4CAF50',
-    '#FFC107',
-    '#FF9800',
-    '#795548',
+    '#F44336', '#E91E63', '#9C27B0', '#3F51B5', '#03A9F4',
+    '#009688', '#4CAF50', '#FFC107', '#FF9800', '#795548',
   ];
 
-isValidName(name: string): boolean {
-  return /^[A-Za-zäöüÄÖÜß\s\-']+$/.test(name.trim());
-}
+  /**
+   * Validiert den Namen mit einem regulären Ausdruck
+   * @param name Name des Kontakts
+   * @returns True, wenn der Name gültig ist
+   */
+  isValidName(name: string): boolean {
+    return /^[A-Za-zäöüÄÖÜß\s\-']+$/.test(name.trim());
+  }
 
+  /** Lifecycle-Hook: Initialisierung */
   ngOnInit(): void {
     this.loadSelectedContact();
   }
 
+  /**
+   * Lifecycle-Hook: reagiert auf Änderungen der Input-Properties
+   * @param changes geänderte Properties
+   */
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['contactToEdit']?.currentValue) {
       this.loadContactData(this.contactToEdit!);
@@ -73,6 +89,7 @@ isValidName(name: string): boolean {
     }
   }
 
+  /** Lädt den aktuell ausgewählten Kontakt aus dem Service */
   private loadSelectedContact(): void {
     const contactId = this.contactService.getSelectedContactId();
     if (contactId) {
@@ -83,6 +100,10 @@ isValidName(name: string): boolean {
     }
   }
 
+  /**
+   * Lädt die Kontaktdaten in die Formularfelder
+   * @param contact Kontaktobjekt
+   */
   private loadContactData(contact: Contact): void {
     this.name = contact.name || '';
     this.email = contact.email || '';
@@ -91,6 +112,11 @@ isValidName(name: string): boolean {
     this.isEditing = !!contact.id;
   }
 
+  /**
+   * Aktualisiert das entsprechende Feld bei Input-Änderungen
+   * @param field Feldname ('name', 'email' oder 'phone')
+   * @param value Wert des Feldes
+   */
   onInputChange(
     field: keyof Pick<Contact, 'name' | 'email' | 'phone'>,
     value: string
@@ -98,11 +124,13 @@ isValidName(name: string): boolean {
     this[field] = value;
   }
 
+  /** Handler für Klick auf den Hintergrund, schließt das Modal */
   handleBackdropClick() {
     this.resetForm();
     this.closed.emit();
   }
 
+  /** Setzt alle Formularfelder zurück */
   private resetForm(): void {
     this.name = '';
     this.email = '';
@@ -111,6 +139,7 @@ isValidName(name: string): boolean {
     this.currentContactId = null;
   }
 
+  /** Löscht den aktuellen Kontakt und schließt das Modal */
   async deleteContactAndClose(): Promise<void> {
     if (!this.currentContactId) return;
 
@@ -124,6 +153,10 @@ isValidName(name: string): boolean {
     }
   }
 
+  /**
+   * Speichert den Kontakt (neu oder bearbeitet)
+   * @param form NgForm der Eingabemaske
+   */
   async saveContact(form: NgForm): Promise<void> {
     if (form.invalid) {
       this.markFormAsTouched(form);
@@ -150,10 +183,12 @@ isValidName(name: string): boolean {
     }
   }
 
+  /** Markiert alle Formularfelder als "touched" */
   private markFormAsTouched(form: NgForm): void {
     Object.values(form.controls).forEach((control) => control.markAsTouched());
   }
 
+  /** Bereitet die Kontaktdaten für den Service auf */
   private prepareContactData(): Omit<Contact, 'id'> {
     return {
       name: this.name.trim(),
@@ -164,6 +199,11 @@ isValidName(name: string): boolean {
     };
   }
 
+  /**
+   * Berechnet die Initialen des Namens für den Avatar
+   * @param name Name des Kontakts
+   * @returns 1–2 Buchstaben Initialen
+   */
   getInitials(name: string): string {
     return name
       .split(' ')
@@ -173,6 +213,11 @@ isValidName(name: string): boolean {
       .join('');
   }
 
+  /**
+   * Berechnet die Avatar-Farbe basierend auf dem ersten Buchstaben des Namens
+   * @param name Name des Kontakts
+   * @returns Hex-Farbcode
+   */
   getAvatarColor(name: string): string {
     if (!name?.trim()) return this.avatarColors[0];
     const firstCharCode = name.trim().charCodeAt(0);

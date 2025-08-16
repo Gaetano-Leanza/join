@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { FirebaseService } from '../../../services/firebase.service';
-import { Observable } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { Contact } from '../contact-model/contact.model';
 
 /**
  * Service zur Verwaltung von Kontakten über Firebase.
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ContactService {
   /** ID des aktuell ausgewählten Kontakts */
@@ -25,9 +25,14 @@ export class ContactService {
     return this.selectedContactId;
   }
 
-  /** Liefert alle Kontakte aus Firebase zurück */
   getContacts(): Observable<Contact[]> {
-    return this.firebaseService.getCollectionData<Contact>('contacts');
+    return this.firebaseService.getCollectionData<Contact>('contacts').pipe(
+      tap(() => console.debug('Kontakte erfolgreich geladen')),
+      catchError((err) => {
+        console.error('Firebase Fehler:', err);
+        return throwError(() => new Error('Datenbankfehler'));
+      })
+    );
   }
 
   /** Liefert einen einzelnen Kontakt anhand der ID zurück */

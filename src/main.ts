@@ -9,7 +9,10 @@ import { setLogLevel, LogLevel } from '@angular/fire';
 import { AppComponent } from './app/app.component';
 import { appConfig } from './app/app.config';
 
-// Firebase-Konfiguration
+/**
+ * Konfiguration für Firebase.
+ * Enthält die API-Schlüssel und Projektinformationen.
+ */
 const firebaseConfig = {
   apiKey: 'AIzaSyD1fse1ML6Ie-iFClg_2Ukr-G1FEeQUHac',
   authDomain: 'join-e1f64.firebaseapp.com',
@@ -20,16 +23,31 @@ const firebaseConfig = {
   measurementId: 'G-Y12RXDEX3N'
 };
 
-// Firebase-Logging auf verbose setzen
+/**
+ * Setzt das Logging-Level von Firebase.
+ * LogLevel.VERBOSE zeigt alle Logs an.
+ */
 setLogLevel(LogLevel.VERBOSE);
 
-// Bootstrap der Anwendung
+/**
+ * Bootstrappt die Angular-Anwendung.
+ * 
+ * Dies ist ein **Client-Side Rendering (CSR) Bootstrap**, keine SSR.
+ * 
+ * @returns {Promise<void>} Ein Promise, das auf die erfolgreiche Initialisierung der App wartet.
+ */
 bootstrapApplication(AppComponent, {
   ...appConfig,
   providers: [
+    // Provider aus der App-Konfiguration übernehmen
     ...(appConfig.providers || []),
+    // Animationen bereitstellen
     provideAnimations(),
+    // Firebase App initialisieren
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    // Firestore bereitstellen
     provideFirestore(() => getFirestore())
   ]
-}).catch(err => console.error(err));
+}).catch(err => console.error(err)); // Fehler beim Bootstrap protokollieren
+
+
