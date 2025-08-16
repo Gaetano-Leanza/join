@@ -4,96 +4,65 @@ import { Observable } from 'rxjs';
 import { Contact } from '../contact-model/contact.model';
 
 /**
- * Service for managing contact data operations
- * Provides CRUD operations and state management for contacts using Firebase
+ * Service zur Verwaltung von Kontakten über Firebase.
  */
 @Injectable({
   providedIn: 'root'
 })
 export class ContactService {
-  /** Browser detection property */
-  isBrowser: any;
-  
-  /** ID of currently selected contact */
-  private selectedContactId: string | null = null; 
+  /** ID des aktuell ausgewählten Kontakts */
+  private selectedContactId: string | null = null;
 
-  /**
-   * Constructor
-   * @param {FirebaseService} firebaseService - Injected Firebase service for data operations
-   */
   constructor(private firebaseService: FirebaseService) {}
 
-  /**
-   * Sets the currently selected contact ID
-   * @param {string | null} contactId - ID of contact to select, or null to deselect
-   */
+  /** Setzt die aktuell ausgewählte Kontakt-ID */
   setSelectedContact(contactId: string | null): void {
     this.selectedContactId = contactId;
   }
 
-  /**
-   * Gets the currently selected contact ID
-   * @returns {string | null} ID of selected contact or null if none selected
-   */
+  /** Gibt die aktuell ausgewählte Kontakt-ID zurück */
   getSelectedContactId(): string | null {
     return this.selectedContactId;
   }
 
-  /**
-   * Retrieves all contacts from Firebase
-   * @returns {Observable<Contact[]>} Observable stream of contact array
-   */
+  /** Liefert alle Kontakte aus Firebase zurück */
   getContacts(): Observable<Contact[]> {
     return this.firebaseService.getCollectionData<Contact>('contacts');
   }
 
-  /**
-   * Retrieves a specific contact by ID
-   * @param {string} id - Contact ID to retrieve
-   * @returns {Observable<Contact | undefined>} Observable of contact or undefined if not found
-   */
+  /** Liefert einen einzelnen Kontakt anhand der ID zurück */
   getContactById(id: string): Observable<Contact | undefined> {
     return this.firebaseService.getDocumentById<Contact>('contacts', id);
   }
 
-  /**
-   * Adds a new contact to Firebase
-   * @param {Omit<Contact, 'id'>} contact - Contact data without ID
-   * @returns {Promise<string | null>} Promise resolving to new contact ID or null on error
-   */
+  /** Fügt einen neuen Kontakt hinzu */
   async addContact(contact: Omit<Contact, 'id'>): Promise<string | null> {
     try {
       return await this.firebaseService.addDocument('contacts', contact);
     } catch (error) {
+      console.error('Fehler beim Hinzufügen des Kontakts:', error);
       return null;
     }
   }
 
-  /**
-   * Updates an existing contact in Firebase
-   * @param {string} id - ID of contact to update
-   * @param {Partial<Contact>} updates - Partial contact data with changes
-   * @returns {Promise<boolean>} Promise resolving to true on success, false on error
-   */
+  /** Aktualisiert einen bestehenden Kontakt */
   async updateContact(id: string, updates: Partial<Contact>): Promise<boolean> {
     try {
       await this.firebaseService.updateDocument('contacts', id, updates);
       return true;
     } catch (error) {
+      console.error('Fehler beim Aktualisieren des Kontakts:', error);
       return false;
     }
   }
 
-  /**
-   * Deletes a contact from Firebase
-   * @param {string} id - ID of contact to delete
-   * @returns {Promise<boolean>} Promise resolving to true on success, false on error
-   */
+  /** Löscht einen Kontakt */
   async deleteContact(id: string): Promise<boolean> {
     try {
       await this.firebaseService.deleteDocument('contacts', id);
       return true;
     } catch (error) {
+      console.error('Fehler beim Löschen des Kontakts:', error);
       return false;
     }
   }

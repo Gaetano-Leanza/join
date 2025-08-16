@@ -1,4 +1,4 @@
-import { Component, HostListener, ElementRef, ViewChild } from '@angular/core';
+import { Component, HostListener, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Contact } from '../contact-model/contact.model';
@@ -33,14 +33,13 @@ import { ContactService } from '../contact-service/contact.service';
     ]),
   ],
 })
-export class ContactLayoutComponent {
+export class ContactLayoutComponent implements OnInit {
   selectedContact: Contact | null = null;
   isModalVisible = false;
   isSmallScreen = false;
   sidePanelActive = false;
   isMenuOpen = false;
 
-  // ViewChild für Burger-Button und Menü
   @ViewChild('burgerButton', { static: false }) burgerButton!: ElementRef;
   @ViewChild('burgerMenu', { static: false }) burgerMenu!: ElementRef;
 
@@ -64,16 +63,18 @@ export class ContactLayoutComponent {
 
   selectContact(contact: Contact): void {
     this.selectedContact = contact;
+    this.contactService.setSelectedContact(contact.id || null);
     if (this.isSmallScreen) {
       this.sidePanelActive = true;
     }
   }
 
   closeSidePanel() {
-  this.selectedContact = null;
-  this.sidePanelActive = false;
-  this.isMenuOpen = false; 
-}
+    this.selectedContact = null;
+    this.contactService.setSelectedContact(null);
+    this.sidePanelActive = false;
+    this.isMenuOpen = false;
+  }
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
@@ -83,7 +84,6 @@ export class ContactLayoutComponent {
     this.isMenuOpen = false;
   }
 
-  // HostListener für Klicks auf das Dokument
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     const clickedInsideMenu = this.burgerMenu?.nativeElement.contains(
@@ -131,21 +131,22 @@ export class ContactLayoutComponent {
   closeModal() {
     this.isModalVisible = false;
     this.selectedContact = null;
+    this.contactService.setSelectedContact(null);
     this.sidePanelActive = false;
   }
 
   async onDeleteContact(): Promise<void> {
     if (!this.selectedContact?.id) return;
 
-    const success = await this.contactService.deleteContact(
-      this.selectedContact.id
-    );
-
-    if (success) {
+    try {
+      await this.contactService.deleteContact(this.selectedContact.id);
       this.selectedContact = null;
       this.sidePanelActive = false;
       this.contactService.setSelectedContact(null);
       this.isModalVisible = false;
+    } catch (error) {
+      console.error('Error deleting contact:', error);
+      // Hier könnten Sie eine Fehlermeldung anzeigen
     }
   }
 }

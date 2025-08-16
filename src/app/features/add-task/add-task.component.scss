@@ -309,3 +309,22 @@ h3 {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
   transition: all 0.3s ease;
 }
+
+
+.placeholder3 {
+  background: url("/img/date-icon.svg") no-repeat right 10px center;
+  background-size: 20px; /* Icon-Größe anpassen */
+  padding-right: 35px;   /* Platz lassen, damit Text nicht über das Icon läuft */
+}
+
+.placeholder7, .placeholder8 {
+  background: url("/img/arrow-drop-down.svg") no-repeat right 10px center;
+  background-size: 20px; /* Icon-Größe anpassen */
+  padding-right: 35px;   /* Platz lassen, damit Text nicht über das Icon läuft */
+}
+
+
+
+
+
+

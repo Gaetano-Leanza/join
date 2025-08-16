@@ -1,16 +1,9 @@
-/**
- * Schnittstelle für einen Kontakt.
- */
+// contact.model.ts
 export interface Contact {
-  /** Eindeutige Identifikationsnummer des Kontakts. */
-  id: string;
-
-  /** Vollständiger Name des Kontakts. */
+  id?: string;
   name: string;
-
-  /** E-Mail-Adresse des Kontakts. */
   email: string;
-
-  /** Telefonnummer des Kontakts. */
   phone: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
