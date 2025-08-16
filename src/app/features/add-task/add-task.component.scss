@@ -259,16 +259,13 @@ h3 {
   padding-top: 20px;
 }
 
-.cancel-button {
-  height: 50px;
-  margin-top: 8px;
-}
-
 .create-task-button {
   height: 50px;
   width: 165px;
   border-radius: 10px;
   margin-bottom: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .create-task-button svg {
@@ -279,4 +276,36 @@ h3 {
 .create-task-button:hover svg rect {
   fill: #007cee;
   stroke: #007cee;
+}
+
+.cancel-button {
+  height: 50px;
+  width: 110px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: transparent;
+}
+
+.cancel-button svg {
+  transform: translateX(-9px) translateY(-0px);
+  height: 50px;
+}
+
+.cancel-button:hover svg text {
+  fill: #007cee;
+  stroke: none;
+}
+
+.cancel-button:hover svg rect,
+.cancel-button:hover svg path,
+.cancel-button:hover svg circle {
+  stroke: #007cee;
+}
+
+.cancel-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
 }
