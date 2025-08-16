@@ -123,20 +123,30 @@ h3 {
   border-left: 2px solid #ccc;
   border-right: 2px solid #ccc;
   border-bottom: 4px solid #999;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 0;
   cursor: pointer;
   transition: box-shadow 0.2s ease;
 }
 
 .image-button-middle {
-  width: 119px;
-  background: none;
+  width: 114px;
+  background-color: none;
   border: none;
+  border-left: 2px solid #ccc;
+  border-right: 2px solid #ccc;
+  border-bottom: 4px solid #999;
+  border-radius: 10px;
+  padding: 0;
   cursor: pointer;
+  transition: box-shadow 0.2s ease;
 }
 
 .image-button-left:hover {
+  box-shadow: 2px 6px 8px -2px rgba(0, 0, 0, 0.4);
+}
+
+.image-button-middle.active:hover {
   box-shadow: 2px 6px 8px -2px rgba(0, 0, 0, 0.4);
 }
 
@@ -150,8 +160,8 @@ h3 {
 }
 
 .image-button-middle svg {
-  transform: translateX(-8.5px) translateY(-0px);
-  height: 50px;
+  transform: translateX(-13px) translateY(2px);
+  height: 46px;
 }
 
 .image-button-right svg {
@@ -159,22 +169,8 @@ h3 {
   height: 55px;
 }
 
-.image-button-left {
-  svg {
-    path:not([fill="#FF3D00"]) {
-      stroke: currentColor;
-      stroke-width: 0.3px;
-      paint-order: stroke;
-    }
-
-    // Für den aktiven Zustand
-    &.active path:not([fill="white"]) {
-      stroke: white;
-    }
-  }
-}
-
-.image-button-left {
+.image-button-left,
+.image-button-right {
   &.active svg {
     path {
       &[fill="white"] {
@@ -185,4 +181,78 @@ h3 {
       }
     }
   }
+}
+
+.image-button-middle {
+  rect {
+    fill: #ffa800;
+  }
+
+  path,
+  g path {
+    fill: white;
+  }
+
+  &.active {
+    rect {
+      fill: white;
+    }
+
+    path:not(g path) {
+      fill: black;
+    }
+
+    g path {
+      fill: #ffa800;
+    }
+  }
+}
+
+.image-button-left {
+  svg {
+    path:not([fill="#FF3D00"]) {
+      stroke: currentColor;
+      stroke-width: 0.3px;
+      paint-order: stroke;
+    }
+
+    &.active path:not([fill="white"]) {
+      stroke: white;
+    }
+  }
+}
+
+.image-button-right {
+  width: 119px;
+  background: none;
+  border: none;
+  border-left: 2px solid #ccc;
+  border-right: 2px solid #ccc;
+  border-bottom: 4px solid #999;
+  border-radius: 8px;
+  padding: 0;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease;
+}
+
+.image-button-right.active {
+  svg rect {
+    fill: #7ae229 !important;
+  }
+
+  svg path {
+    fill: white !important;
+  }
+}
+
+.image-button-left.active:hover {
+  box-shadow: none;
+}
+
+.image-button-right.active:hover {
+  box-shadow: none;
+}
+
+.image-button-middle:hover {
+  box-shadow: none;
 }
