@@ -106,15 +106,6 @@ h3 {
   opacity: 1;
 }
 
-.content-bottom {
-  width: 100%;
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  padding-top: 20px;
-}
-
 .image-button-left,
 .image-button-right {
   width: 119px;
@@ -255,4 +246,37 @@ h3 {
 
 .image-button-middle:hover {
   box-shadow: none;
+}
+
+.content-bottom {
+  width: 1013px;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 20px;
+  padding-top: 20px;
+}
+
+.cancel-button {
+  height: 50px;
+  margin-top: 8px;
+}
+
+.create-task-button {
+  height: 50px;
+  width: 165px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+
+.create-task-button svg {
+  transform: translateX(-12px) translateY(-1px);
+  height: 50px;
+}
+
+.create-task-button:hover svg rect {
+  fill: #007cee;
+  stroke: #007cee;
 }
