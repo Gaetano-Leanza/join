@@ -51,12 +51,31 @@
                     (cdkDropListDropped)="drop($event)">
                     @if (todo.length > 0) {
                     @for (item of todo; track item.id) {
-                    <div class="example-box" cdkDrag>
+                    <div class="example-box" cdkDrag (click)="openTaskModal(item)">
                         <div class="task-category" [style.backgroundColor]="item.categoryColor">
                             {{ item.category }}
                         </div>
                         <div class="task-title">{{ item.title }}</div>
                         <div class="task-description">{{ item.description }}</div>
+                        <!-- Subtasks Progress Bar -->
+                        <div class="task-subtasks" *ngIf="item.subtasks && item.subtasks.length > 0">
+                            <div class="progress-bar">
+                                <div class="progress" [style.width.%]="getSubtaskProgress(item)"></div>
+                            </div>
+                            <span>{{ getDoneSubtasks(item) }}/{{ item.subtasks.length }} Subtasks</span>
+                        </div>
+                        <!-- Contacts -->
+                        <div class="task-contacts-wrapper">
+                            <div class="task-contacts" *ngIf="item.contacts && item.contacts.length > 0">
+                                <div class="contact" *ngFor="let c of item.contacts" [style.backgroundColor]="c.color">
+                                    {{ c.initials }}
+                                </div>
+
+                            </div>
+                            <div class="task-priority" *ngIf="item.priority">
+                                {{ item.priority }}
+                            </div>
+                        </div>
                     </div>
                     }
                     } @else {
@@ -85,12 +104,31 @@
                     (cdkDropListDropped)="drop($event)">
                     @if (inprogress.length > 0) {
                     @for (item of inprogress; track item.id) {
-                    <div class="example-box" cdkDrag>
+                    <div class="example-box" cdkDrag (click)="openTaskModal(item)">
                         <div class="task-category" [style.backgroundColor]="item.categoryColor">
                             {{ item.category }}
                         </div>
                         <div class="task-title">{{ item.title }}</div>
                         <div class="task-description">{{ item.description }}</div>
+                        <!-- Subtasks Progress Bar -->
+                        <div class="task-subtasks" *ngIf="item.subtasks && item.subtasks.length > 0">
+                            <div class="progress-bar">
+                                <div class="progress" [style.width.%]="getSubtaskProgress(item)"></div>
+                            </div>
+                            <span>{{ getDoneSubtasks(item) }}/{{ item.subtasks.length }} Subtasks</span>
+                        </div>
+                        <!-- Contacts -->
+                        <div class="task-contacts-wrapper">
+                            <div class="task-contacts" *ngIf="item.contacts && item.contacts.length > 0">
+                                <div class="contact" *ngFor="let c of item.contacts" [style.backgroundColor]="c.color">
+                                    {{ c.initials }}
+                                </div>
+
+                            </div>
+                            <div class="task-priority" *ngIf="item.priority">
+                                {{ item.priority }}
+                            </div>
+                        </div>
                     </div>
                     }
                     } @else {
@@ -119,12 +157,31 @@
                     (cdkDropListDropped)="drop($event)">
                     @if (awaitfeedback.length > 0) {
                     @for (item of awaitfeedback; track item.id) {
-                    <div class="example-box" cdkDrag>
+                    <div class="example-box" cdkDrag (click)="openTaskModal(item)">
                         <div class="task-category" [style.backgroundColor]="item.categoryColor">
                             {{ item.category }}
                         </div>
                         <div class="task-title">{{ item.title }}</div>
                         <div class="task-description">{{ item.description }}</div>
+                        <!-- Subtasks Progress Bar -->
+                        <div class="task-subtasks" *ngIf="item.subtasks && item.subtasks.length > 0">
+                            <div class="progress-bar">
+                                <div class="progress" [style.width.%]="getSubtaskProgress(item)"></div>
+                            </div>
+                            <span>{{ getDoneSubtasks(item) }}/{{ item.subtasks.length }} Subtasks</span>
+                        </div>
+                        <!-- Contacts -->
+                        <div class="task-contacts-wrapper">
+                            <div class="task-contacts" *ngIf="item.contacts && item.contacts.length > 0">
+                                <div class="contact" *ngFor="let c of item.contacts" [style.backgroundColor]="c.color">
+                                    {{ c.initials }}
+                                </div>
+
+                            </div>
+                            <div class="task-priority" *ngIf="item.priority">
+                                {{ item.priority }}
+                            </div>
+                        </div>
                     </div>
                     }
                     } @else {
@@ -159,6 +216,25 @@
                         </div>
                         <div class="task-title">{{ item.title }}</div>
                         <div class="task-description">{{ item.description }}</div>
+                        <!-- Subtasks Progress Bar -->
+                        <div class="task-subtasks" *ngIf="item.subtasks && item.subtasks.length > 0">
+                            <div class="progress-bar">
+                                <div class="progress" [style.width.%]="getSubtaskProgress(item)"></div>
+                            </div>
+                            <span>{{ getDoneSubtasks(item) }}/{{ item.subtasks.length }} Subtasks</span>
+                        </div>
+                        <!-- Contacts -->
+                        <div class="task-contacts-wrapper">
+                            <div class="task-contacts" *ngIf="item.contacts && item.contacts.length > 0">
+                                <div class="contact" *ngFor="let c of item.contacts" [style.backgroundColor]="c.color">
+                                    {{ c.initials }}
+                                </div>
+
+                            </div>
+                            <div class="task-priority" *ngIf="item.priority">
+                                {{ item.priority }}
+                            </div>
+                        </div>
                     </div>
                     }
                     } @else {
@@ -175,5 +251,34 @@
 
     </div>
 </section>
-
+<!--ADD TASK Modal Board -->
 <app-modal-board *ngIf="showModal" (close)="showModal = false"></app-modal-board>
+
+<!-- Task Modal -->
+<div class="task-modal" *ngIf="selectedTask">
+    <div class="modal-content">
+        <button id="close" (click)="selectedTask = null">X</button>
+        <p id="categoryColor" [style.background-color]="selectedTask.categoryColor">{{selectedTask.category}}</p>
+        <h3>{{ selectedTask.title }}</h3>
+        <p>{{ selectedTask.description }}</p>
+        <p> Due Date: {{ selectedTask.dueDate | date:'shortDate' }} </p>
+        <p>Priority: {{selectedTask.priority}}</p>
+        <p>Assigned To:</p> <br>
+        {{selectedTask.contacts}}
+        <p>Subtasks</p> <br>
+
+        <ul>
+            <li *ngFor="let subtask of selectedTask.subtasks">
+                {{ subtask.title }} - {{ subtask.done ? 'Done' : 'Not Done' }}
+            </li>
+
+
+
+        </ul>
+
+        <div class="task-modal-buttons">
+            <button>Delete</button>
+            <button>Edit </button>
+        </div>
+    </div>
+</div>
