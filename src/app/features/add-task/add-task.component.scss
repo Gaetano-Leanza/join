@@ -310,21 +310,27 @@ h3 {
   transition: all 0.3s ease;
 }
 
+.placeholder2 {
+  background: url("/img/Recurso.svg") no-repeat right 3px bottom 3px;
+  background-size: 12px; /* Icon-Größe anpassen */
+  padding-right: 35px; /* Platz lassen, damit Text nicht über das Icon läuft */
+}
 
 .placeholder3 {
   background: url("/img/date-icon.svg") no-repeat right 10px center;
   background-size: 20px; /* Icon-Größe anpassen */
-  padding-right: 35px;   /* Platz lassen, damit Text nicht über das Icon läuft */
+  padding-right: 35px; /* Platz lassen, damit Text nicht über das Icon läuft */
 }
 
-.placeholder7, .placeholder8 {
+.placeholder7,
+.placeholder8 {
   background: url("/img/arrow-drop-down.svg") no-repeat right 10px center;
   background-size: 20px; /* Icon-Größe anpassen */
-  padding-right: 35px;   /* Platz lassen, damit Text nicht über das Icon läuft */
+  padding-right: 35px; /* Platz lassen, damit Text nicht über das Icon läuft */
 }
 
-
-
-
-
-
+.placeholder9 {
+  background: url("/img/Subtasks-icon.svg") no-repeat right 10px center;
+  background-size: 20px; /* Icon-Größe anpassen */
+  padding-right: 35px; /* Platz lassen, damit Text nicht über das Icon läuft */
+}
