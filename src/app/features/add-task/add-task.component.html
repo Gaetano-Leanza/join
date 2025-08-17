@@ -5,20 +5,24 @@
 
   <div class="content-wrapper">
     <div class="left-side">
-      <h4 class="headline">Title</h4>
+      <div class="headline-wrapper">
+        <h4>Title</h4>
+        <h5>*</h5>
+      </div>
       <input class="placeholder1" type="text" placeholder="Enter a title" />
-      <h4 class="headline">Description</h4>
+      <h4>Description</h4>
       <input
         class="placeholder2"
         type="text"
         placeholder="Enter a Description"
       />
-      <h4 class="headline">Due date</h4>
+      <div class="headline-wrapper">
+        <h4>Due date</h4>
+        <h5>*</h5>
+      </div>
       <input class="placeholder3" type="text" placeholder="dd/mm/yyyy" />
     </div>
-
     <div class="middle"></div>
-
     <div class="right-side">
       <div class="row1-wrapper">
         <h4 class="headline">Priority</h4>
@@ -105,7 +109,6 @@
               </defs>
             </svg>
           </button>
-
           <button
             class="image-button-middle"
             [class.active]="isActive2"
@@ -227,6 +230,7 @@
 
       <div class="row2">
         <h4 class="headline">Assigned to</h4>
+
         <div class="input-wrapper">
           <input
             class="placeholder7"
@@ -238,7 +242,11 @@
       </div>
 
       <div class="row3">
-        <h4 class="headline">Category</h4>
+        <div class="headline-wrapper">
+          <h4>Category</h4>
+          <h5>*</h5>
+        </div>
+
         <div class="input-wrapper">
           <input
             class="placeholder8"
@@ -337,4 +345,9 @@
       </svg>
     </button>
   </div>
+</div>
+
+<div class="text-bottom">
+  <h5>*</h5>
+  <h4>This field is requiered!</h4>
 </div>

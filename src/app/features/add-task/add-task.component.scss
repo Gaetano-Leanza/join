@@ -5,15 +5,50 @@ h3 {
   padding-bottom: 40px;
 }
 
-.headline {
-  padding-bottom: 5px;
+h4 {
   font-weight: 400;
+  margin-bottom: 5px;
+}
+
+h5 {
+  font-weight: 400;
+  color: red;
+  padding-left: 2px;
+  font-size: 20px;
+  padding-bottom: 5px;
 }
 
 .content-wrapper {
   display: flex;
   justify-items: row;
   gap: 40px;
+}
+
+.headline-wrapper {
+  display: flex;
+  flex-direction: row;
+  font-weight: 400;
+  gap: 3px;
+  margin-bottom: 5px;
+}
+
+.headline-wrapper h4 {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.headline-wrapper h5 {
+  margin: 0;
+  padding: 0;
+  line-height: 0.8;
+}
+
+.text-bottom {
+  display: flex;
+  flex-direction: row;
+  padding-left: 100px;
+  gap: 2px;
 }
 
 .left-side {
