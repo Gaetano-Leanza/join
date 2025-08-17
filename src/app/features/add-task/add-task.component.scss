@@ -312,25 +312,72 @@ h3 {
 
 .placeholder2 {
   background: url("/img/Recurso.svg") no-repeat right 3px bottom 3px;
-  background-size: 12px; /* Icon-Größe anpassen */
-  padding-right: 35px; /* Platz lassen, damit Text nicht über das Icon läuft */
+  background-size: 12px;
+  padding-right: 35px;
 }
 
 .placeholder3 {
   background: url("/img/date-icon.svg") no-repeat right 10px center;
-  background-size: 20px; /* Icon-Größe anpassen */
-  padding-right: 35px; /* Platz lassen, damit Text nicht über das Icon läuft */
+  background-size: 20px;
+  padding-right: 35px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: inline-block;
 }
 
 .placeholder7,
 .placeholder8 {
-  background: url("/img/arrow-drop-down.svg") no-repeat right 10px center;
-  background-size: 20px; /* Icon-Größe anpassen */
-  padding-right: 35px; /* Platz lassen, damit Text nicht über das Icon läuft */
+  padding-right: 40px;
+}
+/* Assigned to */
+.icon-assign {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  transform: translateY(-50%);
+  background: url("/img/arrow-drop-down.svg") no-repeat center;
+  background-size: 20px;
+  cursor: pointer;
+  transition: background-image 0.3s;
+}
+.icon-assign:hover {
+  background-image: url("/img/arrow-drop-down-hover.svg");
 }
 
-.placeholder9 {
-  background: url("/img/Subtasks-icon.svg") no-repeat right 10px center;
-  background-size: 20px; /* Icon-Größe anpassen */
-  padding-right: 35px; /* Platz lassen, damit Text nicht über das Icon läuft */
+/* Category */
+.icon-category {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  transform: translateY(-50%);
+  background: url("/img/arrow-drop-down.svg") no-repeat center;
+  background-size: 20px;
+  cursor: pointer;
+  transition: background-image 0.3s;
+}
+.icon-category:hover {
+  background-image: url("/img/arrow-drop-down-hover.svg");
+}
+
+/* Subtask */
+.icon-subtask {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  transform: translateY(-50%);
+  background: url("/img/Subtasks-icon.svg") no-repeat center;
+  background-size: 20px;
+  cursor: pointer;
+  transition: background-image 0.3s;
+}
+.icon-subtask:hover {
+  background-image: url("/img/Subtasks-icon-hover.svg");
 }
