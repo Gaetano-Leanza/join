@@ -13,7 +13,6 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { slideInModal } from './modal.animations';
 import { Contact } from '../contact-model/contact.model';
 import { ContactService } from '../contact-service/contact.service';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 
 
 @Component({

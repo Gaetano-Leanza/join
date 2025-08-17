@@ -49,11 +49,12 @@ h5 {
   flex-direction: row;
   padding-left: 100px;
   gap: 2px;
+  line-height: 0;
 }
 
 .left-side {
   height: 400px;
-  width: 500px;
+  width: 460px;
   padding-left: 100px;
 }
 
@@ -68,6 +69,15 @@ h5 {
   border-color: rgb(206, 203, 203);
 }
 
+.right-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 15px;
+  height: 255px;
+  width: 400px;
+}
+
 .placeholder2 {
   height: 100px;
   border-radius: 8px;
@@ -80,20 +90,11 @@ h5 {
   background-color: rgb(177, 177, 177);
 }
 
-.right-side {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 15px;
-  height: 255px;
-  width: 450px;
-}
-
 .row1 {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  gap: 20px;
+  gap: 12px;
   height: 50px;
   width: 600px;
 }
@@ -111,21 +112,12 @@ h5 {
 .placeholder9 {
   border-radius: 8px;
   height: 35px;
-  width: 430px;
+  width: 378px;
 }
 
 .placeholder5::placeholder {
   color: white;
   opacity: 1;
-}
-
-.placeholder5 {
-  background-color: #ffa800;
-  border: none;
-  font-family: "Inter", sans-serif;
-  font-size: 21px;
-  font-weight: 600;
-  text-align: center;
 }
 
 .placeholder7,
@@ -284,7 +276,7 @@ h5 {
 }
 
 .content-bottom {
-  width: 1013px;
+  width: 920px;
   height: 100px;
   display: flex;
   flex-direction: row;
@@ -346,15 +338,22 @@ h5 {
 }
 
 .placeholder2 {
-  background: url("/img/Recurso.svg") no-repeat right 3px bottom 3px;
-  background-size: 12px;
-  padding-right: 35px;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  padding: 8px;
+  width: 360px;
+  height: 100px;
+  text-align: left;
+  vertical-align: top;
+  margin-bottom: 10px;
+  border: 2px solid #b3b3b3;
 }
 
 .placeholder3 {
   background: url("/img/date-icon.svg") no-repeat right 10px center;
   background-size: 20px;
   padding-right: 35px;
+  border: 2px solid #b3b3b3;
 }
 
 .input-wrapper {
@@ -362,11 +361,17 @@ h5 {
   display: inline-block;
 }
 
+.placeholder1,
+.placeholder9 {
+  border: 2px solid #b3b3b3;
+}
+
 .placeholder7,
 .placeholder8 {
   padding-right: 40px;
+  border: 2px solid #b3b3b3;
 }
-/* Assigned to */
+
 .icon-assign {
   position: absolute;
   top: 50%;
@@ -379,11 +384,11 @@ h5 {
   cursor: pointer;
   transition: background-image 0.3s;
 }
+
 .icon-assign:hover {
   background-image: url("/img/arrow-drop-down-hover.svg");
 }
 
-/* Category */
 .icon-category {
   position: absolute;
   top: 50%;
@@ -396,11 +401,11 @@ h5 {
   cursor: pointer;
   transition: background-image 0.3s;
 }
+
 .icon-category:hover {
   background-image: url("/img/arrow-drop-down-hover.svg");
 }
 
-/* Subtask */
 .icon-subtask {
   position: absolute;
   top: 50%;
@@ -413,6 +418,7 @@ h5 {
   cursor: pointer;
   transition: background-image 0.3s;
 }
+
 .icon-subtask:hover {
   background-image: url("/img/Subtasks-icon-hover.svg");
 }
