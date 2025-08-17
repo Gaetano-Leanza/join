@@ -1,4 +1,4 @@
-import { inject, Injectable, Injector, runInInjectionContext } from '@angular/core';
+import { inject, Injectable, Injector, runInInjectionContext, Optional } from '@angular/core';
 import {
   Firestore,
   collection,
@@ -14,28 +14,45 @@ import {
   DocumentReference,
   UpdateData
 } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 /**
  * Service für Firestore-Operationen mit Angular und Firebase.
  * Bietet CRUD-Funktionen für Collections und Dokumente.
+ * SSR-sicher durch optionale Firestore-Injection.
  */
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
-  /** Firestore-Instanz für Datenbankoperationen */
-  private firestore = inject(Firestore);
+  /** Firestore-Instanz für Datenbankoperationen - OPTIONAL für SSR */
+  private firestore: Firestore | null = null;
 
   /** Injector für `runInInjectionContext` zur sicheren Ausführung */
   private injector = inject(Injector);
+
+  constructor(@Optional() firestore: Firestore) {
+    this.firestore = firestore;
+    console.log('FirebaseService initialisiert:', this.firestore ? 'mit Firestore' : 'ohne Firestore (SSR)');
+  }
+
+  /**
+   * Überprüft ob Firestore verfügbar ist
+   */
+  private isFirestoreAvailable(): boolean {
+    return !!this.firestore;
+  }
 
   /**
    * Führt eine Operation innerhalb des Angular-Injektionskontextes aus.
    * @param operation Die auszuführende Funktion
    * @returns Das Ergebnis der Operation
    */
-  private firestoreOperation<T>(operation: () => T): T {
+  private firestoreOperation<T>(operation: () => T): T | null {
+    if (!this.isFirestoreAvailable()) {
+      console.warn('Firestore nicht verfügbar (SSR) - Operation übersprungen');
+      return null;
+    }
     return runInInjectionContext(this.injector, operation);
   }
 
@@ -46,11 +63,18 @@ export class FirebaseService {
    * @returns Observable einer Liste von Dokumenten mit `id`
    */
   getCollectionData<T extends DocumentData>(path: string): Observable<(T & { id: string })[]> {
-    return this.firestoreOperation(() => {
-      const collectionRef = collection(this.firestore, path);
+    if (!this.isFirestoreAvailable()) {
+      console.warn('getCollectionData übersprungen (SSR) - leere Liste zurückgeben');
+      return of([]);
+    }
+
+    const result = this.firestoreOperation(() => {
+      const collectionRef = collection(this.firestore!, path);
       const q = query(collectionRef, orderBy('name', 'asc'));
       return collectionData(q, { idField: 'id' }) as Observable<(T & { id: string })[]>;
     });
+
+    return result || of([]);
   }
 
   /**
@@ -64,10 +88,17 @@ export class FirebaseService {
     collectionPath: string,
     id: string
   ): Observable<(T & { id: string }) | undefined> {
-    return this.firestoreOperation(() => {
-      const ref = doc(this.firestore, collectionPath, id) as DocumentReference<T, T>;
+    if (!this.isFirestoreAvailable()) {
+      console.warn('getDocumentById übersprungen (SSR) - undefined zurückgeben');
+      return of(undefined);
+    }
+
+    const result = this.firestoreOperation(() => {
+      const ref = doc(this.firestore!, collectionPath, id) as DocumentReference<T, T>;
       return docData(ref, { idField: 'id' }) as Observable<(T & { id: string }) | undefined>;
     });
+
+    return result || of(undefined);
   }
 
   /**
@@ -78,11 +109,18 @@ export class FirebaseService {
    * @returns Die ID des erstellten Dokuments
    */
   async addDocument<T extends DocumentData>(collectionPath: string, data: T): Promise<string> {
-    return this.firestoreOperation(async () => {
-      const ref = collection(this.firestore, collectionPath);
+    if (!this.isFirestoreAvailable()) {
+      console.warn('addDocument übersprungen (SSR) - leere ID zurückgeben');
+      return '';
+    }
+
+    const result = this.firestoreOperation(async () => {
+      const ref = collection(this.firestore!, collectionPath);
       const docRef = await addDoc(ref, data);
       return docRef.id;
     });
+
+    return await (result || Promise.resolve(''));
   }
 
   /**
@@ -97,10 +135,19 @@ export class FirebaseService {
     id: string,
     updates: UpdateData<T>
   ): Promise<void> {
-    return this.firestoreOperation(async () => {
-      const ref = doc(this.firestore, collectionPath, id) as DocumentReference<T, T>;
+    if (!this.isFirestoreAvailable()) {
+      console.warn('updateDocument übersprungen (SSR)');
+      return;
+    }
+
+    const result = this.firestoreOperation(async () => {
+      const ref = doc(this.firestore!, collectionPath, id) as DocumentReference<T, T>;
       await updateDoc(ref, updates);
     });
+
+    if (result) {
+      await result;
+    }
   }
 
   /**
@@ -109,9 +156,18 @@ export class FirebaseService {
    * @param id Dokument-ID
    */
   async deleteDocument(collectionPath: string, id: string): Promise<void> {
-    return this.firestoreOperation(async () => {
-      const ref = doc(this.firestore, collectionPath, id);
+    if (!this.isFirestoreAvailable()) {
+      console.warn('deleteDocument übersprungen (SSR)');
+      return;
+    }
+
+    const result = this.firestoreOperation(async () => {
+      const ref = doc(this.firestore!, collectionPath, id);
       await deleteDoc(ref);
     });
+
+    if (result) {
+      await result;
+    }
   }
 }

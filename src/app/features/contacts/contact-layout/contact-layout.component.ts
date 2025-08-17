@@ -1,5 +1,5 @@
-import { Component, HostListener, ElementRef, ViewChild, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, HostListener, ElementRef, ViewChild, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Contact } from '../contact-model/contact.model';
 import { ContactListComponent } from '../contact-list/contact-list.component';
@@ -55,24 +55,49 @@ export class ContactLayoutComponent implements OnInit {
   /** Referenz auf das Burger-Menü im Template. */
   @ViewChild('burgerMenu', { static: false }) burgerMenu!: ElementRef;
 
-  constructor(private contactService: ContactService) {}
+  /**
+   * @param contactService Service zur Verwaltung von Kontakten
+   * @param platformId Plattformkennung (Browser oder Server).
+   * Wird benötigt, da SSR kein `window`-Objekt kennt.
+   */
+  constructor(
+    private contactService: ContactService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
-  /** Lifecycle-Hook: Initialisierung des Components. */
+  /**
+   * Lifecycle-Hook: Initialisierung des Components.
+   * Prüft beim Start die Bildschirmgröße nur,
+   * wenn die App tatsächlich im Browser läuft.
+   */
   ngOnInit(): void {
-    this.checkScreenSize();
+    if (isPlatformBrowser(this.platformId)) {
+      this.checkScreenSize();
+    }
   }
 
-  /** HostListener: Überwacht Fenstergröße bei Resize. */
+  /**
+   * HostListener: Reagiert auf Fenster-Resize Events.
+   * Funktioniert nur im Browser, nicht bei SSR.
+   */
   @HostListener('window:resize')
   onResize() {
-    this.checkScreenSize();
+    if (isPlatformBrowser(this.platformId)) {
+      this.checkScreenSize();
+    }
   }
 
-  /** Prüft die aktuelle Bildschirmgröße und passt Side Panel an. */
+  /**
+   * Prüft die aktuelle Bildschirmgröße und passt
+   * die Side-Panel-Logik entsprechend an.
+   * Wird abgesichert, damit kein Fehler in SSR auftritt.
+   */
   private checkScreenSize() {
-    this.isSmallScreen = window.innerWidth <= 950;
-    if (!this.isSmallScreen) {
-      this.sidePanelActive = false;
+    if (isPlatformBrowser(this.platformId)) {
+      this.isSmallScreen = window.innerWidth <= 950;
+      if (!this.isSmallScreen) {
+        this.sidePanelActive = false;
+      }
     }
   }
 
@@ -107,17 +132,14 @@ export class ContactLayoutComponent implements OnInit {
   }
 
   /**
-   * Schließt das Burger-Menü, wenn außerhalb geklickt wurde.
-   * @param event MouseEvent
+   * HostListener: Schließt das Burger-Menü,
+   * wenn außerhalb geklickt wurde.
+   * @param event MouseEvent des Klicks
    */
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
-    const clickedInsideMenu = this.burgerMenu?.nativeElement.contains(
-      event.target
-    );
-    const clickedBurgerButton = this.burgerButton?.nativeElement.contains(
-      event.target
-    );
+    const clickedInsideMenu = this.burgerMenu?.nativeElement.contains(event.target);
+    const clickedBurgerButton = this.burgerButton?.nativeElement.contains(event.target);
 
     if (!clickedInsideMenu && !clickedBurgerButton) {
       this.isMenuOpen = false;
@@ -165,7 +187,10 @@ export class ContactLayoutComponent implements OnInit {
     this.sidePanelActive = false;
   }
 
-  /** Löscht den aktuell ausgewählten Kontakt. */
+  /**
+   * Löscht den aktuell ausgewählten Kontakt.
+   * @returns Promise<void> nach erfolgreichem oder fehlgeschlagenem Löschvorgang
+   */
   async onDeleteContact(): Promise<void> {
     if (!this.selectedContact?.id) return;
 

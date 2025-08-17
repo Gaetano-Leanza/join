@@ -6,7 +6,6 @@ import {
   inject,
   DestroyRef,
   PLATFORM_ID,
-  Inject,
   OnDestroy,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';

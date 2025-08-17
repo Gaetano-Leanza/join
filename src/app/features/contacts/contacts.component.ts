@@ -4,7 +4,6 @@ import { Contact } from './contact-model/contact.model';
 import { ContactService } from './contact-service/contact.service';
 import { Observable, catchError, of, startWith } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { ModalComponent } from "./modal/modal.component";
 
 /**
  * Komponente zur Anzeige und Verwaltung einer Kontaktliste.

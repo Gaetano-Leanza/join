@@ -24,21 +24,38 @@ const firebaseConfig = {
 };
 
 /**
- * Setzt das Logging-Level von Firebase.
- * LogLevel.VERBOSE zeigt alle Logs an.
+ * Setzt das Logging-Level von Firebase nur im Browser.
  */
-setLogLevel(LogLevel.VERBOSE);
+if (typeof window !== 'undefined') {
+  setLogLevel(LogLevel.VERBOSE);
+}
+
+/**
+ * Erstellt Browser-spezifische Firebase Provider
+ */
+const getFirebaseProviders = () => {
+  // Provider nur erstellen wenn wir im Browser sind
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    console.log('SSR-Kontext erkannt - Firebase Provider übersprungen');
+    return [];
+  }
+  
+  console.log('Browser-Kontext erkannt - Firebase Provider hinzugefügt');
+  return [
+    provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    provideFirestore(() => getFirestore())
+  ];
+};
 
 /**
  * Bootstrappt die Angular-Anwendung.
- * Stellt globale Provider (u. a. Firebase und Firestore) bereit.
+ * Firebase Provider werden nur im Browser hinzugefügt.
  */
 bootstrapApplication(AppComponent, {
   ...appConfig,
   providers: [
     ...(appConfig.providers || []),
     provideAnimations(),
-    provideFirebaseApp(() => initializeApp(firebaseConfig)),
-    provideFirestore(() => getFirestore())
+    ...getFirebaseProviders()
   ]
 }).catch(err => console.error(err));
