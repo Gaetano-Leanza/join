@@ -1,5 +1,5 @@
-import { inject, Injectable } from '@angular/core';
-import { 
+import { inject, Injectable, Injector, runInInjectionContext } from '@angular/core';
+import {
   Firestore,
   collection,
   collectionData,
@@ -10,79 +10,108 @@ import {
   docData,
   updateDoc,
   deleteDoc,
-  DocumentData
+  DocumentData,
+  DocumentReference,
+  UpdateData
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
+/**
+ * Service für Firestore-Operationen mit Angular und Firebase.
+ * Bietet CRUD-Funktionen für Collections und Dokumente.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
+  /** Firestore-Instanz für Datenbankoperationen */
   private firestore = inject(Firestore);
 
-  getCollectionData<T>(path: string): Observable<T[]> {
-    const collectionRef = collection(this.firestore, path);
-    const q = query(collectionRef, orderBy('name', 'asc'));
-    return collectionData(q, { idField: 'id' }) as Observable<T[]>;
+  /** Injector für `runInInjectionContext` zur sicheren Ausführung */
+  private injector = inject(Injector);
+
+  /**
+   * Führt eine Operation innerhalb des Angular-Injektionskontextes aus.
+   * @param operation Die auszuführende Funktion
+   * @returns Das Ergebnis der Operation
+   */
+  private firestoreOperation<T>(operation: () => T): T {
+    return runInInjectionContext(this.injector, operation);
   }
 
   /**
-   * Liefert die Daten eines einzelnen Dokuments anhand seiner ID.
-   * 
-   * @template T Typ des Dokuments
-   * @param collectionPath Pfad der Collection
-   * @param id ID des Dokuments
-   * @returns Observable mit dem Dokument vom Typ T
+   * Holt alle Dokumente einer Collection, sortiert nach dem Feld 'name'.
+   * @template T Typ der Dokumentdaten
+   * @param path Pfad zur Collection
+   * @returns Observable einer Liste von Dokumenten mit `id`
    */
-  getDocumentById<T>(collectionPath: string, id: string): Observable<T> {
-    const ref = doc(this.firestore, collectionPath, id);
-    return docData(ref, { idField: 'id' }) as Observable<T>;
+  getCollectionData<T extends DocumentData>(path: string): Observable<(T & { id: string })[]> {
+    return this.firestoreOperation(() => {
+      const collectionRef = collection(this.firestore, path);
+      const q = query(collectionRef, orderBy('name', 'asc'));
+      return collectionData(q, { idField: 'id' }) as Observable<(T & { id: string })[]>;
+    });
+  }
+
+  /**
+   * Holt ein einzelnes Dokument anhand seiner ID.
+   * @template T Typ der Dokumentdaten
+   * @param collectionPath Pfad zur Collection
+   * @param id Dokument-ID
+   * @returns Observable des Dokuments oder `undefined`, falls nicht gefunden
+   */
+  getDocumentById<T extends DocumentData>(
+    collectionPath: string,
+    id: string
+  ): Observable<(T & { id: string }) | undefined> {
+    return this.firestoreOperation(() => {
+      const ref = doc(this.firestore, collectionPath, id) as DocumentReference<T, T>;
+      return docData(ref, { idField: 'id' }) as Observable<(T & { id: string }) | undefined>;
+    });
   }
 
   /**
    * Fügt ein neues Dokument in eine Collection ein.
-   * 
-   * @template T Typ der Daten, die hinzugefügt werden
-   * @param collectionPath Pfad der Collection
-   * @param data Objekt mit den Daten für das neue Dokument
-   * @returns Promise, das die ID des neu erstellten Dokuments zurückgibt
+   * @template T Typ der Dokumentdaten
+   * @param collectionPath Pfad zur Collection
+   * @param data Die zu speichernden Daten
+   * @returns Die ID des erstellten Dokuments
    */
-  async addDocument<T extends DocumentData>(
-    collectionPath: string,
-    data: T
-  ): Promise<string> {
-    const ref = collection(this.firestore, collectionPath);
-    const docRef = await addDoc(ref, data);
-    return docRef.id;
+  async addDocument<T extends DocumentData>(collectionPath: string, data: T): Promise<string> {
+    return this.firestoreOperation(async () => {
+      const ref = collection(this.firestore, collectionPath);
+      const docRef = await addDoc(ref, data);
+      return docRef.id;
+    });
   }
 
   /**
    * Aktualisiert ein bestehendes Dokument.
-   * 
-   * @template T Typ der Daten im Dokument
-   * @param collectionPath Pfad der Collection
-   * @param id ID des zu aktualisierenden Dokuments
-   * @param updates Teilobjekt mit den zu aktualisierenden Feldern
-   * @returns Promise<void>
+   * @template T Typ der Dokumentdaten
+   * @param collectionPath Pfad zur Collection
+   * @param id Dokument-ID
+   * @param updates Die zu aktualisierenden Felder
    */
-  async updateDocument<T>(
+  async updateDocument<T extends DocumentData>(
     collectionPath: string,
     id: string,
-    updates: Partial<T>
+    updates: UpdateData<T>
   ): Promise<void> {
-    const ref = doc(this.firestore, collectionPath, id);
-    await updateDoc(ref, updates);
+    return this.firestoreOperation(async () => {
+      const ref = doc(this.firestore, collectionPath, id) as DocumentReference<T, T>;
+      await updateDoc(ref, updates);
+    });
   }
 
   /**
    * Löscht ein Dokument anhand seiner ID.
-   * 
-   * @param collectionPath Pfad der Collection
-   * @param id ID des zu löschenden Dokuments
-   * @returns Promise<void>
+   * @param collectionPath Pfad zur Collection
+   * @param id Dokument-ID
    */
   async deleteDocument(collectionPath: string, id: string): Promise<void> {
-    const ref = doc(this.firestore, collectionPath, id);
-    await deleteDoc(ref);
+    return this.firestoreOperation(async () => {
+      const ref = doc(this.firestore, collectionPath, id);
+      await deleteDoc(ref);
+    });
   }
 }

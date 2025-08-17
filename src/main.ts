@@ -31,23 +31,14 @@ setLogLevel(LogLevel.VERBOSE);
 
 /**
  * Bootstrappt die Angular-Anwendung.
- * 
- * Dies ist ein **Client-Side Rendering (CSR) Bootstrap**, keine SSR.
- * 
- * @returns {Promise<void>} Ein Promise, das auf die erfolgreiche Initialisierung der App wartet.
+ * Stellt globale Provider (u. a. Firebase und Firestore) bereit.
  */
 bootstrapApplication(AppComponent, {
   ...appConfig,
   providers: [
-    // Provider aus der App-Konfiguration übernehmen
     ...(appConfig.providers || []),
-    // Animationen bereitstellen
     provideAnimations(),
-    // Firebase App initialisieren
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
-    // Firestore bereitstellen
     provideFirestore(() => getFirestore())
   ]
-}).catch(err => console.error(err)); // Fehler beim Bootstrap protokollieren
-
-
+}).catch(err => console.error(err));
