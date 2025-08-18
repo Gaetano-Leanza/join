@@ -100,7 +100,7 @@ noTasksMessage: string = "";
     const initialAwaitfeedback: Omit<Task, 'status'>[] = [
       {
         id: 3, category: 'User Story', categoryColor: '#0038FF', title: 'CSS Architecture Planning',
-        description: 'Define CSS naming conventions and structure...',
+        description: 'Define CSS naming conventions and structure.',
         subtasks: [{ id: 1, title: 'Create UI layout', done: false }, { id: 2, title: 'Connect API', done: false }],
         contacts: [{ initials: 'SW', color: '#2aad56ff' }, { initials: 'MD', color: '#6aa39dff' }, { initials: 'PL', color: '#3c326fff' }],
         priority: 'medium'
@@ -134,7 +134,7 @@ noTasksMessage: string = "";
     this.distributeTasks(filteredTasks);
 
     this.noTasksMessage = filteredTasks.length === 0
-    ? "Keine Ergebnisse gefunden."
+    ? "No results found."
     : "";
   }
 
