@@ -1,0 +1,328 @@
+@media (max-width: 1200px) {
+  h3 {
+    font-size: 50px;
+    padding-left: 80px;
+  }
+
+  .left-side {
+    height: 400px;
+    width: 410px;
+    padding-left: 80px;
+  }
+
+  .right-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 15px;
+    height: 255px;
+    width: 350px;
+  }
+
+  .placeholder2 {
+    width: 330px;
+    height: 100px;
+  }
+
+  .placeholder7,
+  .placeholder8,
+  .placeholder9 {
+    width: 348px;
+  }
+
+  .placeholder4,
+  .placeholder5,
+  .placeholder6 {
+    height: 45px;
+    width: 80px;
+  }
+
+  .image-button-left,
+  .image-button-middle,
+  .image-button-right {
+    height: 45px;
+    width: 108px;
+  }
+
+  .image-button-left svg {
+    transform: translateX(-5px) translateY(-2px);
+    height: 49px;
+    width: 114px;
+  }
+
+  .image-button-middle svg {
+    transform: translateX(-0.5px) translateY(0.5px);
+    height: 43px;
+    width: 105px;
+  }
+
+  .image-button-right svg {
+    transform: translateX(-5px) translateY(-3px);
+    height: 49px;
+    width: 114px;
+  }
+
+  .content-bottom {
+    width: 835px;
+  }
+
+  .create-task-button svg {
+    transform: translateX(-12px) translateY(-1px);
+    height: 50px;
+  }
+
+  .cancel-button {
+    height: 44px;
+    width: 100px;
+  }
+
+  .cancel-button svg {
+    transform: translateX(-13px) translateY(-1px);
+    height: 45px;
+  }
+
+  .create-task-button {
+    height: 45px;
+    width: 148px;
+  }
+
+  .create-task-button svg {
+    transform: translateX(-20px) translateY(-2px);
+    height: 45px;
+  }
+
+  .text-bottom {
+    padding-left: 80px;
+  }
+}
+
+@media (max-width: 1100px) {
+  h3 {
+    font-size: 47px;
+    padding-left: 50px;
+  }
+
+  .left-side {
+    padding-left: 50px;
+    width: 380px;
+  }
+
+  .text-bottom {
+    padding-left: 50px;
+  }
+
+  .content-bottom {
+    width: 805px;
+  }
+}
+
+@media (max-width: 1060px) {
+  .left-side {
+    padding-left: 50px;
+    width: 350px;
+  }
+
+  .placeholder2 {
+    width: 300px;
+  }
+
+  .text-bottom {
+    padding-left: 50px;
+  }
+
+  .content-bottom {
+    width: 745px;
+  }
+
+  .placeholder7,
+  .placeholder8,
+  .placeholder9 {
+    width: 318px;
+  }
+
+
+
+  .image-button-left,
+  .image-button-middle,
+  .image-button-right {
+    height: 40px;
+    width: 95px;
+  }
+
+  .image-button-left svg {
+    transform: translateX(-11.5px) translateY(-2px);
+    height: 43px;
+    width: 114px;
+  }
+
+  .image-button-middle svg {
+    transform: translateX(-4.5px) translateY(1px);
+    height: 37.5px;
+    width: 100px;
+  }
+
+  .image-button-right svg {
+    transform: translateX(-11px) translateY(-2px);
+    height: 43px;
+    width: 114px;
+  }
+
+
+
+  .create-task-button {
+    height: 50px;
+    width: 165px;
+  }
+
+  .create-task-button svg {
+    transform: translateX(-12px) translateY(-1px);
+    height: 50px;
+  }
+
+  .cancel-button {
+    height: 44px;
+    width: 100px;
+  }
+
+  .cancel-button svg {
+    transform: translateX(-13px) translateY(-1px);
+    height: 45px;
+  }
+
+  .create-task-button {
+    height: 45px;
+    width: 148px;
+  }
+
+  .create-task-button svg {
+    transform: translateX(-20px) translateY(-2px);
+    height: 45px;
+  }
+}
+
+@media (max-width: 1020px) {
+  h3 {
+    font-size: 45px;
+    padding-left: 40px;
+  }
+
+  .left-side {
+    padding-left: 40px;
+    width: 320px;
+  }
+
+  .placeholder2 {
+    width: 280px;
+  }
+
+  .right-side {
+    width: 320px;
+  }
+
+  .placeholder7,
+  .placeholder8,
+  .placeholder9 {
+    width: 318px;
+  }
+
+  .content-bottom {
+    width: 718px;
+  }
+
+  .text-bottom {
+    padding-left: 40px;
+  }
+}
+
+@media (max-width: 975px) {
+  h3 {
+    font-size: 42px;
+    padding-left: 30px;
+  }
+
+  .left-side {
+    padding-left: 30px;
+    width: 290px;
+  }
+
+  .placeholder2 {
+    width: 260px;
+  }
+
+  .right-side {
+    width: 290px;
+  }
+
+  .placeholder7,
+  .placeholder8,
+  .placeholder9 {
+    width: 288px;
+  }
+
+  .content-bottom {
+    width: 654px;
+  }
+
+  .text-bottom {
+    padding-left: 30px;
+  }
+
+  .image-button-left,
+  .image-button-middle,
+  .image-button-right {
+    height: 39px;
+    width: 88px;
+  }
+
+  .image-button-left svg {
+    transform: translateX(-13px) translateY(0px);
+    height: 40px;
+    width: 110px;
+  }
+
+  .image-button-middle svg {
+    transform: translateX(-4px) translateY(2px);
+    height: 35px;
+    width: 92px;
+  }
+
+  .image-button-right svg {
+    transform: translateX(-13px) translateY(0px);
+    height: 40px;
+    width: 110px;
+  }
+
+  .create-task-button svg {
+    transform: translateX(-12px) translateY(-1px);
+    height: 40px;
+  }
+
+  .cancel-button {
+    height: 38px;
+    width: 90px;
+  }
+
+  .cancel-button svg {
+    transform: translateX(-18px) translateY(-1px);
+    height: 40px;
+  }
+
+  .create-task-button {
+    height: 40px;
+    width: 128px;
+  }
+
+  .create-task-button svg {
+    transform: translateX(-29px) translateY(-2px);
+    height: 40px;
+  }
+}
+
+@media (max-width: 910px) {
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 350px) {
+}
