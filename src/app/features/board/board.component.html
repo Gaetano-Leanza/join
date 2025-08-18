@@ -268,7 +268,12 @@
         <p> <span class="p-link">Due Date: </span> {{ selectedTask.dueDate | date:'shortDate' }} </p>
         <p><span class="p-link">Priority: </span> {{selectedTask.priority}}</p>
         <p><span class="p-link">Assigned To:</span></p> <br>
-        {{selectedTask.contacts}} <br>
+
+        <span *ngFor="let contact of selectedTask.contacts" [style.background-color]="contact.color"
+            class="contact-badge"> </span>
+
+
+
         <p><span class="p-link">Subtasks</span></p> <br>
 
         <ul>

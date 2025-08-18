@@ -287,7 +287,7 @@ h1 {
 
 ul {
     list-style-type: none;
-    padding: 10px;
+    margin-left: 20px;
 }
 
 #close {
@@ -369,4 +369,14 @@ ul {
     stroke: #4589FF !important;
     transform: scale(1.1);
     transition: transform 0.3s ease;
+}
+
+.contact-badge {
+
+    width: 50px;
+    border-radius: 50%;
+    height: 50px;
+    display: inline-block;
+    flex-direction: row;
+    margin-bottom: 20px;
 }
