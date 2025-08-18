@@ -5,6 +5,10 @@
             <div id="header-left">
                 <div id="task-search">
                     <input type="text" placeholder="Find Task" [(ngModel)]="searchTerm" (ngModelChange)="filterTasks()">
+                    <div *ngIf="noTasksMessage" class="no-tasks">
+                        {{ noTasksMessage }}
+                    </div>
+
 
                     <svg id="search" width="32" height="32" viewBox="0 0 32 32" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -44,7 +48,7 @@
         <div id="board-content">
 
             <div class="example-container">
-                <h2>To-Do</h2>
+                <h2>To Do</h2>
 
                 <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo"
                     [cdkDropListConnectedTo]="[inprogressList,awaitList,doneList]" class="example-list"

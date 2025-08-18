@@ -64,7 +64,7 @@ export class BoardComponent implements OnInit {
 
   /** @property {Task[]} allTasks - A master list that always holds all tasks unchanged for filtering purposes. */
   private allTasks: Task[] = [];
-
+noTasksMessage: string = "";
   /**
    * Initializes the component. Loads the initial tasks into the master list and distributes them to the columns.
    */
@@ -122,9 +122,9 @@ export class BoardComponent implements OnInit {
     const search = this.searchTerm.toLowerCase().trim();
 
     if (!search) {
-      this.distributeTasks(this.allTasks);
-      return;
-    }
+    this.distributeTasks(this.allTasks);
+    return;
+  }
 
     const filteredTasks = this.allTasks.filter(task =>
       task.title.toLowerCase().includes(search) ||
@@ -132,6 +132,10 @@ export class BoardComponent implements OnInit {
     );
 
     this.distributeTasks(filteredTasks);
+
+    this.noTasksMessage = filteredTasks.length === 0
+    ? "Keine Ergebnisse gefunden."
+    : "";
   }
 
   /**
