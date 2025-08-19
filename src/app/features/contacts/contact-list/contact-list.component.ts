@@ -154,14 +154,16 @@ export class ContactListComponent implements OnInit, OnDestroy {
   }
 
   /** Gruppiert Kontakte nach Anfangsbuchstaben. */
-  private groupContacts(): void {
-    this.groupedContacts = this.contacts.reduce((acc, contact) => {
+private groupContacts(): void {
+  this.groupedContacts = this.contacts
+    .filter(contact => contact.name && contact.name.trim().length > 0) // Nur Kontakte mit Namen (Fix für die "Noname" Kontakte)
+    .reduce((acc, contact) => {
       const letter = contact.name.charAt(0).toUpperCase();
       acc[letter] = acc[letter] || [];
       acc[letter].push(contact);
       return acc;
     }, {} as { [letter: string]: Contact[] });
-  }
+}
 
   /**
    * Reagiert auf Klick auf einen Kontakt.
