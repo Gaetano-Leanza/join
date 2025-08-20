@@ -205,6 +205,8 @@ export class BoardComponent implements OnDestroy {
       }
  
     }
+
+    
     
   }
   
