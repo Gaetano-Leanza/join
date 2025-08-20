@@ -38,6 +38,7 @@ h1 {
   cursor: pointer;
 }
 
+
 #task-search input {
   height: 48px;
   max-width: 312px;
@@ -81,12 +82,17 @@ h1 {
   height: 100px;
   width: 1500px;
   margin-top: 20px;
-  gap: 5px;
+  gap: 15px;
   flex: 1;
   max-width: 100%;
   display: flex;
   flex-direction: row;
   font-family: sans-serif;
+}
+
+.topic-wrapper {
+  display: flex;
+  flex-direction: row;
 }
 
 
@@ -102,40 +108,31 @@ h1 {
   font-family: sans-serif;
 }
 
-.topic-wrapper {
-  display: flex;
-  flex-direction: row;
-}
-
-
 
 .headline {
   height: 50px;
-  flex: 0 0 80%; /* grow 0, shrink 0, basis 180px */
+  flex: 0 0 80%;
+  /* grow 0, shrink 0, basis 180px */
 }
 
 .container-icon {
   height: 50px;
-  flex: 0 0 5%; /* grow 0, shrink 0, basis 20px */
-}
-
-.task-list,
-.task-card {
-    background-color:bisque;
-  height: 250px;
-  width: 200px;
+  flex: 0 0 5%;
+  /* grow 0, shrink 0, basis 20px */
 }
 
 .example-list {
   border: none;
-  min-height: 60px;
+  width: 320px;
   background: #f5f5f5;
   border-radius: 4px;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   padding: 10px;
+  gap: 8px;
+  height: 100vh;
   flex-grow: 1;
+  cursor: pointer;
 }
 
 .example-box {
@@ -148,7 +145,6 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
   font-family: sans-serif;
 }
 

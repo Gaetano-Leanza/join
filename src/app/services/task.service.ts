@@ -25,6 +25,7 @@ export interface Subtask {
  * Interface für ein Task-Dokument in Firestore.
  */
 export interface Task {
+  status: string;
   /** Eindeutige ID des Tasks */
   id: string;
   /** Zugewiesene Person */
@@ -42,7 +43,7 @@ export interface Task {
   /** Fortschrittsstatus des Tasks */
   progress: 'toDo' | 'inProgress' | 'awaitFeedback' | 'done';
   /** Liste der Subtasks */
-  subtasks: Subtask[];
+  subtasks: string;
   /** Titel des Tasks */
   title: string;
   /** Zugewiesene Kontakte */
