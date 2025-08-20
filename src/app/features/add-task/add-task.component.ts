@@ -44,7 +44,7 @@ export class AddTaskComponent implements OnInit {
     this.contactService.getContacts().subscribe({
       next: (contacts) => {
         this.contacts = contacts;
-        this.topContacts = contacts.slice(0, 3);
+        this.topContacts = contacts.slice(0, 3); 
       },
       error: (err) => console.error('Fehler beim Laden der Kontakte:', err),
     });

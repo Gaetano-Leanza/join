@@ -126,7 +126,6 @@ export class ModalComponent implements OnChanges, OnInit {
 
   /** Handler für Klick auf den Hintergrund, schließt das Modal */
   handleBackdropClick() {
-    this.resetForm();
     this.closed.emit();
   }
 

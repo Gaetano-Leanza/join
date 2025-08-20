@@ -38,6 +38,7 @@ h1 {
   cursor: pointer;
 }
 
+
 #task-search input {
   height: 48px;
   max-width: 312px;
@@ -81,24 +82,11 @@ h1 {
   height: 100px;
   width: 1500px;
   margin-top: 20px;
-  gap: 5px;
+  gap: 15px;
   flex: 1;
   max-width: 100%;
   display: flex;
   flex-direction: row;
-  font-family: sans-serif;
-}
-
-
-.example-container {
-  height: 100%;
-  width: 320px;
-  margin-top: 40px;
-  margin-right: 20px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-direction: column;
   font-family: sans-serif;
 }
 
@@ -108,38 +96,48 @@ h1 {
 }
 
 
+.example-container {
+  height: 100%;
+  width: 300px;
+  margin-top: 40px;
+  margin-right: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  font-family: sans-serif;
+}
+
 
 .headline {
   height: 50px;
-  flex: 0 0 80%; /* grow 0, shrink 0, basis 180px */
+  flex: 0 0 80%;
+  /* grow 0, shrink 0, basis 180px */
 }
 
 .container-icon {
   height: 50px;
-  flex: 0 0 5%; /* grow 0, shrink 0, basis 20px */
-}
-
-.task-list,
-.task-card {
-    background-color:bisque;
-  height: 250px;
-  width: 200px;
+  flex: 0 0 5%;
+  /* grow 0, shrink 0, basis 20px */
 }
 
 .example-list {
   border: none;
-  min-height: 60px;
-  background: #f5f5f5;
+  background: white;
   border-radius: 4px;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 5px;
+  gap: 10px;
+  width: 270px;
+  height: auto;
   flex-grow: 1;
+  cursor: pointer;
+
 }
 
 .example-box {
-  padding: 16px;
+  padding: 5px;
   margin-bottom: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -148,23 +146,34 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
   font-family: sans-serif;
+
 }
 
+.cdk-drop-list .cdk-drag {
+  transition: transform 250ms ease, top 250ms ease, left 250ms ease;
+}
+
+
+
 .cdk-drag-preview {
-  box-sizing: border-box;
-  border-radius: 4px;
-  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  box-shadow: 10px 12px 24px rgba(210, 205, 99, 0.25);
+  border-radius: 12px;
+  transform: scale(1.05);
+  rotate: 3deg;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+  cursor: grabbing;
+  background: white;
 }
 
 .cdk-drag-placeholder {
   opacity: 0;
+  transition: none !important;
+
 }
 
 .cdk-drag-animating {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  transition: transform 250ms ease;
 }
 
 .example-box:last-child {

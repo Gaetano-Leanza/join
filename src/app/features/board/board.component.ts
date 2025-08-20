@@ -14,11 +14,12 @@ import { ContactService } from '../contacts/contact-service/contact.service';
 
 // Modelle
 import { Contact } from '../contacts/contact-model/contact.model';
+import { ModalBoardComponent } from './modal-board/modal-board.component';
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [CommonModule, DragDropModule],
+  imports: [CommonModule, DragDropModule,ModalBoardComponent ],
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
 })
@@ -60,28 +61,44 @@ export class BoardComponent implements OnDestroy {
     }
   }
 
+
+    getDoneSubtasks(task: Task): number {
+    const subtasks: Subtask[] = this.parseSubtasks(task.subtasks);
+    return subtasks.filter(s => s.done).length;
+  }
+
+  /**
+   * Calculates the progress of subtasks as a percentage.
+   * @param {Task} task - The task for which the progress is to be calculated.
+   * @returns {number} The progress percentage (0-100).
+   */
+  getSubtaskProgress(task: Task): number {
+    if (!task.subtasks || task.subtasks.length === 0) return 0;
+    return (this.getDoneSubtasks(task) / task.subtasks.length) * 100;
+  }
+
   /**
    * Normalisiert Task-Daten aus Firestore.
    * @param task Rohdaten eines Tasks
    * @returns Task-Objekt mit korrekten Typen
    */
   private mapTask(task: any): Task {
-  console.log('Raw task data:', task);
-  return {
-    id: task.id || '',
-    assignedTo: task.assignedTo || '',
-    category: task.category || '',
-    categoryColor: task.categoryColor || this.getCategoryColor(task.category),
-    description: task.description || '',
-    dueDate: task.dueDate || '',
-    priority: this.mapPriority(task.priority),
-    progress: task.progress || 'toDo',
-    subtasks: task.subtasks || '',   
-    title: task.title || task.titile || '',
-    contacts: task.contacts || task.assignedTo || ''
-  };
-}
-
+    console.log('Raw task data:', task);
+    return {
+      id: task.id || '',
+      assignedTo: task.assignedTo || '',
+      category: task.category || '',
+      categoryColor: task.categoryColor || this.getCategoryColor(task.category),
+      description: task.description || '',
+      dueDate: task.dueDate || '',
+      priority: this.mapPriority(task.priority),
+      progress: task.progress || 'toDo',
+      subtasks: task.subtasks || '',
+      title: task.title || task.titile || '',
+      contacts: task.contacts || task.assignedTo || '',
+      status: task.status || '', 
+    };
+  }
 
   /**
    * Generiert eine Farbe basierend auf der Kategorie.
@@ -172,8 +189,9 @@ export class BoardComponent implements OnDestroy {
           event.currentIndex
         );
 
-        // Firebase-Update
-        this.taskService.updateTask(task.id, { progress: newProgress } as Partial<Task>)
+       
+       // Firebase-Update
+       this.taskService.updateTask(task.id, { progress: newProgress } as Partial<Task>)
           .catch(error => {
             console.error('Error updating task:', error);
             // Bei Fehler: Rückgängig machen
@@ -185,8 +203,13 @@ export class BoardComponent implements OnDestroy {
             );
           });
       }
+ 
     }
+
+    
+    
   }
+  
 
   /**
    * Bestimmt den Fortschrittswert basierend auf der Container-ID.
@@ -208,8 +231,10 @@ export class BoardComponent implements OnDestroy {
    * @param task Ausgewählter Task
    */
   openTaskModal(task: Task) {
+    // Nur das Task-Modal öffnen, NICHT showModal setzen!
     this.selectedTask = task;
-    this.showModal = true;
+    // Entferne oder lasse folgende Zeile weg:
+    // this.showModal = true;
   }
 
   /**
