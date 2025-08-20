@@ -76,7 +76,7 @@
         </svg>
       </div>
     </div>
-     <div class="topic">
+    <div class="topic">
       <!-- TODO-Spalte -->
       <div
         class="example-container"
@@ -126,10 +126,7 @@
           </div>
         </div>
 
-        <div
-          *ngFor="let task of todo; trackBy: trackByTaskId"
-          cdkDrag
-        >
+        <div *ngFor="let task of todo; trackBy: trackByTaskId" cdkDrag>
           <div class="task-card" (click)="openTaskModal(task)">
             <h3>{{ task.title }}</h3>
             <p><strong>Beschreibung:</strong> {{ task.description }}</p>
@@ -137,10 +134,7 @@
             <p><strong>Zugewiesen an:</strong> {{ task.assignedTo }}</p>
             <p><strong>Fällig bis:</strong> {{ task.dueDate }}</p>
             <p><strong>Priorität:</strong> {{ task.priority }}</p>
-            <p>
-              <strong>Subtasks:</strong>
-              {{ task.subtasks ? task.subtasks.length : 0 }}
-            </p>
+            <p><strong>Subtasks:</strong> {{ task.subtasks }}</p>
           </div>
         </div>
       </div>
@@ -190,10 +184,7 @@
           </div>
         </div>
 
-        <div
-          *ngFor="let task of inprogress; trackBy: trackByTaskId"
-          cdkDrag
-        >
+        <div *ngFor="let task of inprogress; trackBy: trackByTaskId" cdkDrag>
           <div class="task-card" (click)="openTaskModal(task)">
             <h3>{{ task.title }}</h3>
             <p><strong>Beschreibung:</strong> {{ task.description }}</p>
@@ -201,10 +192,7 @@
             <p><strong>Zugewiesen an:</strong> {{ task.assignedTo }}</p>
             <p><strong>Fällig bis:</strong> {{ task.dueDate }}</p>
             <p><strong>Priorität:</strong> {{ task.priority }}</p>
-            <p>
-              <strong>Subtasks:</strong>
-              {{ task.subtasks ? task.subtasks.length : 0 }}
-            </p>
+            <p><strong>Subtasks:</strong> {{ task.subtasks }}</p>
           </div>
         </div>
       </div>
@@ -254,10 +242,7 @@
           </div>
         </div>
 
-        <div
-          *ngFor="let task of awaitfeedback; trackBy: trackByTaskId"
-          cdkDrag
-        >
+        <div *ngFor="let task of awaitfeedback; trackBy: trackByTaskId" cdkDrag>
           <div class="task-card" (click)="openTaskModal(task)">
             <h3>{{ task.title }}</h3>
             <p><strong>Beschreibung:</strong> {{ task.description }}</p>
@@ -265,10 +250,7 @@
             <p><strong>Zugewiesen an:</strong> {{ task.assignedTo }}</p>
             <p><strong>Fällig bis:</strong> {{ task.dueDate }}</p>
             <p><strong>Priorität:</strong> {{ task.priority }}</p>
-            <p>
-              <strong>Subtasks:</strong>
-              {{ task.subtasks ? task.subtasks.length : 0 }}
-            </p>
+            <p><strong>Subtasks:</strong> {{ task.subtasks }}</p>
           </div>
         </div>
       </div>
@@ -322,10 +304,7 @@
           </div>
         </div>
 
-        <div
-          *ngFor="let task of done; trackBy: trackByTaskId"
-          cdkDrag
-        >
+        <div *ngFor="let task of done; trackBy: trackByTaskId" cdkDrag>
           <div class="task-card" (click)="openTaskModal(task)">
             <h3>{{ task.title }}</h3>
             <p><strong>Beschreibung:</strong> {{ task.description }}</p>
@@ -333,10 +312,7 @@
             <p><strong>Zugewiesen an:</strong> {{ task.assignedTo }}</p>
             <p><strong>Fällig bis:</strong> {{ task.dueDate }}</p>
             <p><strong>Priorität:</strong> {{ task.priority }}</p>
-            <p>
-              <strong>Subtasks:</strong>
-              {{ task.subtasks ? task.subtasks.length : 0 }}
-            </p>
+            <p><strong>Subtasks:</strong> {{ task.subtasks }}</p>
           </div>
         </div>
       </div>
@@ -363,11 +339,7 @@
       <p>Subtasks</p>
       <br />
 
-      <ul>
-        <li *ngFor="let subtask of selectedTask.subtasks">
-          {{ subtask.title }} - {{ subtask.done ? "Done" : "Not Done" }}
-        </li>
-      </ul>
+      
 
       <div class="task-modal-buttons">
         <button>Delete</button>

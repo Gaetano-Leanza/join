@@ -66,21 +66,22 @@ export class BoardComponent implements OnDestroy {
    * @returns Task-Objekt mit korrekten Typen
    */
   private mapTask(task: any): Task {
-    console.log('Raw task data:', task);
-    return {
-      id: task.id || '',
-      assignedTo: task.assignedTo || '',
-      category: task.category || '',
-      categoryColor: task.categoryColor || this.getCategoryColor(task.category),
-      description: task.description || '',
-      dueDate: task.dueDate || '',
-      priority: this.mapPriority(task.priority),
-      progress: task.progress || 'toDo',
-      subtasks: this.parseSubtasks(task.subtasks),
-      title: task.title || task.titile || '',
-      contacts: task.contacts || task.assignedTo || ''
-    };
-  }
+  console.log('Raw task data:', task);
+  return {
+    id: task.id || '',
+    assignedTo: task.assignedTo || '',
+    category: task.category || '',
+    categoryColor: task.categoryColor || this.getCategoryColor(task.category),
+    description: task.description || '',
+    dueDate: task.dueDate || '',
+    priority: this.mapPriority(task.priority),
+    progress: task.progress || 'toDo',
+    subtasks: task.subtasks || '',   
+    title: task.title || task.titile || '',
+    contacts: task.contacts || task.assignedTo || ''
+  };
+}
+
 
   /**
    * Generiert eine Farbe basierend auf der Kategorie.
