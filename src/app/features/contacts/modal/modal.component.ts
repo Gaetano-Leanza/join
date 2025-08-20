@@ -14,7 +14,6 @@ import { slideInModal } from './modal.animations';
 import { Contact } from '../contact-model/contact.model';
 import { ContactService } from '../contact-service/contact.service';
 
-
 @Component({
   standalone: true,
   selector: 'app-modal',
@@ -26,7 +25,6 @@ import { ContactService } from '../contact-service/contact.service';
   ],
   animations: [slideInModal],
   imports: [CommonModule, FormsModule],
-  
 })
 export class ModalComponent implements OnChanges, OnInit {
   /** Service für CRUD-Operationen auf Kontakten */
@@ -192,10 +190,14 @@ export class ModalComponent implements OnChanges, OnInit {
 
   /** Bereitet die Kontaktdaten für den Service auf */
   private prepareContactData(): Omit<Contact, 'id'> {
+    const trimmedName = this.name.trim();
+    
     return {
-      name: this.name.trim(),
+      name: trimmedName,
       email: this.email.trim(),
       phone: this.phone.trim(),
+      color: this.getAvatarColor(trimmedName),        // Neue Property hinzugefügt
+      initials: this.getInitials(trimmedName),        // Neue Property hinzugefügt
       updatedAt: new Date(),
       ...(!this.isEditing && { createdAt: new Date() }),
     };

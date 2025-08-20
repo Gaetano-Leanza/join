@@ -19,7 +19,7 @@ import { ContactService } from '../contact-service/contact.service';
   styleUrls: [
     './modal2.component.scss',
     './modal2.responsive.scss',
-    './modal2.responsive2.scss'
+    './modal2.responsive2.scss',
   ],
   animations: [slideInModal],
   imports: [CommonModule, FormsModule],
@@ -53,8 +53,16 @@ export class Modal2Component implements OnChanges {
 
   /** Farben für Avatare */
   private readonly avatarColors = [
-    '#F44336', '#E91E63', '#9C27B0', '#3F51B5', '#03A9F4',
-    '#009688', '#4CAF50', '#FFC107', '#FF9800', '#795548'
+    '#F44336',
+    '#E91E63',
+    '#9C27B0',
+    '#3F51B5',
+    '#03A9F4',
+    '#009688',
+    '#4CAF50',
+    '#FFC107',
+    '#FF9800',
+    '#795548',
   ];
 
   /**
@@ -75,7 +83,9 @@ export class Modal2Component implements OnChanges {
    * Lädt die Kontaktdaten in die Formularfelder
    * @param contact Kontaktobjekt
    */
-  private loadContactData(contact: NonNullable<typeof this.contactToEdit>): void {
+  private loadContactData(
+    contact: NonNullable<typeof this.contactToEdit>
+  ): void {
     this.name = contact.name || '';
     this.email = contact.email || '';
     this.phone = contact.phone || '';
@@ -106,19 +116,27 @@ export class Modal2Component implements OnChanges {
     }
 
     try {
+      // Gemeinsame Felder für neuen oder bestehenden Kontakt
       const contactData = {
         name: this.name.trim(),
         email: this.email.trim(),
         phone: this.phone.trim(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
+        color: this.avatarColor || this.getAvatarColor(this.name),
+        initials: this.getInitials(this.name),
       };
 
       if (this.contactToEdit?.id) {
-        await this.contactService.updateContact(this.contactToEdit.id, contactData);
+        // Update: vorhandenen Kontakt ändern
+        await this.contactService.updateContact(
+          this.contactToEdit.id,
+          contactData
+        );
       } else {
+        // Neu: createdAt hinzufügen
         await this.contactService.addContact({
           ...contactData,
-          createdAt: new Date()
+          createdAt: new Date(),
         });
       }
 
@@ -132,7 +150,7 @@ export class Modal2Component implements OnChanges {
 
   /** Markiert alle Formularfelder als "touched" */
   private markFormAsTouched(form: NgForm): void {
-    Object.values(form.controls).forEach(control => control.markAsTouched());
+    Object.values(form.controls).forEach((control) => control.markAsTouched());
   }
 
   /**
@@ -152,8 +170,8 @@ export class Modal2Component implements OnChanges {
   getInitials(name: string): string {
     return name
       .split(' ')
-      .filter(part => part.length > 0)
-      .map(part => part[0].toUpperCase())
+      .filter((part) => part.length > 0)
+      .map((part) => part[0].toUpperCase())
       .slice(0, 2)
       .join('');
   }
@@ -166,7 +184,9 @@ export class Modal2Component implements OnChanges {
   getAvatarColor(name: string): string {
     if (!name?.trim()) return this.avatarColors[0];
     const firstCharCode = name.trim().charCodeAt(0);
-    return this.avatarColors[Math.abs(firstCharCode) % this.avatarColors.length];
+    return this.avatarColors[
+      Math.abs(firstCharCode) % this.avatarColors.length
+    ];
   }
 
   /**
@@ -174,9 +194,8 @@ export class Modal2Component implements OnChanges {
    */
   onNameChange(): void {
     if (this.name.length === 1 && !this.avatarColor) {
-      this.avatarColor = this.avatarColors[
-        Math.floor(Math.random() * this.avatarColors.length)
-      ];
+      this.avatarColor =
+        this.avatarColors[Math.floor(Math.random() * this.avatarColors.length)];
     }
 
     if (!this.name.length) {

@@ -1,140 +1,223 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; 
-import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
-import { ModalBoardComponent} from './modal-board/modal-board.component';
+import { Component, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+  DragDropModule,
+} from '@angular/cdk/drag-drop';
+import { map, Subscription } from 'rxjs';
 
-export interface Subtask {
-  id: number;
-  title: string;
-  done: boolean;
-}
-export interface Contact {
-  initials: string;
-  color: string;
-}
-export interface Task {
-  id: number;
-  category: string;
-  categoryColor: string;
-  title: string;
-  description: string;
-  subtasks?: Subtask[];
-  contacts?: Contact[];
-  priority?: 'low' | 'medium' | 'high'; // Optional property for task priority
-  dueDate?: string | number | Date; // Optional property for due date
-}
+// Services
+import { TaskService, Task, Subtask } from '../../services/task.service';
+import { ContactService } from '../contacts/contact-service/contact.service';
+
+// Modelle
+import { Contact } from '../contacts/contact-model/contact.model';
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [CdkDropList, CdkDrag,ModalBoardComponent,CommonModule],
+  imports: [CommonModule, DragDropModule],
   templateUrl: './board.component.html',
-  styleUrl: './board.component.scss'
+  styleUrls: ['./board.component.scss'],
 })
-export class BoardComponent {
+export class BoardComponent implements OnDestroy {
+  /** Modal-Status für Task-Details */
+  showModal = false;
 
-showModal = false;
-
-  /** @property {Task[]} todo - Array für Tasks im Status 'To do'. */
-  todo: Task[] = [
-    {
-      id: 1,
-      category: 'User Story',
-      categoryColor: '#0038FF',
-      title: 'Kochwelt Page & Recipe Recommender',
-      description: 'Build a page that recommends recipes based on selected ingredients.',
-      subtasks: [
-        { id: 1, title: 'Create UI layout', done: true },
-        { id: 2, title: 'Connect API', done: true }
-      ],
-      contacts: [
-        { initials: 'AM', color: '#FF8A00' },
-        { initials: 'EM', color: '#1FD7C1' },
-        { initials: 'MB', color: '#6E52FF' }
-      ],
-      priority: 'high' // Example of setting a priority
-    }
-  ];
-
-  /** @property {Task[]} inprogress - Array für Tasks im Status 'In progress'. */
-  inprogress: Task[] = [
-    {
-      id: 2,
-      category: 'Technical Task',
-      categoryColor: '#1FD7C1',
-      title: 'Implement Authentication',
-      description: 'Secure the application by implementing user authentication.',
-      subtasks: [
-        { id: 1, title: 'Add login form', done: true },
-        { id: 2, title: 'Integrate backend', done: false }
-      ],
-      contacts: [
-        { initials: 'JD', color: '#FF8A00' }
-      ],
-            priority: 'low' // Example of setting a priority
-
-    }
-  ];
-
-    
-
-  /** @property {Task[]} awaitfeedback - Array für Tasks im Status 'Awaiting Feedback'. */
-  awaitfeedback: Task[] = [
-    {
-      id: 3,
-      category: 'User Story',
-      categoryColor: '#0038FF',
-      title: 'CSS Architecture Planning',
-      description: 'Define CSS naming conventions and structure...',
-      subtasks: [
-        { id: 1, title: 'Create UI layout', done: false},
-        { id: 2, title: 'Connect API', done: false}
-      ],
-      contacts: [
-        { initials: 'SW', color: '#2aad56ff' },
-        { initials: 'MD', color: '#6aa39dff' },
-        { initials: 'PL', color: '#3c326fff' }
-      ],
-      priority: 'medium' // Example of setting a priority
-    }
-  ];
-
-
-  /** @property {Task[]} done - Array für Tasks im Status 'Done'. */
+  /** Lokale Arrays für die Spalten */
+  todo: Task[] = [];
+  inprogress: Task[] = [];
+  awaitfeedback: Task[] = [];
   done: Task[] = [];
 
+  /** Aktuell ausgewählter Task für Details */
+  selectedTask: Task | null = null;
+
+  /** Aktuell ausgewählter Kontakt */
+  selectedContact: (Contact & { id: string }) | null = null;
+
+  private tasksSubscription: Subscription;
+
+  constructor(
+    private taskService: TaskService,
+    private contactService: ContactService
+  ) {
+    this.tasksSubscription = this.taskService.getTasks().pipe(
+      map(tasks => tasks.map(t => this.mapTask(t)))
+    ).subscribe(tasks => {
+      this.todo = tasks.filter(t => t.progress === 'toDo');
+      this.inprogress = tasks.filter(t => t.progress === 'inProgress');
+      this.awaitfeedback = tasks.filter(t => t.progress === 'awaitFeedback');
+      this.done = tasks.filter(t => t.progress === 'done');
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.tasksSubscription) {
+      this.tasksSubscription.unsubscribe();
+    }
+  }
+
   /**
-   * Behandelt das `drop`-Ereignis für die Drag-and-Drop-Funktionalität.
-   * Verschiebt ein Element entweder innerhalb seiner eigenen Liste oder transferiert es in eine neue Liste.
-   * @param {CdkDragDrop<Task[]>} event - Das Drop-Ereignis, das vom Angular CDK ausgelöst wird.
+   * Normalisiert Task-Daten aus Firestore.
+   * @param task Rohdaten eines Tasks
+   * @returns Task-Objekt mit korrekten Typen
+   */
+  private mapTask(task: any): Task {
+    console.log('Raw task data:', task);
+    return {
+      id: task.id || '',
+      assignedTo: task.assignedTo || '',
+      category: task.category || '',
+      categoryColor: task.categoryColor || this.getCategoryColor(task.category),
+      description: task.description || '',
+      dueDate: task.dueDate || '',
+      priority: this.mapPriority(task.priority),
+      progress: task.progress || 'toDo',
+      subtasks: this.parseSubtasks(task.subtasks),
+      title: task.title || task.titile || '',
+      contacts: task.contacts || task.assignedTo || ''
+    };
+  }
+
+  /**
+   * Generiert eine Farbe basierend auf der Kategorie.
+   * @param category Kategorie-Name
+   * @returns Hex-Farbcode
+   */
+  private getCategoryColor(category: string): string {
+    const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#F9A826', '#6A0572'];
+    const index = Math.abs(this.hashCode(category)) % colors.length;
+    return colors[index];
+  }
+
+  /**
+   * Erzeugt einen Hash-Wert für einen String.
+   * @param str Input-String
+   * @returns Ganzzahl-Hash
+   */
+  private hashCode(str: string): number {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = ((hash << 5) - hash) + str.charCodeAt(i);
+      hash |= 0;
+    }
+    return hash;
+  }
+
+  /**
+   * Parst Subtasks aus verschiedenen Formaten.
+   * @param subtasks Array oder CSV-String
+   * @returns Array von Subtask-Objekten
+   */
+  private parseSubtasks(subtasks: any): Subtask[] {
+    if (!subtasks) return [];
+    
+    if (Array.isArray(subtasks)) {
+      return subtasks.map(sub => ({
+        title: sub.title || sub || '',
+        done: sub.done || false
+      }));
+    }
+    
+    if (typeof subtasks === 'string') {
+      return subtasks.split(',').map(title => ({
+        title: title.trim(),
+        done: false
+      }));
+    }
+    
+    return [];
+  }
+
+  /**
+   * Normalisiert die Priorität eines Tasks.
+   * @param priority String-Priorität
+   * @returns Task-Priority
+   */
+  private mapPriority(priority: string): Task['priority'] {
+    const priorityMap: Record<string, Task['priority']> = {
+      'low': 'low',
+      'medium': 'medium',
+      'urgent': 'urgent'
+    };
+    
+    return priorityMap[priority.toLowerCase()] || 'medium';
+  }
+
+  /**
+   * Behandelt Drag & Drop von Tasks zwischen Listen.
+   * @param event CdkDragDrop Event
    */
   drop(event: CdkDragDrop<Task[]>) {
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
+      moveItemInArray(
         event.container.data,
         event.previousIndex,
-        event.currentIndex,
+        event.currentIndex
       );
+    } else {
+      const task = event.previousContainer.data[event.previousIndex];
+      const newProgress = this.getProgressFromContainerId(event.container.id);
+      
+      if (newProgress && task.id) {
+        // Sofortige UI-Aktualisierung
+        transferArrayItem(
+          event.previousContainer.data,
+          event.container.data,
+          event.previousIndex,
+          event.currentIndex
+        );
+
+        // Firebase-Update
+        this.taskService.updateTask(task.id, { progress: newProgress } as Partial<Task>)
+          .catch(error => {
+            console.error('Error updating task:', error);
+            // Bei Fehler: Rückgängig machen
+            transferArrayItem(
+              event.container.data,
+              event.previousContainer.data,
+              event.currentIndex,
+              event.previousIndex
+            );
+          });
+      }
     }
   }
 
-  getDoneSubtasks(task: Task): number {
-    return task.subtasks ? task.subtasks.filter(s => s.done).length : 0;
+  /**
+   * Bestimmt den Fortschrittswert basierend auf der Container-ID.
+   * @param containerId ID der Drop-Container
+   * @returns Fortschrittsstatus oder null
+   */
+  private getProgressFromContainerId(containerId: string): Task['progress'] | null {
+    const progressMap: Record<string, Task['progress']> = {
+      'todoList': 'toDo',
+      'inProgressList': 'inProgress',
+      'awaitFeedbackList': 'awaitFeedback',
+      'doneList': 'done'
+    };
+    return progressMap[containerId] || null;
   }
 
-  getSubtaskProgress(task: Task): number {
-    if (!task.subtasks || task.subtasks.length === 0) return 0;
-    return (this.getDoneSubtasks(task) / task.subtasks.length) * 100;
+  /**
+   * Öffnet das Task-Modal für Details.
+   * @param task Ausgewählter Task
+   */
+  openTaskModal(task: Task) {
+    this.selectedTask = task;
+    this.showModal = true;
   }
 
-  selectedTask: Task | null = null;
-
-openTaskModal(task: Task) {
-  this.selectedTask = task;
-}
-
- 
+  /**
+   * TrackBy-Funktion für ngFor zur Verbesserung der Performance.
+   * @param index Index im Array
+   * @param task Task-Objekt
+   * @returns Task-ID
+   */
+  trackByTaskId(index: number, task: Task): string {
+    return task.id || index.toString();
+  }
 }

@@ -4,6 +4,8 @@
  * Repräsentiert einen Kontakt mit grundlegenden Informationen.
  */
 export interface Contact {
+color: any;
+initials: any;
   /**
    * Eindeutige Kennung des Kontakts.
    * Optional, da sie z.B. erst beim Speichern in einer Datenbank vergeben wird.
