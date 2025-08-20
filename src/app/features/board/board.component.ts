@@ -1,199 +1,223 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
-import { ModalBoardComponent } from './modal-board/modal-board.component';
-export interface Subtask {
-  id: number;
-  title: string;
-  done: boolean;
-}
-export interface Contact {
-  initials: string;
-  color: string;
-}
-export interface Task {
-  id: number;
-  category: string;
-  categoryColor: string;
-  title: string;
-  description: string;
-  status: 'todo' | 'inprogress' | 'awaitfeedback' | 'done';
-  subtasks?: Subtask[];
-  contacts?: Contact[];
-  priority?: 'low' | 'medium' | 'high';
-  dueDate?: string | number | Date;
-}
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+  DragDropModule,
+} from '@angular/cdk/drag-drop';
+import { map, Subscription } from 'rxjs';
+
+// Services
+import { TaskService, Task, Subtask } from '../../services/task.service';
+import { ContactService } from '../contacts/contact-service/contact.service';
+
+// Modelle
+import { Contact } from '../contacts/contact-model/contact.model';
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [
-    CdkDropList,
-    CdkDrag,
-    ModalBoardComponent,
-    CommonModule,
-    FormsModule
-  ],
+  imports: [CommonModule, DragDropModule],
   templateUrl: './board.component.html',
-  styleUrl: './board.component.scss'
+  styleUrls: ['./board.component.scss'],
 })
-export class BoardComponent implements OnInit {
-
-  /** @property {boolean} showModal - Controls the visibility of the "Add Task" modal. */
+export class BoardComponent implements OnDestroy {
+  /** Modal-Status für Task-Details */
   showModal = false;
 
-  /** @property {Task[]} todo - Array for tasks displayed in the 'To do' column in the template. */
+  /** Lokale Arrays für die Spalten */
   todo: Task[] = [];
-
-  /** @property {Task[]} inprogress - Array for tasks displayed in the 'In progress' column in the template. */
   inprogress: Task[] = [];
-
-  /** @property {Task[]} awaitfeedback - Array for tasks displayed in the 'Awaiting Feedback' column in the template. */
   awaitfeedback: Task[] = [];
-
-  /** @property {Task[]} done - Array for tasks displayed in the 'Done' column in the template. */
   done: Task[] = [];
 
-  /** @property {Task | null} selectedTask - Holds the currently selected task for display in the detail modal. */
+  /** Aktuell ausgewählter Task für Details */
   selectedTask: Task | null = null;
-  
-  /** @property {string} searchTerm - Is bound via ngModel to the search input in the HTML and holds the current search term. */
-  searchTerm: string = '';
 
-  /** @property {Task[]} allTasks - A master list that always holds all tasks unchanged for filtering purposes. */
-  private allTasks: Task[] = [];
-noTasksMessage: string = "";
+  /** Aktuell ausgewählter Kontakt */
+  selectedContact: (Contact & { id: string }) | null = null;
+
+  private tasksSubscription: Subscription;
+
+  constructor(
+    private taskService: TaskService,
+    private contactService: ContactService
+  ) {
+    this.tasksSubscription = this.taskService.getTasks().pipe(
+      map(tasks => tasks.map(t => this.mapTask(t)))
+    ).subscribe(tasks => {
+      this.todo = tasks.filter(t => t.progress === 'toDo');
+      this.inprogress = tasks.filter(t => t.progress === 'inProgress');
+      this.awaitfeedback = tasks.filter(t => t.progress === 'awaitFeedback');
+      this.done = tasks.filter(t => t.progress === 'done');
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.tasksSubscription) {
+      this.tasksSubscription.unsubscribe();
+    }
+  }
+
   /**
-   * Initializes the component. Loads the initial tasks into the master list and distributes them to the columns.
+   * Normalisiert Task-Daten aus Firestore.
+   * @param task Rohdaten eines Tasks
+   * @returns Task-Objekt mit korrekten Typen
    */
-  ngOnInit(): void {
-    this.initializeAllTasks();
-    this.distributeTasks(this.allTasks);
+  private mapTask(task: any): Task {
+    console.log('Raw task data:', task);
+    return {
+      id: task.id || '',
+      assignedTo: task.assignedTo || '',
+      category: task.category || '',
+      categoryColor: task.categoryColor || this.getCategoryColor(task.category),
+      description: task.description || '',
+      dueDate: task.dueDate || '',
+      priority: this.mapPriority(task.priority),
+      progress: task.progress || 'toDo',
+      subtasks: this.parseSubtasks(task.subtasks),
+      title: task.title || task.titile || '',
+      contacts: task.contacts || task.assignedTo || ''
+    };
   }
 
   /**
-   * Populates the `allTasks` master list with initial task data and assigns the correct status to each task.
+   * Generiert eine Farbe basierend auf der Kategorie.
+   * @param category Kategorie-Name
+   * @returns Hex-Farbcode
    */
-  private initializeAllTasks(): void {
-    const initialTodo: Omit<Task, 'status'>[] = [
-      {
-        id: 1, category: 'User Story', categoryColor: '#0038FF', title: 'Kochwelt Page & Recipe Recommender',
-        description: 'Build a page that recommends recipes based on selected ingredients.',
-        subtasks: [{ id: 1, title: 'Create UI layout', done: true }, { id: 2, title: 'Connect API', done: true }],
-        contacts: [{ initials: 'AM', color: '#FF8A00' }, { initials: 'EM', color: '#1FD7C1' }, { initials: 'MB', color: '#6E52FF' }],
-        priority: 'high'
-      }
-    ];
-
-    const initialInprogress: Omit<Task, 'status'>[] = [
-      {
-        id: 2, category: 'Technical Task', categoryColor: '#1FD7C1', title: 'Implement Authentication',
-        description: 'Secure the application by implementing user authentication.',
-        subtasks: [{ id: 1, title: 'Add login form', done: true }, { id: 2, title: 'Integrate backend', done: false }],
-        contacts: [{ initials: 'JD', color: '#FF8A00' }],
-        priority: 'low'
-      }
-    ];
-
-    const initialAwaitfeedback: Omit<Task, 'status'>[] = [
-      {
-        id: 3, category: 'User Story', categoryColor: '#0038FF', title: 'CSS Architecture Planning',
-        description: 'Define CSS naming conventions and structure.',
-        subtasks: [{ id: 1, title: 'Create UI layout', done: false }, { id: 2, title: 'Connect API', done: false }],
-        contacts: [{ initials: 'SW', color: '#2aad56ff' }, { initials: 'MD', color: '#6aa39dff' }, { initials: 'PL', color: '#3c326fff' }],
-        priority: 'medium'
-      }
-    ];
-
-    this.allTasks = [
-      ...initialTodo.map(task => ({ ...task, status: 'todo' as const })),
-      ...initialInprogress.map(task => ({ ...task, status: 'inprogress' as const })),
-      ...initialAwaitfeedback.map(task => ({ ...task, status: 'awaitfeedback' as const }))
-    ];
+  private getCategoryColor(category: string): string {
+    const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#F9A826', '#6A0572'];
+    const index = Math.abs(this.hashCode(category)) % colors.length;
+    return colors[index];
   }
 
   /**
-   * Filters tasks based on the `searchTerm` in real-time and distributes the results to the columns.
-   * Triggered on every input in the search field.
+   * Erzeugt einen Hash-Wert für einen String.
+   * @param str Input-String
+   * @returns Ganzzahl-Hash
    */
-  filterTasks(): void {
-    const search = this.searchTerm.toLowerCase().trim();
-
-    if (!search) {
-    this.distributeTasks(this.allTasks);
-    return;
-  }
-
-    const filteredTasks = this.allTasks.filter(task =>
-      task.title.toLowerCase().includes(search) ||
-      task.description.toLowerCase().includes(search)
-    );
-
-    this.distributeTasks(filteredTasks);
-
-    this.noTasksMessage = filteredTasks.length === 0
-    ? "No results found."
-    : "";
+  private hashCode(str: string): number {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = ((hash << 5) - hash) + str.charCodeAt(i);
+      hash |= 0;
+    }
+    return hash;
   }
 
   /**
-   * Distributes a given list of tasks into the four status arrays (todo, inprogress, etc.) for correct display in the template.
-   * @param {Task[]} tasks - The list of tasks to be distributed.
+   * Parst Subtasks aus verschiedenen Formaten.
+   * @param subtasks Array oder CSV-String
+   * @returns Array von Subtask-Objekten
    */
-  private distributeTasks(tasks: Task[]): void {
-    this.todo = tasks.filter(t => t.status === 'todo');
-    this.inprogress = tasks.filter(t => t.status === 'inprogress');
-    this.awaitfeedback = tasks.filter(t => t.status === 'awaitfeedback');
-    this.done = tasks.filter(t => t.status === 'done');
+  private parseSubtasks(subtasks: any): Subtask[] {
+    if (!subtasks) return [];
+    
+    if (Array.isArray(subtasks)) {
+      return subtasks.map(sub => ({
+        title: sub.title || sub || '',
+        done: sub.done || false
+      }));
+    }
+    
+    if (typeof subtasks === 'string') {
+      return subtasks.split(',').map(title => ({
+        title: title.trim(),
+        done: false
+      }));
+    }
+    
+    return [];
   }
 
   /**
-   * Handles the `drop` event for the drag-and-drop functionality.
-   * Updates a task's status when it is moved to a new column.
-   * @param {CdkDragDrop<Task[]>} event - The drop event triggered by the Angular CDK.
+   * Normalisiert die Priorität eines Tasks.
+   * @param priority String-Priorität
+   * @returns Task-Priority
+   */
+  private mapPriority(priority: string): Task['priority'] {
+    const priorityMap: Record<string, Task['priority']> = {
+      'low': 'low',
+      'medium': 'medium',
+      'urgent': 'urgent'
+    };
+    
+    return priorityMap[priority.toLowerCase()] || 'medium';
+  }
+
+  /**
+   * Behandelt Drag & Drop von Tasks zwischen Listen.
+   * @param event CdkDragDrop Event
    */
   drop(event: CdkDragDrop<Task[]>) {
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      const task = event.previousContainer.data[event.previousIndex];
-      const newStatus = event.container.id as 'todo' | 'inprogress' | 'awaitfeedback' | 'done';
-      task.status = newStatus;
-
-      transferArrayItem(
-        event.previousContainer.data,
+      moveItemInArray(
         event.container.data,
         event.previousIndex,
-        event.currentIndex,
+        event.currentIndex
       );
+    } else {
+      const task = event.previousContainer.data[event.previousIndex];
+      const newProgress = this.getProgressFromContainerId(event.container.id);
+      
+      if (newProgress && task.id) {
+        // Sofortige UI-Aktualisierung
+        transferArrayItem(
+          event.previousContainer.data,
+          event.container.data,
+          event.previousIndex,
+          event.currentIndex
+        );
+
+        // Firebase-Update
+        this.taskService.updateTask(task.id, { progress: newProgress } as Partial<Task>)
+          .catch(error => {
+            console.error('Error updating task:', error);
+            // Bei Fehler: Rückgängig machen
+            transferArrayItem(
+              event.container.data,
+              event.previousContainer.data,
+              event.currentIndex,
+              event.previousIndex
+            );
+          });
+      }
     }
-  }
-  
-  /**
-   * Calculates the number of completed subtasks for a given task.
-   * @param {Task} task - The task for which to count the completed subtasks.
-   * @returns {number} The number of completed subtasks.
-   */
-  getDoneSubtasks(task: Task): number {
-    return task.subtasks ? task.subtasks.filter(s => s.done).length : 0;
   }
 
   /**
-   * Calculates the progress of subtasks as a percentage.
-   * @param {Task} task - The task for which the progress is to be calculated.
-   * @returns {number} The progress percentage (0-100).
+   * Bestimmt den Fortschrittswert basierend auf der Container-ID.
+   * @param containerId ID der Drop-Container
+   * @returns Fortschrittsstatus oder null
    */
-  getSubtaskProgress(task: Task): number {
-    if (!task.subtasks || task.subtasks.length === 0) return 0;
-    return (this.getDoneSubtasks(task) / task.subtasks.length) * 100;
+  private getProgressFromContainerId(containerId: string): Task['progress'] | null {
+    const progressMap: Record<string, Task['progress']> = {
+      'todoList': 'toDo',
+      'inProgressList': 'inProgress',
+      'awaitFeedbackList': 'awaitFeedback',
+      'doneList': 'done'
+    };
+    return progressMap[containerId] || null;
   }
-  
+
   /**
-   * Opens the modal to display the task details.
-   * @param {Task} task - The task to be displayed in the modal.
+   * Öffnet das Task-Modal für Details.
+   * @param task Ausgewählter Task
    */
   openTaskModal(task: Task) {
     this.selectedTask = task;
+    this.showModal = true;
+  }
+
+  /**
+   * TrackBy-Funktion für ngFor zur Verbesserung der Performance.
+   * @param index Index im Array
+   * @param task Task-Objekt
+   * @returns Task-ID
+   */
+  trackByTaskId(index: number, task: Task): string {
+    return task.id || index.toString();
   }
 }
