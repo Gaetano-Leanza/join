@@ -489,7 +489,7 @@
 
   .content-bottom {
     height: 70px;
-    width: 96%;
+    width: 94%;
     margin-bottom: 80px;
     padding-top: 0px;
   }
@@ -502,7 +502,6 @@
   .text-bottom h5 {
     display: none;
   }
-
 
   .image-button-left,
   .image-button-middle,
@@ -532,8 +531,134 @@
   .row1 {
     gap: 30px;
   }
+}
 
+@media (max-width: 435px) {
+  .row1 {
+    gap: 25px;
+  }
+}
+
+@media (max-width: 422px) {
+  .row1 {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 410px) {
+  .row1 {
+    gap: 30px;
+  }
+
+  .image-button-left,
+  .image-button-middle,
+  .image-button-right {
+    height: 40px;
+    width: 95px;
+  }
+
+  .image-button-left svg {
+    transform: translateX(-11.5px) translateY(-2px);
+    height: 43px;
+    width: 114px;
+  }
+
+  .image-button-middle svg {
+    transform: translateX(-4.5px) translateY(1px);
+    height: 37.5px;
+    width: 100px;
+  }
+
+  .image-button-right svg {
+    transform: translateX(-11px) translateY(-2px);
+    height: 43px;
+    width: 114px;
+  }
+}
+
+@media (max-width: 380px) {
+  .row1 {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 370px) {
+  .row1 {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 360px) {
+  .row1 {
+    gap: 10px;
+  }
 }
 
 @media (max-width: 350px) {
+  .row1 {
+    gap: 15px;
+  }
+
+  .image-button-left,
+  .image-button-middle,
+  .image-button-right {
+    height: 39px;
+    width: 88px;
+  }
+
+  .image-button-left svg {
+    transform: translateX(-13px) translateY(0px);
+    height: 40px;
+    width: 110px;
+  }
+
+  .image-button-middle svg {
+    transform: translateX(-4px) translateY(2px);
+    height: 35px;
+    width: 92px;
+  }
+
+  .image-button-right svg {
+    transform: translateX(-13px) translateY(0px);
+    height: 40px;
+    width: 110px;
+  }
+}
+
+@media (max-width: 340px) {
+  .row1 {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 330px) {
+
+.row1 {
+    gap: 23px;
+  }
+
+  .image-button-left,
+  .image-button-middle,
+  .image-button-right {
+    height: 34px;
+    width: 76px;
+  }
+
+  .image-button-left svg {
+    transform: translateX(-8px) translateY(0px);
+    height: 35px;
+    width: 90px;
+  }
+
+  .image-button-middle svg {
+    transform: translateX(-14px) translateY(2px);
+    height: 30px;
+    width: 100px;
+  }
+
+  .image-button-right svg {
+    transform: translateX(-9px) translateY(0px);
+    height: 35px;
+    width: 90px;
+  }
 }
