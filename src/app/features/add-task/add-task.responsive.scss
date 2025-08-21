@@ -490,6 +490,7 @@
   .content-bottom {
     height: 70px;
     width: 94%;
+    width: 94%;
     margin-bottom: 80px;
     padding-top: 0px;
   }
@@ -536,6 +537,10 @@
 @media (max-width: 435px) {
   .row1 {
     gap: 25px;
+  }
+
+  .avatar-container {
+    display: none;
   }
 }
 
@@ -632,8 +637,7 @@
 }
 
 @media (max-width: 330px) {
-
-.row1 {
+  .row1 {
     gap: 23px;
   }
 

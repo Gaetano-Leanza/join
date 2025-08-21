@@ -7,6 +7,7 @@ import {
   DestroyRef,
   PLATFORM_ID,
   OnDestroy,
+  Input,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -30,7 +31,7 @@ export class ContactListComponent implements OnInit, OnDestroy {
    * Event, das ausgelöst wird, wenn ein Kontakt ausgewählt wird.
    */
   @Output() contactSelected = new EventEmitter<Contact>();
-  
+
   /** Service zur Verwaltung von Kontakten. */
   private contactService = inject(ContactService);
 
@@ -73,16 +74,26 @@ export class ContactListComponent implements OnInit, OnDestroy {
   /** True, wenn auf mobilem Gerät. */
   isMobile = false;
 
+  @Input() showAddButton: boolean = true;
+
   /** Farbpalette für Avatare. */
   private readonly avatarColors = [
-    '#F44336', '#E91E63', '#9C27B0', '#3F51B5', '#03A9F4',
-    '#009688', '#4CAF50', '#FFC107', '#FF9800', '#795548'
+    '#F44336',
+    '#E91E63',
+    '#9C27B0',
+    '#3F51B5',
+    '#03A9F4',
+    '#009688',
+    '#4CAF50',
+    '#FFC107',
+    '#FF9800',
+    '#795548',
   ];
 
   /** Initialisierung des Components. */
   ngOnInit(): void {
     this.setupResponsiveBehavior();
-    
+
     if (!isPlatformBrowser(this.platformId)) {
       this.handleServerContext();
       return;
@@ -98,16 +109,18 @@ export class ContactListComponent implements OnInit, OnDestroy {
 
   /** Überwacht Breakpoints und setzt `isMobile`. */
   private setupResponsiveBehavior(): void {
-    this.breakpointObserver.observe([Breakpoints.Handset])
+    this.breakpointObserver
+      .observe([Breakpoints.Handset])
       .pipe(takeUntil(this.destroyed$))
-      .subscribe(result => {
+      .subscribe((result) => {
         this.isMobile = result.matches;
       });
   }
 
   /** Lädt Kontakte über den Service. */
   loadContacts(): void {
-    this.contactService.getContacts()
+    this.contactService
+      .getContacts()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (contacts) => {
@@ -136,7 +149,9 @@ export class ContactListComponent implements OnInit, OnDestroy {
    */
   getAvatarColor(name: string): string {
     if (!name) return this.avatarColors[0];
-    return this.avatarColors[name.trim().charCodeAt(0) % this.avatarColors.length];
+    return this.avatarColors[
+      name.trim().charCodeAt(0) % this.avatarColors.length
+    ];
   }
 
   /**
@@ -147,8 +162,8 @@ export class ContactListComponent implements OnInit, OnDestroy {
   getInitials(name: string): string {
     return name
       .split(' ')
-      .filter(part => part.length > 0)
-      .map(part => part[0].toUpperCase())
+      .filter((part) => part.length > 0)
+      .map((part) => part[0].toUpperCase())
       .slice(0, 2)
       .join('');
   }
@@ -168,10 +183,10 @@ export class ContactListComponent implements OnInit, OnDestroy {
    * @param contact Ausgewählter Kontakt
    */
   onContactClick(contact: Contact): void {
-    this.contactService.setSelectedContact(contact.id!); 
+    this.contactService.setSelectedContact(contact.id!);
     this.selectedContact = contact;
     this.contactSelected.emit(contact);
-    
+
     if (this.isMobile) {
       this.toggleOverlay();
     }
@@ -185,8 +200,9 @@ export class ContactListComponent implements OnInit, OnDestroy {
 
   /** Gibt die Einträge der gruppierten Kontakte sortiert zurück. */
   get groupedContactsEntries(): [string, Contact[]][] {
-    return Object.entries(this.groupedContacts)
-      .sort(([a], [b]) => a.localeCompare(b));
+    return Object.entries(this.groupedContacts).sort(([a], [b]) =>
+      a.localeCompare(b)
+    );
   }
 
   /**
@@ -196,7 +212,7 @@ export class ContactListComponent implements OnInit, OnDestroy {
    * @returns ID des Kontakts
    */
   trackContact(_: number, contact: Contact): string {
-    return contact.id!; 
+    return contact.id!;
   }
 
   /** Wechselt den Overlay-Status. */

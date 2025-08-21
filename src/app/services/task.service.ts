@@ -33,7 +33,7 @@ export interface Task {
   /** Kategorie des Tasks */
   category: string;
   /** Farbe der Kategorie für UI */
-  categoryColor: string; 
+  categoryColor: string;
   /** Beschreibung des Tasks */
   description: string;
   /** Fälligkeitsdatum als ISO-String */
@@ -47,7 +47,7 @@ export interface Task {
   /** Titel des Tasks */
   title: string;
   /** Zugewiesene Kontakte */
-  contacts: string; 
+  contacts: string;
 }
 
 /**
@@ -77,7 +77,9 @@ export class TaskService {
    * @returns Observable-Liste aller Tasks
    */
   getTasks(): Observable<Task[]> {
-    return collectionData(this.taskCollection, { idField: 'id' }) as Observable<Task[]>;
+    return collectionData(this.taskCollection, { idField: 'id' }) as Observable<
+      Task[]
+    >;
   }
 
   /**

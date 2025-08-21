@@ -75,7 +75,11 @@
     </svg>
   </button>
 
-  <button class="add-contact-button" (click)="openModal2()">
+  <button
+    *ngIf="showAddButton"
+    class="add-contact-button"
+    (click)="openModal2()"
+  >
     <svg
       width="300"
       height="57"

@@ -236,7 +236,31 @@
             type="text"
             placeholder="Select contacts to assign"
           />
-          <span class="icon-assign"></span>
+          <span
+            class="icon-category"
+            [class.open]="isAssignDropdownOpen"
+            (click)="toggleAssignDropdown()"
+          ></span>
+
+          <!-- Modal/Drowdown -->
+          <div *ngIf="isAssignDropdownOpen" class="assign-dropdown">
+
+            <app-contact-list
+              [showAddButton]="false"
+              (contactSelected)="onContactSelected($event)"
+            ></app-contact-list>
+          </div>
+        </div>
+      </div>
+
+      <div class="avatar-container">
+        <div
+          *ngFor="let contact of topContacts"
+          class="avatar"
+          [title]="contact.name"
+          [style.background-color]="getAvatarColor(contact.name)"
+        >
+          {{ getInitials(contact.name) }}
         </div>
       </div>
 
@@ -252,7 +276,11 @@
             type="text"
             placeholder="Select task category"
           />
-          <span class="icon-category"></span>
+          <span
+            class="icon-category"
+            [class.open]="isCategoryDropdownOpen"
+            (click)="toggleCategoryDropdown()"
+          ></span>
         </div>
       </div>
 
@@ -264,7 +292,20 @@
             type="text"
             placeholder="Add new subtask"
           />
-          <span class="icon-subtask"></span>
+
+          <!-- Zustand 1: Standard -->
+          <span
+            *ngIf="!isSubtaskOpen"
+            class="icon-subtask"
+            (click)="toggleSubtaskIcon()"
+          ></span>
+
+          <!-- Zustand 2: zwei Symbole mit Trenner -->
+          <div *ngIf="isSubtaskOpen" class="icon-subtask-wrapper">
+            <span class="icon-close" (click)="toggleSubtaskIcon()"></span>
+            <span class="divider"></span>
+            <span class="icon-check" (click)="toggleSubtaskIcon()"></span>
+          </div>
         </div>
       </div>
     </div>

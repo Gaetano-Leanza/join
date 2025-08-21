@@ -64,7 +64,8 @@ export class Modal2Component implements OnChanges {
     '#FF9800',
     '#795548',
   ];
-
+  /** True, wenn gerade ein Kontakt bearbeitet wird */
+  showSuccessInfo = false;
   /**
    * Lifecycle-Hook: reagiert auf Änderungen der Input-Properties
    * @param changes geänderte Properties
@@ -140,9 +141,13 @@ export class Modal2Component implements OnChanges {
         });
       }
 
-      this.resetForm();
-      this.closed.emit();
-      this.contactSaved.emit();
+      this.showSuccessInfo = true;
+      setTimeout(() => {
+        this.showSuccessInfo = false;
+        this.resetForm();
+        this.closed.emit();
+        this.contactSaved.emit();
+      }, 2000);
     } catch (error) {
       console.error('Error saving contact:', error);
     }

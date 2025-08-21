@@ -402,6 +402,13 @@ h5 {
   background-image: url("/img/arrow-drop-down-hover.svg");
 }
 
+.icon-category.open:hover {
+  background-image: url("/img/arrow-drop-up-hover.svg");
+}
+
+.icon-category.open {
+  background-image: url("/img/arrow-drop-up.svg");
+}
 .icon-subtask {
   position: absolute;
   top: 50%;
@@ -417,4 +424,96 @@ h5 {
 
 .icon-subtask:hover {
   background-image: url("/img/Subtasks-icon-hover.svg");
+}
+
+/* Wrapper für die zwei Icons */
+.icon-subtask-wrapper {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  transform: translateY(-50%);
+  background: white; /* optional, damit es nicht durchsichtig ist */
+  border-radius: 4px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+/* einzelne Icons */
+.icon-close {
+  width: 20px;
+  height: 20px;
+  background: url("/img/close.svg") no-repeat center;
+  background-size: 16px;
+  cursor: pointer;
+}
+
+.icon-close:hover {
+  background: url("/img/close-hover.svg") no-repeat center;
+  background-size: 16px;
+}
+
+.icon-check {
+  width: 20px;
+  height: 20px;
+  background: url("/img/haken.svg") no-repeat center;
+  background-size: 16px;
+}
+
+.icon-check:hover {
+  background: url("/img/haken-hover.svg") no-repeat center;
+  background-size: 16px;
+}
+
+/* vertikale graue Linie */
+.divider {
+  width: 1px;
+  height: 16px;
+  background-color: #ccc;
+  margin: 0 6px;
+}
+
+.avatar-container {
+  display: flex;
+  gap: 8px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  color: white;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.input-wrapper {
+  position: relative; // wichtig, damit das Dropdown relativ zu diesem Container positioniert wird
+}
+
+.assign-dropdown {
+  position: absolute;
+  top: 100%;         // direkt unter dem Input
+  left: 0;
+  width: 100%;       // gleiche Breite wie Input
+  height: 400px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 4px;   // kleiner Abstand unter Input
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;     // damit es über allem liegt
+  overflow-y: auto;  // falls Inhalte länger werden
+  padding: 10px;
 }

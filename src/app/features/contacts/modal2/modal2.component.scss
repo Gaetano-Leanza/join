@@ -277,3 +277,43 @@ img {
   font-weight: 400;
   margin-top: 140px;
 }
+
+.success-info-modal {
+  position: fixed;
+  bottom: 20px;
+  right: 100px;
+  width: 600px;
+  height: 300px;
+  transform: translateX(-50%);
+  background-color: #2a3647;
+  color: #fff;
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-size: 18px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 9992259;
+  animation: fadeInOut s;
+  animation-duration: 2.5s;
+  animation-fill-mode: forwards;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
