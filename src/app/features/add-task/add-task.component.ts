@@ -23,9 +23,13 @@ export class AddTaskComponent implements OnInit {
   description: string = '';
   contacts: (Contact & { id: string })[] = [];
   topContacts: (Contact & { id: string })[] = [];
-  selectedCategory: string = ''; // Neue Eigenschaft für die ausgewählte Kategorie
-  hoveredOption: string = ''; // Neue Eigenschaft für Hover-Effekt
-  
+  selectedCategory: string = '';
+  hoveredOption: string = '';
+
+  // neue Variable für das Input-Feld
+  subtaskText: string = '';
+  private subtaskTextSet = false; // Flag, damit es nur einmal gesetzt wird
+
   private readonly avatarColors = [
     '#F44336', '#E91E63', '#9C27B0', '#3F51B5', '#03A9F4',
     '#009688', '#4CAF50', '#FFC107', '#FF9800', '#795548',
@@ -90,9 +94,14 @@ export class AddTaskComponent implements OnInit {
 
   toggleSubtaskIcon() {
     this.isSubtaskOpen = !this.isSubtaskOpen;
+
+    // Nur beim ersten Öffnen Text setzen
+    if (this.isSubtaskOpen && !this.subtaskTextSet) {
+      this.subtaskText = 'Contact Form';
+      this.subtaskTextSet = true;
+    }
   }
 
-  // Neue Methode zur Auswahl einer Kategorie
   selectCategory(category: string) {
     this.selectedCategory = category;
     this.isCategoryDropdownOpen = false;
@@ -110,11 +119,11 @@ export class AddTaskComponent implements OnInit {
           button3: this.isActive3,
         },
         assignedContacts: this.topContacts,
-        category: this.selectedCategory, // Kategorie hinzugefügt
+        category: this.selectedCategory,
       });
       this.title = '';
       this.description = '';
-      this.selectedCategory = ''; // Kategorie zurücksetzen
+      this.selectedCategory = '';
     } else {
       alert('Bitte gib einen Titel für die Aufgabe ein.');
     }
