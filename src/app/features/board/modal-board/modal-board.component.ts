@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { slideInModal } from './modal-board.animations';
 
+
 @Component({
   selector: 'app-modal-board',
   imports: [],

@@ -270,9 +270,10 @@ export class BoardComponent implements OnDestroy {
     } else {
       const task = event.previousContainer.data[event.previousIndex];
       const newProgress = this.getProgressFromContainerId(event.container.id);
-      
+
       if (newProgress && task.id) {
-        // Sofortige UI-Aktualisierung
+        // Sofortige UI-Aktualisierung (Task-Status im Objekt direkt ändern)
+        task.progress = newProgress;
         transferArrayItem(
           event.previousContainer.data,
           event.container.data,
@@ -280,18 +281,18 @@ export class BoardComponent implements OnDestroy {
           event.currentIndex
         );
 
-       
-       // Firebase-Update
-       this.taskService.updateTask(task.id, { progress: newProgress } as Partial<Task>)
+        // Asynchrones Update in Firestore, UI bleibt sofort aktuell
+        this.taskService.updateTask(task.id, { progress: newProgress } as Partial<Task>)
           .catch(error => {
             console.error('Error updating task:', error);
-            // Bei Fehler: Rückgängig machen
+            // Optional: Rückgängig machen bei Fehler
             transferArrayItem(
               event.container.data,
               event.previousContainer.data,
               event.currentIndex,
               event.previousIndex
             );
+            task.progress = this.getProgressFromContainerId(event.previousContainer.id) || task.progress;
           });
       }
  
