@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { ContactService } from '../contacts/contact-service/contact.service';
 import { Contact } from '../contacts/contact-model/contact.model';
 import { ContactListComponent } from '../contacts/contact-list/contact-list.component';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-add-task',
   standalone: true,
-  imports: [CommonModule, ContactListComponent],
+  imports: [CommonModule, ContactListComponent, FormsModule],
   templateUrl: './add-task.component.html',
   styleUrls: ['./add-task.component.scss', './add-task.responsive.scss'],
 })
@@ -92,15 +94,14 @@ export class AddTaskComponent implements OnInit {
     this.isCategoryDropdownOpen = !this.isCategoryDropdownOpen;
   }
 
-  toggleSubtaskIcon() {
-    this.isSubtaskOpen = !this.isSubtaskOpen;
+ toggleSubtaskIcon() {
+  this.isSubtaskOpen = !this.isSubtaskOpen;
 
-    // Nur beim ersten Öffnen Text setzen
-    if (this.isSubtaskOpen && !this.subtaskTextSet) {
-      this.subtaskText = 'Contact Form';
-      this.subtaskTextSet = true;
-    }
+  if (this.isSubtaskOpen && !this.subtaskTextSet) {
+    this.subtaskText = 'Contact Form';
+    this.subtaskTextSet = true;
   }
+}
 
   selectCategory(category: string) {
     this.selectedCategory = category;
