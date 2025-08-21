@@ -1,5 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import {
   CdkDragDrop,
   moveItemInArray,
@@ -19,7 +20,7 @@ import { ModalBoardComponent } from './modal-board/modal-board.component';
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [CommonModule, DragDropModule,ModalBoardComponent ],
+  imports: [CommonModule, DragDropModule,ModalBoardComponent,FormsModule ],
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
 })
@@ -64,6 +65,16 @@ export class BoardComponent implements OnDestroy {
       '#009688', '#4CAF50', '#FFC107', '#FF9800', '#795548'
     ];
 
+  /** Suchbegriff für die Task-Suche */
+  searchTerm: string = '';
+
+  /** Hinweistext, wenn keine Tasks gefunden werden */
+  noTasksMessage: string = '';
+
+  /** Master-Liste aller Tasks (für Filterzwecke) */
+  private allTasks: Task[] = [];
+  
+
   constructor(
     private taskService: TaskService,
     private contactService: ContactService,
@@ -71,12 +82,45 @@ export class BoardComponent implements OnDestroy {
     this.tasksSubscription = this.taskService.getTasks().pipe(
       map(tasks => tasks.map(t => this.mapTask(t)))
     ).subscribe(tasks => {
-      this.todo = tasks.filter(t => t.progress === 'toDo');
-      this.inprogress = tasks.filter(t => t.progress === 'inProgress');
-      this.awaitfeedback = tasks.filter(t => t.progress === 'awaitFeedback');
-      this.done = tasks.filter(t => t.progress === 'done');
+      this.allTasks = tasks;
+      this.filterTasks(); // Initiale Filterung
     });
   }
+
+  /**
+   * Filtert Tasks anhand des Suchbegriffs und verteilt sie auf die Spalten.
+   */
+  filterTasks(): void {
+  const search = this.searchTerm.trim().toLowerCase();
+
+  if (!search) {
+    this.todo = this.allTasks.filter(t => t.progress === 'toDo');
+    this.inprogress = this.allTasks.filter(t => t.progress === 'inProgress');
+    this.awaitfeedback = this.allTasks.filter(t => t.progress === 'awaitFeedback');
+    this.done = this.allTasks.filter(t => t.progress === 'done');
+    this.noTasksMessage = '';
+    return;
+  }
+
+  // Suche nur, wenn title/description mit search ANFÄNGT
+  const filtered = this.allTasks.filter(
+    t =>
+      (t.title && t.title.toLowerCase().startsWith(search)) ||
+      (t.description && t.description.toLowerCase().startsWith(search))
+  );
+
+  this.todo = filtered.filter(t => t.progress === 'toDo');
+  this.inprogress = filtered.filter(t => t.progress === 'inProgress');
+  this.awaitfeedback = filtered.filter(t => t.progress === 'awaitFeedback');
+  this.done = filtered.filter(t => t.progress === 'done');
+
+  this.noTasksMessage = filtered.length === 0 ? 'No results found.' : '';
+}
+
+  /**
+   * Wendet den aktuellen Filter (searchTerm) auf die Master-Liste an.
+   */
+  
 
     /**
      * Berechnet eine Avatar-Farbe basierend auf dem Namen.
