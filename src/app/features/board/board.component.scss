@@ -2,21 +2,26 @@
 .category-development {
   background-color: #30cfcf;
 }
+
 .category-user-story {
-  background-color: #ffd600;
+  background-color: #0038FF;
   color: #2a3647;
 }
+
 .category-design {
   background-color: #98ff98;
   color: #2a3647;
 }
+
 .category-technical {
-  background-color: #cfa8ff;
+  background-color: #1FD7C1;
 }
+
 .category-documentation {
   background-color: #ffb3b3;
   color: #2a3647;
 }
+
 .task-priority-icon {
   display: flex;
   align-items: center;
@@ -152,8 +157,8 @@ h1 {
 
 .example-list {
   border: none;
-  width: 320px;
-  background: #f5f5f5;
+  width: 250px;
+  background: #fafafa;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
@@ -163,8 +168,26 @@ h1 {
   height: auto;
   flex-grow: 1;
   cursor: pointer;
-  margin-top: -10px;
+  margin-top: -15px;
 }
+
+.empty-list {
+  width: 280px;
+  flex: 1;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 14px;
+  font-style: italic;
+  border: 2px dashed #ccc;
+  border-radius: 4px;
+  background: #fafafa;
+  pointer-events: none;
+  margin-top: 20px;
+}
+
 
 .example-box {
   padding: 5px;
@@ -190,9 +213,10 @@ h1 {
 .cdk-drag-preview {
   border-radius: 12px;
   background: white;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 8px 16px rgba(239, 221, 91, 0.25);
   transform: scale(1.05);
   transition: transform 150ms ease, box-shadow 150ms ease;
+  rotate: 3deg;
   cursor: grabbing;
 }
 
@@ -214,21 +238,7 @@ h1 {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.empty-list {
-  flex: 1;
-  min-height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #888;
-  font-size: 14px;
-  font-style: italic;
-  border: 2px dashed #ccc;
-  border-radius: 4px;
-  background: #fafafa;
-  pointer-events: none;
-  margin-top: 20px;
-}
+
 
 .task-category {
   padding: 6px 32px;
@@ -240,17 +250,21 @@ h1 {
 .task-category[ng-reflect-ng-style*="Development"] {
   background-color: #30cfcf;
 }
+
 .task-category[ng-reflect-ng-style*="User Story"] {
   background-color: #ffd600;
   color: #2a3647;
 }
+
 .task-category[ng-reflect-ng-style*="Design"] {
   background-color: #98ff98;
   color: #2a3647;
 }
+
 .task-category[ng-reflect-ng-style*="Technical"] {
   background-color: #cfa8ff;
 }
+
 .task-category[ng-reflect-ng-style*="Documentation"] {
   background-color: #ffb3b3;
   color: #2a3647;
