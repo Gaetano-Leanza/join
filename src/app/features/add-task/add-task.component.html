@@ -244,8 +244,11 @@
 
           <!-- Modal/Drowdown -->
           <div *ngIf="isAssignDropdownOpen" class="assign-dropdown">
-            <p>Hier kannst du Kontakte auswählen</p>
-            <!-- später: Kontakte rendern -->
+
+            <app-contact-list
+              [showAddButton]="false"
+              (contactSelected)="onContactSelected($event)"
+            ></app-contact-list>
           </div>
         </div>
       </div>

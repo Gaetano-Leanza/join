@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContactService } from '../contacts/contact-service/contact.service';
 import { Contact } from '../contacts/contact-model/contact.model';
+import { ContactListComponent } from '../contacts/contact-list/contact-list.component';
 
 @Component({
   selector: 'app-add-task',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ContactListComponent],
   templateUrl: './add-task.component.html',
   styleUrls: ['./add-task.component.scss', './add-task.responsive.scss'],
 })
@@ -44,7 +45,7 @@ export class AddTaskComponent implements OnInit {
     this.contactService.getContacts().subscribe({
       next: (contacts) => {
         this.contacts = contacts;
-        this.topContacts = contacts.slice(0, 3); 
+        this.topContacts = contacts.slice(0, 3);
       },
       error: (err) => console.error('Fehler beim Laden der Kontakte:', err),
     });
@@ -108,5 +109,10 @@ export class AddTaskComponent implements OnInit {
     } else {
       alert('Bitte gib einen Titel für die Aufgabe ein.');
     }
+  }
+
+  onContactSelected(contact: Contact) {
+    console.log('Kontakt ausgewählt:', contact);
+    // Hier könntest du z.B. selectedContacts in einem Array speichern
   }
 }
