@@ -146,24 +146,7 @@ h5 {
   transition: box-shadow 0.2s ease;
 }
 
-.image-button-middle {
-  width: 114px;
-  background-color: none;
-  border: none;
-  border-left: 2px solid #ccc;
-  border-right: 2px solid #ccc;
-  border-bottom: 4px solid #999;
-  border-radius: 10px;
-  padding: 0;
-  cursor: pointer;
-  transition: box-shadow 0.2s ease;
-}
-
 .image-button-left:hover {
-  box-shadow: 2px 6px 8px -2px rgba(0, 0, 0, 0.4);
-}
-
-.image-button-middle.active:hover {
   box-shadow: 2px 6px 8px -2px rgba(0, 0, 0, 0.4);
 }
 
@@ -171,14 +154,11 @@ h5 {
   box-shadow: 2px 6px 8px -2px rgba(0, 0, 0, 0.4);
 }
 
+
+
 .image-button-left svg {
   transform: translateX(-15px) translateY(-3px);
   height: 55px;
-}
-
-.image-button-middle svg {
-  transform: translateX(-13px) translateY(2px);
-  height: 46px;
 }
 
 .image-button-right svg {
@@ -196,31 +176,6 @@ h5 {
         paint-order: stroke;
         stroke-linejoin: round;
       }
-    }
-  }
-}
-
-.image-button-middle {
-  rect {
-    fill: #ffa800;
-  }
-
-  path,
-  g path {
-    fill: white;
-  }
-
-  &.active {
-    rect {
-      fill: white;
-    }
-
-    path:not(g path) {
-      fill: black;
-    }
-
-    g path {
-      fill: #ffa800;
     }
   }
 }
@@ -270,9 +225,55 @@ h5 {
   box-shadow: none;
 }
 
-.image-button-middle:hover {
-  box-shadow: none;
+.image-button-middle {
+  width: 114px;
+  background-color: none;
+  border: none;
+  border-left: 2px solid #ccc;
+  border-right: 2px solid #ccc;
+  border-bottom: 4px solid #999;
+  border-radius: 10px;
+  padding: 0;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease;
 }
+
+.image-button-middle rect {
+  fill: white;
+}
+
+.image-button-middle path:not(g path) {
+  fill: black;
+}
+
+.image-button-middle g path {
+  fill: #ffa800;
+}
+
+/* Aktiver Zustand */
+.image-button-middle.active rect {
+  fill: #ffa800;
+}
+
+.image-button-middle.active path:not(g path) {
+  fill: white;
+}
+
+.image-button-middle.active g path {
+  fill: white;
+}
+
+.image-button-middle.active:hover {
+  box-shadow: 2px 6px 8px -2px rgba(0, 0, 0, 0.4);
+}
+
+.image-button-middle svg {
+  transform: translateX(-15px) translateY(-4.5px) scale(0.8); 
+  height: 60px;
+  width: 140px; 
+  transform-origin: center; 
+}
+
 
 .content-bottom {
   width: 920px;
@@ -430,7 +431,6 @@ h5 {
   background-image: url("/img/Subtasks-icon-hover.svg");
 }
 
-/* Wrapper für die zwei Icons */
 .icon-subtask-wrapper {
   position: absolute;
   top: 50%;
@@ -438,13 +438,12 @@ h5 {
   display: flex;
   align-items: center;
   transform: translateY(-50%);
-  background: white; /* optional, damit es nicht durchsichtig ist */
+  background: white;
   border-radius: 4px;
   padding: 2px;
   cursor: pointer;
 }
 
-/* einzelne Icons */
 .icon-close {
   width: 20px;
   height: 20px;
@@ -470,7 +469,6 @@ h5 {
   background-size: 16px;
 }
 
-/* vertikale graue Linie */
 .divider {
   width: 1px;
   height: 16px;
@@ -503,17 +501,16 @@ h5 {
 }
 
 .input-wrapper {
-  position: relative; 
+  position: relative;
 }
 
 .assign-dropdown {
   position: absolute;
   top: 100%;
   left: 0;
-  min-width: 250px; 
+  min-width: 250px;
   width: 100%;
   height: 400px;
-
   background: white;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -528,3 +525,38 @@ h5 {
   transform: scale(0.95);
   transform-origin: top left;
 }
+
+
+
+  .category-modal {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    z-index: 900;
+    margin-top: 4px;
+
+    .modal-column {
+      flex: 1;
+      padding: 8px;
+
+      .category-option {
+        padding: 12px;
+        cursor: pointer;
+        text-align: center;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+
+        &.hovered {
+          background-color: #f0f0f0;
+        }
+      }
+    }
+  }

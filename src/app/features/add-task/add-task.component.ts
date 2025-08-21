@@ -15,30 +15,20 @@ export class AddTaskComponent implements OnInit {
   isActive1 = false;
   isActive2 = false;
   isActive3 = false;
-
   isAssignDropdownOpen = false;
   isCategoryDropdownOpen = false;
   isSubtaskOpen = false;
-
   selectedContact: Contact | null = null;
-
   title: string = '';
   description: string = '';
-
   contacts: (Contact & { id: string })[] = [];
   topContacts: (Contact & { id: string })[] = [];
-
+  selectedCategory: string = ''; // Neue Eigenschaft für die ausgewählte Kategorie
+  hoveredOption: string = ''; // Neue Eigenschaft für Hover-Effekt
+  
   private readonly avatarColors = [
-    '#F44336',
-    '#E91E63',
-    '#9C27B0',
-    '#3F51B5',
-    '#03A9F4',
-    '#009688',
-    '#4CAF50',
-    '#FFC107',
-    '#FF9800',
-    '#795548',
+    '#F44336', '#E91E63', '#9C27B0', '#3F51B5', '#03A9F4',
+    '#009688', '#4CAF50', '#FFC107', '#FF9800', '#795548',
   ];
 
   constructor(private contactService: ContactService) {}
@@ -70,15 +60,24 @@ export class AddTaskComponent implements OnInit {
   }
 
   toggleButton1() {
-    this.isActive1 = !this.isActive1;
+    this.isActive1 = true;
+    this.isActive2 = false;
+    this.isActive3 = false;
+    console.log('Button 1 ist aktiv');
   }
 
   toggleButton2() {
-    this.isActive2 = !this.isActive2;
+    this.isActive1 = false;
+    this.isActive2 = true;
+    this.isActive3 = false;
+    console.log('Button 2 ist aktiv');
   }
 
   toggleButton3() {
-    this.isActive3 = !this.isActive3;
+    this.isActive1 = false;
+    this.isActive2 = false;
+    this.isActive3 = true;
+    console.log('Button 3 ist aktiv');
   }
 
   toggleAssignDropdown() {
@@ -93,6 +92,13 @@ export class AddTaskComponent implements OnInit {
     this.isSubtaskOpen = !this.isSubtaskOpen;
   }
 
+  // Neue Methode zur Auswahl einer Kategorie
+  selectCategory(category: string) {
+    this.selectedCategory = category;
+    this.isCategoryDropdownOpen = false;
+    console.log('Ausgewählte Kategorie:', category);
+  }
+
   addTask() {
     if (this.title.trim()) {
       console.log('Neue Aufgabe:', {
@@ -104,17 +110,18 @@ export class AddTaskComponent implements OnInit {
           button3: this.isActive3,
         },
         assignedContacts: this.topContacts,
+        category: this.selectedCategory, // Kategorie hinzugefügt
       });
-
       this.title = '';
       this.description = '';
+      this.selectedCategory = ''; // Kategorie zurücksetzen
     } else {
       alert('Bitte gib einen Titel für die Aufgabe ein.');
     }
   }
 
- onContactSelected(contact: Contact) {
-  this.selectedContact = contact;
-  console.log('Ausgewählter Kontakt:', contact);
-}
+  onContactSelected(contact: Contact) {
+    this.selectedContact = contact;
+    console.log('Ausgewählter Kontakt:', contact);
+  }
 }

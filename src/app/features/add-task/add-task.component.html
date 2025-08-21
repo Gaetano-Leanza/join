@@ -266,25 +266,53 @@
         </div>
       </div>
 
-      <div class="row3">
-        <div class="headline-wrapper">
-          <h4>Category</h4>
-          <h5>*</h5>
-        </div>
+ <div class="row3">
+  <div class="headline-wrapper">
+    <h4>Category</h4>
+    <h5>*</h5>
+  </div>
 
-        <div class="input-wrapper">
-          <input
-            class="placeholder8"
-            type="text"
-            placeholder="Select task category"
-          />
-          <span
-            class="icon-category"
-            [class.open]="isCategoryDropdownOpen"
-            (click)="toggleCategoryDropdown()"
-          ></span>
+  <div class="input-wrapper">
+    <input
+      class="placeholder8"
+      type="text"
+      placeholder="Select task category"
+      [value]="selectedCategory"
+      readonly
+    />
+    <span
+      class="icon-category"
+      [class.open]="isCategoryDropdownOpen"
+      (click)="toggleCategoryDropdown()"
+    ></span>
+
+    <!-- Modal für Kategorieauswahl -->
+    <div class="category-modal" *ngIf="isCategoryDropdownOpen">
+      <div class="modal-column">
+        <div
+          class="category-option"
+          (click)="selectCategory('Technical Task')"
+          (mouseover)="hoveredOption = 'Technical Task'"
+          (mouseleave)="hoveredOption = ''"
+          [class.hovered]="hoveredOption === 'Technical Task'"
+        >
+          Technical Task
         </div>
       </div>
+      <div class="modal-column">
+        <div
+          class="category-option"
+          (click)="selectCategory('User Story')"
+          (mouseover)="hoveredOption = 'User Story'"
+          (mouseleave)="hoveredOption = ''"
+          [class.hovered]="hoveredOption === 'User Story'"
+        >
+          User Story
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
       <div class="row4">
         <h4 class="headline">Subtasks</h4>
@@ -310,6 +338,7 @@
           </div>
         </div>
       </div>
+
     </div>
   </div>
 
