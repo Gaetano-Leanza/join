@@ -24,6 +24,23 @@ import { ModalBoardComponent } from './modal-board/modal-board.component';
   styleUrls: ['./board.component.scss'],
 })
 export class BoardComponent implements OnDestroy {
+  getCategoryClass(category: string): string {
+    switch (category) {
+      case 'Development':
+        return 'category-development';
+      case 'User Story':
+        return 'category-user-story';
+      case 'Design':
+        return 'category-design';
+      case 'Technical':
+      case 'Technical Task':
+        return 'category-technical';
+      case 'Documentation':
+        return 'category-documentation';
+      default:
+        return '';
+    }
+  }
   /** Modal-Status für Task-Details */
   showModal = false;
 
@@ -41,9 +58,15 @@ export class BoardComponent implements OnDestroy {
 
   private tasksSubscription: Subscription;
 
+    /** Farbpalette für Avatare. */
+    private readonly avatarColors = [
+      '#F44336', '#E91E63', '#9C27B0', '#3F51B5', '#03A9F4',
+      '#009688', '#4CAF50', '#FFC107', '#FF9800', '#795548'
+    ];
+
   constructor(
     private taskService: TaskService,
-    private contactService: ContactService
+    private contactService: ContactService,
   ) {
     this.tasksSubscription = this.taskService.getTasks().pipe(
       map(tasks => tasks.map(t => this.mapTask(t)))
@@ -54,6 +77,30 @@ export class BoardComponent implements OnDestroy {
       this.done = tasks.filter(t => t.progress === 'done');
     });
   }
+
+    /**
+     * Berechnet eine Avatar-Farbe basierend auf dem Namen.
+     * @param name Name des Kontakts
+     * @returns Hex-Farbcode
+     */
+    getAvatarColor(name: string): string {
+      if (!name) return this.avatarColors[0];
+      return this.avatarColors[name.trim().charCodeAt(0) % this.avatarColors.length];
+    }
+
+    /**
+     * Extrahiert Initialen aus dem Namen.
+     * @param name Name des Kontakts
+     * @returns Initialen (z.B. "AB")
+     */
+    getInitials(name: string): string {
+      return name
+        .split(' ')
+        .filter(part => part.length > 0)
+        .map(part => part[0].toUpperCase())
+        .slice(0, 2)
+        .join('');
+    }
 
   ngOnDestroy() {
     if (this.tasksSubscription) {

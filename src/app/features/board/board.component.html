@@ -65,22 +65,34 @@
           [cdkDropListConnectedTo]="['inProgressList','awaitFeedbackList','doneList']"
           (cdkDropListDropped)="drop($event)">
           <div *ngFor="let task of todo; trackBy: trackByTaskId" cdkDrag>
-            <div class="example-box " (click)="openTaskModal(task)">
-              <p class="task-category" [style.backgroundColor]="task.categoryColor"> {{ task.category }}</p>
-
+            <div class="example-box" (click)="openTaskModal(task)">
+              <p class="task-category {{ getCategoryClass(task.category) }}">{{ task.category }}</p>
               <h3 class="task-title">{{ task.title }}</h3>
               <p class="task-description"> {{ task.description }}</p>
-
               <div class="task-subtasks" *ngIf="task.subtasks && task.subtasks.length > 0">
                 <div class="progress-bar">
                   <div class="progress" [style.width.%]="getSubtaskProgress(task)"></div>
                 </div>
                 <span>{{ getDoneSubtasks(task) }}/{{task.subtasks.length }} Subtasks</span>
               </div>
-              <div>
-                {{ task.assignedTo }}
-                {{ task.priority }}
-
+              <div class="task-contacts">
+                <div class="contact" [ngStyle]="{ 'background-color': getAvatarColor(task.assignedTo) }">
+                  {{ getInitials(task.assignedTo) }}
+                </div>
+              <span class="task-priority-icon" [ngSwitch]="task.priority">
+                <svg *ngSwitchCase="'medium'" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="4" y="11" width="16" height="2" rx="1" fill="#FFA800"/>
+                  <rect x="4" y="15" width="16" height="2" rx="1" fill="#FFA800"/>
+                </svg>
+                <svg *ngSwitchCase="'urgent'" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 14L12 9L17 14" stroke="#FF3D00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M7 18L12 13L17 18" stroke="#FF3D00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <svg *ngSwitchCase="'low'" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 10L12 15L17 10" stroke="#7AE229" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M7 6L12 11L17 6" stroke="#7AE229" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
               </div>
             </div>
           </div>
@@ -110,21 +122,33 @@
           [cdkDropListConnectedTo]="['todoList','awaitFeedbackList','doneList']" (cdkDropListDropped)="drop($event)">
           <div *ngFor="let task of inprogress; trackBy: trackByTaskId" cdkDrag>
             <div class="example-box" (click)="openTaskModal(task)">
-              <p class="task-category" [style.backgroundColor]="task.categoryColor"> {{ task.category }}</p>
-
+              <p class="task-category {{ getCategoryClass(task.category) }}">{{ task.category }}</p>
               <h3 class="task-title">{{ task.title }}</h3>
               <p class="task-description"> {{ task.description }}</p>
-
               <div class="task-subtasks" *ngIf="task.subtasks && task.subtasks.length > 0">
                 <div class="progress-bar">
                   <div class="progress" [style.width.%]="getSubtaskProgress(task)"></div>
                 </div>
                 <span>{{ getDoneSubtasks(task) }}/{{task.subtasks.length }} Subtasks</span>
               </div>
-              <div>
-                {{ task.assignedTo }}
-                {{ task.priority }}
-
+              <div class="task-contacts">
+                <div class="contact" [ngStyle]="{ 'background-color': getAvatarColor(task.assignedTo) }">
+                  {{ getInitials(task.assignedTo) }}
+                </div>
+                <span class="task-priority-icon" [ngSwitch]="task.priority">
+                  <svg *ngSwitchCase="'medium'" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="11" width="16" height="2" rx="1" fill="#FFA800"/>
+                    <rect x="4" y="15" width="16" height="2" rx="1" fill="#FFA800"/>
+                  </svg>
+                  <svg *ngSwitchCase="'urgent'" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 14L12 9L17 14" stroke="#FF3D00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M7 18L12 13L17 18" stroke="#FF3D00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <svg *ngSwitchCase="'low'" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 10L12 15L17 10" stroke="#7AE229" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M7 6L12 11L17 6" stroke="#7AE229" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
               </div>
             </div>
           </div>
@@ -154,21 +178,33 @@
           [cdkDropListConnectedTo]="['todoList','inProgressList','doneList']" (cdkDropListDropped)="drop($event)">
           <div *ngFor="let task of awaitfeedback; trackBy: trackByTaskId" cdkDrag>
             <div class="example-box" (click)="openTaskModal(task)">
-              <p class="task-category" [style.backgroundColor]="task.categoryColor"> {{ task.category }}</p>
-
+              <p class="task-category {{ getCategoryClass(task.category) }}">{{ task.category }}</p>
               <h3 class="task-title">{{ task.title }}</h3>
               <p class="task-description"> {{ task.description }}</p>
-
               <div class="task-subtasks" *ngIf="task.subtasks && task.subtasks.length > 0">
                 <div class="progress-bar">
                   <div class="progress" [style.width.%]="getSubtaskProgress(task)"></div>
                 </div>
                 <span>{{ getDoneSubtasks(task) }}/{{task.subtasks.length }} Subtasks</span>
               </div>
-              <div>
-                {{ task.assignedTo }}
-                {{ task.priority }}
-
+              <div class="task-contacts">
+                <div class="contact" [ngStyle]="{ 'background-color': getAvatarColor(task.assignedTo) }">
+                  {{ getInitials(task.assignedTo) }}
+                </div>
+                <span class="task-priority-icon" [ngSwitch]="task.priority">
+                  <svg *ngSwitchCase="'medium'" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="11" width="16" height="2" rx="1" fill="#FFA800"/>
+                    <rect x="4" y="15" width="16" height="2" rx="1" fill="#FFA800"/>
+                  </svg>
+                  <svg *ngSwitchCase="'urgent'" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 14L12 9L17 14" stroke="#FF3D00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M7 18L12 13L17 18" stroke="#FF3D00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <svg *ngSwitchCase="'low'" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 10L12 15L17 10" stroke="#7AE229" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M7 6L12 11L17 6" stroke="#7AE229" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
               </div>
             </div>
           </div>
@@ -198,22 +234,34 @@
           [cdkDropListConnectedTo]="['todoList','inProgressList','awaitFeedbackList']"
           (cdkDropListDropped)="drop($event)">
           <div *ngFor="let task of done; trackBy: trackByTaskId" cdkDrag>
-            <div class="example-box " (click)="openTaskModal(task)">
-              <p class="task-category" [style.backgroundColor]="task.categoryColor"> {{ task.category }}</p>
-
+            <div class="example-box" (click)="openTaskModal(task)">
+              <p class="task-category {{ getCategoryClass(task.category) }}">{{ task.category }}</p>
               <h3 class="task-title">{{ task.title }}</h3>
               <p class="task-description"> {{ task.description }}</p>
-
               <div class="task-subtasks" *ngIf="task.subtasks && task.subtasks.length > 0">
                 <div class="progress-bar">
                   <div class="progress" [style.width.%]="getSubtaskProgress(task)"></div>
                 </div>
                 <span>{{ getDoneSubtasks(task) }}/{{task.subtasks.length }} Subtasks</span>
               </div>
-              <div>
-                {{ task.assignedTo }}
-                {{ task.priority }}
-
+              <div class="task-contacts">
+                <div class="contact" [ngStyle]="{ 'background-color': getAvatarColor(task.assignedTo) }">
+                  {{ getInitials(task.assignedTo) }}
+                </div>
+                <span class="task-priority-icon" [ngSwitch]="task.priority">
+                  <svg *ngSwitchCase="'medium'" class="" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="11" width="16" height="2" rx="1" fill="#FFA800"/>
+                    <rect x="4" y="15" width="16" height="2" rx="1" fill="#FFA800"/>
+                  </svg>
+                  <svg *ngSwitchCase="'urgent'" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 14L12 9L17 14" stroke="#FF3D00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M7 18L12 13L17 18" stroke="#FF3D00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <svg *ngSwitchCase="'low'" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 10L12 15L17 10" stroke="#7AE229" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M7 6L12 11L17 6" stroke="#7AE229" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
               </div>
             </div>
           </div>
