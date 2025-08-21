@@ -100,3 +100,8 @@
   </div>
   }
 </form>
+
+<!-- Info-Modal nach erfolgreichem Editieren oder Löschen eines Kontakts -->
+<div *ngIf="showSuccessInfo" class="success-info-modal" [@fadeInOutInfo]>
+  {{ successMessage }}
+</div>

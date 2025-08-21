@@ -244,11 +244,13 @@
 
           <!-- Modal/Drowdown -->
           <div *ngIf="isAssignDropdownOpen" class="assign-dropdown">
-
-            <app-contact-list
-              [showAddButton]="false"
-              (contactSelected)="onContactSelected($event)"
-            ></app-contact-list>
+            <div class="contact-list-wrapper">
+              <app-contact-list
+                [showAddButton]="false"
+                [showAddButtonMobile]="false"
+                (contactSelected)="onContactSelected($event)"
+              ></app-contact-list>
+            </div>
           </div>
         </div>
       </div>

@@ -76,6 +76,8 @@ export class ContactListComponent implements OnInit, OnDestroy {
 
   @Input() showAddButton: boolean = true;
 
+  @Input() showAddButtonMobile = true;
+
   /** Farbpalette für Avatare. */
   private readonly avatarColors = [
     '#F44336',

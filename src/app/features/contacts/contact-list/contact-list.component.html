@@ -1,5 +1,9 @@
 <div class="contact-wrapper">
-  <button class="add-contact-button-mobile" (click)="openModal2()">
+  <button
+    *ngIf="showAddButtonMobile"
+    class="add-contact-button-mobile"
+    (click)="openModal2()"
+  >
     <svg
       width="68"
       height="68"

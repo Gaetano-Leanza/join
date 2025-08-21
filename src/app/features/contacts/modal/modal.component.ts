@@ -59,6 +59,9 @@ export class ModalComponent implements OnChanges, OnInit {
     '#009688', '#4CAF50', '#FFC107', '#FF9800', '#795548',
   ];
 
+  showSuccessInfo = false;
+  successMessage = '';
+
   /**
    * Validiert den Namen mit einem regulären Ausdruck
    * @param name Name des Kontakts
@@ -138,20 +141,6 @@ export class ModalComponent implements OnChanges, OnInit {
     this.currentContactId = null;
   }
 
-  /** Löscht den aktuellen Kontakt und schließt das Modal */
-  async deleteContactAndClose(): Promise<void> {
-    if (!this.currentContactId) return;
-
-    try {
-      await this.contactService.deleteContact(this.currentContactId);
-      this.resetForm();
-      this.closed.emit();
-      this.contactSaved.emit();
-    } catch (error) {
-      console.error('Error deleting contact:', error);
-    }
-  }
-
   /**
    * Speichert den Kontakt (neu oder bearbeitet)
    * @param form NgForm der Eingabemaske
@@ -170,15 +159,48 @@ export class ModalComponent implements OnChanges, OnInit {
           this.currentContactId,
           contactData
         );
+        this.successMessage = 'Contact successfully edited';
+        this.showSuccessInfo = true;
+        setTimeout(() => {
+          this.showSuccessInfo = false;
+          this.resetForm();
+          this.closed.emit();
+          this.contactSaved.emit();
+        }, 2000);
+        return;
       } else {
         await this.contactService.addContact(contactData);
+        this.successMessage = 'Contact successfully added';
+        this.showSuccessInfo = true;
+        setTimeout(() => {
+          this.showSuccessInfo = false;
+          this.resetForm();
+          this.closed.emit();
+          this.contactSaved.emit();
+        }, 2000);
       }
-
-      this.resetForm();
-      this.closed.emit();
-      this.contactSaved.emit();
     } catch (error) {
       console.error('Error saving contact:', error);
+    }
+  }
+
+  /** Löscht den aktuellen Kontakt und schließt das Modal */
+  async deleteContactAndClose(): Promise<void> {
+    if (!this.currentContactId) return;
+
+    try {
+      this.successMessage = 'Contact successfully deleted';
+      this.showSuccessInfo = true;
+      // Modal erst nach Timeout schließen, damit Nachricht sichtbar bleibt
+      setTimeout(async () => {
+        await this.contactService.deleteContact(this.currentContactId!);
+        this.showSuccessInfo = false;
+        this.resetForm();
+        this.closed.emit();
+        this.contactSaved.emit();
+      }, 2000);
+    } catch (error) {
+      console.error('Error deleting contact:', error);
     }
   }
 

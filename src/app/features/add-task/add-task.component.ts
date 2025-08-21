@@ -20,6 +20,8 @@ export class AddTaskComponent implements OnInit {
   isCategoryDropdownOpen = false;
   isSubtaskOpen = false;
 
+  selectedContact: Contact | null = null;
+
   title: string = '';
   description: string = '';
 
@@ -111,8 +113,8 @@ export class AddTaskComponent implements OnInit {
     }
   }
 
-  onContactSelected(contact: Contact) {
-    console.log('Kontakt ausgewählt:', contact);
-    // Hier könntest du z.B. selectedContacts in einem Array speichern
-  }
+ onContactSelected(contact: Contact) {
+  this.selectedContact = contact;
+  console.log('Ausgewählter Kontakt:', contact);
+}
 }

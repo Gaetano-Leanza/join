@@ -143,10 +143,11 @@ export class Modal2Component implements OnChanges {
 
       this.showSuccessInfo = true;
       setTimeout(() => {
-        this.showSuccessInfo = false;
         this.resetForm();
         this.closed.emit();
         this.contactSaved.emit();
+        this.showSuccessInfo = false;
+
       }, 2000);
     } catch (error) {
       console.error('Error saving contact:', error);

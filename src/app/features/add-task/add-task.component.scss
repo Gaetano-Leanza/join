@@ -18,6 +18,10 @@ h5 {
   padding-bottom: 5px;
 }
 
+.content {
+  overflow-x: hidden;
+}
+
 .content-wrapper {
   display: flex;
   justify-items: row;
@@ -499,21 +503,28 @@ h5 {
 }
 
 .input-wrapper {
-  position: relative; // wichtig, damit das Dropdown relativ zu diesem Container positioniert wird
+  position: relative; 
 }
 
 .assign-dropdown {
   position: absolute;
-  top: 100%;         // direkt unter dem Input
+  top: 100%;
   left: 0;
-  width: 100%;       // gleiche Breite wie Input
+  min-width: 250px; 
+  width: 100%;
   height: 400px;
-  background: #fff;
+
+  background: white;
   border: 1px solid #ddd;
   border-radius: 8px;
-  margin-top: 4px;   // kleiner Abstand unter Input
+  margin-top: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  z-index: 1000;     // damit es über allem liegt
-  overflow-y: auto;  // falls Inhalte länger werden
-  padding: 10px;
+  z-index: 1000;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.contact-list-wrapper {
+  transform: scale(0.95);
+  transform-origin: top left;
 }
