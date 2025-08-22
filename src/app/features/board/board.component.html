@@ -302,32 +302,8 @@
     </div>
   </div>
 
-  <!-- Task Modal -->
-  <div class="task-modal" *ngIf="selectedTask">
-    <div class="modal-content">
-      <button id="close" (click)="selectedTask = null">X</button>
-      <p id="categoryColor" [style.background-color]="selectedTask.categoryColor">
-        {{ selectedTask.category}}</p>
-      <h3>{{ selectedTask.title }}</h3>
-      <p>{{ selectedTask.description }}</p>
-      <p>Due Date: {{ selectedTask.dueDate}}</p>
-      <p>Priority: {{selectedTask.priority}}</p>
-      <p>Assigned To:</p>
-      <br />
-      {{ selectedTask.contacts }}
-      <p>Subtasks:
-        {{ selectedTask.subtasks }} </p>
-      <br />
+  <app-modal-board *ngIf="selectedTask" [task]="selectedTask" (close)="selectedTask = null">
+  </app-modal-board>
 
-
-
-      <div class="task-modal-buttons">
-
-        <button>Delete</button>
-        <button>Edit</button>
-      </div>
-    </div>
-  </div>
-
-  <app-modal-board *ngIf="showModal" (close)="showModal = false"></app-modal-board>
+  <app-modal-board-add-task *ngIf="showModal" (close)="showModal = false"></app-modal-board-add-task>
 </section>

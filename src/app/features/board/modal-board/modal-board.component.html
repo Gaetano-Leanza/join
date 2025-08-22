@@ -1,7 +1,34 @@
-<div class="modal-backdrop" (click)="close.emit()">
-    <div class="modal-content" (click)="$event.stopPropagation()" @slideInModal>
-        <button (click)="close.emit()"><span id="close">X </span></button>
-        <!--  Modal-Inhalt -->
-        <h2>Add Task</h2>
-    </div>
-</div>
+<!-- Task Modal -->
+<div class="task-modal">
+    <div class="modal-content">
+        <button id="close" (click)="close.emit()">X</button>
+        <p id="categoryColor" [style.background-color]="task.categoryColor">
+            {{ task.category }}
+        </p>
+        <h3>{{ task.title }}</h3>
+        <p>{{ task.description }}</p>
+        <p>Due Date: {{ task.dueDate }}</p>
+        <p>Priority: {{ task.priority }}</p>
+        <p>Assigned To:</p>
+        <br />
+        <div class="task-modal">
+            <div class="modal-content">
+                <button id="close" (click)="close.emit()">X</button>
+                <p id="categoryColor" [style.background-color]="task.categoryColor">
+                    {{ task.category }}
+                </p>
+                <h3>{{ task.title }}</h3>
+                <p>{{ task.description }}</p>
+                <p>Due Date: {{ task.dueDate }}</p>
+                <p>Priority: {{ task.priority }}</p>
+                <p>Assigned To:</p>
+                <br>
+
+
+                <div class="task-modal-buttons">
+
+                    <button>Delete</button>
+                    <button>Edit</button>
+                </div>
+            </div>
+        </div>

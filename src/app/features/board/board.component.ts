@@ -1,6 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {ModalBoardComponent } from './modal-board/modal-board.component';
 import {
   CdkDragDrop,
   moveItemInArray,
@@ -15,12 +16,11 @@ import { ContactService } from '../contacts/contact-service/contact.service';
 
 // Models
 import { Contact } from '../contacts/contact-model/contact.model';
-import { ModalBoardComponent } from './modal-board/modal-board.component';
-
+import { ModalBoardAddTaskComponent } from './modal-board-add-task/modal-board-add-task.component';
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [CommonModule, DragDropModule, ModalBoardComponent, FormsModule],
+  imports: [CommonModule, DragDropModule, ModalBoardAddTaskComponent, FormsModule,ModalBoardComponent ],
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
 })
@@ -339,9 +339,10 @@ export class BoardComponent implements OnDestroy {
    * Opens the modal to display task details.
    * @param {Task} task - The task to be displayed in the modal.
    */
-  openTaskModal(task: Task) {
-    this.selectedTask = task;
-  }
+
+openTaskModal(task: Task) {
+  this.selectedTask = task;
+}
 
   /**
    * TrackBy function for `ngFor` to optimize performance when rendering task lists.

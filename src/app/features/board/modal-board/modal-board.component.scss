@@ -1,43 +1,155 @@
-.modal-backdrop {
+/* Stile für das Task-Modal-Overlay */
+.task-modal {
     position: fixed;
+    /* Bleibt an der gleichen Stelle, auch beim Scrollen */
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
     display: flex;
-    align-items: center;
     justify-content: center;
-
+    align-items: center;
     z-index: 1000;
 }
 
+/* Stile für den Inhalt des Modals */
 .modal-content {
-    background: #fff;
-    padding: 2rem;
-    min-width: 500px;
-    max-width: 1200px;
-    width: 95%;
+    background-color: #ffffff;
+    padding: 48px;
     border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 550px;
     height: 600px;
-    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.1);
-}
 
-button {
+    width: 90%;
     position: relative;
-    background-color: #fff;
-    border: none;
-    left: 97%;
-    top: 2%;
-    ;
-}
+    font-family: 'Inter', sans-serif;
 
-button:hover {
-    transform: scale(1.1);
-    transition: transform ease 0.2s;
-    cursor: pointer;
-}
+    /* Schließen-Button oben rechts */
+    #close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: url('/img/close.svg') no-repeat center;
+        border: none;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        font-size: 0;
 
-#close {
-    font-size: 24px;
+        &:hover {
+            background: url('/img/close-hover.svg') no-repeat center;
+            transform: scale(1.1);
+        }
+    }
+
+    /* Kategorie-Chip */
+    #categoryColor {
+        display: inline-block;
+        color: white;
+        padding: 4px 25px;
+        border-radius: 8px;
+        font-size: 23px;
+        font-weight: 400;
+        margin-bottom: 20px;
+    }
+
+    /* Task-Titel */
+    h3 {
+        font-size: 45px;
+        font-weight: 700;
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+
+    /* Beschreibung, Fälligkeitsdatum und Priorität */
+    p {
+        font-size: 20px;
+        margin-bottom: 20px;
+        line-height: 1.4;
+    }
+
+    /* Spezielle Formatierung für die Label (Due Date, Priority, etc.) */
+    .label {
+        font-weight: 700;
+        width: 150px;
+        display: inline-block;
+    }
+
+    /* Container für Due Date und Priority für Flexbox-Layout */
+    .details-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+
+        span {
+            margin-left: 10px;
+        }
+
+        // Styling für das Prioritäts-Icon
+        img {
+            margin-left: 5px;
+        }
+    }
+
+    /* Container für "Assigned To" Liste */
+    .assigned-to {
+        margin-top: 15px;
+    }
+
+    /* Jeder Kontakt in der Liste */
+    .contact-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        font-size: 19px;
+
+        .contact-initials {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            margin-right: 15px;
+            border: 2px solid white;
+        }
+    }
+
+    /* Container für die Buttons am Ende */
+    .task-modal-buttons {
+        display: flex;
+        justify-content: flex-end;
+        /* Buttons nach rechts ausrichten */
+        gap: 10px;
+        /* Abstand zwischen den Buttons */
+        margin-top: 30px;
+
+        button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            border: 1px solid #d1d1d1;
+            border-radius: 10px;
+            background-color: transparent;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.1s ease-in-out;
+
+            &:hover {
+                border-color: #29abe2;
+                color: #29abe2;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+                // Ändert die Icon-Farbe beim Hovern
+                img {
+                    filter: invert(58%) sepia(87%) saturate(1636%) hue-rotate(160deg) brightness(95%) contrast(87%);
+                }
+            }
+        }
+    }
 }
