@@ -325,6 +325,10 @@
             [ngModelOptions]="{ standalone: true }"
           />
 
+          <ul *ngIf="subtasks.length > 0" class="subtask-list">
+            <li *ngFor="let task of subtasks">{{ task }}</li>
+          </ul>
+
           <!-- Zustand 1: Standard -->
           <span
             *ngIf="!isSubtaskOpen"
@@ -333,10 +337,11 @@
           ></span>
 
           <!-- Zustand 2: zwei Symbole mit Trenner -->
+
           <div *ngIf="isSubtaskOpen" class="icon-subtask-wrapper">
             <span class="icon-close" (click)="toggleSubtaskIcon()"></span>
             <span class="divider"></span>
-            <span class="icon-check" (click)="toggleSubtaskIcon()"></span>
+            <span class="icon-check" (click)="addSubtask()"></span>
           </div>
         </div>
       </div>

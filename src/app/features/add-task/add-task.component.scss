@@ -559,3 +559,21 @@ h5 {
     }
   }
 }
+
+.subtask-list {
+  position: absolute;
+  top: 100%; // direkt unter dem Input
+  left: 0;
+  width: 100%; // gleiche Breite wie das Input
+  margin: 0;
+  padding-top: 2px;
+  background: white;
+  border: none;
+  z-index: 10;
+  list-style: disc inside; // Bulletpoints
+}
+
+.subtask-list li {
+  padding: 2px 0;
+  color: #333;
+}

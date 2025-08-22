@@ -5,7 +5,6 @@ import { Contact } from '../contacts/contact-model/contact.model';
 import { ContactListComponent } from '../contacts/contact-list/contact-list.component';
 import { FormsModule } from '@angular/forms';
 
-
 @Component({
   selector: 'app-add-task',
   standalone: true,
@@ -28,13 +27,23 @@ export class AddTaskComponent implements OnInit {
   selectedCategory: string = '';
   hoveredOption: string = '';
 
-  // neue Variable für das Input-Feld
+  // Subtask-Handling
   subtaskText: string = '';
-  private subtaskTextSet = false; // Flag, damit es nur einmal gesetzt wird
+  subtasks: string[] = [];
+  defaultSubtasks: string[] = ['Contact Form', 'Write Legal Imprint'];
+  currentIndex: number = 0;
 
   private readonly avatarColors = [
-    '#F44336', '#E91E63', '#9C27B0', '#3F51B5', '#03A9F4',
-    '#009688', '#4CAF50', '#FFC107', '#FF9800', '#795548',
+    '#F44336',
+    '#E91E63',
+    '#9C27B0',
+    '#3F51B5',
+    '#03A9F4',
+    '#009688',
+    '#4CAF50',
+    '#FFC107',
+    '#FF9800',
+    '#795548',
   ];
 
   constructor(private contactService: ContactService) {}
@@ -94,14 +103,33 @@ export class AddTaskComponent implements OnInit {
     this.isCategoryDropdownOpen = !this.isCategoryDropdownOpen;
   }
 
- toggleSubtaskIcon() {
-  this.isSubtaskOpen = !this.isSubtaskOpen;
+  // === Subtask-Logik ===
+  toggleSubtaskIcon() {
+    this.isSubtaskOpen = !this.isSubtaskOpen;
 
-  if (this.isSubtaskOpen && !this.subtaskTextSet) {
-    this.subtaskText = 'Contact Form';
-    this.subtaskTextSet = true;
+    if (this.isSubtaskOpen && this.currentIndex < this.defaultSubtasks.length) {
+      this.subtaskText = this.defaultSubtasks[this.currentIndex];
+    } else if (!this.isSubtaskOpen) {
+      this.subtaskText = '';
+    }
   }
-}
+
+  addSubtask() {
+    if (this.subtaskText.trim()) {
+      this.subtasks.push(this.subtaskText.trim());
+      console.log(this.subtaskText.trim());
+
+      // nächsten Default-Text vorbereiten
+      this.currentIndex++;
+
+      if (this.currentIndex < this.defaultSubtasks.length) {
+        this.subtaskText = this.defaultSubtasks[this.currentIndex];
+      } else {
+        this.subtaskText = '';
+        this.isSubtaskOpen = false;
+      }
+    }
+  }
 
   selectCategory(category: string) {
     this.selectedCategory = category;
@@ -121,10 +149,15 @@ export class AddTaskComponent implements OnInit {
         },
         assignedContacts: this.topContacts,
         category: this.selectedCategory,
+        subtasks: this.subtasks,
       });
       this.title = '';
       this.description = '';
       this.selectedCategory = '';
+      this.subtasks = [];
+      this.currentIndex = 0;
+      this.subtaskText = '';
+      this.isSubtaskOpen = false;
     } else {
       alert('Bitte gib einen Titel für die Aufgabe ein.');
     }
