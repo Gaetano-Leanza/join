@@ -13,18 +13,23 @@ import { map, Subscription } from 'rxjs';
 import { TaskService, Task, Subtask } from '../../services/task.service';
 import { ContactService } from '../contacts/contact-service/contact.service';
 
-// Modelle
+// Models
 import { Contact } from '../contacts/contact-model/contact.model';
 import { ModalBoardComponent } from './modal-board/modal-board.component';
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [CommonModule, DragDropModule,ModalBoardComponent,FormsModule ],
+  imports: [CommonModule, DragDropModule, ModalBoardComponent, FormsModule],
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
 })
 export class BoardComponent implements OnDestroy {
+  /**
+   * Returns the corresponding CSS class for a task category.
+   * @param {string} category - The category of the task.
+   * @returns {string} The name of the CSS class.
+   */
   getCategoryClass(category: string): string {
     switch (category) {
       case 'Development':
@@ -42,39 +47,52 @@ export class BoardComponent implements OnDestroy {
         return '';
     }
   }
-  /** Modal-Status für Task-Details */
+
+  /** Status of the modal for the task detail view. */
   showModal = false;
 
-  /** Lokale Arrays für die Spalten */
+  /** Array for tasks in the 'To Do' column. */
   todo: Task[] = [];
+  /** Array for tasks in the 'In Progress' column. */
   inprogress: Task[] = [];
+  /** Array for tasks in the 'Await Feedback' column. */
   awaitfeedback: Task[] = [];
+  /** Array for tasks in the 'Done' column. */
   done: Task[] = [];
 
-  /** Aktuell ausgewählter Task für Details */
+  /** The currently selected task to be displayed in the modal. */
   selectedTask: Task | null = null;
 
-  /** Aktuell ausgewählter Kontakt */
+  /** The currently selected contact. */
   selectedContact: (Contact & { id: string }) | null = null;
 
+  /** Subscription to the task data. */
   private tasksSubscription: Subscription;
 
-    /** Farbpalette für Avatare. */
-    private readonly avatarColors = [
-      '#F44336', '#E91E63', '#9C27B0', '#3F51B5', '#03A9F4',
-      '#009688', '#4CAF50', '#FFC107', '#FF9800', '#795548'
-    ];
+  /**
+   * Color palette for contact avatars.
+   * @private
+   * @readonly
+   */
+  private readonly avatarColors = [
+    '#F44336', '#E91E63', '#9C27B0', '#3F51B5', '#03A9F4',
+    '#009688', '#4CAF50', '#FFC107', '#FF9800', '#795548'
+  ];
 
-  /** Suchbegriff für die Task-Suche */
+  /** The current search term for filtering tasks. */
   searchTerm: string = '';
 
-  /** Hinweistext, wenn keine Tasks gefunden werden */
+  /** Message displayed when no tasks are found. */
   noTasksMessage: string = '';
 
-  /** Master-Liste aller Tasks (für Filterzwecke) */
+  /** A master list containing all tasks for filtering purposes. */
   private allTasks: Task[] = [];
-  
 
+  /**
+   * Initializes the component and subscribes to task data.
+   * @param {TaskService} taskService - The service for managing tasks.
+   * @param {ContactService} contactService - The service for managing contacts.
+   */
   constructor(
     private taskService: TaskService,
     private contactService: ContactService,
@@ -83,98 +101,102 @@ export class BoardComponent implements OnDestroy {
       map(tasks => tasks.map(t => this.mapTask(t)))
     ).subscribe(tasks => {
       this.allTasks = tasks;
-      this.filterTasks(); // Initiale Filterung
+      this.filterTasks(); // Initial filtering on load
     });
   }
 
   /**
-   * Filtert Tasks anhand des Suchbegriffs und verteilt sie auf die Spalten.
+   * Filters tasks based on the `searchTerm` and distributes them into the columns.
+   * If the search term is empty, all tasks are displayed.
    */
   filterTasks(): void {
-  const search = this.searchTerm.trim().toLowerCase();
+    const search = this.searchTerm.trim().toLowerCase();
 
-  if (!search) {
-    this.todo = this.allTasks.filter(t => t.progress === 'toDo');
-    this.inprogress = this.allTasks.filter(t => t.progress === 'inProgress');
-    this.awaitfeedback = this.allTasks.filter(t => t.progress === 'awaitFeedback');
-    this.done = this.allTasks.filter(t => t.progress === 'done');
-    this.noTasksMessage = '';
-    return;
+    if (!search) {
+      this.todo = this.allTasks.filter(t => t.progress === 'toDo');
+      this.inprogress = this.allTasks.filter(t => t.progress === 'inProgress');
+      this.awaitfeedback = this.allTasks.filter(t => t.progress === 'awaitFeedback');
+      this.done = this.allTasks.filter(t => t.progress === 'done');
+      this.noTasksMessage = '';
+      return;
+    }
+
+    const filtered = this.allTasks.filter(
+      t =>
+        (t.title && t.title.toLowerCase().startsWith(search)) ||
+        (t.description && t.description.toLowerCase().startsWith(search))
+    );
+
+    this.todo = filtered.filter(t => t.progress === 'toDo');
+    this.inprogress = filtered.filter(t => t.progress === 'inProgress');
+    this.awaitfeedback = filtered.filter(t => t.progress === 'awaitFeedback');
+    this.done = filtered.filter(t => t.progress === 'done');
+
+    this.noTasksMessage = filtered.length === 0 ? 'No results found.' : '';
   }
 
-  // Suche nur, wenn title/description mit search ANFÄNGT
-  const filtered = this.allTasks.filter(
-    t =>
-      (t.title && t.title.toLowerCase().startsWith(search)) ||
-      (t.description && t.description.toLowerCase().startsWith(search))
-  );
-
-  this.todo = filtered.filter(t => t.progress === 'toDo');
-  this.inprogress = filtered.filter(t => t.progress === 'inProgress');
-  this.awaitfeedback = filtered.filter(t => t.progress === 'awaitFeedback');
-  this.done = filtered.filter(t => t.progress === 'done');
-
-  this.noTasksMessage = filtered.length === 0 ? 'No results found.' : '';
-}
+  /**
+   * Calculates a deterministic avatar color based on the name.
+   * @param {string} name - The contact's name.
+   * @returns {string} A hex color code.
+   */
+  getAvatarColor(name: string): string {
+    if (!name) return this.avatarColors[0];
+    return this.avatarColors[name.trim().charCodeAt(0) % this.avatarColors.length];
+  }
 
   /**
-   * Wendet den aktuellen Filter (searchTerm) auf die Master-Liste an.
+   * Extracts the initials from a full name.
+   * @param {string} name - The contact's name.
+   * @returns {string} The initials (e.g., "AB").
    */
-  
+  getInitials(name: string): string {
+    return name
+      .split(' ')
+      .filter(part => part.length > 0)
+      .map(part => part[0].toUpperCase())
+      .slice(0, 2)
+      .join('');
+  }
 
-    /**
-     * Berechnet eine Avatar-Farbe basierend auf dem Namen.
-     * @param name Name des Kontakts
-     * @returns Hex-Farbcode
-     */
-    getAvatarColor(name: string): string {
-      if (!name) return this.avatarColors[0];
-      return this.avatarColors[name.trim().charCodeAt(0) % this.avatarColors.length];
-    }
-
-    /**
-     * Extrahiert Initialen aus dem Namen.
-     * @param name Name des Kontakts
-     * @returns Initialen (z.B. "AB")
-     */
-    getInitials(name: string): string {
-      return name
-        .split(' ')
-        .filter(part => part.length > 0)
-        .map(part => part[0].toUpperCase())
-        .slice(0, 2)
-        .join('');
-    }
-
+  /**
+   * Lifecycle hook called when the component is destroyed to clean up subscriptions.
+   */
   ngOnDestroy() {
     if (this.tasksSubscription) {
       this.tasksSubscription.unsubscribe();
     }
   }
 
-
-    getDoneSubtasks(task: Task): number {
+  /**
+   * Counts the number of completed subtasks for a given task.
+   * @param {Task} task - The task whose subtasks are to be counted.
+   * @returns {number} The number of completed subtasks.
+   */
+  getDoneSubtasks(task: Task): number {
     const subtasks: Subtask[] = this.parseSubtasks(task.subtasks);
     return subtasks.filter(s => s.done).length;
   }
 
   /**
    * Calculates the progress of subtasks as a percentage.
-   * @param {Task} task - The task for which the progress is to be calculated.
+   * @param {Task} task - The task for which to calculate the progress.
    * @returns {number} The progress percentage (0-100).
    */
   getSubtaskProgress(task: Task): number {
     if (!task.subtasks || task.subtasks.length === 0) return 0;
-    return (this.getDoneSubtasks(task) / task.subtasks.length) * 100;
+    const totalSubtasks = this.parseSubtasks(task.subtasks).length;
+    if (totalSubtasks === 0) return 0;
+    return (this.getDoneSubtasks(task) / totalSubtasks) * 100;
   }
 
   /**
-   * Normalisiert Task-Daten aus Firestore.
-   * @param task Rohdaten eines Tasks
-   * @returns Task-Objekt mit korrekten Typen
+   * Maps and normalizes raw task data from Firestore into a structured Task object.
+   * @private
+   * @param {*} task - The raw task data.
+   * @returns {Task} The normalized Task object.
    */
   private mapTask(task: any): Task {
-    console.log('Raw task data:', task);
     return {
       id: task.id || '',
       assignedTo: task.assignedTo || '',
@@ -184,17 +206,18 @@ export class BoardComponent implements OnDestroy {
       dueDate: task.dueDate || '',
       priority: this.mapPriority(task.priority),
       progress: task.progress || 'toDo',
-      subtasks: task.subtasks || '',
+      subtasks: task.subtasks || [],
       title: task.title || task.titile || '',
-      contacts: task.contacts || task.assignedTo || '',
-      status: task.status || '', 
+      contacts: task.contacts || task.assignedTo || [],
+      status: task.status || '',
     };
   }
 
   /**
-   * Generiert eine Farbe basierend auf der Kategorie.
-   * @param category Kategorie-Name
-   * @returns Hex-Farbcode
+   * Generates a deterministic color based on the category name.
+   * @private
+   * @param {string} category - The name of the category.
+   * @returns {string} A hex color code.
    */
   private getCategoryColor(category: string): string {
     const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#F9A826', '#6A0572'];
@@ -203,9 +226,10 @@ export class BoardComponent implements OnDestroy {
   }
 
   /**
-   * Erzeugt einen Hash-Wert für einen String.
-   * @param str Input-String
-   * @returns Ganzzahl-Hash
+   * Generates a simple hash code for a string.
+   * @private
+   * @param {string} str - The input string.
+   * @returns {number} The generated hash code.
    */
   private hashCode(str: string): number {
     let hash = 0;
@@ -217,34 +241,33 @@ export class BoardComponent implements OnDestroy {
   }
 
   /**
-   * Parst Subtasks aus verschiedenen Formaten.
-   * @param subtasks Array oder CSV-String
-   * @returns Array von Subtask-Objekten
+   * Parses subtasks, which can be an array or a string, into a consistent format.
+   * @private
+   * @param {*} subtasks - The subtasks in various formats.
+   * @returns {Subtask[]} An array of Subtask objects.
    */
   private parseSubtasks(subtasks: any): Subtask[] {
     if (!subtasks) return [];
-    
     if (Array.isArray(subtasks)) {
       return subtasks.map(sub => ({
         title: sub.title || sub || '',
         done: sub.done || false
       }));
     }
-    
     if (typeof subtasks === 'string') {
       return subtasks.split(',').map(title => ({
         title: title.trim(),
         done: false
       }));
     }
-    
     return [];
   }
 
   /**
-   * Normalisiert die Priorität eines Tasks.
-   * @param priority String-Priorität
-   * @returns Task-Priority
+   * Maps a priority string to the defined `Task['priority']` type.
+   * @private
+   * @param {string} priority - The priority as a string (e.g., 'low', 'medium', 'urgent').
+   * @returns {Task['priority']} The normalized priority.
    */
   private mapPriority(priority: string): Task['priority'] {
     const priorityMap: Record<string, Task['priority']> = {
@@ -252,13 +275,13 @@ export class BoardComponent implements OnDestroy {
       'medium': 'medium',
       'urgent': 'urgent'
     };
-    
-    return priorityMap[priority.toLowerCase()] || 'medium';
+    return priorityMap[priority?.toLowerCase()] || 'medium';
   }
 
   /**
-   * Behandelt Drag & Drop von Tasks zwischen Listen.
-   * @param event CdkDragDrop Event
+   * Handles the drag-and-drop event for tasks.
+   * Updates the task status when it's moved to a different column.
+   * @param {CdkDragDrop<Task[]>} event - The drag-and-drop event object.
    */
   drop(event: CdkDragDrop<Task[]>) {
     if (event.previousContainer === event.container) {
@@ -272,7 +295,6 @@ export class BoardComponent implements OnDestroy {
       const newProgress = this.getProgressFromContainerId(event.container.id);
 
       if (newProgress && task.id) {
-        // Sofortige UI-Aktualisierung (Task-Status im Objekt direkt ändern)
         task.progress = newProgress;
         transferArrayItem(
           event.previousContainer.data,
@@ -281,11 +303,10 @@ export class BoardComponent implements OnDestroy {
           event.currentIndex
         );
 
-        // Asynchrones Update in Firestore, UI bleibt sofort aktuell
         this.taskService.updateTask(task.id, { progress: newProgress } as Partial<Task>)
           .catch(error => {
             console.error('Error updating task:', error);
-            // Optional: Rückgängig machen bei Fehler
+            // Optional: Revert UI change on error
             transferArrayItem(
               event.container.data,
               event.previousContainer.data,
@@ -295,18 +316,14 @@ export class BoardComponent implements OnDestroy {
             task.progress = this.getProgressFromContainerId(event.previousContainer.id) || task.progress;
           });
       }
- 
     }
-
-    
-    
   }
-  
 
   /**
-   * Bestimmt den Fortschrittswert basierend auf der Container-ID.
-   * @param containerId ID der Drop-Container
-   * @returns Fortschrittsstatus oder null
+   * Determines the progress status based on the ID of the target container.
+   * @private
+   * @param {string} containerId - The ID of the drop container.
+   * @returns {Task['progress'] | null} The corresponding progress status or null.
    */
   private getProgressFromContainerId(containerId: string): Task['progress'] | null {
     const progressMap: Record<string, Task['progress']> = {
@@ -319,21 +336,18 @@ export class BoardComponent implements OnDestroy {
   }
 
   /**
-   * Öffnet das Task-Modal für Details.
-   * @param task Ausgewählter Task
+   * Opens the modal to display task details.
+   * @param {Task} task - The task to be displayed in the modal.
    */
   openTaskModal(task: Task) {
-    // Nur das Task-Modal öffnen, NICHT showModal setzen!
     this.selectedTask = task;
-    // Entferne oder lasse folgende Zeile weg:
-    // this.showModal = true;
   }
 
   /**
-   * TrackBy-Funktion für ngFor zur Verbesserung der Performance.
-   * @param index Index im Array
-   * @param task Task-Objekt
-   * @returns Task-ID
+   * TrackBy function for `ngFor` to optimize performance when rendering task lists.
+   * @param {number} index - The index of the item in the array.
+   * @param {Task} task - The task object.
+   * @returns {string} The unique ID of the task.
    */
   trackByTaskId(index: number, task: Task): string {
     return task.id || index.toString();
