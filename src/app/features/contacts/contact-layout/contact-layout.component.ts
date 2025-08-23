@@ -34,6 +34,7 @@ import { ContactService } from '../contact-service/contact.service';
   ],
 })
 export class ContactLayoutComponent implements OnInit {
+  showSuccessInfo = false;
   /** Der aktuell ausgewählte Kontakt. */
   selectedContact: Contact | null = null;
 
@@ -195,11 +196,15 @@ export class ContactLayoutComponent implements OnInit {
     if (!this.selectedContact?.id) return;
 
     try {
+  setTimeout(() => this.showSuccessInfo = false, 2000);
       await this.contactService.deleteContact(this.selectedContact.id);
       this.selectedContact = null;
       this.sidePanelActive = false;
       this.contactService.setSelectedContact(null);
       this.isModalVisible = false;
+      this.showSuccessInfo = true;
+    setTimeout(() => this.showSuccessInfo = false, 2000);
+
     } catch (error) {
       console.error('Error deleting contact:', error);
       // Optional: Anzeige einer Fehlermeldung

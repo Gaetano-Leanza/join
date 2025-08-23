@@ -5,7 +5,7 @@ import { Contact } from '../contacts/contact-model/contact.model';
 import { ContactListComponent } from '../contacts/contact-list/contact-list.component';
 import { FormsModule } from '@angular/forms';
 import { Firestore, collection, addDoc } from '@angular/fire/firestore';
-
+import { fadeInOutInfo } from '../contacts/modal/modal.animations';
 interface Subtask {
   title: string;
   done: boolean;
@@ -14,6 +14,7 @@ interface Subtask {
 @Component({
   selector: 'app-add-task',
   standalone: true,
+  animations: [fadeInOutInfo],
   imports: [CommonModule, ContactListComponent, FormsModule],
   templateUrl: './add-task.component.html',
   styleUrls: ['./add-task.component.scss', './add-task.responsive.scss'],
@@ -46,6 +47,10 @@ export class AddTaskComponent implements OnInit {
     private contactService: ContactService,
     private firestore: Firestore
   ) {}
+
+showSuccessInfo = false;
+  successMessage = '';
+
 
   ngOnInit() {
     this.contactService.getContacts().subscribe({
@@ -162,7 +167,11 @@ export class AddTaskComponent implements OnInit {
 
   async createTask() {
     if (!this.isFormValid()) {
-      alert('Bitte füllen Sie alle erforderlichen Felder aus.');
+        this.showSuccessInfo = true;
+        this.successMessage = 'Bitte füllen Sie alle erforderlichen Felder aus.';
+
+      setInterval(() => { this.showSuccessInfo = false; }, 2000);   
+
       return;
     }
 
@@ -182,7 +191,9 @@ export class AddTaskComponent implements OnInit {
     try {
       const taskCollection = collection(this.firestore, 'tasks');
       await addDoc(taskCollection, taskData);
-      console.log('Task erfolgreich erstellt!');
+          this.successMessage = 'Task erfolgreich erstellt!';
+          this.showSuccessInfo = true;
+      setInterval(() => { this.showSuccessInfo = false; }, 2000);
       this.resetForm();
     } catch (error) {
       console.error('Fehler beim Erstellen des Tasks: ', error);

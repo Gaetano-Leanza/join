@@ -284,15 +284,13 @@ img {
   right: 40%;
   width: 300px;
   height: 100px;
-  transform: translateX(-50%);
   background-color: #2A3647;
   color: #fff;
   padding: 14px 32px;
   border-radius: 8px;
   font-size: 18px;
   box-shadow: 2px 8px 12px rgba(0, 0, 0, 0.3);
-  z-index: 9992259;
-  animation: fadeInOut s;
+  z-index: 999;
   animation-duration: 2.5s;
   animation-fill-mode: forwards;
   display: flex;

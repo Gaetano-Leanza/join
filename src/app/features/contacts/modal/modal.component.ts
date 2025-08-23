@@ -11,6 +11,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { slideInModal } from './modal.animations';
+import { fadeInOutInfo } from './modal.animations';
+
 import { Contact } from '../contact-model/contact.model';
 import { ContactService } from '../contact-service/contact.service';
 
@@ -23,7 +25,7 @@ import { ContactService } from '../contact-service/contact.service';
     './modal.responsive.scss',
     './modal.responsive2.scss',
   ],
-  animations: [slideInModal],
+  animations: [slideInModal,fadeInOutInfo],
   imports: [CommonModule, FormsModule],
 })
 export class ModalComponent implements OnChanges, OnInit {
@@ -189,16 +191,17 @@ export class ModalComponent implements OnChanges, OnInit {
     if (!this.currentContactId) return;
 
     try {
-      this.successMessage = 'Contact successfully deleted';
       this.showSuccessInfo = true;
       // Modal erst nach Timeout schließen, damit Nachricht sichtbar bleibt
       setTimeout(async () => {
         await this.contactService.deleteContact(this.currentContactId!);
         this.showSuccessInfo = false;
+              this.successMessage = 'Contact successfully deleted';
+
         this.resetForm();
         this.closed.emit();
         this.contactSaved.emit();
-      }, 2000);
+      }, 1500);
     } catch (error) {
       console.error('Error deleting contact:', error);
     }

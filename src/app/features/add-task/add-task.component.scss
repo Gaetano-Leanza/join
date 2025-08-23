@@ -415,6 +415,7 @@ h5 {
 .icon-category.open {
   background-image: url("/img/arrow-drop-up.svg");
 }
+
 .icon-subtask {
   position: absolute;
   top: 50%;
@@ -576,4 +577,24 @@ h5 {
 .subtask-list li {
   padding: 2px 0;
   color: #333;
+}
+
+.success-info-modal {
+  position: fixed;
+  bottom: 104px;
+  right: 40%;
+  width: 500px;
+  height: 100px;
+  background-color: #2A3647;
+  color: #fff;
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-size: 18px;
+  box-shadow: 2px 8px 12px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  animation-duration: 2.5s;
+  animation-fill-mode: forwards;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

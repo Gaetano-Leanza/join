@@ -10,6 +10,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { slideInModal } from './modal2.animations';
+import { fadeInOutInfo  } from './modal2.animations';
+
 import { ContactService } from '../contact-service/contact.service';
 
 @Component({
@@ -21,7 +23,7 @@ import { ContactService } from '../contact-service/contact.service';
     './modal2.responsive.scss',
     './modal2.responsive2.scss',
   ],
-  animations: [slideInModal],
+  animations: [slideInModal,fadeInOutInfo ],
   imports: [CommonModule, FormsModule],
 })
 export class Modal2Component implements OnChanges {
