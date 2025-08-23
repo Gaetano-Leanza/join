@@ -346,4 +346,13 @@ openTaskModal(task: Task) {
   trackByTaskId(index: number, task: Task): string {
     return task.id || index.toString();
   }
+
+  getDonePredefinedSubtasks(task: Task): number {
+  const predefinedTitles = ['Contact Form', 'Write Legal Imprint'];
+  const subtasks: Subtask[] = this.parseSubtasks(task.subtasks);
+  
+  return subtasks.filter(sub => 
+    predefinedTitles.includes(sub.title) && sub.done
+  ).length;
+}
 }
