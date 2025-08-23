@@ -6,6 +6,11 @@ import { ContactListComponent } from '../contacts/contact-list/contact-list.comp
 import { FormsModule } from '@angular/forms';
 import { Firestore, collection, addDoc } from '@angular/fire/firestore';
 
+interface Subtask {
+  title: string;
+  done: boolean;
+}
+
 @Component({
   selector: 'app-add-task',
   standalone: true,
@@ -21,32 +26,20 @@ export class AddTaskComponent implements OnInit {
   isCategoryDropdownOpen = false;
   isSubtaskOpen = false;
   selectedContact: Contact | null = null;
-
   title: string = '';
   description: string = '';
   dueDate: string = '';
   contacts: (Contact & { id: string })[] = [];
   topContacts: (Contact & { id: string })[] = [];
-
   selectedCategory: string = '';
   hoveredOption: string = '';
-
   subtaskText: string = '';
-  subtasks: string[] = [];
+  subtasks: Subtask[] = [];
   defaultSubtasks: string[] = ['Contact Form', 'Write Legal Imprint'];
   currentIndex: number = 0;
-
   private readonly avatarColors = [
-    '#F44336',
-    '#E91E63',
-    '#9C27B0',
-    '#3F51B5',
-    '#03A9F4',
-    '#009688',
-    '#4CAF50',
-    '#FFC107',
-    '#FF9800',
-    '#795548',
+    '#F44336', '#E91E63', '#9C27B0', '#3F51B5', '#03A9F4', 
+    '#009688', '#4CAF50', '#FFC107', '#FF9800', '#795548',
   ];
 
   constructor(
@@ -111,7 +104,6 @@ export class AddTaskComponent implements OnInit {
 
   toggleSubtaskIcon() {
     this.isSubtaskOpen = !this.isSubtaskOpen;
-
     if (this.isSubtaskOpen && this.currentIndex < this.defaultSubtasks.length) {
       this.subtaskText = this.defaultSubtasks[this.currentIndex];
     } else if (!this.isSubtaskOpen) {
@@ -119,20 +111,26 @@ export class AddTaskComponent implements OnInit {
     }
   }
 
-  addSubtask() {
-    if (this.subtaskText.trim()) {
-      this.subtasks.push(this.subtaskText.trim());
-      console.log(this.subtaskText.trim());
-
-      this.currentIndex++;
-
-      if (this.currentIndex < this.defaultSubtasks.length) {
-        this.subtaskText = this.defaultSubtasks[this.currentIndex];
-      } else {
-        this.subtaskText = '';
-        this.isSubtaskOpen = false;
-      }
+ addSubtask() {
+  if (this.subtaskText.trim()) {
+    this.subtasks.push({
+      title: this.subtaskText.trim(),
+      done: true  
+    });
+    console.log('Subtask hinzugefügt:', this.subtaskText.trim(), 'done: true');
+    this.currentIndex++;
+    if (this.currentIndex < this.defaultSubtasks.length) {
+      this.subtaskText = this.defaultSubtasks[this.currentIndex];
+    } else {
+      this.subtaskText = '';
+      this.isSubtaskOpen = false;
     }
+  }
+}
+
+  toggleSubtaskStatus(index: number) {
+    this.subtasks[index].done = !this.subtasks[index].done;
+    console.log('Subtask Status geändert:', this.subtasks[index]);
   }
 
   selectCategory(category: string) {
@@ -149,7 +147,7 @@ export class AddTaskComponent implements OnInit {
   }
 
   get progress(): string {
-    return 'toDo'; // interne Bezeichnung konsistent halten
+    return 'toDo'; 
   }
 
   isFormValid(): boolean {
@@ -168,12 +166,6 @@ export class AddTaskComponent implements OnInit {
       return;
     }
 
-    // Subtasks als Array von Objekten speichern
-    const formattedSubtasks = this.subtasks.map(title => ({
-      title,
-      done: false
-    }));
-
     const taskData = {
       title: this.title,
       description: this.description,
@@ -182,8 +174,7 @@ export class AddTaskComponent implements OnInit {
       progress: this.progress,
       assignedTo: this.selectedContact ? this.selectedContact.name : '',
       category: this.selectedCategory,
-      categoryColor: '#29ABE2',
-      subtasks: formattedSubtasks,
+      subtasks: this.subtasks, 
       contacts: this.selectedContact ? [this.selectedContact.name] : [],
       status: 'open'
     };
