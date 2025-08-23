@@ -42,7 +42,6 @@
       </div>
     </div>
 
-
     <div class="topic">
       <!-- TODO-Spalte -->
       <div class="example-container">
@@ -79,7 +78,7 @@
                 <div class="progress-bar">
                   <div class="progress" [style.width.%]="getSubtaskProgress(task)"></div>
                 </div>
-                <span>{{ getDoneSubtasks(task) }}/{{task.subtasks.length }} Subtasks</span>
+                <span>{{ getDonePredefinedSubtasks(task) }}/2</span>
               </div>
               <div class="task-contacts">
                 <div class="contact" [ngStyle]="{ 'background-color': getAvatarColor(task.assignedTo) }">
@@ -144,7 +143,7 @@
                 <div class="progress-bar">
                   <div class="progress" [style.width.%]="getSubtaskProgress(task)"></div>
                 </div>
-                <span>{{ getDoneSubtasks(task) }}/{{task.subtasks.length }} Subtasks</span>
+                <span>{{ getDonePredefinedSubtasks(task) }}/2</span>
               </div>
               <div class="task-contacts">
                 <div class="contact" [ngStyle]="{ 'background-color': getAvatarColor(task.assignedTo) }">
@@ -209,7 +208,7 @@
                 <div class="progress-bar">
                   <div class="progress" [style.width.%]="getSubtaskProgress(task)"></div>
                 </div>
-                <span>{{ getDoneSubtasks(task) }}/{{task.subtasks.length }} Subtasks</span>
+                <span>{{ getDonePredefinedSubtasks(task) }}/2</span>
               </div>
               <div class="task-contacts">
                 <div class="contact" [ngStyle]="{ 'background-color': getAvatarColor(task.assignedTo) }">
@@ -275,7 +274,7 @@
                 <div class="progress-bar">
                   <div class="progress" [style.width.%]="getSubtaskProgress(task)"></div>
                 </div>
-                <span>{{ getDoneSubtasks(task) }}/{{task.subtasks.length }} Subtasks</span>
+                <span>{{ getDonePredefinedSubtasks(task) }}/2</span>
               </div>
               <div class="task-contacts">
                 <div class="contact" [ngStyle]="{ 'background-color': getAvatarColor(task.assignedTo) }">
