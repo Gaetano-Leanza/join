@@ -25,29 +25,41 @@ export interface Subtask {
  * Interface für ein Task-Dokument in Firestore.
  */
 export interface Task {
-  status: string;
   /** Eindeutige ID des Tasks */
   id: string;
-  /** Zugewiesene Person */
-  assignedTo: string;
-  /** Kategorie des Tasks */
-  category: string;
-  /** Farbe der Kategorie für UI */
-  categoryColor: string;
-  /** Beschreibung des Tasks */
-  description: string;
-  /** Fälligkeitsdatum als ISO-String */
-  dueDate: string;
-  /** Priorität des Tasks */
-  priority: 'low' | 'medium' | 'urgent';
-  /** Fortschrittsstatus des Tasks */
-  progress: 'toDo' | 'inProgress' | 'awaitFeedback' | 'done';
-  /** Liste der Subtasks */
-  subtasks: string;
+
   /** Titel des Tasks */
   title: string;
+
+  /** Beschreibung des Tasks */
+  description: string;
+
+  /** Fälligkeitsdatum als ISO-String */
+  dueDate: string;
+
+  /** Priorität des Tasks */
+  priority: 'low' | 'medium' | 'urgent';
+
+  /** Fortschrittsstatus des Tasks */
+  progress: 'toDo' | 'inProgress' | 'awaitFeedback' | 'done';
+
+  /** Kategorie des Tasks */
+  category: string;
+
+  /** Farbe der Kategorie für UI */
+  categoryColor: string;
+
+  /** Zugewiesene Person (oder Personen-Name) */
+  assignedTo: string;
+
   /** Zugewiesene Kontakte */
-  contacts: string;
+  contacts: string[];   // <-- angepasst auf Array
+
+  /** Liste der Subtasks */
+  subtasks: Subtask[];  // <-- angepasst auf Subtask-Array
+
+  /** Optionaler Status (z. B. für zusätzliche Labels) */
+  status?: string;
 }
 
 /**
@@ -59,9 +71,11 @@ export interface TaskUpdate {
   description?: string;
   priority?: 'urgent' | 'medium' | 'low';
   progress?: 'toDo' | 'inProgress' | 'awaitFeedback' | 'done';
-  subtasks?: string[];
+  subtasks?: Subtask[];   // <-- auch hier angepasst
   assignedTo?: string;
   dueDate?: string;
+  contacts?: string[];
+  categoryColor?: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -77,9 +91,7 @@ export class TaskService {
    * @returns Observable-Liste aller Tasks
    */
   getTasks(): Observable<Task[]> {
-    return collectionData(this.taskCollection, { idField: 'id' }) as Observable<
-      Task[]
-    >;
+    return collectionData(this.taskCollection, { idField: 'id' }) as Observable<Task[]>;
   }
 
   /**

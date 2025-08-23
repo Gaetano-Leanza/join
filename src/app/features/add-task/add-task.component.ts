@@ -21,13 +21,16 @@ export class AddTaskComponent implements OnInit {
   isCategoryDropdownOpen = false;
   isSubtaskOpen = false;
   selectedContact: Contact | null = null;
+
   title: string = '';
   description: string = '';
   dueDate: string = '';
   contacts: (Contact & { id: string })[] = [];
   topContacts: (Contact & { id: string })[] = [];
+
   selectedCategory: string = '';
   hoveredOption: string = '';
+
   subtaskText: string = '';
   subtasks: string[] = [];
   defaultSubtasks: string[] = ['Contact Form', 'Write Legal Imprint'];
@@ -139,14 +142,14 @@ export class AddTaskComponent implements OnInit {
   }
 
   get priority(): string {
-    if (this.isActive1) return 'high';
+    if (this.isActive1) return 'urgent';
     if (this.isActive2) return 'medium';
     if (this.isActive3) return 'low';
     return 'medium';
   }
 
   get progress(): string {
-    return 'To Do';
+    return 'toDo'; // interne Bezeichnung konsistent halten
   }
 
   isFormValid(): boolean {
@@ -165,15 +168,24 @@ export class AddTaskComponent implements OnInit {
       return;
     }
 
+    // Subtasks als Array von Objekten speichern
+    const formattedSubtasks = this.subtasks.map(title => ({
+      title,
+      done: false
+    }));
+
     const taskData = {
       title: this.title,
       description: this.description,
       dueDate: this.dueDate,
       priority: this.priority,
       progress: this.progress,
-      assignedTo: this.selectedContact!.name,
+      assignedTo: this.selectedContact ? this.selectedContact.name : '',
       category: this.selectedCategory,
-      subtasks: this.subtasks
+      categoryColor: '#29ABE2',
+      subtasks: formattedSubtasks,
+      contacts: this.selectedContact ? [this.selectedContact.name] : [],
+      status: 'open'
     };
 
     try {
