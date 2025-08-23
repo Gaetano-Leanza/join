@@ -14,4 +14,15 @@ export class ModalBoardComponent {
 @Input() task!: Task;
   @Output() close = new EventEmitter<void>();
 
+
+ public getCategoryColor(category: string): string {
+  switch (category) {
+    case 'User Story':
+      return ' #0038FF';     
+    case 'Technical Task':
+      return ' #1FD7C1';     
+    default:
+      return '#CCCCCC'; // Standardfarbe für unbekannte Kategorien
+  }
+}
 }

@@ -30,16 +30,16 @@ export class BoardComponent implements OnDestroy {
    * @param {string} category - The category of the task.
    * @returns {string} The name of the CSS class.
    */
-  getCategoryClass(category: string): string {
-    switch (category) {
-      case 'User Story':
-        return 'user-story';
-      case 'Technical Task':
-        return 'technical-task';
-      default:
-        return '';
-    }
+ public getCategoryColor(category: string): string {
+  switch (category) {
+    case 'User Story':
+      return ' #0038FF';     
+    case 'Technical Task':
+      return ' #1FD7C1';     
+    default:
+      return '#CCCCCC'; // Standardfarbe für unbekannte Kategorien
   }
+}
 
   /** Status of the modal for the task detail view. */
   showModal = false;
@@ -88,7 +88,6 @@ export class BoardComponent implements OnDestroy {
    */
   constructor(
     private taskService: TaskService,
-    private contactService: ContactService,
   ) {
     this.tasksSubscription = this.taskService.getTasks().pipe(
       map(tasks => tasks.map(t => this.mapTask(t)))
@@ -212,26 +211,8 @@ export class BoardComponent implements OnDestroy {
    * @param {string} category - The name of the category.
    * @returns {string} A hex color code.
    */
-  private getCategoryColor(category: string): string {
-    const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#F9A826', '#6A0572'];
-    const index = Math.abs(this.hashCode(category)) % colors.length;
-    return colors[index];
-  }
-
-  /**
-   * Generates a simple hash code for a string.
-   * @private
-   * @param {string} str - The input string.
-   * @returns {number} The generated hash code.
-   */
-  private hashCode(str: string): number {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-      hash = ((hash << 5) - hash) + str.charCodeAt(i);
-      hash |= 0;
-    }
-    return hash;
-  }
+ 
+ 
 
   /**
    * Parses subtasks, which can be an array or a string, into a consistent format.
