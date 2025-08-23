@@ -4,6 +4,7 @@ import { ContactService } from '../contacts/contact-service/contact.service';
 import { Contact } from '../contacts/contact-model/contact.model';
 import { ContactListComponent } from '../contacts/contact-list/contact-list.component';
 import { FormsModule } from '@angular/forms';
+import { Firestore, collection, addDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-add-task',
@@ -22,12 +23,11 @@ export class AddTaskComponent implements OnInit {
   selectedContact: Contact | null = null;
   title: string = '';
   description: string = '';
+  dueDate: string = '';
   contacts: (Contact & { id: string })[] = [];
   topContacts: (Contact & { id: string })[] = [];
   selectedCategory: string = '';
   hoveredOption: string = '';
-
-  // Subtask-Handling
   subtaskText: string = '';
   subtasks: string[] = [];
   defaultSubtasks: string[] = ['Contact Form', 'Write Legal Imprint'];
@@ -46,7 +46,10 @@ export class AddTaskComponent implements OnInit {
     '#795548',
   ];
 
-  constructor(private contactService: ContactService) {}
+  constructor(
+    private contactService: ContactService,
+    private firestore: Firestore
+  ) {}
 
   ngOnInit() {
     this.contactService.getContacts().subscribe({
@@ -103,7 +106,6 @@ export class AddTaskComponent implements OnInit {
     this.isCategoryDropdownOpen = !this.isCategoryDropdownOpen;
   }
 
-  // === Subtask-Logik ===
   toggleSubtaskIcon() {
     this.isSubtaskOpen = !this.isSubtaskOpen;
 
@@ -119,7 +121,6 @@ export class AddTaskComponent implements OnInit {
       this.subtasks.push(this.subtaskText.trim());
       console.log(this.subtaskText.trim());
 
-      // nächsten Default-Text vorbereiten
       this.currentIndex++;
 
       if (this.currentIndex < this.defaultSubtasks.length) {
@@ -137,34 +138,71 @@ export class AddTaskComponent implements OnInit {
     console.log('Ausgewählte Kategorie:', category);
   }
 
-  addTask() {
-    if (this.title.trim()) {
-      console.log('Neue Aufgabe:', {
-        title: this.title,
-        description: this.description,
-        buttonStates: {
-          button1: this.isActive1,
-          button2: this.isActive2,
-          button3: this.isActive3,
-        },
-        assignedContacts: this.topContacts,
-        category: this.selectedCategory,
-        subtasks: this.subtasks,
-      });
-      this.title = '';
-      this.description = '';
-      this.selectedCategory = '';
-      this.subtasks = [];
-      this.currentIndex = 0;
-      this.subtaskText = '';
-      this.isSubtaskOpen = false;
-    } else {
-      alert('Bitte gib einen Titel für die Aufgabe ein.');
+  get priority(): string {
+    if (this.isActive1) return 'high';
+    if (this.isActive2) return 'medium';
+    if (this.isActive3) return 'low';
+    return 'medium';
+  }
+
+  get progress(): string {
+    return 'To Do';
+  }
+
+  isFormValid(): boolean {
+    return (
+      this.title.trim() !== '' &&
+      this.dueDate.trim() !== '' &&
+      this.selectedCategory !== '' &&
+      this.selectedContact !== null &&
+      (this.isActive1 || this.isActive2 || this.isActive3)
+    );
+  }
+
+  async createTask() {
+    if (!this.isFormValid()) {
+      alert('Bitte füllen Sie alle erforderlichen Felder aus.');
+      return;
     }
+
+    const taskData = {
+      title: this.title,
+      description: this.description,
+      dueDate: this.dueDate,
+      priority: this.priority,
+      progress: this.progress,
+      assignedTo: this.selectedContact!.name,
+      category: this.selectedCategory,
+      subtasks: this.subtasks
+    };
+
+    try {
+      const taskCollection = collection(this.firestore, 'tasks');
+      await addDoc(taskCollection, taskData);
+      console.log('Task erfolgreich erstellt!');
+      this.resetForm();
+    } catch (error) {
+      console.error('Fehler beim Erstellen des Tasks: ', error);
+    }
+  }
+
+  resetForm() {
+    this.title = '';
+    this.description = '';
+    this.dueDate = '';
+    this.selectedCategory = '';
+    this.selectedContact = null;
+    this.subtasks = [];
+    this.isActive1 = false;
+    this.isActive2 = false;
+    this.isActive3 = false;
+    this.isSubtaskOpen = false;
+    this.subtaskText = '';
+    this.currentIndex = 0;
   }
 
   onContactSelected(contact: Contact) {
     this.selectedContact = contact;
-    console.log('Ausgewählter Kontakt:', contact);
+    this.isAssignDropdownOpen = false;
   }
 }

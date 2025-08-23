@@ -9,18 +9,31 @@
         <h4>Title</h4>
         <h5>*</h5>
       </div>
-      <input class="placeholder1" type="text" placeholder="Enter a title" />
+      <input
+        class="placeholder1"
+        type="text"
+        placeholder="Enter a title"
+        [(ngModel)]="title"
+        [ngModelOptions]="{ standalone: true }"
+      />
       <h4>Description</h4>
       <textarea
         class="placeholder2"
-        placeholder="Enter a Description"
+        placeholder="Enter a description"
+        [(ngModel)]="description"
+        [ngModelOptions]="{ standalone: true }"
       ></textarea>
 
       <div class="headline-wrapper">
         <h4>Due date</h4>
         <h5>*</h5>
       </div>
-      <input class="placeholder3" type="text" placeholder="dd/mm/yyyy" />
+      <input
+        class="placeholder8"
+        type="date"
+        [(ngModel)]="dueDate"
+        [ngModelOptions]="{ standalone: true }"
+      />
     </div>
     <div class="middle"></div>
     <div class="right-side">
@@ -235,14 +248,16 @@
             class="placeholder7"
             type="text"
             placeholder="Select contacts to assign"
+            [value]="selectedContact ? selectedContact.name : ''"
+            readonly
           />
+
           <span
             class="icon-category"
             [class.open]="isAssignDropdownOpen"
             (click)="toggleAssignDropdown()"
           ></span>
 
-          <!-- Modal/Drowdown -->
           <div *ngIf="isAssignDropdownOpen" class="assign-dropdown">
             <div class="contact-list-wrapper">
               <app-contact-list
@@ -286,7 +301,6 @@
             (click)="toggleCategoryDropdown()"
           ></span>
 
-          <!-- Modal für Kategorieauswahl -->
           <div class="category-modal" *ngIf="isCategoryDropdownOpen">
             <div class="modal-column">
               <div
@@ -329,14 +343,11 @@
             <li *ngFor="let task of subtasks">{{ task }}</li>
           </ul>
 
-          <!-- Zustand 1: Standard -->
           <span
             *ngIf="!isSubtaskOpen"
             class="icon-subtask"
             (click)="toggleSubtaskIcon()"
           ></span>
-
-          <!-- Zustand 2: zwei Symbole mit Trenner -->
 
           <div *ngIf="isSubtaskOpen" class="icon-subtask-wrapper">
             <span class="icon-close" (click)="toggleSubtaskIcon()"></span>
@@ -350,11 +361,7 @@
 
   <div class="content-bottom">
     <div>
-      <button
-        class="cancel-button"
-        [class.active]="isActive1"
-        (click)="toggleButton1()"
-      >
+      <button class="cancel-button" (click)="resetForm()">
         <svg
           width="126"
           height="57"
@@ -385,11 +392,7 @@
       </button>
     </div>
 
-    <button
-      class="create-task-button"
-      [class.active]="isActive1"
-      (click)="toggleButton1()"
-    >
+    <button class="create-task-button" (click)="createTask()">
       <svg
         width="184"
         height="56"
