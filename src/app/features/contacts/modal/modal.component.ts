@@ -192,16 +192,18 @@ export class ModalComponent implements OnChanges, OnInit {
 
     try {
       this.showSuccessInfo = true;
+                 this.successMessage = 'Contact successfully deleted';
+
       // Modal erst nach Timeout schließen, damit Nachricht sichtbar bleibt
       setTimeout(async () => {
         await this.contactService.deleteContact(this.currentContactId!);
-        this.showSuccessInfo = false;
-              this.successMessage = 'Contact successfully deleted';
+           
 
         this.resetForm();
         this.closed.emit();
         this.contactSaved.emit();
-      }, 1500);
+        this.showSuccessInfo = false;
+      }, 2000);
     } catch (error) {
       console.error('Error deleting contact:', error);
     }

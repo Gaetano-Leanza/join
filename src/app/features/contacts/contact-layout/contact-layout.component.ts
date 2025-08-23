@@ -5,6 +5,9 @@ import { Contact } from '../contact-model/contact.model';
 import { ContactListComponent } from '../contact-list/contact-list.component';
 import { ModalComponent } from '../modal/modal.component';
 import { ContactService } from '../contact-service/contact.service';
+import { fadeInOutInfo } from '../modal/modal.animations';
+
+
 
 @Component({
   selector: 'app-contact-layout',
@@ -15,8 +18,7 @@ import { ContactService } from '../contact-service/contact.service';
     './contact-layout.component.scss',
     './contact-layout.responsive.scss',
   ],
-  animations: [
-    trigger('slideIn', [
+  animations: [fadeInOutInfo  ,   trigger('slideIn', [
       transition(':enter', [
         style({ transform: 'translateX(100%)', opacity: 0 }),
         animate(
