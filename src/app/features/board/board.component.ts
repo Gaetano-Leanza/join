@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {ModalBoardComponent } from './modal-board/modal-board.component';
+import { ModalBoardComponent } from './modal-board/modal-board.component';
 import {
   CdkDragDrop,
   moveItemInArray,
@@ -20,7 +20,13 @@ import { ModalBoardAddTaskComponent } from './modal-board-add-task/modal-board-a
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [CommonModule, DragDropModule, ModalBoardAddTaskComponent, FormsModule,ModalBoardComponent ],
+  imports: [
+    CommonModule,
+    DragDropModule,
+    ModalBoardAddTaskComponent,
+    FormsModule,
+    ModalBoardComponent,
+  ],
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
 })
@@ -30,14 +36,14 @@ export class BoardComponent implements OnDestroy {
    * @param {string} category - The category of the task.
    * @returns {string} The name of the CSS class.
    */
-  getCategoryClass(category: string): string {
+  public getCategoryColor(category: string): string {
     switch (category) {
       case 'User Story':
-        return 'user-story';
+        return ' #0038FF';
       case 'Technical Task':
-        return 'technical-task';
+        return ' #1FD7C1';
       default:
-        return '';
+        return '#CCCCCC'; // Standardfarbe für unbekannte Kategorien
     }
   }
 
@@ -68,8 +74,16 @@ export class BoardComponent implements OnDestroy {
    * @readonly
    */
   private readonly avatarColors = [
-    '#F44336', '#E91E63', '#9C27B0', '#3F51B5', '#03A9F4',
-    '#009688', '#4CAF50', '#FFC107', '#FF9800', '#795548'
+    '#F44336',
+    '#E91E63',
+    '#9C27B0',
+    '#3F51B5',
+    '#03A9F4',
+    '#009688',
+    '#4CAF50',
+    '#FFC107',
+    '#FF9800',
+    '#795548',
   ];
 
   /** The current search term for filtering tasks. */
@@ -86,16 +100,14 @@ export class BoardComponent implements OnDestroy {
    * @param {TaskService} taskService - The service for managing tasks.
    * @param {ContactService} contactService - The service for managing contacts.
    */
-  constructor(
-    private taskService: TaskService,
-    private contactService: ContactService,
-  ) {
-    this.tasksSubscription = this.taskService.getTasks().pipe(
-      map(tasks => tasks.map(t => this.mapTask(t)))
-    ).subscribe(tasks => {
-      this.allTasks = tasks;
-      this.filterTasks(); // Initial filtering on load
-    });
+  constructor(private taskService: TaskService) {
+    this.tasksSubscription = this.taskService
+      .getTasks()
+      .pipe(map((tasks) => tasks.map((t) => this.mapTask(t))))
+      .subscribe((tasks) => {
+        this.allTasks = tasks;
+        this.filterTasks(); // Initial filtering on load
+      });
   }
 
   /**
@@ -106,24 +118,28 @@ export class BoardComponent implements OnDestroy {
     const search = this.searchTerm.trim().toLowerCase();
 
     if (!search) {
-      this.todo = this.allTasks.filter(t => t.progress === 'toDo');
-      this.inprogress = this.allTasks.filter(t => t.progress === 'inProgress');
-      this.awaitfeedback = this.allTasks.filter(t => t.progress === 'awaitFeedback');
-      this.done = this.allTasks.filter(t => t.progress === 'done');
+      this.todo = this.allTasks.filter((t) => t.progress === 'toDo');
+      this.inprogress = this.allTasks.filter(
+        (t) => t.progress === 'inProgress'
+      );
+      this.awaitfeedback = this.allTasks.filter(
+        (t) => t.progress === 'awaitFeedback'
+      );
+      this.done = this.allTasks.filter((t) => t.progress === 'done');
       this.noTasksMessage = '';
       return;
     }
 
     const filtered = this.allTasks.filter(
-      t =>
+      (t) =>
         (t.title && t.title.toLowerCase().startsWith(search)) ||
         (t.description && t.description.toLowerCase().startsWith(search))
     );
 
-    this.todo = filtered.filter(t => t.progress === 'toDo');
-    this.inprogress = filtered.filter(t => t.progress === 'inProgress');
-    this.awaitfeedback = filtered.filter(t => t.progress === 'awaitFeedback');
-    this.done = filtered.filter(t => t.progress === 'done');
+    this.todo = filtered.filter((t) => t.progress === 'toDo');
+    this.inprogress = filtered.filter((t) => t.progress === 'inProgress');
+    this.awaitfeedback = filtered.filter((t) => t.progress === 'awaitFeedback');
+    this.done = filtered.filter((t) => t.progress === 'done');
 
     this.noTasksMessage = filtered.length === 0 ? 'No results found.' : '';
   }
@@ -135,7 +151,9 @@ export class BoardComponent implements OnDestroy {
    */
   getAvatarColor(name: string): string {
     if (!name) return this.avatarColors[0];
-    return this.avatarColors[name.trim().charCodeAt(0) % this.avatarColors.length];
+    return this.avatarColors[
+      name.trim().charCodeAt(0) % this.avatarColors.length
+    ];
   }
 
   /**
@@ -146,8 +164,8 @@ export class BoardComponent implements OnDestroy {
   getInitials(name: string): string {
     return name
       .split(' ')
-      .filter(part => part.length > 0)
-      .map(part => part[0].toUpperCase())
+      .filter((part) => part.length > 0)
+      .map((part) => part[0].toUpperCase())
       .slice(0, 2)
       .join('');
   }
@@ -168,7 +186,7 @@ export class BoardComponent implements OnDestroy {
    */
   getDoneSubtasks(task: Task): number {
     const subtasks: Subtask[] = this.parseSubtasks(task.subtasks);
-    return subtasks.filter(s => s.done).length;
+    return subtasks.filter((s) => s.done).length;
   }
 
   /**
@@ -212,26 +230,6 @@ export class BoardComponent implements OnDestroy {
    * @param {string} category - The name of the category.
    * @returns {string} A hex color code.
    */
-  private getCategoryColor(category: string): string {
-    const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#F9A826', '#6A0572'];
-    const index = Math.abs(this.hashCode(category)) % colors.length;
-    return colors[index];
-  }
-
-  /**
-   * Generates a simple hash code for a string.
-   * @private
-   * @param {string} str - The input string.
-   * @returns {number} The generated hash code.
-   */
-  private hashCode(str: string): number {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-      hash = ((hash << 5) - hash) + str.charCodeAt(i);
-      hash |= 0;
-    }
-    return hash;
-  }
 
   /**
    * Parses subtasks, which can be an array or a string, into a consistent format.
@@ -242,15 +240,15 @@ export class BoardComponent implements OnDestroy {
   private parseSubtasks(subtasks: any): Subtask[] {
     if (!subtasks) return [];
     if (Array.isArray(subtasks)) {
-      return subtasks.map(sub => ({
+      return subtasks.map((sub) => ({
         title: sub.title || sub || '',
-        done: sub.done || false
+        done: sub.done || false,
       }));
     }
     if (typeof subtasks === 'string') {
-      return subtasks.split(',').map(title => ({
+      return subtasks.split(',').map((title) => ({
         title: title.trim(),
-        done: false
+        done: false,
       }));
     }
     return [];
@@ -264,9 +262,9 @@ export class BoardComponent implements OnDestroy {
    */
   private mapPriority(priority: string): Task['priority'] {
     const priorityMap: Record<string, Task['priority']> = {
-      'low': 'low',
-      'medium': 'medium',
-      'urgent': 'urgent'
+      low: 'low',
+      medium: 'medium',
+      urgent: 'urgent',
     };
     return priorityMap[priority?.toLowerCase()] || 'medium';
   }
@@ -296,8 +294,9 @@ export class BoardComponent implements OnDestroy {
           event.currentIndex
         );
 
-        this.taskService.updateTask(task.id, { progress: newProgress } as Partial<Task>)
-          .catch(error => {
+        this.taskService
+          .updateTask(task.id, { progress: newProgress } as Partial<Task>)
+          .catch((error) => {
             console.error('Error updating task:', error);
             // Optional: Revert UI change on error
             transferArrayItem(
@@ -306,7 +305,9 @@ export class BoardComponent implements OnDestroy {
               event.currentIndex,
               event.previousIndex
             );
-            task.progress = this.getProgressFromContainerId(event.previousContainer.id) || task.progress;
+            task.progress =
+              this.getProgressFromContainerId(event.previousContainer.id) ||
+              task.progress;
           });
       }
     }
@@ -318,12 +319,14 @@ export class BoardComponent implements OnDestroy {
    * @param {string} containerId - The ID of the drop container.
    * @returns {Task['progress'] | null} The corresponding progress status or null.
    */
-  private getProgressFromContainerId(containerId: string): Task['progress'] | null {
+  private getProgressFromContainerId(
+    containerId: string
+  ): Task['progress'] | null {
     const progressMap: Record<string, Task['progress']> = {
-      'todoList': 'toDo',
-      'inProgressList': 'inProgress',
-      'awaitFeedbackList': 'awaitFeedback',
-      'doneList': 'done'
+      todoList: 'toDo',
+      inProgressList: 'inProgress',
+      awaitFeedbackList: 'awaitFeedback',
+      doneList: 'done',
     };
     return progressMap[containerId] || null;
   }
@@ -333,9 +336,9 @@ export class BoardComponent implements OnDestroy {
    * @param {Task} task - The task to be displayed in the modal.
    */
 
-openTaskModal(task: Task) {
-  this.selectedTask = task;
-}
+  openTaskModal(task: Task) {
+    this.selectedTask = task;
+  }
 
   /**
    * TrackBy function for `ngFor` to optimize performance when rendering task lists.
@@ -348,11 +351,11 @@ openTaskModal(task: Task) {
   }
 
   getDonePredefinedSubtasks(task: Task): number {
-  const predefinedTitles = ['Contact Form', 'Write Legal Imprint'];
-  const subtasks: Subtask[] = this.parseSubtasks(task.subtasks);
-  
-  return subtasks.filter(sub => 
-    predefinedTitles.includes(sub.title) && sub.done
-  ).length;
-}
+    const predefinedTitles = ['Contact Form', 'Write Legal Imprint'];
+    const subtasks: Subtask[] = this.parseSubtasks(task.subtasks);
+
+    return subtasks.filter(
+      (sub) => predefinedTitles.includes(sub.title) && sub.done
+    ).length;
+  }
 }

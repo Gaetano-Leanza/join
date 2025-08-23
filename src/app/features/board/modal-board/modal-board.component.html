@@ -2,8 +2,8 @@
 <div class="task-modal">
     <div class="modal-content">
         <button id="close" (click)="close.emit()">X</button>
-        <p id="categoryColor" [style.background-color]="task.categoryColor">
-            {{ task.category }}
+        <p id="categoryColor" [style.backgroundColor]="task.categoryColor">
+            {{ getCategoryColor(task.category)}}
         </p>
         <h3>{{ task.title }}</h3>
         <p>{{ task.description }}</p>

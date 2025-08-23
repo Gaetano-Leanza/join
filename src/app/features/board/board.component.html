@@ -142,10 +142,9 @@
         >
           <div *ngFor="let task of todo; trackBy: trackByTaskId" cdkDrag>
             <div class="example-box" (click)="openTaskModal(task)">
-              <p class="task-category {{ getCategoryClass(task.category) }}">
+ <p class="task-category" [style.backgroundColor]="getCategoryColor(task.category)">
                 {{ task.category }}
-              </p>
-              <h3 class="task-title">{{ task.title }}</h3>
+              </p>              <h3 class="task-title">{{ task.title }}</h3>
               <p class="task-description">{{ task.description }}</p>
 
               <div
@@ -305,10 +304,9 @@
         >
           <div *ngFor="let task of inprogress; trackBy: trackByTaskId" cdkDrag>
             <div class="example-box" (click)="openTaskModal(task)">
-              <p class="task-category {{ getCategoryClass(task.category) }}">
+ <p class="task-category" [style.backgroundColor]="getCategoryColor(task.category)">
                 {{ task.category }}
-              </p>
-              <h3 class="task-title">{{ task.title }}</h3>
+              </p>              <h3 class="task-title">{{ task.title }}</h3>
               <p class="task-description">{{ task.description }}</p>
               <div
                 class="task-subtasks"
@@ -466,10 +464,9 @@
             cdkDrag
           >
             <div class="example-box" (click)="openTaskModal(task)">
-              <p class="task-category {{ getCategoryClass(task.category) }}">
+ <p class="task-category" [style.backgroundColor]="getCategoryColor(task.category)">
                 {{ task.category }}
-              </p>
-              <h3 class="task-title">{{ task.title }}</h3>
+              </p>              <h3 class="task-title">{{ task.title }}</h3>
               <p class="task-description">{{ task.description }}</p>
               <div
                 class="task-subtasks"
@@ -626,10 +623,9 @@
         >
           <div *ngFor="let task of done; trackBy: trackByTaskId" cdkDrag>
             <div class="example-box" (click)="openTaskModal(task)">
-              <p class="task-category {{ getCategoryClass(task.category) }}">
+ <p class="task-category" [style.backgroundColor]="getCategoryColor(task.category)">
                 {{ task.category }}
-              </p>
-              <h3 class="task-title">{{ task.title }}</h3>
+              </p>              <h3 class="task-title">{{ task.title }}</h3>
               <p class="task-description">{{ task.description }}</p>
               <div
                 class="task-subtasks"
