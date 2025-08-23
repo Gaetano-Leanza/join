@@ -32,17 +32,10 @@ export class BoardComponent implements OnDestroy {
    */
   getCategoryClass(category: string): string {
     switch (category) {
-      case 'Development':
-        return 'category-development';
       case 'User Story':
-        return 'category-user-story';
-      case 'Design':
-        return 'category-design';
-      case 'Technical':
+        return 'user-story';
       case 'Technical Task':
-        return 'category-technical';
-      case 'Documentation':
-        return 'category-documentation';
+        return 'technical-task';
       default:
         return '';
     }
