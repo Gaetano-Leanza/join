@@ -140,7 +140,6 @@ export class BoardComponent implements OnDestroy {
     this.inprogress = filtered.filter((t) => t.progress === 'inProgress');
     this.awaitfeedback = filtered.filter((t) => t.progress === 'awaitFeedback');
     this.done = filtered.filter((t) => t.progress === 'done');
-
     this.noTasksMessage = filtered.length === 0 ? 'No results found.' : '';
   }
 

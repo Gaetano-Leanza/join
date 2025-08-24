@@ -8,36 +8,36 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
     z-index: 1000;
 }
 
 .modal-content {
     background: #fff;
-    padding: 2rem;
+    position: fixed;
+    padding: 1rem;
     min-width: 500px;
     max-width: 1200px;
     width: 95%;
     border-radius: 30px;
-    height: 600px;
+    height: 800px;
     box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 button {
     position: relative;
-    background-color: #fff;
     border: none;
     left: 97%;
     top: 2%;
-    ;
 }
 
 button:hover {
-    transform: scale(1.1);
+    transform: scale(1.2);
     transition: transform ease 0.2s;
     cursor: pointer;
 }
 
 #close {
     font-size: 24px;
+    z-index: 1000;
+    background-color: #fff;
 }

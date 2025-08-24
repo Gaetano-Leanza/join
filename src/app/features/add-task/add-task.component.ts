@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContactService } from '../contacts/contact-service/contact.service';
 import { Contact } from '../contacts/contact-model/contact.model';
@@ -20,6 +20,7 @@ interface Subtask {
   styleUrls: ['./add-task.component.scss', './add-task.responsive.scss'],
 })
 export class AddTaskComponent implements OnInit {
+  @Output() close = new EventEmitter<void>();
   isActive1 = false;
   isActive2 = false;
   isActive3 = false;
