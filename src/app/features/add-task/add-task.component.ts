@@ -2,11 +2,11 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContactService } from '../contacts/contact-service/contact.service';
 import { Contact } from '../contacts/contact-model/contact.model';
-import { ContactListComponent } from '../contacts/contact-list/contact-list.component';
 import { FormsModule } from '@angular/forms';
 import { Firestore, collection, addDoc } from '@angular/fire/firestore';
 import { fadeInOutInfo } from '../contacts/modal/modal.animations';
-import{getAvatarColor,getInitials} from './avatar-utils';
+import { getAvatarColor, getInitials } from './avatar-utils';
+
 interface Subtask {
   title: string;
   done: boolean;
@@ -16,14 +16,14 @@ interface Subtask {
   selector: 'app-add-task',
   standalone: true,
   animations: [fadeInOutInfo],
-  imports: [CommonModule, ContactListComponent, FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './add-task.component.html',
   styleUrls: ['./add-task.component.scss', './add-task.responsive.scss'],
 })
 export class AddTaskComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
-getInitials = getInitials;
-getAvatarColor = getAvatarColor;
+  getInitials = getInitials;
+  getAvatarColor = getAvatarColor;
   isActive1 = false;
   isActive2 = false;
   isActive3 = false;
@@ -43,18 +43,29 @@ getAvatarColor = getAvatarColor;
   defaultSubtasks: string[] = ['Contact Form', 'Write Legal Imprint'];
   currentIndex: number = 0;
   private readonly avatarColors = [
-    '#F44336', '#E91E63', '#9C27B0', '#3F51B5', '#03A9F4', 
-    '#009688', '#4CAF50', '#FFC107', '#FF9800', '#795548',
+    '#F44336',
+    '#E91E63',
+    '#9C27B0',
+    '#3F51B5',
+    '#03A9F4',
+    '#009688',
+    '#4CAF50',
+    '#FFC107',
+    '#FF9800',
+    '#795548',
   ];
+
+  // Neue Properties für Kontaktauswahl
+  selectedContacts: Contact[] = [];
+  isContactSelected: boolean = false;
 
   constructor(
     private contactService: ContactService,
     private firestore: Firestore
   ) {}
 
-showSuccessInfo = false;
+  showSuccessInfo = false;
   successMessage = '';
-
 
   ngOnInit() {
     this.contactService.getContacts().subscribe({
@@ -66,6 +77,14 @@ showSuccessInfo = false;
     });
   }
 
+ getSelectedContactsString(): string {
+  if (this.selectedContacts.length === 0) {
+    return '';
+  }
+  
+  const names = this.selectedContacts.map(contact => contact.name);
+  return names.join(', ');
+}
 
   toggleButton1() {
     this.isActive1 = true;
@@ -105,22 +124,26 @@ showSuccessInfo = false;
     }
   }
 
- addSubtask() {
-  if (this.subtaskText.trim()) {
-    this.subtasks.push({
-      title: this.subtaskText.trim(),
-      done: true  
-    });
-    console.log('Subtask hinzugefügt:', this.subtaskText.trim(), 'done: true');
-    this.currentIndex++;
-    if (this.currentIndex < this.defaultSubtasks.length) {
-      this.subtaskText = this.defaultSubtasks[this.currentIndex];
-    } else {
-      this.subtaskText = '';
-      this.isSubtaskOpen = false;
+  addSubtask() {
+    if (this.subtaskText.trim()) {
+      this.subtasks.push({
+        title: this.subtaskText.trim(),
+        done: true,
+      });
+      console.log(
+        'Subtask hinzugefügt:',
+        this.subtaskText.trim(),
+        'done: true'
+      );
+      this.currentIndex++;
+      if (this.currentIndex < this.defaultSubtasks.length) {
+        this.subtaskText = this.defaultSubtasks[this.currentIndex];
+      } else {
+        this.subtaskText = '';
+        this.isSubtaskOpen = false;
+      }
     }
   }
-}
 
   toggleSubtaskStatus(index: number) {
     this.subtasks[index].done = !this.subtasks[index].done;
@@ -141,7 +164,7 @@ showSuccessInfo = false;
   }
 
   get progress(): string {
-    return 'toDo'; 
+    return 'toDo';
   }
 
   isFormValid(): boolean {
@@ -149,49 +172,73 @@ showSuccessInfo = false;
       this.title.trim() !== '' &&
       this.dueDate.trim() !== '' &&
       this.selectedCategory !== '' &&
-      this.selectedContact !== null &&
+      this.selectedContacts.length > 0 &&
       (this.isActive1 || this.isActive2 || this.isActive3)
     );
   }
 
- async createTask() {
-  if (!this.isFormValid()) {
-    this.showSuccessInfo = true;
-    this.successMessage = 'Bitte füllen Sie alle erforderlichen Felder aus.';
-    setInterval(() => { this.showSuccessInfo = false; }, 2000);   
-    return;
+  toggleContactSelection(contact: Contact): void {
+    const index = this.selectedContacts.findIndex((c) => c.id === contact.id);
+
+    if (index > -1) {
+      this.selectedContacts.splice(index, 1);
+    } else {
+      this.selectedContacts.push(contact);
+    }
+
+    this.isContactSelected = this.selectedContacts.length > 0;
+    console.log(
+      'Ausgewählte Kontakte:',
+      this.selectedContacts.map((c) => c.name)
+    );
   }
 
-  // Wenn keine Subtasks hinzugefügt -> default false Subtasks
-  let subtasksToSave = this.subtasks.length > 0 
-    ? this.subtasks 
-    : this.defaultSubtasks.map(title => ({ title, done: false }));
-
-  const taskData = {
-    title: this.title,
-    description: this.description,
-    dueDate: this.dueDate,
-    priority: this.priority,
-    progress: this.progress,
-    assignedTo: this.selectedContact ? this.selectedContact.name : '',
-    category: this.selectedCategory,
-    subtasks: subtasksToSave,
-    contacts: this.selectedContact ? [this.selectedContact.name] : [],
-    status: 'open'
-  };
-
-  try {
-    const taskCollection = collection(this.firestore, 'tasks');
-    await addDoc(taskCollection, taskData);
-    this.successMessage = 'Task erfolgreich erstellt!';
-    this.showSuccessInfo = true;
-    setInterval(() => { this.showSuccessInfo = false; }, 2000);
-    this.resetForm();
-  } catch (error) {
-    console.error('Fehler beim Erstellen des Tasks: ', error);
+  isContactChecked(contact: Contact): boolean {
+    return this.selectedContacts.some((c) => c.id === contact.id);
   }
-}
 
+  async createTask() {
+    if (!this.isFormValid()) {
+      this.showSuccessInfo = true;
+      this.successMessage = 'Bitte füllen Sie alle erforderlichen Felder aus.';
+      setTimeout(() => {
+        this.showSuccessInfo = false;
+      }, 2000);
+      return;
+    }
+
+    // Wenn keine Subtasks hinzugefügt -> default false Subtasks
+    let subtasksToSave =
+      this.subtasks.length > 0
+        ? this.subtasks
+        : this.defaultSubtasks.map((title) => ({ title, done: false }));
+
+    const taskData = {
+      title: this.title,
+      description: this.description,
+      dueDate: this.dueDate,
+      priority: this.priority,
+      progress: this.progress,
+      assignedTo: this.selectedContacts.map((contact) => contact.name),
+      category: this.selectedCategory,
+      subtasks: subtasksToSave,
+      contacts: this.selectedContacts.map((contact) => contact.name),
+      status: 'open',
+    };
+
+    try {
+      const taskCollection = collection(this.firestore, 'tasks');
+      await addDoc(taskCollection, taskData);
+      this.successMessage = 'Task erfolgreich erstellt!';
+      this.showSuccessInfo = true;
+      setTimeout(() => {
+        this.showSuccessInfo = false;
+      }, 2000);
+      this.resetForm();
+    } catch (error) {
+      console.error('Fehler beim Erstellen des Tasks: ', error);
+    }
+  }
 
   resetForm() {
     this.title = '';
@@ -199,6 +246,8 @@ showSuccessInfo = false;
     this.dueDate = '';
     this.selectedCategory = '';
     this.selectedContact = null;
+    this.selectedContacts = [];
+    this.isContactSelected = false;
     this.subtasks = [];
     this.isActive1 = false;
     this.isActive2 = false;
@@ -206,10 +255,5 @@ showSuccessInfo = false;
     this.isSubtaskOpen = false;
     this.subtaskText = '';
     this.currentIndex = 0;
-  }
-
-  onContactSelected(contact: Contact) {
-    this.selectedContact = contact;
-    this.isAssignDropdownOpen = false;
   }
 }
