@@ -6,6 +6,7 @@ import { ContactListComponent } from '../contacts/contact-list/contact-list.comp
 import { FormsModule } from '@angular/forms';
 import { Firestore, collection, addDoc } from '@angular/fire/firestore';
 import { fadeInOutInfo } from '../contacts/modal/modal.animations';
+import{getAvatarColor,getInitials} from './avatar-utils';
 interface Subtask {
   title: string;
   done: boolean;
@@ -21,6 +22,8 @@ interface Subtask {
 })
 export class AddTaskComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
+getInitials = getInitials;
+  getAvatarColor = getAvatarColor;
   isActive1 = false;
   isActive2 = false;
   isActive3 = false;
@@ -40,16 +43,8 @@ export class AddTaskComponent implements OnInit {
   defaultSubtasks: string[] = ['Contact Form', 'Write Legal Imprint'];
   currentIndex: number = 0;
   private readonly avatarColors = [
-    '#F44336',
-    '#E91E63',
-    '#9C27B0',
-    '#3F51B5',
-    '#03A9F4',
-    '#009688',
-    '#4CAF50',
-    '#FFC107',
-    '#FF9800',
-    '#795548',
+    '#F44336', '#E91E63', '#9C27B0', '#3F51B5', '#03A9F4', 
+    '#009688', '#4CAF50', '#FFC107', '#FF9800', '#795548',
   ];
 
   constructor(
@@ -57,8 +52,9 @@ export class AddTaskComponent implements OnInit {
     private firestore: Firestore
   ) {}
 
-  showSuccessInfo = false;
+showSuccessInfo = false;
   successMessage = '';
+
 
   ngOnInit() {
     this.contactService.getContacts().subscribe({
@@ -70,21 +66,6 @@ export class AddTaskComponent implements OnInit {
     });
   }
 
-  getAvatarColor(name: string): string {
-    if (!name) return this.avatarColors[0];
-    return this.avatarColors[
-      name.trim().charCodeAt(0) % this.avatarColors.length
-    ];
-  }
-
-  getInitials(name: string): string {
-    return name
-      .split(' ')
-      .filter((part) => part.length > 0)
-      .map((part) => part[0].toUpperCase())
-      .slice(0, 2)
-      .join('');
-  }
 
   toggleButton1() {
     this.isActive1 = true;
@@ -124,26 +105,22 @@ export class AddTaskComponent implements OnInit {
     }
   }
 
-  addSubtask() {
-    if (this.subtaskText.trim()) {
-      this.subtasks.push({
-        title: this.subtaskText.trim(),
-        done: true,
-      });
-      console.log(
-        'Subtask hinzugefügt:',
-        this.subtaskText.trim(),
-        'done: true'
-      );
-      this.currentIndex++;
-      if (this.currentIndex < this.defaultSubtasks.length) {
-        this.subtaskText = this.defaultSubtasks[this.currentIndex];
-      } else {
-        this.subtaskText = '';
-        this.isSubtaskOpen = false;
-      }
+ addSubtask() {
+  if (this.subtaskText.trim()) {
+    this.subtasks.push({
+      title: this.subtaskText.trim(),
+      done: true  
+    });
+    console.log('Subtask hinzugefügt:', this.subtaskText.trim(), 'done: true');
+    this.currentIndex++;
+    if (this.currentIndex < this.defaultSubtasks.length) {
+      this.subtaskText = this.defaultSubtasks[this.currentIndex];
+    } else {
+      this.subtaskText = '';
+      this.isSubtaskOpen = false;
     }
   }
+}
 
   toggleSubtaskStatus(index: number) {
     this.subtasks[index].done = !this.subtasks[index].done;
@@ -164,7 +141,7 @@ export class AddTaskComponent implements OnInit {
   }
 
   get progress(): string {
-    return 'toDo';
+    return 'toDo'; 
   }
 
   isFormValid(): boolean {
@@ -177,48 +154,44 @@ export class AddTaskComponent implements OnInit {
     );
   }
 
-  async createTask() {
-    if (!this.isFormValid()) {
-      this.showSuccessInfo = true;
-      this.successMessage = 'Bitte füllen Sie alle erforderlichen Felder aus.';
-      setInterval(() => {
-        this.showSuccessInfo = false;
-      }, 2000);
-      return;
-    }
-
-    // Wenn keine Subtasks hinzugefügt -> default false Subtasks
-    let subtasksToSave =
-      this.subtasks.length > 0
-        ? this.subtasks
-        : this.defaultSubtasks.map((title) => ({ title, done: false }));
-
-    const taskData = {
-      title: this.title,
-      description: this.description,
-      dueDate: this.dueDate,
-      priority: this.priority,
-      progress: this.progress,
-      assignedTo: this.selectedContact ? this.selectedContact.name : '',
-      category: this.selectedCategory,
-      subtasks: subtasksToSave,
-      contacts: this.selectedContact ? [this.selectedContact.name] : [],
-      status: 'open',
-    };
-
-    try {
-      const taskCollection = collection(this.firestore, 'tasks');
-      await addDoc(taskCollection, taskData);
-      this.successMessage = 'Task erfolgreich erstellt!';
-      this.showSuccessInfo = true;
-      setInterval(() => {
-        this.showSuccessInfo = false;
-      }, 2000);
-      this.resetForm();
-    } catch (error) {
-      console.error('Fehler beim Erstellen des Tasks: ', error);
-    }
+ async createTask() {
+  if (!this.isFormValid()) {
+    this.showSuccessInfo = true;
+    this.successMessage = 'Bitte füllen Sie alle erforderlichen Felder aus.';
+    setInterval(() => { this.showSuccessInfo = false; }, 2000);   
+    return;
   }
+
+  // Wenn keine Subtasks hinzugefügt -> default false Subtasks
+  let subtasksToSave = this.subtasks.length > 0 
+    ? this.subtasks 
+    : this.defaultSubtasks.map(title => ({ title, done: false }));
+
+  const taskData = {
+    title: this.title,
+    description: this.description,
+    dueDate: this.dueDate,
+    priority: this.priority,
+    progress: this.progress,
+    assignedTo: this.selectedContact ? this.selectedContact.name : '',
+    category: this.selectedCategory,
+    subtasks: subtasksToSave,
+    contacts: this.selectedContact ? [this.selectedContact.name] : [],
+    status: 'open'
+  };
+
+  try {
+    const taskCollection = collection(this.firestore, 'tasks');
+    await addDoc(taskCollection, taskData);
+    this.successMessage = 'Task erfolgreich erstellt!';
+    this.showSuccessInfo = true;
+    setInterval(() => { this.showSuccessInfo = false; }, 2000);
+    this.resetForm();
+  } catch (error) {
+    console.error('Fehler beim Erstellen des Tasks: ', error);
+  }
+}
+
 
   resetForm() {
     this.title = '';

@@ -20,11 +20,42 @@
     border-radius: 30px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     max-width: 550px;
-    height: 600px;
-
+    height: 750px;
     width: 90%;
     position: relative;
     font-family: 'Inter', sans-serif;
+
+    .text {
+        padding: 10px 0;
+    }
+
+
+    .avatar-container {
+        display: flex;
+        gap: 8px;
+        border: 1px solid red;
+        width: 100px;
+        height: 100px;
+    }
+
+    .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        background: #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 400;
+        color: white;
+    }
+
+    .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 
     /* Schließen-Button oben rechts */
     #close {
@@ -57,7 +88,7 @@
 
     /* Task-Titel */
     h3 {
-        font-size: 45px;
+        font-size: 50px;
         font-weight: 700;
         margin-top: 0;
         margin-bottom: 20px;
@@ -124,32 +155,19 @@
         display: flex;
         justify-content: flex-end;
         /* Buttons nach rechts ausrichten */
-        gap: 10px;
+        gap: 20px;
         /* Abstand zwischen den Buttons */
-        margin-top: 30px;
+        margin-top: 400px;
 
-        button {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 15px;
-            border: 1px solid #d1d1d1;
-            border-radius: 10px;
-            background-color: transparent;
+        svg:hover {
             cursor: pointer;
-            font-size: 20px;
-            transition: all 0.1s ease-in-out;
+            transform: scale(1.1);
+            stroke: #29ABE2;
+            fill: #29ABE2;
+        }
 
-            &:hover {
-                border-color: #29abe2;
-                color: #29abe2;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
-                // Ändert die Icon-Farbe beim Hovern
-                img {
-                    filter: invert(58%) sepia(87%) saturate(1636%) hue-rotate(160deg) brightness(95%) contrast(87%);
-                }
-            }
+        svg {
+            fill: #2A3647;
         }
     }
 }
