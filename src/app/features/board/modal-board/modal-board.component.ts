@@ -3,14 +3,16 @@ import { Task } from '../../../services/task.service';
 import { CommonModule } from '@angular/common';
 import { TaskService } from '../../../services/task.service'; 
 import{getAvatarColor,getInitials} from '../../add-task/avatar-utils';
+import { BoardModalEditComponent } from '../board-modal-edit/board-modal-edit.component';
 @Component({
   selector: 'app-modal-board',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,BoardModalEditComponent ],
   templateUrl: './modal-board.component.html',
   styleUrls: ['./modal-board.component.scss']
 })
 export class ModalBoardComponent {
+
   getInitials = getInitials;
   getAvatarColor = getAvatarColor;
   
@@ -39,6 +41,22 @@ onDeleteTask(): void {
   }
 }
 
+openEditModal() {
+  this.showEditModal = true;
+
+}
+
+showEditModal = false;
 
 
+
+closeEditModal() {
+  this.showEditModal = false;
+}
+
+  saveEdit() {
+  
+  this.taskService.updateTask(this.task.id, this.task);
+  this.closeEditModal();
+}
 }
