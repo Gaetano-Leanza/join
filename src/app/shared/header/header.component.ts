@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,HostListener,ElementRef} from '@angular/core';
 import { Router, RouterLink, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs/operators';
@@ -17,13 +17,28 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+isMenuOpen: any;
+isClicked: any;
 
   /** Ob ein Button oder Element im Header angeklickt wurde */
-  isClicked = false;   
+   
 
-  /** Ob das Header-Menü aktuell geöffnet ist */
-  isMenuOpen = false;  
+  
+  
 
+   closeMenu(): void {
+    this.isMenuOpen = false;
+    this.isClicked = true; 
+  }
+toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+ @HostListener('document:click', ['$event'])
+  onClickOutside(event: Event) {
+    if (this.isMenuOpen && !this.eRef.nativeElement.contains(event.target)) {
+      this.closeMenu();
+    }
+  }
   /**
    * Konstruktor der Header-Komponente.
    * 
@@ -31,7 +46,8 @@ export class HeaderComponent {
    * Der Header schließt das Menü automatisch bei jedem Seitenwechsel,
    * außer auf speziellen Seiten wie '/privacy-policy' oder '/legal-notice'.
    */
-  constructor(private router: Router) {
+  constructor(private router: Router,public eRef: ElementRef) {
+ 
 
     // Abonniert Router-Events und filtert NavigationEnd Events
     this.router.events
@@ -51,21 +67,8 @@ export class HeaderComponent {
       });
   }
 
-  /**
-   * Toggle-Funktion für das Menü.
-   * Öffnet es, wenn geschlossen, schließt es, wenn geöffnet.
-   */
-  toggleMenu(): void {
-    this.isMenuOpen = !this.isMenuOpen;
-  }
 
-  /**
-   * Schließt das Menü und setzt den Klick-Status.
-   */
-  closeMenu(): void {
-    this.isMenuOpen = false;
-    this.isClicked = true; 
-  }
+ 
 
   /**
    * Prüft, ob die aktuelle Seite die Info-Seite ist.
