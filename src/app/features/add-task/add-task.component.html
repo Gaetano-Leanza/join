@@ -360,7 +360,6 @@
             [ngModelOptions]="{ standalone: true }"
           />
 
-          <!-- Einfache Liste der Subtasks (ohne Checkboxen) -->
           <div *ngIf="subtasks.length > 0" class="subtask-list">
             <div *ngFor="let subtask of subtasks" class="subtask-item">
               <span class="subtask-checkmark">✓</span>
@@ -461,7 +460,6 @@
   <h4>This field is requiered!</h4>
 </div>
 
-<!-- Info-Modal nach erfolgreichem  eines Task hinzufügen-->
 <div *ngIf="showSuccessInfo" class="success-info-modal" [@fadeInOutInfo]>
   {{ successMessage }}
 </div>

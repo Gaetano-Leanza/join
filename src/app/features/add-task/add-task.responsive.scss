@@ -542,7 +542,7 @@
   }
 
   .row3 {
-    padding-top: 30px;
+    padding-top: 80px;
   }
 
   .row4 {
@@ -642,6 +642,12 @@
     transform: translateX(-11px) translateY(-2px);
     height: 43px;
     width: 114px;
+  }
+
+  
+  .right-side, .left-side {
+    padding-left: 20px;
+   
   }
 }
 
