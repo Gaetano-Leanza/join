@@ -1,8 +1,8 @@
 #header {
+  max-width: 1690px;
   width: 100%;
   height: 96px;
   background-color: white;
-
 }
 
 #header_content {
@@ -13,8 +13,6 @@
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   padding: 0 1.5rem;
   position: relative;
-
-
 }
 
 #info:hover {
@@ -51,7 +49,7 @@
   position: absolute;
   top: 80px;
   right: -10px;
-  background-color: #2A3647;
+  background-color: #2a3647;
   border-radius: 20px 0 20px 20px;
   padding: 10px 0;
   min-width: 160px;
@@ -64,7 +62,7 @@
   position: absolute;
   top: 80px;
   right: 20px;
-  background-color: #2A3647;
+  background-color: #2a3647;
   border-radius: 20px 0 20px 20px;
   padding: 10px 0;
   min-width: 150px;
@@ -73,8 +71,6 @@
   flex-direction: column;
 }
 
-
-
 .hamburger-menu a,
 .hamburger-menu-mobile a {
   display: block;
@@ -82,7 +78,6 @@
   color: white;
   margin-left: 5px;
   text-decoration: none;
-
 }
 
 .hamburger-menu a:hover,
@@ -96,7 +91,6 @@
   .headline {
     margin-left: 40px;
   }
-
 }
 
 @media (max-width: 870px) {
@@ -106,7 +100,6 @@
 }
 
 @media (max-width: 768px) {
-
   .desktop-header {
     display: none;
   }
@@ -132,5 +125,4 @@
   .mobile-logo {
     height: 40px;
   }
-
 }
