@@ -20,6 +20,7 @@ h5 {
 
 .content {
   overflow-x: hidden;
+  max-height: 100vh;
 }
 
 .content-wrapper {
@@ -585,7 +586,7 @@ h5 {
   right: 40%;
   width: 500px;
   height: 100px;
-  background-color: #2A3647;
+  background-color: #2a3647;
   color: #fff;
   padding: 14px 32px;
   border-radius: 8px;
