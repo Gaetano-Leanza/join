@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output,OnInit} from '@angular/core';
 import { Task } from '../../../services/task.service';
 import { CommonModule } from '@angular/common';
 import { TaskService } from '../../../services/task.service'; 
@@ -13,10 +13,12 @@ import{getAvatarColor,getInitials} from '../../add-task/avatar-utils';
 export class ModalBoardComponent {
   getInitials = getInitials;
   getAvatarColor = getAvatarColor;
+  
 
 @Input() task!: Task;
   @Output() close = new EventEmitter<void>();
 topContacts: any;
+Subtasks: any;
 
     constructor(private taskService: TaskService) {}
     

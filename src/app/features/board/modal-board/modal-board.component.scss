@@ -25,17 +25,16 @@
     position: relative;
     font-family: 'Inter', sans-serif;
 
-    .text {
-        padding: 10px 0;
+    .content {
+        font-size: 18px;
+        line-height: 3;
     }
 
 
     .avatar-container {
         display: flex;
         gap: 8px;
-        border: 1px solid red;
-        width: 100px;
-        height: 100px;
+
     }
 
     .avatar {
@@ -152,12 +151,12 @@
 
     /* Container für die Buttons am Ende */
     .task-modal-buttons {
+        position: absolute;
         display: flex;
-        justify-content: flex-end;
-        /* Buttons nach rechts ausrichten */
         gap: 20px;
-        /* Abstand zwischen den Buttons */
-        margin-top: 400px;
+        bottom: 30px;
+        right: 30px;
+
 
         svg:hover {
             cursor: pointer;

@@ -23,7 +23,7 @@ interface Subtask {
 export class AddTaskComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
 getInitials = getInitials;
-  getAvatarColor = getAvatarColor;
+getAvatarColor = getAvatarColor;
   isActive1 = false;
   isActive2 = false;
   isActive3 = false;

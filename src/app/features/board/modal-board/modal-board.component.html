@@ -6,8 +6,8 @@
             {{ task.category }}
         </span><br>
         <h3>{{ task.title }}</h3>
-        <span class="text">{{ task.description }}</span><br>
-        <span class="text">Due Date: {{ task.dueDate }}</span><br>
+        <span class="content">{{ task.description }}</span><br>
+        <span class="content">Due Date: {{ task.dueDate }}</span><br>
         Priority: {{ task.priority }}
         <span class="task-priority-icon" [ngSwitch]="task.priority">
             <svg *ngSwitchCase="'medium'" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -31,20 +31,24 @@
             </svg>
         </span><br>
 
-        <span class="text">Assigned To:
+        <span class="content">Assigned To:
 
         </span><br>
         {{task.contacts}} <br>
         <div class="avatar-container">
-            <div *ngFor="let contact of topContacts" class="avatar" [title]="contact.name"
-                [style.background-color]="getAvatarColor(contact.name)">
-                {{ getInitials(contact.name) }}
+            <div *ngFor="let contact of task.contacts" class="avatar"
+                [style.background-color]="getAvatarColor(contact)">
+                {{ getInitials(contact) }}
             </div>
         </div>
 
-        <span>Subtasks
+        <span class="content">Subtasks</span><br>
+        <div *ngFor="let subtask of task.subtasks">
+            <input type="checkbox" [checked]="subtask.done">
+            <span class="content">{{ subtask.title }}</span>
 
-        </span><br>
+        </div>
+
 
 
         <div class="task-modal-buttons">
