@@ -52,7 +52,8 @@ h1 {
 
 .empty-list {
   width: 100%;
-  min-height: 120px;
+  max-width: 300px;
+  min-height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,7 +68,6 @@ h1 {
 
   @media (min-width: $desktop) {
     font-size: 16px;
-    min-height: 100px;
   }
 }
 
@@ -175,16 +175,11 @@ h1 {
 
 #search {
   position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  color: #666;
-  pointer-events: none;
+  margin-left: -35px;
+  margin-top: 5px;
 
   &:hover {
-    color: #4589ff;
+    fill: #4589ff !important;
     cursor: pointer;
   }
 }
@@ -196,14 +191,16 @@ h1 {
   padding: 8px;
   border-radius: 8px;
   color: #2a3647;
-  transition: all .3s;
+  transition: all 0.3s;
   font-size: 18px;
   min-width: 176px;
   min-height: 96px;
 
   &:hover {
-    color: #4589ff;
-    background: #f8f9fa;
+    fill: #4589ff !important;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: scale(1.03);
   }
 
   svg {
