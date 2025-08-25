@@ -20,6 +20,7 @@ h5 {
 
 .content {
   overflow-x: hidden;
+  overflow-y: hidden;
   max-height: 100vh;
 }
 
@@ -599,3 +600,7 @@ h5 {
   align-items: center;
   justify-content: center;
 }
+
+  .text-bottom-mobile {
+    display: none;
+  }
