@@ -482,10 +482,26 @@
 }
 
 @media (max-width: 768px) {
+  .text-bottom {
+    display: none;
+  }
+
+  .text-bottom-mobile {
+    display: flex;
+    padding-bottom: 80px;
+    height: 80px;
+  }
+
   .content-wrapper {
     display: flex;
     flex-direction: column;
     gap: 5px;
+  }
+
+  .content {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 100vh;
   }
 
   h3 {
@@ -510,7 +526,9 @@
   }
 
   .placeholder2,
-  .placeholder7 {
+  .placeholder7,
+  .placeholder8,
+  .placeholder9 {
     width: 100%;
   }
 
@@ -520,11 +538,15 @@
 
   .row1 {
     width: 100%;
+    gap: 30px;
   }
 
-  .row3,
+  .row3 {
+    padding-top: 30px;
+  }
+
   .row4 {
-    display: none;
+    padding-bottom: 30px;
   }
 
   .content-bottom {
@@ -533,15 +555,6 @@
     width: 94%;
     margin-bottom: 80px;
     padding-top: 0px;
-  }
-
-  .text-bottom {
-    height: 40px;
-  }
-
-  .text-bottom h4,
-  .text-bottom h5 {
-    display: none;
   }
 
   .image-button-left,
@@ -569,11 +582,7 @@
     width: 114px;
   }
 
-  .row1 {
-    gap: 30px;
-  }
-
-     .success-info-modal {
+  .success-info-modal {
     bottom: 104px;
     width: 500px;
     height: 100px;
@@ -584,10 +593,15 @@
   }
 }
 
-@media (max-width: 435px) {
+@media (max-width: 445px) {
   .row1 {
     gap: 25px;
   }
+
+    .row3 {
+    padding-top: 80px;
+  }
+
 
   .avatar-container {
     display: none;
