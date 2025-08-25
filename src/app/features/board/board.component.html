@@ -297,8 +297,8 @@
       </div>
     </div>
   </div>
-
-  <app-modal-board *ngIf="selectedTask" [task]="selectedTask" (close)="selectedTask = null">
-  </app-modal-board>
-  <app-modal-board-add-task *ngIf="showModal" (close)="showModal = false"></app-modal-board-add-task>
 </section>
+
+<app-modal-board *ngIf="selectedTask" [task]="selectedTask" (close)="selectedTask = null">
+</app-modal-board>
+<app-modal-board-add-task *ngIf="showModal" (close)="showModal = false"></app-modal-board-add-task>
