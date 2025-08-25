@@ -60,6 +60,7 @@
         </div>
 
         <!-- Hinweis, wenn keine Tasks vorhanden sind -->
+        <div *ngIf="todo.length === 0" class="empty-list">No tasks To do</div>
         <div class="example-list" cdkDropList id="todoList" [cdkDropListData]="todo" [cdkDropListConnectedTo]="[
             'inProgressList',
             'awaitFeedbackList',
@@ -126,6 +127,10 @@
               <path class="icon-line" d="M16 12.5754L8 12.5754" stroke-width="2" stroke-linecap="round" />
             </svg>
           </div>
+        </div>
+
+        <div *ngIf="inprogress.length === 0" class="empty-list">
+          No tasks In Progress
         </div>
 
         <div class="example-list" cdkDropList id="inProgressList" [cdkDropListData]="inprogress"
@@ -195,7 +200,9 @@
             </svg>
           </div>
         </div>
-
+        <div *ngIf="awaitfeedback.length === 0" class="empty-list">
+          No tasks Await Feedback
+        </div>
         <div class="example-list" cdkDropList id="awaitFeedbackList" [cdkDropListData]="awaitfeedback"
           [cdkDropListConnectedTo]="['todoList', 'inProgressList', 'doneList']" (cdkDropListDropped)="drop($event)">
           <div *ngFor="let task of awaitfeedback; trackBy: trackByTaskId" cdkDrag>
@@ -260,6 +267,7 @@
           </div>
         </div>
 
+        <div *ngIf="done.length === 0" class="empty-list">No tasks Done</div>
         <div class="example-list" cdkDropList id="doneList" [cdkDropListData]="done" [cdkDropListConnectedTo]="[
             'todoList',
             'inProgressList',

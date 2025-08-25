@@ -60,6 +60,27 @@ h1 {
   }
 }
 
+.empty-list {
+  width: 100%;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 14px;
+  font-style: italic;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  background: #f8f8f8;
+  text-align: center;
+  padding: 24px 16px;
+
+  @media (min-width: $desktop) {
+    font-size: 16px;
+    min-height: 100px;
+  }
+}
+
 #board-wrapper {
   width: 100%;
   min-height: 100vh;
@@ -228,6 +249,7 @@ h1 {
 
 .topic {
   display: flex;
+  justify-content: center;
   flex-direction: column;
   width: 100%;
   max-width: 1690px;
@@ -360,7 +382,7 @@ h1 {
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,.1);
   background: #fff;
-  cursor: move;
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   border: 1px solid #e9ecef;
