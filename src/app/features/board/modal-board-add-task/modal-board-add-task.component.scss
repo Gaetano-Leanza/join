@@ -1,43 +1,81 @@
 .modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
 
 .modal-content {
-    background: #fff;
-    position: fixed;
-    padding: 1rem;
-    min-width: 500px;
-    max-width: 1200px;
-    width: 95%;
-    border-radius: 30px;
-    height: 800px;
-    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  position: relative;
+  min-width: 300px;
+  max-width: 1200px;
+  width: 95%;
+  border-radius: 30px;
+  max-height: 800px;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content app-add-task {
+  display: block;
+  transform: scale(0.9) translateY(-60px);
+  padding-left: 75px;
+  transform-origin: center;
 }
 
 button {
-    position: relative;
-    border: none;
-    left: 97%;
-    top: 2%;
+  position: relative;
+  border: none;
+  left: 97%;
+  top: 2%;
 }
 
 button:hover {
-    transform: scale(1.2);
-    transition: transform ease 0.2s;
-    cursor: pointer;
+  transform: scale(1.2);
+  transition: transform ease 0.2s;
+  cursor: pointer;
 }
 
 #close {
-    font-size: 24px;
-    z-index: 1000;
-    background-color: #fff;
+  position: absolute;
+  top: 10px;
+  right: 5px;
+  font-size: 24px;
+  z-index: 1000;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+@media (max-width: 1200px) {
+  .modal-content app-add-task {
+    display: block;
+    transform: scale(0.95) translateY(-50px);
+    padding-left: 95px;
+    transform-origin: center;
+  }
+}
+
+@media (max-width: 1060px) {
+  .modal-content app-add-task {
+    display: block;
+    transform: scale(1) translateY(-50px);
+    padding-left: 95px;
+    transform-origin: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-content app-add-task {
+    display: block;
+    transform: scale(0.8) translateY(-50px);
+    padding-left: 0px;
+    transform-origin: center;
+    height: 90vh;
+  }
 }
