@@ -7,8 +7,8 @@
         </span><br>
         <h3>{{ task.title }}</h3>
         <span class="content">{{ task.description }}</span><br>
-        <span class="content">Due Date: {{ task.dueDate }}</span><br>
-        Priority: {{ task.priority }}
+        <span class="text-grey">Due Date: </span> <span class="content"> {{ task.dueDate }}</span><br>
+        <span class="text-grey"> Priority: </span>{{ task.priority }}
         <span class="task-priority-icon" [ngSwitch]="task.priority">
             <svg *ngSwitchCase="'medium'" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
@@ -31,20 +31,39 @@
             </svg>
         </span><br>
 
-        <span class="content">Assigned To:
+        <span class="text-grey">Assigned To:</span><br>
+        <!-- NEW: show primary contact (first) with avatar + name, others below in a column -->
+        <div class="assigned-contacts" *ngIf="task.contacts?.length">
+            <!-- Primary contact -->
+            <div class="primary-contact" *ngIf="task.contacts.length > 0">
+                <div class="contact-row">
+                    <div class="avatar" [style.background-color]="getAvatarColor(task.contacts[0])">
+                        {{ getInitials(task.contacts[0]) }}
+                    </div>
+                    <div class="contact-name">
+                        {{ task.contacts[0] }}
+                    </div>
+                </div>
+            </div>
 
-        </span><br>
-        {{task.contacts}} <br>
-        <div class="avatar-container">
-            <div *ngFor="let contact of task.contacts" class="avatar"
-                [style.background-color]="getAvatarColor(contact)">
-                {{ getInitials(contact) }}
+            <!-- Other contacts stacked in a column -->
+            <div class="other-contacts" *ngIf="task.contacts.length > 1">
+                <div class="contact-row" *ngFor="let contact of task.contacts; let i = index">
+                    <ng-container *ngIf="i > 0">
+                        <div class="avatar small" [style.background-color]="getAvatarColor(contact)">
+                            {{ getInitials(contact) }}
+                        </div>
+                        <div class="contact-name small">
+                            {{ contact }}
+                        </div>
+                    </ng-container>
+                </div>
             </div>
         </div>
 
-        <span class="content">Subtasks</span><br>
+        <span class="text-grey">Subtasks</span><br>
         <div *ngFor="let subtask of task.subtasks">
-            <input type="checkbox" [checked]="subtask.done">
+            <input class="subtask-checkbox" type="checkbox" [checked]="subtask.done">
             <span class="content">{{ subtask.title }}</span>
 
         </div>
