@@ -28,7 +28,7 @@ import { ModalBoardAddTaskComponent } from './modal-board-add-task/modal-board-a
     ModalBoardComponent,
   ],
   templateUrl: './board.component.html',
-  styleUrls: ['./board.component.scss'],
+  styleUrls: ['./board.component.scss','./board.responsive.scss'],
 })
 export class BoardComponent implements OnDestroy {
   public getCategoryColor(category: string): string {

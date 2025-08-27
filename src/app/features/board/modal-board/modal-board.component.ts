@@ -37,6 +37,8 @@ openEditModal() {
 
 closeEditModal() {
   this.showEditModal = false;
+        this.close.emit(); 
+
 }
 
   public getCategoryColor(category: string): string {
