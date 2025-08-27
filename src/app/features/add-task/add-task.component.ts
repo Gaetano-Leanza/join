@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContactService } from '../contacts/contact-service/contact.service';
 import { Contact } from '../contacts/contact-model/contact.model';
@@ -22,6 +22,10 @@ interface Subtask {
 })
 export class AddTaskComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
+  @Input() showHeader: boolean = true;
+  @Input() showReset: boolean = true;
+  @Input() showCreate: boolean = true;
+
   getInitials = getInitials;
   getAvatarColor = getAvatarColor;
   isActive1 = false;

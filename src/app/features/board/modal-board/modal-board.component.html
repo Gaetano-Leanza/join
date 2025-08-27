@@ -87,7 +87,8 @@
             </svg>
 
             <!-- Edit button -->
-            <svg width="63" height="25" viewBox="0 0 63 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg (click)="showEditModal = true" width="63" height="25" viewBox="0 0 63 25" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
                 <mask id="mask0_75609_16274" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="25"
                     height="25">
                     <rect x="0.682129" y="0.396729" width="24" height="24" />
@@ -103,3 +104,6 @@
         </div>
     </div>
 </div>
+
+<app-board-modal-edit *ngIf="showEditModal" [task]="task" (close)="closeEditModal()">
+</app-board-modal-edit>

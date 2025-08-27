@@ -1,0 +1,11 @@
+<!-- Edit Modal Task -->
+<div class="task-modal" (click)="close.emit()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <button id="close" (click)="close.emit()">X</button>
+
+        <div class="content">
+            <app-add-task [showHeader]="false" [showReset]="false" [showCreate]="false"
+                (close)="close.emit()"></app-add-task>
+        </div>
+    </div>
+</div>

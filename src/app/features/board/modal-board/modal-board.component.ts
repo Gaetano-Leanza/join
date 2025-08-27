@@ -3,10 +3,11 @@ import { Task } from '../../../services/task.service';
 import { CommonModule } from '@angular/common';
 import { TaskService } from '../../../services/task.service';
 import { getAvatarColor, getInitials } from '../../add-task/avatar-utils';
+import { BoardModalEditComponent } from '../board-modal-edit/board-modal-edit.component';
 @Component({
   selector: 'app-modal-board',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, BoardModalEditComponent],
   templateUrl: './modal-board.component.html',
   styleUrls: ['./modal-board.component.scss'],
 })
@@ -27,6 +28,16 @@ export class ModalBoardComponent {
       this.close.emit(); // Modal schließen nach dem Löschen
     }
   }
+
+showEditModal = false;
+
+openEditModal() {
+  this.showEditModal = true;
+}
+
+closeEditModal() {
+  this.showEditModal = false;
+}
 
   public getCategoryColor(category: string): string {
     switch (category) {
