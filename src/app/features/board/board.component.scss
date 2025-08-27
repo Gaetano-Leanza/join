@@ -7,28 +7,12 @@ $xxl-desktop: 1920px;
 
 h1 {
   font-weight: 700;
-  font-size: 32px;
+  font-size: 61px;
   color: #000;
   text-align: center;
   margin-bottom: 16px;
 
-  @media (min-width: $tablet) {
-    font-size: 48px;
-    text-align: left;
-    margin-bottom: 0;
-  }
 
-  @media (min-width: $desktop) {
-    font-size: 61px;
-  }
-
-  @media (min-width: $xl-desktop) {
-    font-size: 72px;
-  }
-
-  @media (min-width: $xxl-desktop) {
-    font-size: 76px;
-  }
 }
 
 .task-priority-icon {

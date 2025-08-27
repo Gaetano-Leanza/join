@@ -4,12 +4,15 @@ import { CommonModule } from '@angular/common';
 import { TaskService } from '../../../services/task.service';
 import { getAvatarColor, getInitials } from '../../add-task/avatar-utils';
 import { BoardModalEditComponent } from '../board-modal-edit/board-modal-edit.component';
+import { slideInModal } from './modal-board.animations';
+
 @Component({
   selector: 'app-modal-board',
   standalone: true,
   imports: [CommonModule, BoardModalEditComponent],
   templateUrl: './modal-board.component.html',
   styleUrls: ['./modal-board.component.scss'],
+  animations: [slideInModal],
 })
 export class ModalBoardComponent {
   getInitials = getInitials;

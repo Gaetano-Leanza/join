@@ -15,7 +15,7 @@ import { NavbarComponent } from '../app/shared/navbar/navbar.component';
     RouterModule,
     CommonModule,
     HeaderComponent,
-    NavbarComponent,
+    NavbarComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],

@@ -1,6 +1,6 @@
 <!-- Task Modal -->
 <div class="task-modal" (click)="close.emit()">
-    <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-content" [@slideInModal] (click)="$event.stopPropagation()">
         <button id="close" (click)="close.emit()">X</button>
         <span class="text" id="categoryColor" [style.background-color]="task.categoryColor">
             {{ task.category }}
