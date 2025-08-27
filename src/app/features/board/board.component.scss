@@ -11,8 +11,6 @@ h1 {
   color: #000;
   text-align: center;
   margin-bottom: 16px;
-
-
 }
 
 .task-priority-icon {
@@ -57,7 +55,6 @@ h1 {
   margin: 0;
   max-width: 1690px;
   overflow-x: auto;
-
 }
 
 #board {
@@ -169,12 +166,10 @@ h1 {
   width: 200px;
   height: 80px;
 
-
   &:hover {
     fill: #4589ff !important;
     transform: scale(1.03);
   }
-
 }
 
 #board-content {
@@ -326,18 +321,14 @@ h1 {
 
 .example-list {
   width: 250px;
-  background: #f8f8f8;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   padding: 3px;
   gap: 12px;
   margin-left: 5px;
-  margin-top: -25px;
   min-height: 20px;
   flex-grow: 2;
-
-
 }
 
 .example-box {
@@ -361,8 +352,6 @@ h1 {
   &:last-child {
     margin-bottom: 0;
   }
-
-
 }
 
 .task-category {
@@ -442,7 +431,7 @@ h1 {
   height: 100%;
   background: #4589ff;
   border-radius: 4px;
-  transition: width .3s ease;
+  transition: width 0.3s ease;
 }
 
 .task-contacts {
@@ -518,8 +507,6 @@ h1 {
   font-style: italic;
   font-size: 16px;
   border-radius: 8px;
-
-
 }
 
 .cdk-drop-list .cdk-drag {
