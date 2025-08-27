@@ -23,7 +23,15 @@
     width: 90%;
     position: relative;
     font-family: 'Inter', sans-serif;
+    overflow-y: auto;
 
+    /* Verhindert sichtbare Scrollleisten */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE & Edge */
+}
+
+.modal-content::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
 }
 
 
@@ -34,7 +42,7 @@
     padding: 0 55px;
     transform-origin: center;
     overflow: auto;
-    width: 770px;
+    width: 760px;
     height: 700px;
     border: 1px solid blue;
     grid-column: 1;

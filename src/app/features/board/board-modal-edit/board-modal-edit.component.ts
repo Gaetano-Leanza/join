@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AddTaskComponent } from '../../add-task/add-task.component';
 import { Task } from '../../../services/task.service';
+import { AddTaskMobileComponent } from '../../add-task-mobile/add-task-mobile.component';
 
 @Component({
   selector: 'app-board-modal-edit',
-  imports: [AddTaskComponent,CommonModule],
+  imports: [CommonModule, AddTaskMobileComponent],
+
   templateUrl: './board-modal-edit.component.html',
   styleUrl: './board-modal-edit.component.scss'
 })

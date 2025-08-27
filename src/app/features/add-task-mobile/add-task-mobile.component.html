@@ -35,7 +35,6 @@
         [ngModelOptions]="{ standalone: true }"
       />
     </div>
-    <div class="middle"></div>
     <div class="right-side">
       <div class="row1-wrapper">
         <h4 class="headline">Priority</h4>
@@ -382,16 +381,17 @@
           </div>
         </div>
       </div>
-      <div class="text-bottom-mobile">
-        <h5>*</h5>
-        <h4>This field is requiered!</h4>
-      </div>
     </div>
   </div>
 
   <div class="content-bottom">
+    <div class="text-bottom-mobile">
+      <h5>*</h5>
+      <h4>This field is requiered!</h4>
+    </div>
+
     <div>
-      <button *ngIf="showReset" class="cancel-button" (click)="resetForm()">
+      <button class="cancel-button" (click)="resetForm()">
         <svg
           width="126"
           height="57"
@@ -422,11 +422,7 @@
       </button>
     </div>
 
-    <button
-      *ngIf="showCreate"
-      class="create-task-button"
-      (click)="createTask()"
-    >
+    <button class="create-task-button" (click)="createTask()">
       <svg
         width="184"
         height="56"
@@ -459,13 +455,8 @@
       </svg>
     </button>
   </div>
-</div>
 
-<div class="text-bottom">
-  <h5>*</h5>
-  <h4>This field is requiered!</h4>
-</div>
-
-<div *ngIf="showSuccessInfo" class="success-info-modal" [@fadeInOutInfo]>
-  {{ successMessage }}
+  <div *ngIf="showSuccessInfo" class="success-info-modal" [@fadeInOutInfo]>
+    {{ successMessage }}
+  </div>
 </div>
