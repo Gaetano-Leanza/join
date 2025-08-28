@@ -258,7 +258,6 @@ h5 {
   fill: #ffa800;
 }
 
-/* Aktiver Zustand */
 .image-button-middle.active rect {
   fill: #ffa800;
 }
@@ -287,6 +286,10 @@ h5 {
   align-items: flex-end;
   gap: 20px;
   padding-top: 20px;
+}
+
+.content-bottom-mobile {
+  display: none;
 }
 
 .create-task-button {
@@ -565,9 +568,9 @@ h5 {
 
 .subtask-list {
   position: absolute;
-  top: 100%; 
+  top: 100%;
   left: 0;
-  width: 100%; 
+  width: 100%;
   margin: 0;
   padding-top: 2px;
   background: white;
@@ -601,11 +604,11 @@ h5 {
   justify-content: center;
 }
 
-  .text-bottom-mobile {
-    display: none;
-  }
+.text-bottom-mobile {
+  display: none;
+}
 
-  .assign-dropdown {
+.assign-dropdown {
   position: absolute;
   top: 100%;
   left: 0;
@@ -631,7 +634,7 @@ h5 {
 
 .contact-avatar {
   margin-right: 10px;
-  
+
   .avatar {
     width: 30px;
     height: 30px;
