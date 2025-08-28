@@ -363,8 +363,8 @@ h5 {
 
 .text-bottom-mobile {
   position: absolute;
-  left: 75px;
-  bottom: -125px;
+  left: 70px;
+  bottom: -130px;
 }
 
 .icon-assign {
@@ -752,8 +752,7 @@ h5 {
 
 @media (max-width: 495px) {
   .row1 {
-    width: 100%;
-    gap: 15px;
+    gap: 25px;
   }
 
   .image-button-left,
@@ -779,5 +778,138 @@ h5 {
     transform: translateX(-10px) translateY(-3px);
     height: 39px;
     width: 103px;
+  }
+
+  .text-bottom-mobile {
+    position: absolute;
+    left: 45px;
+  }
+}
+
+@media (max-width: 470px) {
+  .row1 {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 460px) {
+  .row1 {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 445px) {
+  .row1 {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 430px) {
+  .text-bottom-mobile {
+    position: absolute;
+    left: 40px;
+  }
+}
+
+
+@media (max-width: 420px) {
+  .text-bottom-mobile {
+    position: absolute;
+    left: 35px;
+  }
+}
+
+@media (max-width: 400px) {
+  .text-bottom-mobile {
+    position: absolute;
+    left: 30px;
+  }
+}
+
+
+@media (max-width: 390px) {
+  .image-button-left,
+  .image-button-middle,
+  .image-button-right {
+    height: 35px;
+    width: 82px;
+  }
+
+  .image-button-left svg {
+    transform: translateX(-11px) translateY(-1px);
+    height: 37px;
+    width: 100px;
+  }
+
+  .image-button-middle svg {
+    transform: translateX(-6px) translateY(1px);
+    height: 32px;
+    width: 90px;
+  }
+
+  .image-button-right svg {
+    transform: translateX(-11px) translateY(-1px);
+    height: 37px;
+    width: 100px;
+  }
+}
+
+@media (max-width: 370px) {
+  .image-button-left,
+  .image-button-middle,
+  .image-button-right {
+    height: 35px;
+    width: 77px;
+  }
+
+  .image-button-left svg {
+    transform: translateX(-10px) translateY(1px);
+    height: 35px;
+    width: 93px;
+  }
+
+  .image-button-middle svg {
+    transform: translateX(-7px) translateY(3px);
+    height: 30px;
+    width: 87px;
+  }
+
+  .image-button-right svg {
+    transform: translateX(-10px) translateY(0px);
+    height: 35px;
+    width: 93px;
+  }
+}
+
+@media (max-width: 355px) {
+  .image-button-left,
+  .image-button-middle,
+  .image-button-right {
+    height: 33px;
+    width: 73px;
+  }
+
+  .image-button-left svg {
+    transform: translateX(-10px) translateY(1px);
+    height: 33px;
+    width: 89px;
+  }
+
+  .image-button-middle svg {
+    transform: translateX(-8px) translateY(2px);
+    height: 29px;
+    width: 85px;
+  }
+
+  .image-button-right svg {
+    transform: translateX(-10px) translateY(0px);
+    height: 33px;
+    width: 89px;
+  }
+}
+
+@media (max-width: 330px) {
+  .row1 {
+    gap: 5px;
   }
 }
