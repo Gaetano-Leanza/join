@@ -343,50 +343,17 @@ h5 {
   width: 105px;
 }
 
-.cancel-button {
-  height: 44px;
-  width: 100px;
-  border-radius: 10px;
-  border: none;
-
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.cancel-button svg {
-  transform: translateX(-13px) translateY(-1px);
-  height: 45px;
-}
-
-.cancel-button:hover svg text {
-  fill: #007cee;
-  stroke: none;
-}
-
-.cancel-button:hover svg rect,
-.cancel-button:hover svg path,
-.cancel-button:hover svg circle {
-  stroke: #007cee;
-}
-
-.cancel-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  transition: all 0.3s ease;
-}
-
 .create-task-button {
-  height: 45px;
-  width: 148px;
+  height: 49px;
+  width: 61px;
   border-radius: 10px;
-  margin-bottom: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .create-task-button svg {
-  transform: translateX(-20px) translateY(-2px);
-  height: 45px;
+  transform: translateX(-18px) translateY(-4px);
+  height: 60px;
 }
 
 .create-task-button:hover svg rect {
@@ -682,4 +649,135 @@ h5 {
   top: 50%;
   left: 37%;
   transform: translate(-50%, -37%);
+}
+
+@media (max-width: 600px) {
+  .row1 {
+    width: 100%;
+    gap: 25px;
+  }
+}
+
+@media (max-width: 580px) {
+  .row1 {
+    width: 100%;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 570px) {
+  .row1 {
+    width: 100%;
+    gap: 25px;
+  }
+
+  .image-button-left,
+  .image-button-middle,
+  .image-button-right {
+    height: 40px;
+    width: 98px;
+  }
+
+  .image-button-left svg {
+    transform: translateX(-7px) translateY(-2px);
+    height: 45px;
+    width: 108px;
+  }
+
+  .image-button-middle svg {
+    transform: translateX(-2px) translateY(0.5px);
+    height: 39px;
+    width: 98px;
+  }
+
+  .image-button-right svg {
+    transform: translateX(-7px) translateY(-3px);
+    height: 45px;
+    width: 108px;
+  }
+}
+
+@media (max-width: 550px) {
+  .row1 {
+    width: 100%;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 535px) {
+  .row1 {
+    width: 100%;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 520px) {
+  .row1 {
+    width: 100%;
+    gap: 15px;
+  }
+
+  .image-button-left,
+  .image-button-middle,
+  .image-button-right {
+    height: 38px;
+    width: 93px;
+  }
+
+  .image-button-left svg {
+    transform: translateX(-8px) translateY(-2px);
+    height: 43px;
+    width: 106px;
+  }
+
+  .image-button-middle svg {
+    transform: translateX(-3px) translateY(0.5px);
+    height: 37px;
+    width: 96px;
+  }
+
+  .image-button-right svg {
+    transform: translateX(-7px) translateY(-3px);
+    height: 43px;
+    width: 106px;
+  }
+}
+
+@media (max-width: 510px) {
+  .row1 {
+    width: 100%;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 495px) {
+  .row1 {
+    width: 100%;
+    gap: 15px;
+  }
+
+  .image-button-left,
+  .image-button-middle,
+  .image-button-right {
+    height: 36px;
+    width: 87px;
+  }
+
+  .image-button-left svg {
+    transform: translateX(-10px) translateY(-2px);
+    height: 39px;
+    width: 103px;
+  }
+
+  .image-button-middle svg {
+    transform: translateX(-5px) translateY(1px);
+    height: 34px;
+    width: 93px;
+  }
+
+  .image-button-right svg {
+    transform: translateX(-10px) translateY(-3px);
+    height: 39px;
+    width: 103px;
+  }
 }
