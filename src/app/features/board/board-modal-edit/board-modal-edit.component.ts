@@ -6,28 +6,31 @@ import { AddTaskMobileComponent } from '../../add-task-mobile/add-task-mobile.co
 @Component({
   selector: 'app-board-modal-edit',
   imports: [CommonModule, AddTaskMobileComponent],
-
   templateUrl: './board-modal-edit.component.html',
   styleUrl: './board-modal-edit.component.scss'
 })
 export class BoardModalEditComponent {
- @Input() task!: Task;
+  @Input() task!: Task;
   @Output() close = new EventEmitter<void>();
   @Output() saved = new EventEmitter<Task>();
 
   showEditModal = false;
 
-openEditModal() {
-  this.showEditModal = true;
-}
+  openEditModal() {
+    this.showEditModal = true;
+  }
 
-closeEditModal() {
-  this.showEditModal = false;
-}
+  closeEditModal() {
+    this.showEditModal = false;
+  }
 
-onSave() {
+  onTaskUpdated(updatedTask: Task) {
+    this.saved.emit(updatedTask);
+    this.closeEditModal();
+  }
+
+  onSave() {
     this.saved.emit(this.task);
     this.close.emit();
   }
-
 }
