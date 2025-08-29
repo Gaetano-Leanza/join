@@ -1,7 +1,16 @@
 <section id="board-wrapper">
   <div id="header">
+    <div class="mobile-header">
+      <h1>Board</h1>
 
-    <h1>Board</h1>
+      <!-- mobile button-add-task-->
+      <svg class="mobile-add-task" (click)="showModal = true" width="60" height="60" viewBox="0 0 40 40"
+        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <rect width="40" height="40" rx="10" />
+        <path d="M20 10V30" stroke="white" stroke-width="2" stroke-linecap="round" />
+        <path d="M30 20L10.0005 20.138" stroke="white" stroke-width="2" stroke-linecap="round" />
+      </svg>
+    </div>
 
     <div id="header-left">
       <div id="task-search">
@@ -28,6 +37,9 @@
 
 
       </div>
+
+
+
       <svg id="add-task" width="160" height="48" viewBox="0 0 160 48" fill="none" xmlns="http://www.w3.org/2000/svg"
         (click)="showModal = true">
         <rect x="0.5" y="0.5" width="159" height="47" rx="9.5" fill="#2A3647" />
@@ -47,13 +59,7 @@
       </svg>
 
 
-      <!-- mobile button-add-task-->
-      <svg class="mobile-add-task" (click)="showModal = true" width="60" height="60" viewBox="0 0 40 40"
-        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <rect width="40" height="40" rx="10" />
-        <path d="M20 10V30" stroke="white" stroke-width="2" stroke-linecap="round" />
-        <path d="M30 20L10.0005 20.138" stroke="white" stroke-width="2" stroke-linecap="round" />
-      </svg>
+
 
     </div>
   </div>
