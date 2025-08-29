@@ -7,21 +7,42 @@ import { InfoComponent } from './pages/info/info.component';
 import { AddTaskComponent } from './features/add-task/add-task.component';
 import { BoardComponent } from './features/board/board.component';
 
-/**
- * Anwendungsrouten für das Angular-Routing-Modul.
- *
- * @type {Routes}
- * @description
- * Definiert die Navigationspfade und ihre zugehörigen Komponenten.
- */
 export const routes: Routes = [
   { path: '', redirectTo: '/contacts', pathMatch: 'full' },
-  { path: 'task', component: AddTaskComponent },
-  { path: 'board', component: BoardComponent },
-  { path: 'contacts', component: ContactLayoutComponent },
-  { path: 'contacts/:id', component: ContactDetailComponent },
-  { path: 'privacy-policy', component: PrivacyPolicyComponent },
-  { path: 'legal-notice', component: LegalNoticeComponent },
-  { path: 'info', component: InfoComponent },
+  { 
+    path: 'task', 
+    component: AddTaskComponent, 
+    data: { prerender: true } 
+  },
+  { 
+    path: 'board', 
+    component: BoardComponent, 
+    data: { prerender: true } 
+  },
+  {
+    path: 'contacts',
+    component: ContactLayoutComponent,
+    data: { prerender: true },
+  },
+  // GELÖST: Keine parametrisierte Route mehr!
+  {
+    path: 'contact-detail',
+    component: ContactDetailComponent,
+    data: { prerender: true }
+  },
+  {
+    path: 'privacy-policy',
+    component: PrivacyPolicyComponent,
+    data: { prerender: true },
+  },
+  {
+    path: 'legal-notice',
+    component: LegalNoticeComponent,
+    data: { prerender: true },
+  },
+  { 
+    path: 'info', 
+    component: InfoComponent, 
+    data: { prerender: true } 
+  },
 ];
-
