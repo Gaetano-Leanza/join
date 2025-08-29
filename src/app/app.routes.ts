@@ -24,3 +24,4 @@ export const routes: Routes = [
   { path: 'legal-notice', component: LegalNoticeComponent },
   { path: 'info', component: InfoComponent },
 ];
+
