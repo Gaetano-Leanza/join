@@ -48,7 +48,7 @@
   }
 }
 
-@media (max-width: 1449px) and (min-width: 1300px) {
+@media (max-width: 1449px) and (min-width: 1330px) {
   #header {
     padding: 16px 10%;
   }
@@ -70,7 +70,7 @@
   }
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1330px) {
   #board-wrapper {
     height: auto !important;
     top: 80px;
@@ -83,9 +83,7 @@
   #board-wrapper::-webkit-scrollbar {
     display: none;
   }
-}
 
-@media (max-width: 1299px) {
   .board-wrapper {
     width: 100%;
     height: auto !important;
@@ -109,9 +107,7 @@
     max-width: 100%;
     flex-direction: column;
   }
-}
 
-@media (max-width: 1299px) and (min-width: 1140px) {
   .board-wrapper {
     width: 100%;
     height: auto !important;
@@ -121,9 +117,9 @@
   .topic-wrapper {
     display: flex;
     flex-direction: row;
-    margin-right: 70%;
+    margin-right: 75%;
     height: 60px;
-    overflow-x: auto; /* horizontal scroll erlauben */
+    overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
   }
@@ -139,7 +135,7 @@
     max-width: 1290px;
     margin-top: 0;
     flex-direction: row;
-    overflow-x: auto; /* horizontal scroll erlauben */
+    overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
@@ -159,19 +155,14 @@
   }
 }
 
-@media (max-width: 1139px) and (min-width: 930px) {
+@media (max-width: 1250px) {
   #header {
     padding: 16px 6%;
+    margin-left: -30px;
   }
 
   .topic-wrapper {
-    display: flex;
-    flex-direction: row;
-    margin-right: 60%;
-    height: 60px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
+    margin-right: 73%;
   }
 
   .topic {
@@ -202,14 +193,31 @@
 
   h1 {
     font-size: 48px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .topic-wrapper {
+    margin-right: 72%;
+  }
+}
+
+@media (max-width: 1150px) {
+  .topic-wrapper {
+    margin-right: 71%;
+  }
+}
+
+@media (max-width: 1100px) {
+  .topic-wrapper {
+    margin-right: 69%;
   }
 }
 
 @media (max-width: 1050px) {
-h1 {
-  text-align: left;
+  h1 {
+    text-align: left;
   }
-
 
   #task-search {
     display: none;
@@ -241,11 +249,11 @@ h1 {
   }
 
   .mobile-header {
-    padding-top: 70px;
+    padding-top: 48px;
   }
 
   .topic {
-    padding-top: 70px;
+    padding-top: 48px;
   }
 
   #add-task {
@@ -260,115 +268,60 @@ h1 {
       transform: scale(1.03);
     }
   }
+
+  .topic-wrapper {
+    margin-right: 67%;
+  }
 }
 
-@media (max-width: 950px) {
+@media (max-width: 1000px) {
+  .topic-wrapper {
+    margin-right: 65%;
+  }
+}
+
+@media (max-width: 970px) {
   #header {
     margin-left: -30px;
     gap: 10px;
   }
-}
-
-@media (max-width: 929px) and (min-width: 769px) {
-  #add-task {
-    margin-right: 0 auto;
-  }
-
-  input {
-    margin-top: 45px;
-  }
-
-  .no-tasks {
-    top: 70px;
-  }
-
-  .topic {
-    flex-direction: column;
-    gap: 16px;
-    align-items: flex-start;
-    justify-content: center;
-    max-width: 700px;
-    margin-top: 200px;
-    height: auto !important;
-    overflow: visible !important;
-  }
 
   .topic-wrapper {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: row;
-    margin-right: 50%;
-    height: 60px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
+    margin-right: 63%;
   }
+}
 
-  .example-list {
-    justify-content: start;
-    width: 100%;
-    max-width: 1290px;
-    margin-top: 0;
-    flex-direction: row;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
+@media (max-width: 930px) {
+  .topic-wrapper {
+    margin-right: 61%;
   }
+}
 
-  .example-box {
-    width: 320px;
-  }
-
-  .empty-list {
-    width: 300px;
-    margin-left: 30%;
-  }
-
-  h1 {
-    font-size: 44px;
-    margin-top: -70px;
-  }
-
-  #search {
-    margin-top: 25px;
-  }
-
-  #add-task {
-    margin-top: -70px;
-    left: -50px;
-  }
-
-  .no-tasks {
-    margin-top: 25px;
-  }
-
-  #header {
-    gap: 0;
-    max-width: 60%;
-    margin: 35px 15px;
-  }
-
-  #add-task {
-    margin-left: -80px;
+@media (max-width: 890px) {
+  .topic-wrapper {
+    margin-right: 59%;
   }
 }
 
 @media (max-width: 860px) {
-  #add-task {
-    margin-left: -100px;
+  .topic-wrapper {
+    margin-right: 57%;
+  }
+
+  .mobile-header {
+    padding-left: 10px;
   }
 }
 
-@media (max-width: 835px) {
-  #add-task {
-    margin-left: -130px;
+@media (max-width: 830px) {
+  .topic-wrapper {
+    margin-right: 55%;
   }
 }
 
 @media (max-width: 800px) {
-  #add-task {
-    margin-left: -160px;
+  .topic-wrapper {
+    margin-right: 53%;
   }
 }
 
