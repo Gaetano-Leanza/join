@@ -288,7 +288,7 @@
     margin-left: 50px;
     width: 100%;
     max-width: 700px;
-    min-width: 300px;
+    min-width: 100px;
     padding: 0 10px;
     align-items: center;
     height: 70px;
@@ -435,3 +435,41 @@
     }
   }
 }
+
+@media (max-width: 360px) {
+  #task-search-responsive {
+    input {
+      width: 95%;
+
+      &:focus {
+        border-color: #4589ff !important;
+      }
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  #task-search-responsive {
+    input {
+      width: 95%;
+
+      &:focus {
+        border-color: #4589ff !important;
+      }
+    }
+  }
+}
+
+
+@media (max-width: 360px) {
+  #task-search-responsive {
+    input {
+      width: 90%;
+
+      &:focus {
+        border-color: #4589ff !important;
+      }
+    }
+  }
+}
+
