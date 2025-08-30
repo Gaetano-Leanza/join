@@ -2,6 +2,8 @@
   <div id="header">
     <div class="mobile-header">
       <h1>Board</h1>
+
+      
       <div id="task-search-responsive">
         <input
           type="text"
@@ -40,30 +42,6 @@
           </g>
         </svg>
       </div>
-      <!-- mobile button-add-task-->
-      <svg
-        class="mobile-add-task"
-        (click)="showModal = true"
-        width="60"
-        height="60"
-        viewBox="0 0 40 40"
-        fill="currentColor"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <rect width="40" height="40" rx="10" />
-        <path
-          d="M20 10V30"
-          stroke="white"
-          stroke-width="2"
-          stroke-linecap="round"
-        />
-        <path
-          d="M30 20L10.0005 20.138"
-          stroke="white"
-          stroke-width="2"
-          stroke-linecap="round"
-        />
-      </svg>
     </div>
 
     <div id="header-left">
@@ -139,6 +117,31 @@
         </g>
       </svg>
     </div>
+
+       <!-- mobile button-add-task-->
+    <svg
+      class="mobile-add-task"
+      (click)="showModal = true"
+      width="60"
+      height="60"
+      viewBox="0 0 40 40"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect width="40" height="40" rx="10" />
+      <path
+        d="M20 10V30"
+        stroke="white"
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+      <path
+        d="M30 20L10.0005 20.138"
+        stroke="white"
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+    </svg>
   </div>
 
   <div class="topic">
