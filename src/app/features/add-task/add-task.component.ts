@@ -29,7 +29,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   getInitials = getInitials;
   getAvatarColor = getAvatarColor;
   isActive1 = false;
-  isActive2 = false;
+  isActive2 = true;
   isActive3 = false;
   isAssignDropdownOpen = false;
   isCategoryDropdownOpen = false;
