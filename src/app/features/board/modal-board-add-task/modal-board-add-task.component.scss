@@ -37,18 +37,19 @@ button {
 }
 
 button:hover {
-  transform: scale(1.2);
+  transform: scale(1.2) translateY(0px);
   transition: transform ease 0.2s;
   cursor: pointer;
 }
 
 #close {
   position: absolute;
-  top: 10px;
-  right: 5px;
-  font-size: 24px;
-  z-index: 1000;
-  background-color: #fff;
+  top: 20px;
+  right: 20px;
+  background: url("/img/close.svg") no-repeat center;
+  border: none;
+  width: 24px;
+  height: 24px;
   cursor: pointer;
 }
 
