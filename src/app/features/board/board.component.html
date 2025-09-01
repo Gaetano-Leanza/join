@@ -181,7 +181,9 @@
               {{ task.category }}
             </p>
             <h3 class="task-title">{{ task.title }}</h3>
-            <p class="task-description">{{ task.description }}</p>
+            <p class="task-description" [title]="task.description">
+              {{ (task.description.length > 30) ? (task.description | slice:0:30) + '…' : task.description }}
+            </p>
             <div class="task-subtasks" *ngIf="task.subtasks && task.subtasks.length > 0">
               <div class="progress-bar">
                 <div class="progress" [style.width.%]="getSubtaskProgress(task)"></div>
@@ -259,7 +261,9 @@
               {{ task.category }}
             </p>
             <h3 class="task-title">{{ task.title }}</h3>
-            <p class="task-description">{{ task.description }}</p>
+            <p class="task-description" [title]="task.description">
+              {{ (task.description.length > 30) ? (task.description | slice:0:30) + '…' : task.description }}
+            </p>
             <div class="task-subtasks" *ngIf="task.subtasks && task.subtasks.length > 0">
               <div class="progress-bar">
                 <div class="progress" [style.width.%]="getSubtaskProgress(task)"></div>
@@ -338,7 +342,9 @@
               {{ task.category }}
             </p>
             <h3 class="task-title">{{ task.title }}</h3>
-            <p class="task-description">{{ task.description }}</p>
+            <p class="task-description" [title]="task.description">
+              {{ (task.description.length > 30) ? (task.description | slice:0:30) + '…' : task.description }}
+            </p>
             <div class="task-subtasks" *ngIf="task.subtasks && task.subtasks.length > 0">
               <div class="progress-bar">
                 <div class="progress" [style.width.%]="getSubtaskProgress(task)"></div>
