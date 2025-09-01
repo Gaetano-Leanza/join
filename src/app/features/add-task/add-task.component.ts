@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContactService } from '../contacts/contact-service/contact.service';
 import { Contact } from '../contacts/contact-model/contact.model';
@@ -20,7 +20,7 @@ interface Subtask {
   templateUrl: './add-task.component.html',
   styleUrls: ['./add-task.component.scss', './add-task.responsive.scss'],
 })
-export class AddTaskComponent implements OnInit {
+export class AddTaskComponent implements OnInit, OnDestroy {
   @Output() close = new EventEmitter<void>();
   @Input() showHeader: boolean = true;
   @Input() showReset: boolean = true;
@@ -63,6 +63,8 @@ export class AddTaskComponent implements OnInit {
   selectedContacts: Contact[] = [];
   isContactSelected: boolean = false;
 
+  private dropdownElement: HTMLElement | null = null;
+
   constructor(
     private contactService: ContactService,
     private firestore: Firestore
@@ -79,16 +81,24 @@ export class AddTaskComponent implements OnInit {
       },
       error: (err) => console.error('Fehler beim Laden der Kontakte:', err),
     });
+
+    // Event-Listener für Klicks außerhalb des Dropdowns
+    document.addEventListener('click', this.handleDocumentClick.bind(this));
   }
 
- getSelectedContactsString(): string {
-  if (this.selectedContacts.length === 0) {
-    return '';
+  ngOnDestroy() {
+    // Event-Listener entfernen, wenn Komponente zerstört wird
+    document.removeEventListener('click', this.handleDocumentClick.bind(this));
   }
-  
-  const names = this.selectedContacts.map(contact => contact.name);
-  return names.join(', ');
-}
+
+  getSelectedContactsString(): string {
+    if (this.selectedContacts.length === 0) {
+      return '';
+    }
+    
+    const names = this.selectedContacts.map(contact => contact.name);
+    return names.join(', ');
+  }
 
   toggleButton1() {
     this.isActive1 = true;
@@ -111,8 +121,36 @@ export class AddTaskComponent implements OnInit {
     console.log('Button 3 ist aktiv');
   }
 
-  toggleAssignDropdown() {
+  toggleAssignDropdown(event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
     this.isAssignDropdownOpen = !this.isAssignDropdownOpen;
+    
+    // Dropdown-Element referenzieren
+    if (this.isAssignDropdownOpen) {
+      setTimeout(() => {
+        this.dropdownElement = document.querySelector('.assign-dropdown');
+      }, 0);
+    }
+  }
+
+  private handleDocumentClick(event: MouseEvent) {
+    if (this.isAssignDropdownOpen && this.dropdownElement) {
+      const target = event.target as HTMLElement;
+      
+      // Prüfen, ob das angeklickte Element innerhalb des Dropdowns liegt
+      const clickedInside = this.dropdownElement.contains(target);
+      
+      // Prüfen, ob auf den Input oder das Icon geklickt wurde
+      const isInput = target.closest('.placeholder7');
+      const isIcon = target.closest('.icon-category');
+      
+      // Wenn außerhalb geklickt wurde und nicht auf Input/Icon, Dropdown schließen
+      if (!clickedInside && !isInput && !isIcon) {
+        this.isAssignDropdownOpen = false;
+      }
+    }
   }
 
   toggleCategoryDropdown() {

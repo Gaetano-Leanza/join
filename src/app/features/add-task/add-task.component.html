@@ -252,22 +252,22 @@
             placeholder="Select contacts to assign"
             [value]="getSelectedContactsString()"
             readonly
-            (click)="toggleAssignDropdown()"
+            (click)="toggleAssignDropdown($event)"
           />
 
           <span
             class="icon-category"
             [class.open]="isAssignDropdownOpen"
-            (click)="toggleAssignDropdown()"
+            (click)="toggleAssignDropdown($event)"
           ></span>
-
           <!-- Neue Kontaktauswahl Dropdown -->
           <div *ngIf="isAssignDropdownOpen" class="assign-dropdown">
             <div class="contact-list-wrapper">
               <div
                 class="contact-item"
                 *ngFor="let contact of contacts"
-                (click)="$event.stopPropagation()"
+                (click)="toggleContactSelection(contact)"
+                [class.selected]="isContactChecked(contact)"
               >
                 <div class="contact-avatar">
                   <div
@@ -282,8 +282,9 @@
                   <input
                     type="checkbox"
                     [checked]="isContactChecked(contact)"
-                    (change)="toggleContactSelection(contact)"
-                    (click)="$event.stopPropagation()"
+                    (click)="
+                      $event.stopPropagation(); toggleContactSelection(contact)
+                    "
                   />
                 </div>
               </div>
