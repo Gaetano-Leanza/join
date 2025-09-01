@@ -115,9 +115,14 @@
                   task.contacts && task.contacts.length > 0;
                   else singleContact
                 ">
-                <div class="contact" *ngFor="let c of task.contacts"
+                <div class="contact" *ngFor="let c of task.contacts| slice:0:5"
                   [ngStyle]="{ 'background-color': getAvatarColor(c) }">
                   {{ getInitials(c) }}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="task.contacts.length > 5">
+                <div class="avatar more-contacts">
+                  +{{ task.contacts.length - 5 }}
                 </div>
               </ng-container>
 
@@ -188,16 +193,21 @@
               <div class="progress-bar">
                 <div class="progress" [style.width.%]="getSubtaskProgress(task)"></div>
               </div>
-              <span>{{ getDonePredefinedSubtasks(task) }}/2</span>
+              <span>{{ getDoneSubtasks(task) }}/{{ task.subtasks.length }}</span>
             </div>
             <div class="task-contacts">
               <ng-container *ngIf="
                   task.contacts && task.contacts.length > 0;
                   else singleContact
                 ">
-                <div class="contact" *ngFor="let c of task.contacts"
+                <div class="contact" *ngFor="let c of task.contacts | slice:0:5"
                   [ngStyle]="{ 'background-color': getAvatarColor(c) }">
                   {{ getInitials(c) }}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="task.contacts.length > 5">
+                <div class="avatar more-contacts">
+                  +{{ task.contacts.length - 5 }}
                 </div>
               </ng-container>
 
@@ -275,9 +285,14 @@
                   task.contacts && task.contacts.length > 0;
                   else singleContact
                 ">
-                <div class="contact" *ngFor="let c of task.contacts"
+                <div class="contact" *ngFor="let c of task.contacts| slice:0:5"
                   [ngStyle]="{ 'background-color': getAvatarColor(c) }">
                   {{ getInitials(c) }}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="task.contacts.length > 5">
+                <div class="avatar more-contacts">
+                  +{{ task.contacts.length - 5 }}
                 </div>
               </ng-container>
 
@@ -356,9 +371,15 @@
                   task.contacts && task.contacts.length > 0;
                   else singleContact
                 ">
-                <div class="contact" *ngFor="let c of task.contacts"
+                <div class="contact" *ngFor="let c of task.contacts| slice:0:5"
                   [ngStyle]="{ 'background-color': getAvatarColor(c) }">
                   {{ getInitials(c) }}
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="task.contacts.length > 5">
+                <div class="avatar more-contacts">
+                  +{{ task.contacts.length - 5 }}
                 </div>
               </ng-container>
 

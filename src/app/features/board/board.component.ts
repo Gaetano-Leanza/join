@@ -94,8 +94,8 @@ export class BoardComponent implements OnDestroy {
 
     const filtered = this.allTasks.filter(
       (t) =>
-        (t.title && t.title.toLowerCase().startsWith(search)) ||
-        (t.description && t.description.toLowerCase().startsWith(search))
+        (t.title && t.title.toLowerCase().includes(search)) ||
+        (t.description && t.description.toLowerCase().includes(search))
     );
 
     this.todo = filtered.filter((t) => t.progress === 'toDo');
@@ -126,17 +126,21 @@ export class BoardComponent implements OnDestroy {
     }
   }
 
-  getDoneSubtasks(task: Task): number {
-    const subtasks: Subtask[] = this.parseSubtasks(task.subtasks);
-    return subtasks.filter((s) => s.done).length;
-  }
+ getDoneSubtasks(task: Task): number {
+  const subtasks: Subtask[] = this.parseSubtasks(task.subtasks);
+  const doneCount = subtasks.filter((s) => s.done).length;
+  console.log('Task:', task.title, '| Total:', subtasks.length, '| Done:', doneCount);
+  return doneCount;
+}
 
-  getSubtaskProgress(task: Task): number {
-    if (!task.subtasks || task.subtasks.length === 0) return 0;
-    const totalSubtasks = this.parseSubtasks(task.subtasks).length;
-    if (totalSubtasks === 0) return 0;
-    return (this.getDoneSubtasks(task) / totalSubtasks) * 100;
-  }
+getSubtaskProgress(task: Task): number {
+  if (!task.subtasks || task.subtasks.length === 0) return 0;
+  const subtasks = this.parseSubtasks(task.subtasks);
+  const done = this.getDoneSubtasks(task);
+  const percent = subtasks.length === 0 ? 0 : (done / subtasks.length) * 100;
+  console.log('Progress for', task.title, ':', percent, '%');
+  return percent;
+}
 
   /**
    * Normalize raw task data from Firestore into Task.
