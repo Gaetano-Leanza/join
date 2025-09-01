@@ -4,14 +4,8 @@
         <button id="close" (click)="close.emit()">X</button>
 
         <div class="content">
-            <app-add-task-mobile 
-                [showHeader]="false" 
-                [showReset]="false" 
-                [showCreate]="false"
-                [editMode]="true"
-                [taskToEdit]="task"
-                (close)="close.emit()"
-                (taskUpdated)="onTaskUpdated($event)">
+            <app-add-task-mobile [showHeader]="false" [showReset]="false" [showCreate]="false" [editMode]="true"
+                [taskToEdit]="task" (close)="close.emit()" (taskUpdated)="onTaskUpdated($event)">
             </app-add-task-mobile>
         </div>
     </div>

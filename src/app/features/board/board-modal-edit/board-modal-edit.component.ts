@@ -33,4 +33,6 @@ export class BoardModalEditComponent {
     this.saved.emit(this.task);
     this.close.emit();
   }
+
+  
 }

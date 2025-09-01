@@ -76,6 +76,7 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
 
   showSuccessInfo = false;
   successMessage = '';
+  showError = false;
 
   ngOnInit() {
     this.contactService.getContacts().subscribe({
@@ -272,10 +273,12 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
 
   async createTask() {
     if (!this.isFormValid()) {
+       this.showError = true;
       this.showSuccessInfo = true;
-      this.successMessage = 'Bitte füllen Sie alle erforderlichen Felder aus.';
+      this.successMessage = 'Please fill in all required fields';
       setTimeout(() => {
         this.showSuccessInfo = false;
+
       }, 2000);
       return;
     }
@@ -318,7 +321,7 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
       };
       this.taskUpdated.emit(updatedTask);
       
-      this.successMessage = 'Task erfolgreich aktualisiert!';
+      this.successMessage = 'Task updated successfully!';
       this.showSuccessInfo = true;
       setTimeout(() => {
         this.showSuccessInfo = false;
@@ -326,7 +329,7 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
       }, 1500);
     } catch (error) {
       console.error('Fehler beim Aktualisieren des Tasks: ', error);
-      this.successMessage = 'Fehler beim Aktualisieren des Tasks.';
+      this.successMessage = 'Error updating task.';
       this.showSuccessInfo = true;
       setTimeout(() => {
         this.showSuccessInfo = false;

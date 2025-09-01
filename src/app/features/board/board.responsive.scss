@@ -74,8 +74,10 @@
   #board-wrapper {
     height: auto !important;
     top: 80px;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE & alter Edge */
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE & alter Edge */
     overflow: visible !important;
   }
 
@@ -265,10 +267,12 @@
   }
 }
 
+
 @media (max-width: 768px) {
   #header {
     padding: 5px 1%;
   }
+
 
   .mobile-header {
     padding-left: 35px;
@@ -304,15 +308,16 @@
   }
 
   .example-list {
+    display: flex;
     justify-content: start;
-    width: 100%;
-    max-width: 800px;
     margin-top: 0;
-    flex-direction: row;
-    overflow-x: auto;
+    flex-direction: row !important;
+    overflow-x: auto !important;
     overflow-y: hidden;
+    gap: 16px;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
+    padding-bottom: 30px;
   }
 
   #add-task {
@@ -417,6 +422,7 @@
     align-items: flex-start;
     position: relative;
     width: 100%;
+
     input {
       display: flex;
       width: 100%;
@@ -472,4 +478,3 @@
     }
   }
 }
-

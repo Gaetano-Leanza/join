@@ -24,6 +24,18 @@ h5 {
   overflow-y: auto;
 }
 
+.input-error {
+  border: 2px solid #d32f2f !important;
+  background-color: #fff0f0;
+}
+
+.error-message {
+  color: #d32f2f;
+  font-size: 0.95em;
+  margin-bottom: 8px;
+  margin-top: -8px;
+}
+
 .content-wrapper {
   display: flex;
   flex-direction: column;
@@ -826,6 +838,7 @@ h5 {
 }
 
 @media (max-width: 390px) {
+
   .image-button-left,
   .image-button-middle,
   .image-button-right {
@@ -853,6 +866,7 @@ h5 {
 }
 
 @media (max-width: 370px) {
+
   .image-button-left,
   .image-button-middle,
   .image-button-right {
@@ -880,6 +894,7 @@ h5 {
 }
 
 @media (max-width: 355px) {
+
   .image-button-left,
   .image-button-middle,
   .image-button-right {

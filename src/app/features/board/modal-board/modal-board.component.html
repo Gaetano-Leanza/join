@@ -63,7 +63,8 @@
 
         <span class="text-grey">Subtasks</span><br>
         <div *ngFor="let subtask of task.subtasks">
-            <input class="subtask-checkbox" type="checkbox" [checked]="subtask.done">
+            <input class="subtask-checkbox" type="checkbox" [checked]="subtask.done"
+                (change)="toggleSubtaskDone(subtask)">
             <span class="content">{{ subtask.title }}</span>
 
         </div>

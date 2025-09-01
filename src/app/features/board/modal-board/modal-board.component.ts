@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { Task } from '../../../services/task.service';
+import { Subtask, Task } from '../../../services/task.service';
 import { CommonModule } from '@angular/common';
 import { TaskService } from '../../../services/task.service';
 import { getAvatarColor, getInitials } from '../../add-task/avatar-utils';
@@ -42,6 +42,13 @@ closeEditModal() {
   this.showEditModal = false;
         this.close.emit(); 
 
+}
+toggleSubtaskDone(subtask: Subtask) {
+  subtask.done = !subtask.done;
+  if (this.task && this.task.id) {
+    const updateData: Partial<Task> = { subtasks: this.task.subtasks };
+    this.taskService.updateTask(this.task.id, updateData);
+  }
 }
 
   public getCategoryColor(category: string): string {

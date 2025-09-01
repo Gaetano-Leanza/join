@@ -107,7 +107,7 @@
               <div class="progress-bar">
                 <div class="progress" [style.width.%]="getSubtaskProgress(task)"></div>
               </div>
-              <span>{{ getDonePredefinedSubtasks(task) }}/2</span>
+              <span>{{ getDonePredefinedSubtasks(task) }}/{{ task.subtasks.length }}</span>
             </div>
             <div class="task-contacts">
               <!-- Wenn contacts vorhanden sind, für jedes einen Avatar rendern -->
@@ -193,7 +193,7 @@
               <div class="progress-bar">
                 <div class="progress" [style.width.%]="getSubtaskProgress(task)"></div>
               </div>
-              <span>{{ getDoneSubtasks(task) }}/{{ task.subtasks.length }}</span>
+              <span>{{ getDonePredefinedSubtasks(task) }}/{{ task.subtasks.length }}</span>
             </div>
             <div class="task-contacts">
               <ng-container *ngIf="
@@ -278,7 +278,7 @@
               <div class="progress-bar">
                 <div class="progress" [style.width.%]="getSubtaskProgress(task)"></div>
               </div>
-              <span>{{ getDonePredefinedSubtasks(task) }}/2</span>
+              <span>{{ getDonePredefinedSubtasks(task) }}/{{ task.subtasks.length }}</span>
             </div>
             <div class="task-contacts">
               <ng-container *ngIf="
@@ -364,7 +364,7 @@
               <div class="progress-bar">
                 <div class="progress" [style.width.%]="getSubtaskProgress(task)"></div>
               </div>
-              <span>{{ getDonePredefinedSubtasks(task) }}/2</span>
+              <span>{{ getDonePredefinedSubtasks(task) }}/{{ task.subtasks.length }}</span>
             </div>
             <div class="task-contacts">
               <ng-container *ngIf="
