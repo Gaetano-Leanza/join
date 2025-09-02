@@ -57,9 +57,7 @@
     font-size: 52px;
   }
 
-  .example-list {
-    width: 220px;
-  }
+
 
   .example-container {
     width: 240px;
@@ -70,7 +68,7 @@
   }
 }
 
-@media (max-width: 1330px) {
+@media (max-width: 1299px) {
   #board-wrapper {
     height: auto !important;
     top: 80px;
@@ -135,16 +133,21 @@
     overflow: visible;
   }
 
+
+
   .example-list {
+    display: flex;
     justify-content: start;
     width: 100%;
-    max-width: 1290px;
+    max-width: 1300px;
     margin-top: 0;
-    flex-direction: row;
-    overflow-x: auto;
+    flex-direction: row !important;
+    overflow-x: auto !important;
     overflow-y: hidden;
+    gap: 16px;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
+    scrollbar-width: thick;
+    padding-bottom: 30px;
   }
 
   .example-box {

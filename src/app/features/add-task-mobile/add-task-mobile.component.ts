@@ -392,4 +392,18 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
   get submitButtonText(): string {
     return this.editMode ? 'Update Task' : 'Create Task';
   }
+
+editSubtaskIndex: number | null = null;
+
+startEditSubtask(index: number) {
+  this.editSubtaskIndex = index;
+}
+
+saveSubtaskEdit() {
+  this.editSubtaskIndex = null;
+}
+
+  removeSubtask(index: number) {
+  this.subtasks.splice(index, 1);
+}
 }

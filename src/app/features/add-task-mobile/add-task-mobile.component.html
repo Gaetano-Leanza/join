@@ -190,10 +190,14 @@
           <input class="placeholder9" type="text" placeholder="Add new subtask" [(ngModel)]="subtaskText"
             [ngModelOptions]="{ standalone: true }" />
 
-          <div *ngIf="subtasks.length > 0" class="subtask-list">
-            <div *ngFor="let subtask of subtasks" class="subtask-item">
-              <span class="subtask-checkmark">✓</span>
-              {{ subtask.title }}
+          <div *ngIf="subtasks.length > 0" class="subtask-list subtask-list-wrapper">
+            <div *ngFor="let subtask of subtasks; let i = index" class="subtask-row">
+              <input type="text" [(ngModel)]="subtask.title" [readonly]="editSubtaskIndex !== i"
+                (click)="startEditSubtask(i)" />
+              <button *ngIf="editMode" type="button" class="delete-subtask-btn" (click)="removeSubtask(i)"
+                aria-label="Delete subtask">🗑️</button>
+              <button *ngIf="editMode && editSubtaskIndex === i" type="button" class="save-subtask-btn"
+                (click)="saveSubtaskEdit()" aria-label="Save subtask" style="margin-left:4px">✔️</button>
             </div>
           </div>
 
@@ -215,7 +219,8 @@
       <h4>This field is requiered!</h4>
     </div>
     <div>
-      <button class="create-task-button" [class.disabled]="!isFormValid()" (click)="createTask()" *ngIf="showCreate || editMode">
+      <button class="create-task-button" [class.disabled]="!isFormValid()" (click)="createTask()"
+        *ngIf="showCreate || editMode">
         <svg width="93" height="77" viewBox="0 0 93 77" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g filter="url(#filter0_d_75918_13938)">
             <rect x="8" y="4" width="77" height="61" rx="10" fill="#2A3647" />

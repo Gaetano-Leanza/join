@@ -36,6 +36,24 @@ h5 {
   margin-top: -8px;
 }
 
+.delete-subtask-btn {
+  background: none;
+  border: none;
+  color: #d32f2f;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+.save-subtask-btn {
+  background: none;
+  border: none;
+  color: #388e3c;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+
 .content-wrapper {
   display: flex;
   flex-direction: column;
@@ -451,6 +469,22 @@ h5 {
   cursor: pointer;
 }
 
+.subtask-row input[type="text"] {
+  border: none !important;
+  box-shadow: none;
+  background: transparent;
+  padding: 5px 0;
+  padding-left: 10px;
+
+}
+
+.subtask-row input[type="text"]:focus {
+  border: 1.5px solid #007cee !important;
+  background: #f5faff;
+  outline: none;
+
+}
+
 .icon-close {
   width: 20px;
   height: 20px;
@@ -562,6 +596,14 @@ h5 {
   border: none;
   z-index: 10;
   list-style: disc inside;
+}
+
+.subtask-list-wrapper {
+  margin-top: 2px;
+  max-height: 50px;
+  overflow-y: auto;
+  margin-bottom: 12px;
+  border: 1px dotted gray;
 }
 
 .subtask-list li {
