@@ -44,8 +44,6 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   hoveredOption: string = '';
   subtaskText: string = '';
   subtasks: Subtask[] = [];
-  defaultSubtasks: string[] = ['Contact Form', 'Write Legal Imprint'];
-  currentIndex: number = 0;
   private readonly avatarColors = [
     '#F44336',
     '#E91E63',
@@ -206,9 +204,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
 
   toggleSubtaskIcon() {
     this.isSubtaskOpen = !this.isSubtaskOpen;
-    if (this.isSubtaskOpen && this.currentIndex < this.defaultSubtasks.length) {
-      this.subtaskText = this.defaultSubtasks[this.currentIndex];
-    } else if (!this.isSubtaskOpen) {
+    if (this.isSubtaskOpen) {
       this.subtaskText = '';
     }
   }
@@ -217,21 +213,16 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     if (this.subtaskText.trim()) {
       this.subtasks.push({
         title: this.subtaskText.trim(),
-        done: true,
+        done: false,
       });
-      console.log(
-        'Subtask hinzugefügt:',
-        this.subtaskText.trim(),
-        'done: true'
-      );
-      this.currentIndex++;
-      if (this.currentIndex < this.defaultSubtasks.length) {
-        this.subtaskText = this.defaultSubtasks[this.currentIndex];
-      } else {
-        this.subtaskText = '';
-        this.isSubtaskOpen = false;
-      }
+      console.log('Subtask hinzugefügt:', this.subtaskText.trim());
+      this.subtaskText = '';
+      this.isSubtaskOpen = false;
     }
+  }
+
+  removeSubtask(index: number) {
+    this.subtasks.splice(index, 1);
   }
 
   toggleSubtaskStatus(index: number) {
@@ -317,12 +308,6 @@ export class AddTaskComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // Wenn keine Subtasks hinzugefügt -> default false Subtasks
-    let subtasksToSave =
-      this.subtasks.length > 0
-        ? this.subtasks
-        : this.defaultSubtasks.map((title) => ({ title, done: false }));
-
     const taskData = {
       title: this.title,
       description: this.description,
@@ -331,7 +316,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
       progress: this.progress,
       assignedTo: this.selectedContacts.map((contact) => contact.name),
       category: this.selectedCategory,
-      subtasks: subtasksToSave,
+      subtasks: this.subtasks,
       contacts: this.selectedContacts.map((contact) => contact.name),
       status: 'open',
     };
@@ -364,7 +349,6 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     this.isActive3 = false;
     this.isSubtaskOpen = false;
     this.subtaskText = '';
-    this.currentIndex = 0;
     
     // Fehlerzustände zurücksetzen
     this.showTitleError = false;
