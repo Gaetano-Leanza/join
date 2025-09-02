@@ -16,6 +16,9 @@ import { fadeInOutInfo } from './modal.animations';
 import { Contact } from '../contact-model/contact.model';
 import { ContactService } from '../contact-service/contact.service';
 
+/**
+ * @description Component for adding, editing, and deleting a contact in a modal window.
+ */
 @Component({
   standalone: true,
   selector: 'app-modal',
@@ -25,62 +28,94 @@ import { ContactService } from '../contact-service/contact.service';
     './modal.responsive.scss',
     './modal.responsive2.scss',
   ],
-  animations: [slideInModal,fadeInOutInfo],
+  animations: [slideInModal, fadeInOutInfo],
   imports: [CommonModule, FormsModule],
 })
 export class ModalComponent implements OnChanges, OnInit {
-  /** Service für CRUD-Operationen auf Kontakten */
+  /**
+   * @description Service for contact CRUD operations.
+   */
   private contactService = inject(ContactService);
 
-  /** Kontakt, der bearbeitet werden soll */
+  /**
+   * @description The contact to be edited.
+   */
   @Input() contactToEdit: Contact | null = null;
 
-  /** Steuert die Sichtbarkeit des Modals */
+  /**
+   * @description Controls the visibility of the modal.
+   */
   @Input() visible = false;
 
-  /** Event: Modal wurde geschlossen */
+  /**
+   * @description Event emitted when the modal is closed.
+   */
   @Output() closed = new EventEmitter<void>();
 
-  /** Event: Kontakt wurde gespeichert oder gelöscht */
+  /**
+   * @description Event emitted when a contact is saved or deleted.
+   */
   @Output() contactSaved = new EventEmitter<void>();
 
-  /** Eingabefelder */
+  /**
+   * @description The name input field.
+   */
   name = '';
+  /**
+   * @description The email input field.
+   */
   email = '';
+  /**
+   * @description The phone input field.
+   */
   phone = '';
 
-  /** True, wenn gerade ein Kontakt bearbeitet wird */
+  /**
+   * @description Indicates if the component is in editing mode.
+   */
   isEditing = false;
 
-  /** ID des aktuellen Kontakts */
+  /**
+   * @description The ID of the current contact.
+   */
   currentContactId: string | null = null;
 
-  /** Farben für Avatare */
+  /**
+   * @description Color palette for avatars.
+   */
   private readonly avatarColors = [
     '#F44336', '#E91E63', '#9C27B0', '#3F51B5', '#03A9F4',
     '#009688', '#4CAF50', '#FFC107', '#FF9800', '#795548',
   ];
 
+  /**
+   * @description Controls the visibility of a success/info modal.
+   */
   showSuccessInfo = false;
+  /**
+   * @description The success or error message to display.
+   */
   successMessage = '';
 
   /**
-   * Validiert den Namen mit einem regulären Ausdruck
-   * @param name Name des Kontakts
-   * @returns True, wenn der Name gültig ist
+   * @description Validates the name with a regular expression.
+   * @param name The contact's name.
+   * @returns True if the name is valid.
    */
   isValidName(name: string): boolean {
     return /^[A-Za-zäöüÄÖÜß\s\-']+$/.test(name.trim());
   }
 
-  /** Lifecycle-Hook: Initialisierung */
+  /**
+   * @description Lifecycle hook: Initializes the component.
+   */
   ngOnInit(): void {
     this.loadSelectedContact();
   }
 
   /**
-   * Lifecycle-Hook: reagiert auf Änderungen der Input-Properties
-   * @param changes geänderte Properties
+   * @description Lifecycle hook: Responds to changes in input properties.
+   * @param changes The changed properties.
    */
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['contactToEdit']?.currentValue) {
@@ -94,7 +129,9 @@ export class ModalComponent implements OnChanges, OnInit {
     }
   }
 
-  /** Lädt den aktuell ausgewählten Kontakt aus dem Service */
+  /**
+   * @description Loads the currently selected contact from the service.
+   */
   private loadSelectedContact(): void {
     const contactId = this.contactService.getSelectedContactId();
     if (contactId) {
@@ -106,8 +143,8 @@ export class ModalComponent implements OnChanges, OnInit {
   }
 
   /**
-   * Lädt die Kontaktdaten in die Formularfelder
-   * @param contact Kontaktobjekt
+   * @description Loads the contact data into the form fields.
+   * @param contact The contact object.
    */
   private loadContactData(contact: Contact): void {
     this.name = contact.name || '';
@@ -118,9 +155,9 @@ export class ModalComponent implements OnChanges, OnInit {
   }
 
   /**
-   * Aktualisiert das entsprechende Feld bei Input-Änderungen
-   * @param field Feldname ('name', 'email' oder 'phone')
-   * @param value Wert des Feldes
+   * @description Updates the corresponding field on input changes.
+   * @param field The field name ('name', 'email', or 'phone').
+   * @param value The value of the field.
    */
   onInputChange(
     field: keyof Pick<Contact, 'name' | 'email' | 'phone'>,
@@ -129,12 +166,16 @@ export class ModalComponent implements OnChanges, OnInit {
     this[field] = value;
   }
 
-  /** Handler für Klick auf den Hintergrund, schließt das Modal */
+  /**
+   * @description Handler for clicking the backdrop, closes the modal.
+   */
   handleBackdropClick() {
     this.closed.emit();
   }
 
-  /** Setzt alle Formularfelder zurück */
+  /**
+   * @description Resets all form fields.
+   */
   private resetForm(): void {
     this.name = '';
     this.email = '';
@@ -144,8 +185,8 @@ export class ModalComponent implements OnChanges, OnInit {
   }
 
   /**
-   * Speichert den Kontakt (neu oder bearbeitet)
-   * @param form NgForm der Eingabemaske
+   * @description Saves the contact (new or edited).
+   * @param form The NgForm of the input form.
    */
   async saveContact(form: NgForm): Promise<void> {
     if (form.invalid) {
@@ -186,19 +227,20 @@ export class ModalComponent implements OnChanges, OnInit {
     }
   }
 
-  /** Löscht den aktuellen Kontakt und schließt das Modal */
+  /**
+   * @description Deletes the current contact and closes the modal.
+   */
   async deleteContactAndClose(): Promise<void> {
     if (!this.currentContactId) return;
 
     try {
       this.showSuccessInfo = true;
-                 this.successMessage = 'Contact successfully deleted';
+      this.successMessage = 'Contact successfully deleted';
 
-      // Modal erst nach Timeout schließen, damit Nachricht sichtbar bleibt
+      // Close modal after a timeout so the message remains visible.
       setTimeout(async () => {
         await this.contactService.deleteContact(this.currentContactId!);
-           
-
+        
         this.resetForm();
         this.closed.emit();
         this.contactSaved.emit();
@@ -209,12 +251,18 @@ export class ModalComponent implements OnChanges, OnInit {
     }
   }
 
-  /** Markiert alle Formularfelder als "touched" */
+  /**
+   * @description Marks all form fields as 'touched'.
+   * @param form The NgForm instance.
+   */
   private markFormAsTouched(form: NgForm): void {
     Object.values(form.controls).forEach((control) => control.markAsTouched());
   }
 
-  /** Bereitet die Kontaktdaten für den Service auf */
+  /**
+   * @description Prepares the contact data for the service.
+   * @returns The contact data object.
+   */
   private prepareContactData(): Omit<Contact, 'id'> {
     const trimmedName = this.name.trim();
     
@@ -222,17 +270,17 @@ export class ModalComponent implements OnChanges, OnInit {
       name: trimmedName,
       email: this.email.trim(),
       phone: this.phone.trim(),
-      color: this.getAvatarColor(trimmedName),        // Neue Property hinzugefügt
-      initials: this.getInitials(trimmedName),        // Neue Property hinzugefügt
+      color: this.getAvatarColor(trimmedName),
+      initials: this.getInitials(trimmedName),
       updatedAt: new Date(),
       ...(!this.isEditing && { createdAt: new Date() }),
     };
   }
 
   /**
-   * Berechnet die Initialen des Namens für den Avatar
-   * @param name Name des Kontakts
-   * @returns 1–2 Buchstaben Initialen
+   * @description Calculates the initials of the name for the avatar.
+   * @param name The contact's name.
+   * @returns 1-2 letter initials.
    */
   getInitials(name: string): string {
     return name
@@ -244,9 +292,9 @@ export class ModalComponent implements OnChanges, OnInit {
   }
 
   /**
-   * Berechnet die Avatar-Farbe basierend auf dem ersten Buchstaben des Namens
-   * @param name Name des Kontakts
-   * @returns Hex-Farbcode
+   * @description Calculates the avatar color based on the first letter of the name.
+   * @param name The contact's name.
+   * @returns A hex color code.
    */
   getAvatarColor(name: string): string {
     if (!name?.trim()) return this.avatarColors[0];

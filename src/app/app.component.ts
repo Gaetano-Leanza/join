@@ -5,8 +5,8 @@ import { HeaderComponent } from '../app/shared/header/header.component';
 import { NavbarComponent } from '../app/shared/navbar/navbar.component';
 
 /**
- * Root-Komponente der Anwendung.
- * Lädt Header, Navbar und das Router-Modul.
+ * @description The root component of the application.
+ * It loads the Header, Navbar, and the RouterModule.
  */
 @Component({
   selector: 'app-root',
@@ -21,6 +21,10 @@ import { NavbarComponent } from '../app/shared/navbar/navbar.component';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  /**
+   * @description A placeholder method that is not implemented.
+   * @param title The title to be processed.
+   */
   title(title: any) {
     throw new Error('Method not implemented.');
   }

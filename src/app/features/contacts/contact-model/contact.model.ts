@@ -1,41 +1,47 @@
 // contact.model.ts
 
 /**
- * Repräsentiert einen Kontakt mit grundlegenden Informationen.
+ * @description Represents a contact with basic information.
  */
 export interface Contact {
-color: any;
-initials: any;
   /**
-   * Eindeutige Kennung des Kontakts.
-   * Optional, da sie z.B. erst beim Speichern in einer Datenbank vergeben wird.
+   * @description The avatar color of the contact.
+   */
+  color: any;
+  /**
+   * @description The initials of the contact.
+   */
+  initials: any;
+  /**
+   * @description Unique identifier of the contact.
+   * Optional, as it is usually assigned when saving to a database.
    */
   id?: string;
 
   /**
-   * Name des Kontakts.
+   * @description The name of the contact.
    */
   name: string;
 
   /**
-   * E-Mail-Adresse des Kontakts.
+   * @description The email address of the contact.
    */
   email: string;
 
   /**
-   * Telefonnummer des Kontakts.
+   * @description The phone number of the contact.
    */
   phone: string;
 
   /**
-   * Zeitpunkt der Erstellung des Kontakts.
-   * Optional, wird meist automatisch gesetzt.
+   * @description The creation timestamp of the contact.
+   * Optional, usually set automatically.
    */
   createdAt?: Date;
 
   /**
-   * Zeitpunkt der letzten Aktualisierung des Kontakts.
-   * Optional, wird meist automatisch aktualisiert.
+   * @description The last update timestamp of the contact.
+   * Optional, usually updated automatically.
    */
   updatedAt?: Date;
 }

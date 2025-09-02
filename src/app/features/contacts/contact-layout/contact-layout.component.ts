@@ -9,6 +9,11 @@ import { fadeInOutInfo } from '../modal/modal.animations';
 
 
 
+/**
+ * @description Main layout component for the contacts view.
+ * It manages the display of the contact list, contact details, and various modals and panels,
+ * adapting to different screen sizes.
+ */
 @Component({
   selector: 'app-contact-layout',
   standalone: true,
@@ -18,50 +23,67 @@ import { fadeInOutInfo } from '../modal/modal.animations';
     './contact-layout.component.scss',
     './contact-layout.responsive.scss',
   ],
-  animations: [fadeInOutInfo  ,   trigger('slideIn', [
-      transition(':enter', [
-        style({ transform: 'translateX(100%)', opacity: 0 }),
-        animate(
-          '300ms ease-out',
-          style({ transform: 'translateX(0)', opacity: 1 })
-        ),
-      ]),
-      transition(':leave', [
-        animate(
-          '300ms ease-in',
-          style({ transform: 'translateX(100%)', opacity: 0 })
-        ),
-      ]),
+  animations: [fadeInOutInfo, trigger('slideIn', [
+    transition(':enter', [
+      style({ transform: 'translateX(100%)', opacity: 0 }),
+      animate(
+        '300ms ease-out',
+        style({ transform: 'translateX(0)', opacity: 1 })
+      ),
     ]),
+    transition(':leave', [
+      animate(
+        '300ms ease-in',
+        style({ transform: 'translateX(100%)', opacity: 0 })
+      ),
+    ]),
+  ]),
   ],
 })
 export class ContactLayoutComponent implements OnInit {
+  /**
+   * @description Controls the visibility of a success/info modal.
+   */
   showSuccessInfo = false;
-  /** Der aktuell ausgewählte Kontakt. */
+  /**
+   * @description The currently selected contact.
+   */
   selectedContact: Contact | null = null;
 
-  /** Sichtbarkeit des Modals. */
+  /**
+   * @description Controls the visibility of the main modal.
+   */
   isModalVisible = false;
 
-  /** True, wenn das Display als klein (z.B. mobile) gilt. */
+  /**
+   * @description Indicates if the current screen is small (e.g., mobile).
+   */
   isSmallScreen = false;
 
-  /** True, wenn das Side Panel aktiv ist. */
+  /**
+   * @description Controls the visibility of the side panel.
+   */
   sidePanelActive = false;
 
-  /** True, wenn das Burger-Menü geöffnet ist. */
+  /**
+   * @description Controls the open/closed state of the burger menu.
+   */
   isMenuOpen = false;
 
-  /** Referenz auf den Burger-Button im Template. */
+  /**
+   * @description Reference to the burger button element in the template.
+   */
   @ViewChild('burgerButton', { static: false }) burgerButton!: ElementRef;
 
-  /** Referenz auf das Burger-Menü im Template. */
+  /**
+   * @description Reference to the burger menu element in the template.
+   */
   @ViewChild('burgerMenu', { static: false }) burgerMenu!: ElementRef;
 
   /**
-   * @param contactService Service zur Verwaltung von Kontakten
-   * @param platformId Plattformkennung (Browser oder Server).
-   * Wird benötigt, da SSR kein `window`-Objekt kennt.
+   * @description Creates an instance of ContactLayoutComponent.
+   * @param contactService The service for managing contacts.
+   * @param platformId The platform identifier, used to check if the app is running in a browser.
    */
   constructor(
     private contactService: ContactService,
@@ -69,9 +91,8 @@ export class ContactLayoutComponent implements OnInit {
   ) {}
 
   /**
-   * Lifecycle-Hook: Initialisierung des Components.
-   * Prüft beim Start die Bildschirmgröße nur,
-   * wenn die App tatsächlich im Browser läuft.
+   * @description Lifecycle hook that is called after Angular has initialized all data-bound properties.
+   * Checks the screen size on component initialization.
    */
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -80,8 +101,8 @@ export class ContactLayoutComponent implements OnInit {
   }
 
   /**
-   * HostListener: Reagiert auf Fenster-Resize Events.
-   * Funktioniert nur im Browser, nicht bei SSR.
+   * @description Host listener for the window resize event.
+   * Dynamically checks the screen size on window resize.
    */
   @HostListener('window:resize')
   onResize() {
@@ -91,9 +112,8 @@ export class ContactLayoutComponent implements OnInit {
   }
 
   /**
-   * Prüft die aktuelle Bildschirmgröße und passt
-   * die Side-Panel-Logik entsprechend an.
-   * Wird abgesichert, damit kein Fehler in SSR auftritt.
+   * @description Checks the current screen width and updates the `isSmallScreen` property.
+   * If not on a small screen, the side panel is deactivated.
    */
   private checkScreenSize() {
     if (isPlatformBrowser(this.platformId)) {
@@ -105,8 +125,8 @@ export class ContactLayoutComponent implements OnInit {
   }
 
   /**
-   * Setzt einen Kontakt als ausgewählt.
-   * @param contact Kontakt, der ausgewählt werden soll
+   * @description Selects a contact and updates the UI accordingly.
+   * @param contact The contact to be selected.
    */
   selectContact(contact: Contact): void {
     this.selectedContact = contact;
@@ -116,7 +136,9 @@ export class ContactLayoutComponent implements OnInit {
     }
   }
 
-  /** Schließt das Side Panel und entfernt die Auswahl. */
+  /**
+   * @description Closes the side panel and deselects the contact.
+   */
   closeSidePanel() {
     this.selectedContact = null;
     this.contactService.setSelectedContact(null);
@@ -124,20 +146,24 @@ export class ContactLayoutComponent implements OnInit {
     this.isMenuOpen = false;
   }
 
-  /** Wechselt den Status des Burger-Menüs. */
+  /**
+   * @description Toggles the visibility of the burger menu.
+   */
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  /** Schließt das Burger-Menü. */
+  /**
+   * @description Closes the burger menu.
+   */
   closeMenu() {
     this.isMenuOpen = false;
   }
 
   /**
-   * HostListener: Schließt das Burger-Menü,
-   * wenn außerhalb geklickt wurde.
-   * @param event MouseEvent des Klicks
+   * @description Host listener for document clicks.
+   * Closes the burger menu if the click target is outside the menu and the burger button.
+   * @param event The mouse click event.
    */
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
@@ -150,9 +176,9 @@ export class ContactLayoutComponent implements OnInit {
   }
 
   /**
-   * Berechnet die Initialen eines Namens.
-   * @param name Name des Kontakts
-   * @returns Initialen in Großbuchstaben
+   * @description Calculates the initials from a contact's name.
+   * @param name The name of the contact.
+   * @returns The capitalized initials.
    */
   getInitials(name: string): string {
     return name
@@ -163,9 +189,9 @@ export class ContactLayoutComponent implements OnInit {
   }
 
   /**
-   * Berechnet eine Avatar-Farbe basierend auf dem Namen.
-   * @param name Name des Kontakts
-   * @returns Hex-Farbcode
+   * @description Calculates an avatar color based on the contact's name.
+   * @param name The name of the contact.
+   * @returns A hex color code.
    */
   getAvatarColor(name: string): string {
     const colors = [
@@ -177,12 +203,16 @@ export class ContactLayoutComponent implements OnInit {
     return colors[firstCharCode % colors.length];
   }
 
-  /** Öffnet das Modal. */
+  /**
+   * @description Opens the modal.
+   */
   openModal() {
     this.isModalVisible = true;
   }
 
-  /** Schließt das Modal und entfernt die Auswahl. */
+  /**
+   * @description Closes the modal and deselects the contact.
+   */
   closeModal() {
     this.isModalVisible = false;
     this.selectedContact = null;
@@ -191,25 +221,23 @@ export class ContactLayoutComponent implements OnInit {
   }
 
   /**
-   * Löscht den aktuell ausgewählten Kontakt.
-   * @returns Promise<void> nach erfolgreichem oder fehlgeschlagenem Löschvorgang
+   * @description Deletes the currently selected contact.
+   * @returns A Promise that resolves when the deletion is complete.
    */
   async onDeleteContact(): Promise<void> {
     if (!this.selectedContact?.id) return;
 
     try {
-  setTimeout(() => this.showSuccessInfo = false, 2000);
+      setTimeout(() => this.showSuccessInfo = false, 2000);
       await this.contactService.deleteContact(this.selectedContact.id);
       this.selectedContact = null;
       this.sidePanelActive = false;
       this.contactService.setSelectedContact(null);
       this.isModalVisible = false;
       this.showSuccessInfo = true;
-    setTimeout(() => this.showSuccessInfo = false, 2000);
-
+      setTimeout(() => this.showSuccessInfo = false, 2000);
     } catch (error) {
       console.error('Error deleting contact:', error);
-      // Optional: Anzeige einer Fehlermeldung
     }
   }
 }

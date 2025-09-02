@@ -6,10 +6,10 @@ import { ContactService } from '../contact-service/contact.service';
 import { Contact } from '../contact-model/contact.model';
 
 /**
- * Komponente zur Anzeige der Detailinformationen eines Kontakts.
+ * @description Component for displaying the detailed information of a contact.
  *
- * Die Komponente liest die Kontakt-ID aus der URL aus und lädt
- * den zugehörigen Kontakt über den ContactService.
+ * This component reads the contact ID from the URL and loads the
+ * corresponding contact using the ContactService.
  */
 @Component({
   selector: 'app-contact-detail',
@@ -19,25 +19,24 @@ import { Contact } from '../contact-model/contact.model';
     <ng-container *ngIf="contact$ | async as contact; else noContact">
       <h2>{{ contact.name }}</h2>
       <p><strong>Email:</strong> {{ contact.email }}</p>
-      <p><strong>Telefon:</strong> {{ contact.phone }}</p>
+      <p><strong>Phone:</strong> {{ contact.phone }}</p>
     </ng-container>
     <ng-template #noContact>
-      <p>Kontakt nicht gefunden.</p>
+      <p>Contact not found.</p>
     </ng-template>
   `,
 })
 export class ContactDetailComponent {
   /**
-   * Observable, das den aktuell geladenen Kontakt liefert.
-   * Gibt `undefined` zurück, falls kein Kontakt gefunden wurde.
+   * @description Observable that provides the currently loaded contact.
+   * Returns `undefined` if no contact is found.
    */
   contact$: Observable<Contact | undefined> | undefined;
 
   /**
-   * Erstellt eine neue Instanz der ContactDetailComponent.
-   *
-   * @param route - Zum Auslesen der URL-Parameter (insbesondere der Kontakt-ID).
-   * @param contactService - Service zur Kontaktverwaltung und -abfrage.
+   * @description Creates a new instance of the ContactDetailComponent.
+   * @param route - For reading URL parameters (specifically the contact ID).
+   * @param contactService - Service for contact management and retrieval.
    */
   constructor(
     private route: ActivatedRoute,

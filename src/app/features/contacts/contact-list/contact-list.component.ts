@@ -19,6 +19,9 @@ import { Modal2Component } from '../modal2/modal2.component';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Subject, takeUntil } from 'rxjs';
 
+/**
+ * @description Component for displaying a list of contacts, handling contact selection, and managing modals.
+ */
 @Component({
   selector: 'app-contact-list',
   standalone: true,
@@ -28,57 +31,93 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class ContactListComponent implements OnInit, OnDestroy {
   /**
-   * Event, das ausgelöst wird, wenn ein Kontakt ausgewählt wird.
+   * @description Event emitted when a contact is selected.
    */
   @Output() contactSelected = new EventEmitter<Contact>();
 
-  /** Service zur Verwaltung von Kontakten. */
+  /**
+   * @description Service for managing contacts.
+   */
   private contactService = inject(ContactService);
 
-  /** Reference für automatische Zerstörung von Subscriptions. */
+  /**
+   * @description Reference for automatically destroying subscriptions.
+   */
   private destroyRef = inject(DestroyRef);
 
-  /** Beobachter für responsive Layouts. */
+  /**
+   * @description Observer for responsive layouts.
+   */
   private breakpointObserver = inject(BreakpointObserver);
 
-  /** Plattform-ID, um zwischen Server und Browser zu unterscheiden. */
+  /**
+   * @description Platform ID to distinguish between server and browser context.
+   */
   private platformId = inject(PLATFORM_ID);
 
-  /** Subject zum Beenden von Observables bei Zerstörung. */
+  /**
+   * @description Subject to complete observables on component destruction.
+   */
   private destroyed$ = new Subject<void>();
 
-  /** Liste aller Kontakte. */
+  /**
+   * @description List of all contacts.
+   */
   contacts: Contact[] = [];
 
-  /** Kontakte gruppiert nach Anfangsbuchstaben. */
+  /**
+   * @description Contacts grouped by the first letter of their name.
+   */
   groupedContacts: { [letter: string]: Contact[] } = {};
 
-  /** Ladezustand der Kontaktliste. */
+  /**
+   * @description Loading state of the contact list.
+   */
   loading = true;
 
-  /** Fehlernachricht beim Laden der Kontakte. */
+  /**
+   * @description Error message for contact loading.
+   */
   error: string | null = null;
 
-  /** Status des Detail-Sliders (sichtbar oder nicht). */
+  /**
+   * @description Status of the detail slider (visible or not).
+   */
   isActive = false;
 
-  /** Aktuell ausgewählter Kontakt. */
+  /**
+   * @description The currently selected contact.
+   */
   selectedContact: Contact | null = null;
 
-  /** Kontakt, der bearbeitet werden soll. */
+  /**
+   * @description The contact to be edited.
+   */
   contactToEdit: Contact | null = null;
 
-  /** Sichtbarkeit des zweiten Modals. */
+  /**
+   * @description Visibility of the second modal.
+   */
   modal2Visible = false;
 
-  /** True, wenn auf mobilem Gerät. */
+  /**
+   * @description Indicates if the device is mobile.
+   */
   isMobile = false;
 
+  /**
+   * @description Determines if the add button should be shown.
+   */
   @Input() showAddButton: boolean = true;
 
+  /**
+   * @description Determines if the mobile add button should be shown.
+   */
   @Input() showAddButtonMobile = true;
 
-  /** Farbpalette für Avatare. */
+  /**
+   * @description Color palette for avatars.
+   */
   private readonly avatarColors = [
     '#F44336',
     '#E91E63',
@@ -92,7 +131,9 @@ export class ContactListComponent implements OnInit, OnDestroy {
     '#795548',
   ];
 
-  /** Initialisierung des Components. */
+  /**
+   * @description Lifecycle hook for component initialization.
+   */
   ngOnInit(): void {
     this.setupResponsiveBehavior();
 
@@ -103,13 +144,17 @@ export class ContactListComponent implements OnInit, OnDestroy {
     this.loadContacts();
   }
 
-  /** Aufräumarbeiten beim Zerstören des Components. */
+  /**
+   * @description Lifecycle hook for component destruction.
+   */
   ngOnDestroy(): void {
     this.destroyed$.next();
     this.destroyed$.complete();
   }
 
-  /** Überwacht Breakpoints und setzt `isMobile`. */
+  /**
+   * @description Sets up responsive behavior by observing breakpoints.
+   */
   private setupResponsiveBehavior(): void {
     this.breakpointObserver
       .observe([Breakpoints.Handset])
@@ -119,7 +164,9 @@ export class ContactListComponent implements OnInit, OnDestroy {
       });
   }
 
-  /** Lädt Kontakte über den Service. */
+  /**
+   * @description Loads contacts using the contact service.
+   */
   loadContacts(): void {
     this.contactService
       .getContacts()
@@ -131,23 +178,25 @@ export class ContactListComponent implements OnInit, OnDestroy {
           this.loading = false;
         },
         error: (error) => {
-          this.error = 'Fehler beim Laden der Kontakte';
+          this.error = 'Error loading contacts';
           this.loading = false;
           console.error('Error loading contacts:', error);
         },
       });
   }
 
-  /** Behandlung, wenn Component im Server-Kontext läuft. */
+  /**
+   * @description Handles component behavior when running in a server context.
+   */
   private handleServerContext(): void {
     this.loading = false;
-    this.error = 'Kontaktliste benötigt Browser-Kontext';
+    this.error = 'Contact list requires a browser context';
   }
 
   /**
-   * Berechnet eine Avatar-Farbe basierend auf dem Namen.
-   * @param name Name des Kontakts
-   * @returns Hex-Farbcode
+   * @description Calculates an avatar color based on the contact name.
+   * @param name The contact's name.
+   * @returns A hex color code.
    */
   getAvatarColor(name: string): string {
     if (!name) return this.avatarColors[0];
@@ -157,9 +206,9 @@ export class ContactListComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Extrahiert Initialen aus dem Namen.
-   * @param name Name des Kontakts
-   * @returns Initialen (z.B. "AB")
+   * @description Extracts initials from a name.
+   * @param name The contact's name.
+   * @returns The initials (e.g., "AB").
    */
   getInitials(name: string): string {
     return name
@@ -170,7 +219,9 @@ export class ContactListComponent implements OnInit, OnDestroy {
       .join('');
   }
 
-  /** Gruppiert Kontakte nach Anfangsbuchstaben. */
+  /**
+   * @description Groups contacts by the first letter of their name.
+   */
   private groupContacts(): void {
     this.groupedContacts = this.contacts.reduce((acc, contact) => {
       const letter = contact.name.charAt(0).toUpperCase();
@@ -181,8 +232,8 @@ export class ContactListComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Reagiert auf Klick auf einen Kontakt.
-   * @param contact Ausgewählter Kontakt
+   * @description Handles a contact click event.
+   * @param contact The selected contact.
    */
   onContactClick(contact: Contact): void {
     this.contactService.setSelectedContact(contact.id!);
@@ -194,13 +245,18 @@ export class ContactListComponent implements OnInit, OnDestroy {
     }
   }
 
-  /** Schließt den Detail-Slider. */
+  /**
+   * @description Closes the detail slider.
+   */
   closeDetailSlider(): void {
     this.contactService.setSelectedContact(null);
     this.selectedContact = null;
   }
 
-  /** Gibt die Einträge der gruppierten Kontakte sortiert zurück. */
+  /**
+   * @description Gets sorted entries of the grouped contacts.
+   * @returns An array of [letter, contacts] pairs, sorted alphabetically by letter.
+   */
   get groupedContactsEntries(): [string, Contact[]][] {
     return Object.entries(this.groupedContacts).sort(([a], [b]) =>
       a.localeCompare(b)
@@ -208,31 +264,39 @@ export class ContactListComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * TrackBy-Funktion für ngFor.
-   * @param _ Index (nicht verwendet)
-   * @param contact Kontakt
-   * @returns ID des Kontakts
+   * @description TrackBy function for ngFor.
+   * @param _ The index (not used).
+   * @param contact The contact.
+   * @returns The contact's ID.
    */
   trackContact(_: number, contact: Contact): string {
     return contact.id!;
   }
 
-  /** Wechselt den Overlay-Status. */
+  /**
+   * @description Toggles the overlay status.
+   */
   toggleOverlay(): void {
     this.isActive = !this.isActive;
   }
 
-  /** Öffnet das zweite Modal. */
+  /**
+   * @description Opens the second modal.
+   */
   openModal2(): void {
     this.modal2Visible = true;
   }
 
-  /** Schließt das zweite Modal. */
+  /**
+   * @description Closes the second modal.
+   */
   closeModal2(): void {
     this.modal2Visible = false;
   }
 
-  /** Lädt die Kontakte neu, nachdem ein Kontakt gespeichert wurde. */
+  /**
+   * @description Reloads contacts after a contact has been saved.
+   */
   onContactSaved(): void {
     this.loadContacts();
   }

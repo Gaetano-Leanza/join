@@ -17,54 +17,59 @@ import {
 import { Observable, of } from 'rxjs';
 
 /**
- * Service für Firestore-Operationen mit Angular und Firebase.
- * Bietet CRUD-Funktionen für Collections und Dokumente.
- * SSR-sicher durch optionale Firestore-Injection.
+ * @description Service for Firestore operations with Angular and Firebase.
+ * Provides CRUD functions for collections and documents.
+ * SSR-safe due to optional Firestore injection.
  */
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
-  /** Firestore-Instanz für Datenbankoperationen - OPTIONAL für SSR */
+  /**
+   * @description Firestore instance for database operations - OPTIONAL for SSR.
+   */
   private firestore: Firestore | null = null;
 
-  /** Injector für `runInInjectionContext` zur sicheren Ausführung */
+  /**
+   * @description Injector for `runInInjectionContext` for safe execution.
+   */
   private injector = inject(Injector);
 
   constructor(@Optional() firestore: Firestore) {
     this.firestore = firestore;
-    console.log('FirebaseService initialisiert:', this.firestore ? 'mit Firestore' : 'ohne Firestore (SSR)');
+    console.log('FirebaseService initialized:', this.firestore ? 'with Firestore' : 'without Firestore (SSR)');
   }
 
   /**
-   * Überprüft ob Firestore verfügbar ist
+   * @description Checks if Firestore is available.
+   * @returns True if Firestore is available.
    */
   private isFirestoreAvailable(): boolean {
     return !!this.firestore;
   }
 
   /**
-   * Führt eine Operation innerhalb des Angular-Injektionskontextes aus.
-   * @param operation Die auszuführende Funktion
-   * @returns Das Ergebnis der Operation
+   * @description Executes an operation within the Angular injection context.
+   * @param operation The function to be executed.
+   * @returns The result of the operation.
    */
   private firestoreOperation<T>(operation: () => T): T | null {
     if (!this.isFirestoreAvailable()) {
-      console.warn('Firestore nicht verfügbar (SSR) - Operation übersprungen');
+      console.warn('Firestore not available (SSR) - operation skipped');
       return null;
     }
     return runInInjectionContext(this.injector, operation);
   }
 
   /**
-   * Holt alle Dokumente einer Collection, sortiert nach dem Feld 'name'.
-   * @template T Typ der Dokumentdaten
-   * @param path Pfad zur Collection
-   * @returns Observable einer Liste von Dokumenten mit `id`
+   * @description Fetches all documents from a collection, sorted by the 'name' field.
+   * @template T Type of the document data.
+   * @param path The path to the collection.
+   * @returns An Observable of a list of documents with `id`.
    */
   getCollectionData<T extends DocumentData>(path: string): Observable<(T & { id: string })[]> {
     if (!this.isFirestoreAvailable()) {
-      console.warn('getCollectionData übersprungen (SSR) - leere Liste zurückgeben');
+      console.warn('getCollectionData skipped (SSR) - returning empty list');
       return of([]);
     }
 
@@ -78,18 +83,18 @@ export class FirebaseService {
   }
 
   /**
-   * Holt ein einzelnes Dokument anhand seiner ID.
-   * @template T Typ der Dokumentdaten
-   * @param collectionPath Pfad zur Collection
-   * @param id Dokument-ID
-   * @returns Observable des Dokuments oder `undefined`, falls nicht gefunden
+   * @description Fetches a single document by its ID.
+   * @template T Type of the document data.
+   * @param collectionPath The path to the collection.
+   * @param id The document ID.
+   * @returns An Observable of the document or `undefined` if not found.
    */
   getDocumentById<T extends DocumentData>(
     collectionPath: string,
     id: string
   ): Observable<(T & { id: string }) | undefined> {
     if (!this.isFirestoreAvailable()) {
-      console.warn('getDocumentById übersprungen (SSR) - undefined zurückgeben');
+      console.warn('getDocumentById skipped (SSR) - returning undefined');
       return of(undefined);
     }
 
@@ -102,15 +107,15 @@ export class FirebaseService {
   }
 
   /**
-   * Fügt ein neues Dokument in eine Collection ein.
-   * @template T Typ der Dokumentdaten
-   * @param collectionPath Pfad zur Collection
-   * @param data Die zu speichernden Daten
-   * @returns Die ID des erstellten Dokuments
+   * @description Adds a new document to a collection.
+   * @template T Type of the document data.
+   * @param collectionPath The path to the collection.
+   * @param data The data to be saved.
+   * @returns The ID of the created document.
    */
   async addDocument<T extends DocumentData>(collectionPath: string, data: T): Promise<string> {
     if (!this.isFirestoreAvailable()) {
-      console.warn('addDocument übersprungen (SSR) - leere ID zurückgeben');
+      console.warn('addDocument skipped (SSR) - returning empty ID');
       return '';
     }
 
@@ -124,11 +129,11 @@ export class FirebaseService {
   }
 
   /**
-   * Aktualisiert ein bestehendes Dokument.
-   * @template T Typ der Dokumentdaten
-   * @param collectionPath Pfad zur Collection
-   * @param id Dokument-ID
-   * @param updates Die zu aktualisierenden Felder
+   * @description Updates an existing document.
+   * @template T Type of the document data.
+   * @param collectionPath The path to the collection.
+   * @param id The document ID.
+   * @param updates The fields to be updated.
    */
   async updateDocument<T extends DocumentData>(
     collectionPath: string,
@@ -136,7 +141,7 @@ export class FirebaseService {
     updates: UpdateData<T>
   ): Promise<void> {
     if (!this.isFirestoreAvailable()) {
-      console.warn('updateDocument übersprungen (SSR)');
+      console.warn('updateDocument skipped (SSR)');
       return;
     }
 
@@ -151,13 +156,13 @@ export class FirebaseService {
   }
 
   /**
-   * Löscht ein Dokument anhand seiner ID.
-   * @param collectionPath Pfad zur Collection
-   * @param id Dokument-ID
+   * @description Deletes a document by its ID.
+   * @param collectionPath The path to the collection.
+   * @param id The document ID.
    */
   async deleteDocument(collectionPath: string, id: string): Promise<void> {
     if (!this.isFirestoreAvailable()) {
-      console.warn('deleteDocument übersprungen (SSR)');
+      console.warn('deleteDocument skipped (SSR)');
       return;
     }
 

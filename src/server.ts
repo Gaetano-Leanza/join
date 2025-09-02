@@ -21,7 +21,7 @@ const angularApp = new AngularNodeAppEngine();
  * Example:
  * ```ts
  * app.get('/api/**', (req, res) => {
- *   // Handle API request
+ * // Handle API request
  * });
  * ```
  */

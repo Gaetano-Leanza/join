@@ -10,10 +10,13 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { slideInModal } from './modal2.animations';
-import { fadeInOutInfo  } from './modal2.animations';
+import { fadeInOutInfo } from './modal2.animations';
 
 import { ContactService } from '../contact-service/contact.service';
 
+/**
+ * @description Component for adding a new contact in a modal window.
+ */
 @Component({
   standalone: true,
   selector: 'app-modal2',
@@ -23,17 +26,23 @@ import { ContactService } from '../contact-service/contact.service';
     './modal2.responsive.scss',
     './modal2.responsive2.scss',
   ],
-  animations: [slideInModal,fadeInOutInfo ],
+  animations: [slideInModal, fadeInOutInfo],
   imports: [CommonModule, FormsModule],
 })
 export class Modal2Component implements OnChanges {
-  /** Service für CRUD-Operationen auf Kontakten */
+  /**
+   * @description Service for contact CRUD operations.
+   */
   private contactService = inject(ContactService);
 
-  /** Steuert die Sichtbarkeit des Modals */
+  /**
+   * @description Controls the visibility of the modal.
+   */
   @Input() visible = false;
 
-  /** Optionaler Kontakt, der bearbeitet werden soll */
+  /**
+   * @description Optional contact to be edited.
+   */
   @Input() contactToEdit: {
     name: string;
     email: string;
@@ -41,19 +50,36 @@ export class Modal2Component implements OnChanges {
     id?: string;
   } | null = null;
 
-  /** Event: Modal wurde geschlossen */
+  /**
+   * @description Event emitted when the modal is closed.
+   */
   @Output() closed = new EventEmitter<void>();
 
-  /** Event: Kontakt wurde gespeichert */
+  /**
+   * @description Event emitted when a contact is saved.
+   */
   @Output() contactSaved = new EventEmitter<void>();
 
-  /** Eingabefelder */
+  /**
+   * @description The name input field.
+   */
   name = '';
+  /**
+   * @description The email input field.
+   */
   email = '';
+  /**
+   * @description The phone input field.
+   */
   phone = '';
+  /**
+   * @description The color of the contact's avatar.
+   */
   avatarColor: string | null = null;
 
-  /** Farben für Avatare */
+  /**
+   * @description Color palette for avatars.
+   */
   private readonly avatarColors = [
     '#F44336',
     '#E91E63',
@@ -66,11 +92,13 @@ export class Modal2Component implements OnChanges {
     '#FF9800',
     '#795548',
   ];
-  /** True, wenn gerade ein Kontakt bearbeitet wird */
+  /**
+   * @description Controls the visibility of the success message.
+   */
   showSuccessInfo = false;
   /**
-   * Lifecycle-Hook: reagiert auf Änderungen der Input-Properties
-   * @param changes geänderte Properties
+   * @description Lifecycle hook: Responds to changes in input properties.
+   * @param changes The changed properties.
    */
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['contactToEdit']?.currentValue) {
@@ -83,8 +111,8 @@ export class Modal2Component implements OnChanges {
   }
 
   /**
-   * Lädt die Kontaktdaten in die Formularfelder
-   * @param contact Kontaktobjekt
+   * @description Loads the contact data into the form fields.
+   * @param contact The contact object.
    */
   private loadContactData(
     contact: NonNullable<typeof this.contactToEdit>
@@ -95,12 +123,16 @@ export class Modal2Component implements OnChanges {
     this.avatarColor = contact.name ? this.getAvatarColor(contact.name) : null;
   }
 
-  /** Handler für Klick auf den Hintergrund, schließt das Modal */
+  /**
+   * @description Handler for clicking the backdrop, closes the modal.
+   */
   handleBackdropClick(): void {
     this.closed.emit();
   }
 
-  /** Setzt alle Formularfelder zurück */
+  /**
+   * @description Resets all form fields.
+   */
   resetForm(): void {
     this.name = '';
     this.email = '';
@@ -109,8 +141,8 @@ export class Modal2Component implements OnChanges {
   }
 
   /**
-   * Speichert den Kontakt (neu oder bearbeitet)
-   * @param form NgForm der Eingabemaske
+   * @description Saves the contact (new or edited).
+   * @param form The NgForm of the input form.
    */
   async saveContact(form: NgForm): Promise<void> {
     if (form.invalid) {
@@ -119,7 +151,7 @@ export class Modal2Component implements OnChanges {
     }
 
     try {
-      // Gemeinsame Felder für neuen oder bestehenden Kontakt
+      // Common fields for new or existing contact
       const contactData = {
         name: this.name.trim(),
         email: this.email.trim(),
@@ -130,13 +162,13 @@ export class Modal2Component implements OnChanges {
       };
 
       if (this.contactToEdit?.id) {
-        // Update: vorhandenen Kontakt ändern
+        // Update: modify existing contact
         await this.contactService.updateContact(
           this.contactToEdit.id,
           contactData
         );
       } else {
-        // Neu: createdAt hinzufügen
+        // New: add createdAt
         await this.contactService.addContact({
           ...contactData,
           createdAt: new Date(),
@@ -149,31 +181,33 @@ export class Modal2Component implements OnChanges {
         this.closed.emit();
         this.contactSaved.emit();
         this.showSuccessInfo = false;
-
       }, 2000);
     } catch (error) {
       console.error('Error saving contact:', error);
     }
   }
 
-  /** Markiert alle Formularfelder als "touched" */
+  /**
+   * @description Marks all form fields as 'touched'.
+   * @param form The NgForm instance.
+   */
   private markFormAsTouched(form: NgForm): void {
     Object.values(form.controls).forEach((control) => control.markAsTouched());
   }
 
   /**
-   * Validiert den Namen mit einem regulären Ausdruck
-   * @param name Name des Kontakts
-   * @returns True, wenn der Name gültig ist
+   * @description Validates the name with a regular expression.
+   * @param name The contact's name.
+   * @returns True if the name is valid.
    */
   isValidName(name: string): boolean {
     return /^[A-Za-z\s\-]+$/.test(name.trim());
   }
 
   /**
-   * Berechnet die Initialen des Namens für den Avatar
-   * @param name Name des Kontakts
-   * @returns 1–2 Buchstaben Initialen
+   * @description Calculates the initials of the name for the avatar.
+   * @param name The contact's name.
+   * @returns 1-2 letter initials.
    */
   getInitials(name: string): string {
     return name
@@ -185,9 +219,9 @@ export class Modal2Component implements OnChanges {
   }
 
   /**
-   * Berechnet die Avatar-Farbe basierend auf dem ersten Buchstaben des Namens
-   * @param name Name des Kontakts
-   * @returns Hex-Farbcode
+   * @description Calculates the avatar color based on the first letter of the name.
+   * @param name The contact's name.
+   * @returns A hex color code.
    */
   getAvatarColor(name: string): string {
     if (!name?.trim()) return this.avatarColors[0];
@@ -198,7 +232,7 @@ export class Modal2Component implements OnChanges {
   }
 
   /**
-   * Aktualisiert die Avatar-Farbe, wenn sich der Name ändert
+   * @description Updates the avatar color when the name changes.
    */
   onNameChange(): void {
     if (this.name.length === 1 && !this.avatarColor) {

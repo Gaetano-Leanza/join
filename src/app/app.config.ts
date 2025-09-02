@@ -3,23 +3,22 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 
 /**
- * Globale Konfiguration der Angular-Anwendung.
- * 
- * Enthält alle Provider, die beim Bootstrap der Anwendung bereitgestellt werden.
+ * Global configuration for the Angular application.
+ *
+ * Contains all the providers that are made available during the application's bootstrap.
  */
 export const appConfig: ApplicationConfig = {
   providers: [
     /**
-     * Aktiviert die Zonen-basierte Change Detection.
-     * 
-     * @param eventCoalescing true: Mehrere DOM-Events werden zu einem Change Detection Zyklus zusammengefasst,
-     *                         um Performance zu verbessern.
+     * Enables Zone-based change detection.
+     *
+     * @param eventCoalescing true: Multiple DOM events are coalesced into a single change detection cycle to improve performance.
      */
     provideZoneChangeDetection({ eventCoalescing: true }),
 
     /**
-     * Router-Provider mit den definierten App-Routen.
-     * Stellt die Angular Router-Funktionalität zur Verfügung.
+     * Router provider with the defined application routes.
+     * Provides the Angular Router functionality.
      */
     provideRouter(routes),
   ],

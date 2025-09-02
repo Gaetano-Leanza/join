@@ -4,9 +4,9 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 /**
- * Info-Komponente zeigt eine Informationsseite an.
- * 
- * Bietet eine Zurück-Funktion zur Navigation zur vorherigen Seite.
+ * @description The Info component displays an informational page.
+ *
+ * It provides a "go back" function for navigating to the previous page.
  */
 @Component({
   selector: 'app-info',
@@ -18,12 +18,13 @@ import { RouterLink } from '@angular/router';
 export class InfoComponent {
 
   /**
-   * @param location Angular Location Service zur Navigation im Verlauf.
+   * @description Creates an instance of the InfoComponent.
+   * @param location The Angular Location service for navigation history.
    */
   constructor(private location: Location) {}
 
   /**
-   * Navigiert zur vorherigen Seite im Browser-Verlauf.
+   * @description Navigates to the previous page in the browser history.
    */
   goBack(): void {
     this.location.back();

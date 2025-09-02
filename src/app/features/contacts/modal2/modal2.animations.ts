@@ -1,11 +1,11 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 
 /**
- * Animations-Trigger für ein Modal, das von rechts hereinschiebt und herausgleitet.
- * 
- * - Beim Einblenden (:enter) wird das Modal von rechts mit einer Translation von 100% und
- *   einer Opazität von 0 auf die Position 0 und Opazität 1 animiert.
- * - Beim Ausblenden (:leave) fährt das Modal zurück nach rechts und wird dabei ausgeblendet.
+ * @description Animation trigger for a modal that slides in and out from the right.
+ *
+ * - On entering (:enter), the modal is animated from a position of 100% translation
+ * and 0 opacity to position 0 and 1 opacity.
+ * - On leaving (:leave), the modal slides back to the right and fades out.
  */
 export const slideInModal = trigger('slideInModal', [
   transition(':enter', [
@@ -18,7 +18,9 @@ export const slideInModal = trigger('slideInModal', [
 ]);
 
 /**
- * Animation für das kleine Info-Modal unten (Kontakt erfolgreich hinzugefügt)
+ * @description Animation for the small info modal at the bottom (e.g., "Contact successfully added").
+ * - On entering (:enter), the modal fades in from opacity 0 and slides up.
+ * - On leaving (:leave), the modal fades out and slides down.
  */
 export const fadeInOutInfo = trigger('fadeInOutInfo', [
   transition(':enter', [

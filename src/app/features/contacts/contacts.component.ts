@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core'; 
+import { Component, inject, OnInit } from '@angular/core';
 import { trigger, style, transition, animate } from '@angular/animations';
 import { Contact } from './contact-model/contact.model';
 import { ContactService } from './contact-service/contact.service';
@@ -6,14 +6,14 @@ import { Observable, catchError, of, startWith } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 /**
- * Komponente zur Anzeige und Verwaltung einer Kontaktliste.
- * 
- * Unterstützt Animationen, Auswahl eines Kontakts und Bearbeitung via Modal.
+ * @description Component for displaying and managing a contact list.
+ *
+ * It supports animations, contact selection, and editing via a modal.
  */
 @Component({
   selector: 'app-contacts',
   standalone: true,
-  imports: [CommonModule], // CommonModule für *ngIf, *ngFor etc.
+  imports: [CommonModule],
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.scss'],
   animations: [
@@ -35,13 +35,30 @@ import { CommonModule } from '@angular/common';
   ],
 })
 export class ContactsComponent implements OnInit {
+  /**
+   * @description The contact service for data operations.
+   */
   private contactService = inject(ContactService);
 
-  // Zustandsmanagement mit klareren Typen
+  /**
+   * @description Observable for managing contact state.
+   */
   contacts$!: Observable<Contact[]>;
+  /**
+   * @description The currently selected contact.
+   */
   selectedContact: Contact | null = null;
+  /**
+   * @description Controls the visibility of the modal.
+   */
   modalOpen = false;
+  /**
+   * @description Indicates if the contacts are currently loading.
+   */
   loading = true;
+  /**
+   * @description Stores any error message that occurs during loading.
+   */
   error: string | null = null;
 
   ngOnInit(): void {
@@ -49,44 +66,47 @@ export class ContactsComponent implements OnInit {
   }
 
   /**
-   * Lädt Kontakte mit Fehlerbehandlung und Ladeindikator
+   * @description Loads contacts with error handling and a loading indicator.
    */
   private loadContacts(): void {
     this.loading = true;
     this.error = null;
-    
+
     this.contacts$ = this.contactService.getContacts().pipe(
-      startWith([]), // Vermeidet undefined beim ersten Laden
+      startWith([]),
       catchError((err) => {
-        console.error('Fehler beim Laden der Kontakte:', err);
-        this.error = 'Kontakte konnten nicht geladen werden';
+        console.error('Error loading contacts:', err);
+        this.error = 'Could not load contacts';
         return of([]);
       })
     );
   }
 
   /**
-   * Öffnet das Modal zum Bearbeiten eines Kontakts
+   * @description Opens the modal to edit a specific contact.
+   * @param contact The contact to be edited.
    */
   editContact(contact: Contact): void {
-    this.selectedContact = { ...contact }; // Clone für Immutability
+    this.selectedContact = { ...contact };
     this.modalOpen = true;
   }
 
   /**
-   * Wählt einen Kontakt aus
+   * @description Selects a contact from the list.
+   * @param contact The contact to select.
    */
   selectContact(contact: Contact): void {
     this.selectedContact = contact;
   }
 
   /**
-   * Schließt das Modal und behandelt das Ergebnis
+   * @description Closes the modal and handles the result.
+   * @param success A boolean indicating if the operation was successful.
    */
   closeModal(success: boolean): void {
     this.modalOpen = false;
     if (success) {
-      this.loadContacts(); // Daten neu laden bei Änderungen
+      this.loadContacts();
     }
     this.selectedContact = null;
   }

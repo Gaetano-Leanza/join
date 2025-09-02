@@ -10,8 +10,8 @@ import { AppComponent } from './app/app.component';
 import { appConfig } from './app/app.config';
 
 /**
- * Konfiguration für Firebase.
- * Enthält die API-Schlüssel und Projektinformationen.
+ * Firebase configuration.
+ * Contains API keys and project information.
  */
 const firebaseConfig = {
   apiKey: 'AIzaSyD1fse1ML6Ie-iFClg_2Ukr-G1FEeQUHac',
@@ -24,23 +24,23 @@ const firebaseConfig = {
 };
 
 /**
- * Setzt das Logging-Level von Firebase nur im Browser.
+ * Sets the Firebase logging level only in the browser.
  */
 if (typeof window !== 'undefined') {
   setLogLevel(LogLevel.VERBOSE);
 }
 
 /**
- * Erstellt Browser-spezifische Firebase Provider
+ * Creates browser-specific Firebase providers.
  */
 const getFirebaseProviders = () => {
-  // Provider nur erstellen wenn wir im Browser sind
+  // Only create providers if we are in the browser
   if (typeof window === 'undefined' || typeof document === 'undefined') {
-    console.log('SSR-Kontext erkannt - Firebase Provider übersprungen');
+    console.log('SSR context detected - skipping Firebase providers');
     return [];
   }
   
-  console.log('Browser-Kontext erkannt - Firebase Provider hinzugefügt');
+  console.log('Browser context detected - adding Firebase providers');
   return [
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideFirestore(() => getFirestore())
@@ -48,8 +48,8 @@ const getFirebaseProviders = () => {
 };
 
 /**
- * Bootstrappt die Angular-Anwendung.
- * Firebase Provider werden nur im Browser hinzugefügt.
+ * Bootstraps the Angular application.
+ * Firebase providers are only added in the browser.
  */
 bootstrapApplication(AppComponent, {
   ...appConfig,

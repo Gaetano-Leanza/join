@@ -3,9 +3,8 @@ import { AppComponent } from './app/app.component';
 import { config } from './app/app.config.server';
 
 /**
- * Bootstrappt die Angular-Anwendung mit der Root-Komponente und der Server-Konfiguration.
- * 
- * @returns {Promise<void>} Ein Promise, das auf die erfolgreiche Initialisierung der App wartet.
+ * Bootstraps the Angular application with the root component and the server configuration.
+ * * @returns {Promise<void>} A promise that resolves when the app has been successfully initialized.
  */
 const bootstrap = () => bootstrapApplication(AppComponent, config);
 

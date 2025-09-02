@@ -1,22 +1,22 @@
 import { RenderMode, ServerRoute } from '@angular/ssr';
 
 /**
- * Server-seitige Routen-Konfiguration für Angular SSR.
- * 
+ * Server-side route configuration for Angular SSR.
+ *
  * @type {ServerRoute[]}
  * @description
- * Definiert, wie verschiedene Pfade auf dem Server gerendert werden.
+ * Defines how different paths are rendered on the server.
  */
 export const serverRoutes: ServerRoute[] = [
-  // Spezifische Route für Contact-Details mit dynamischen Parametern
+  // Specific route for Contact Details with dynamic parameters
   {
     path: 'contacts/:id',
     renderMode: RenderMode.Prerender,
     getPrerenderParams: async () => {
-      // Hier definierst du die Contact-IDs, die prerendert werden sollen
-      const contactIds = ['1', '2', '3', '4', '5']; // Passe diese IDs an deine Daten an
+      // Here you define the contact IDs that should be prerendered
+      const contactIds = ['1', '2', '3', '4', '5']; // Adjust these IDs to your data
       
-      // Alternativ: IDs aus einer API laden (auskommentiert)
+      // Alternatively: Load IDs from an API (commented out)
       /*
       try {
         const response = await fetch('https://your-api.com/contacts');
@@ -24,8 +24,8 @@ export const serverRoutes: ServerRoute[] = [
         const contactIds = contacts.map((contact: any) => contact.id.toString());
         return contactIds.map(id => ({ id }));
       } catch (error) {
-        console.error('Fehler beim Laden der Contact-IDs:', error);
-        return []; // Fallback: keine Routen prerendern
+        console.error('Error loading contact IDs:', error);
+        return []; // Fallback: do not prerender any routes
       }
       */
       
@@ -33,7 +33,7 @@ export const serverRoutes: ServerRoute[] = [
     }
   },
   
-  // Catch-all Route für alle anderen Pfade - muss am Ende stehen
+  // Catch-all route for all other paths - must be at the end
   {
     path: '**',
     renderMode: RenderMode.Prerender

@@ -3,15 +3,15 @@ import { provideServerRendering } from '@angular/platform-server';
 import { appConfig } from './app.config';
 
 /**
- * Server-spezifische Angular Application Configuration.
- * Fügt Server-Side Rendering und Routing Provider hinzu.
+ * @description Server-specific Angular Application Configuration.
+ * Adds providers for Server-Side Rendering.
  */
 const serverConfig: ApplicationConfig = {
   providers: [provideServerRendering()],
 };
 
 /**
- * Kombinierte Angular Application Configuration,
- * die sowohl allgemeine als auch server-spezifische Konfigurationen enthält.
+ * @description Merged Angular Application Configuration that combines
+ * the general and server-specific configurations.
  */
 export const config = mergeApplicationConfig(appConfig, serverConfig);

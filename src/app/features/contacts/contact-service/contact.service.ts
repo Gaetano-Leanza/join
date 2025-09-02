@@ -4,101 +4,103 @@ import { catchError, Observable, tap, throwError } from 'rxjs';
 import { Contact } from '../contact-model/contact.model';
 
 /**
- * Service zur Verwaltung von Kontakten über Firebase.
- * 
- * Verwaltet:
- * - Auswahl eines Kontakts
- * - CRUD-Operationen (Create, Read, Update, Delete)
+ * @description Service for managing contacts via Firebase.
+ *
+ * Manages:
+ * - Contact selection
+ * - CRUD operations (Create, Read, Update, Delete)
  */
 @Injectable({
   providedIn: 'root',
 })
 export class ContactService {
-  /** ID des aktuell ausgewählten Kontakts */
+  /**
+   * @description The ID of the currently selected contact.
+   */
   private selectedContactId: string | null = null;
 
   constructor(private firebaseService: FirebaseService) {}
 
   /**
-   * Setzt die aktuell ausgewählte Kontakt-ID.
-   * @param contactId ID des Kontakts oder null
+   * @description Sets the currently selected contact ID.
+   * @param contactId The ID of the contact or null.
    */
   setSelectedContact(contactId: string | null): void {
     this.selectedContactId = contactId;
   }
 
   /**
-   * Gibt die aktuell ausgewählte Kontakt-ID zurück.
-   * @returns ID des Kontakts oder null
+   * @description Returns the currently selected contact ID.
+   * @returns The contact's ID or null.
    */
   getSelectedContactId(): string | null {
     return this.selectedContactId;
   }
 
   /**
-   * Holt alle Kontakte aus Firebase.
-   * @returns Observable mit einer Liste von Kontakten inkl. ID
+   * @description Fetches all contacts from Firebase.
+   * @returns An Observable with a list of contacts including their IDs.
    */
   getContacts(): Observable<(Contact & { id: string })[]> {
     return this.firebaseService.getCollectionData<Contact>('contacts').pipe(
-      tap(() => console.debug('Kontakte erfolgreich geladen')),
+      tap(() => console.debug('Contacts loaded successfully')),
       catchError((err) => {
-        console.error('Firebase Fehler:', err);
-        return throwError(() => new Error('Datenbankfehler'));
+        console.error('Firebase error:', err);
+        return throwError(() => new Error('Database error'));
       })
     );
   }
 
   /**
-   * Holt einen einzelnen Kontakt anhand der ID.
-   * @param id ID des Kontakts
-   * @returns Observable mit Kontakt inkl. ID oder undefined
+   * @description Fetches a single contact by ID.
+   * @param id The ID of the contact.
+   * @returns An Observable with the contact including its ID or undefined.
    */
   getContactById(id: string): Observable<(Contact & { id: string }) | undefined> {
     return this.firebaseService.getDocumentById<Contact>('contacts', id);
   }
 
   /**
-   * Fügt einen neuen Kontakt hinzu.
-   * @param contact Kontakt ohne ID
-   * @returns Promise mit der neuen Kontakt-ID oder null bei Fehler
+   * @description Adds a new contact.
+   * @param contact The contact without an ID.
+   * @returns A Promise with the new contact's ID or null on error.
    */
   async addContact(contact: Omit<Contact, 'id'>): Promise<string | null> {
     try {
       return await this.firebaseService.addDocument<Contact>('contacts', contact as Contact);
     } catch (error) {
-      console.error('Fehler beim Hinzufügen des Kontakts:', error);
+      console.error('Error adding contact:', error);
       return null;
     }
   }
 
   /**
-   * Aktualisiert einen bestehenden Kontakt.
-   * @param id ID des Kontakts
-   * @param updates Teilobjekt mit zu aktualisierenden Feldern
-   * @returns Promise, true bei Erfolg, false bei Fehler
+   * @description Updates an existing contact.
+   * @param id The ID of the contact.
+   * @param updates A partial object with the fields to update.
+   * @returns A Promise that resolves to true on success, false on error.
    */
   async updateContact(id: string, updates: Partial<Contact>): Promise<boolean> {
     try {
       await this.firebaseService.updateDocument<Contact>('contacts', id, updates);
       return true;
     } catch (error) {
-      console.error('Fehler beim Aktualisieren des Kontakts:', error);
+      console.error('Error updating contact:', error);
       return false;
     }
   }
 
   /**
-   * Löscht einen Kontakt anhand der ID.
-   * @param id ID des Kontakts
-   * @returns Promise, true bei Erfolg, false bei Fehler
+   * @description Deletes a contact by ID.
+   * @param id The ID of the contact.
+   * @returns A Promise that resolves to true on success, false on error.
    */
   async deleteContact(id: string): Promise<boolean> {
     try {
       await this.firebaseService.deleteDocument('contacts', id);
       return true;
     } catch (error) {
-      console.error('Fehler beim Löschen des Kontakts:', error);
+      console.error('Error deleting contact:', error);
       return false;
     }
   }
