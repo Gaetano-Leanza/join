@@ -316,8 +316,28 @@
     overflow-y: hidden;
     gap: 16px;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
+    scrollbar-width: thick;
     padding-bottom: 30px;
+  }
+
+  .example-list::-webkit-scrollbar {
+    height: 28px;
+    /* macht die Scrollbar dicker */
+  }
+
+  .example-list::-webkit-scrollbar-thumb {
+    background: #bdbdbd;
+    border-radius: 9px;
+  }
+
+  .example-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 9px;
+  }
+
+  .example-list {
+    scrollbar-width: thick;
+    /* für Firefox */
   }
 
   #add-task {
