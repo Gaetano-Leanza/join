@@ -15,6 +15,9 @@
         placeholder="Enter a title"
         [(ngModel)]="title"
         [ngModelOptions]="{ standalone: true }"
+        (focus)="isTitleFocused = true"
+        (blur)="isTitleFocused = false"
+        [class.input-focused]="isTitleFocused"
       />
       <h4>Description</h4>
       <textarea
@@ -22,6 +25,9 @@
         placeholder="Enter a description"
         [(ngModel)]="description"
         [ngModelOptions]="{ standalone: true }"
+        (focus)="isDescriptionFocused = true"
+        (blur)="isDescriptionFocused = false"
+        [class.input-focused]="isDescriptionFocused"
       ></textarea>
 
       <div class="headline-wrapper">
@@ -33,6 +39,9 @@
         type="date"
         [(ngModel)]="dueDate"
         [ngModelOptions]="{ standalone: true }"
+        (focus)="isDueDateFocused = true"
+        (blur)="isDueDateFocused = false"
+        [class.input-focused]="isDueDateFocused"
       />
     </div>
     <div class="middle"></div>
@@ -253,6 +262,7 @@
             [value]="getSelectedContactsString()"
             readonly
             (click)="toggleAssignDropdown($event)"
+            [class.input-focused]="isAssignDropdownOpen"
           />
 
           <span
@@ -260,7 +270,6 @@
             [class.open]="isAssignDropdownOpen"
             (click)="toggleAssignDropdown($event)"
           ></span>
-          <!-- Neue Kontaktauswahl Dropdown -->
           <div *ngIf="isAssignDropdownOpen" class="assign-dropdown">
             <div class="contact-list-wrapper">
               <div
@@ -285,6 +294,7 @@
                     (click)="
                       $event.stopPropagation(); toggleContactSelection(contact)
                     "
+                    [class.input-focused]="isCategoryDropdownOpen"
                   />
                 </div>
               </div>
@@ -293,7 +303,6 @@
         </div>
       </div>
 
-      <!-- Anzeige der ausgewählten Avatare -->
       <div class="selected-contacts" *ngIf="isContactSelected">
         <div
           class="selected-avatar"
@@ -318,11 +327,17 @@
             placeholder="Select task category"
             [value]="selectedCategory"
             readonly
+            (click)="toggleCategoryDropdown()"
+            (focus)="isCategoryInputFocused = true"
+            (blur)="isCategoryInputFocused = false"
+            [class.input-focused]="
+              isCategoryDropdownOpen || isCategoryInputFocused
+            "
           />
           <span
             class="icon-category"
             [class.open]="isCategoryDropdownOpen"
-            (click)="toggleCategoryDropdown()"
+            (click)="onCategoryIconClick($event)"
           ></span>
 
           <div class="category-modal" *ngIf="isCategoryDropdownOpen">
@@ -361,6 +376,9 @@
             placeholder="Add new subtask"
             [(ngModel)]="subtaskText"
             [ngModelOptions]="{ standalone: true }"
+            (focus)="isSubtaskFocused = true"
+            (blur)="isSubtaskFocused = false"
+            [class.input-focused]="isSubtaskFocused || isSubtaskOpen"
           />
 
           <div *ngIf="subtasks.length > 0" class="subtask-list">

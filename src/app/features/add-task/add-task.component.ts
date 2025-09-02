@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  OnDestroy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContactService } from '../contacts/contact-service/contact.service';
 import { Contact } from '../contacts/contact-model/contact.model';
@@ -33,7 +40,12 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   isActive3 = false;
   isAssignDropdownOpen = false;
   isCategoryDropdownOpen = false;
+  isTitleFocused = false;
+  isDescriptionFocused = false;
+  isDueDateFocused = false;
+  isSubtaskFocused = false;
   isSubtaskOpen = false;
+  isCategoryInputFocused = false;
   selectedContact: Contact | null = null;
   title: string = '';
   description: string = '';
@@ -82,12 +94,10 @@ export class AddTaskComponent implements OnInit, OnDestroy {
       error: (err) => console.error('Fehler beim Laden der Kontakte:', err),
     });
 
-    // Event-Listener für Klicks außerhalb des Dropdowns
     document.addEventListener('click', this.handleDocumentClick.bind(this));
   }
 
   ngOnDestroy() {
-    // Event-Listener entfernen, wenn Komponente zerstört wird
     document.removeEventListener('click', this.handleDocumentClick.bind(this));
   }
 
@@ -95,9 +105,15 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     if (this.selectedContacts.length === 0) {
       return '';
     }
-    
-    const names = this.selectedContacts.map(contact => contact.name);
+
+    const names = this.selectedContacts.map((contact) => contact.name);
     return names.join(', ');
+  }
+
+  onCategoryIconClick(event: Event) {
+    event.stopPropagation();
+    this.isCategoryInputFocused = true;
+    this.toggleCategoryDropdown();
   }
 
   toggleButton1() {
@@ -126,7 +142,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
       event.stopPropagation();
     }
     this.isAssignDropdownOpen = !this.isAssignDropdownOpen;
-    
+
     // Dropdown-Element referenzieren
     if (this.isAssignDropdownOpen) {
       setTimeout(() => {
@@ -138,14 +154,14 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   private handleDocumentClick(event: MouseEvent) {
     if (this.isAssignDropdownOpen && this.dropdownElement) {
       const target = event.target as HTMLElement;
-      
+
       // Prüfen, ob das angeklickte Element innerhalb des Dropdowns liegt
       const clickedInside = this.dropdownElement.contains(target);
-      
+
       // Prüfen, ob auf den Input oder das Icon geklickt wurde
       const isInput = target.closest('.placeholder7');
       const isIcon = target.closest('.icon-category');
-      
+
       // Wenn außerhalb geklickt wurde und nicht auf Input/Icon, Dropdown schließen
       if (!clickedInside && !isInput && !isIcon) {
         this.isAssignDropdownOpen = false;

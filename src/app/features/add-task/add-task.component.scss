@@ -106,6 +106,10 @@ h5 {
   border-radius: 8px;
   height: 45px;
   width: 130px;
+  &.input-focused {
+    border: 1px solid #007bff !important; // Blauer Border
+    outline: none;
+  }
 }
 
 .placeholder7,
@@ -114,6 +118,10 @@ h5 {
   border-radius: 8px;
   height: 35px;
   width: 378px;
+  &.input-focused {
+    border: 1px solid #007bff !important; // Blauer Border
+    outline: none;
+  }
 }
 
 .placeholder5::placeholder {
@@ -716,4 +724,34 @@ h5 {
   cursor: pointer;
   width: 18px;
   height: 18px;
+}
+
+.left-side .placeholder1.input-focused {
+  border: 2px solid #007bff !important;
+  outline: none;
+}
+
+.left-side .placeholder2.input-focused {
+  border: 2px solid #007bff !important;
+  outline: none;
+}
+
+.input-wrapper .placeholder7.input-focused {
+  border: 2px solid #007bff !important;
+  outline: none;
+}
+
+.left-side .placeholder8.input-focused {
+  border: 2px solid #007bff !important;
+  outline: none;
+}
+
+.input-wrapper .placeholder9.input-focused {
+  border: 2px solid #007bff !important;
+  outline: none;
+}
+
+.right-side .input-wrapper .placeholder8.input-focused {
+  border: 2px solid #007bff !important;
+  outline: none;
 }
