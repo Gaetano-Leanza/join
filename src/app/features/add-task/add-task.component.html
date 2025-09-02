@@ -383,47 +383,49 @@
 
     <div class="row4">
   <h4 class="headline">Subtasks</h4>
-  <div class="input-wrapper">
-    <input
-      class="placeholder9"
-      type="text"
-      placeholder="Add new subtask"
-      [(ngModel)]="subtaskText"
-      [ngModelOptions]="{ standalone: true }"
-      (focus)="isSubtaskFocused = true"
-      (blur)="isSubtaskFocused = false"
-      [class.input-focused]="isSubtaskFocused || isSubtaskOpen"
-      (keydown.enter)="addSubtask()"
-    />
 
-    <!-- Anzeige der eingegebenen Subtasks -->
-   <div class="subtask-list" *ngIf="subtasks.length > 0">
-  <div *ngFor="let subtask of subtasks; let i = index" class="subtask-item">
-    <span class="subtask-bullet"></span>
-    <span 
-      class="subtask-text" 
-      [class.done]="subtask.done"
-      (click)="toggleSubtaskStatus(i)"
-    >
-      {{ subtask.title }}
-    </span>
-    <span class="subtask-remove" (click)="removeSubtask(i)">✕</span>
-  </div>
-</div>
+<div class="input-wrapper">
+  <input
+    class="placeholder9"
+    type="text"
+    placeholder="Add new subtask"
+    [(ngModel)]="subtaskText"
+    [ngModelOptions]="{ standalone: true }"
+    (focus)="isSubtaskFocused = true"
+    (blur)="isSubtaskFocused = false"
+    [class.input-focused]="isSubtaskFocused || isSubtaskOpen"
+    (keydown.enter)="addSubtask()"
+  />
 
-    <span
-      *ngIf="!isSubtaskOpen"
-      class="icon-subtask"
-      (click)="toggleSubtaskIcon()"
-    ></span>
-
-    <div *ngIf="isSubtaskOpen" class="icon-subtask-wrapper">
-      <span class="icon-close" (click)="toggleSubtaskIcon()"></span>
-      <span class="divider"></span>
-      <span class="icon-check" (click)="addSubtask()"></span>
+  <!-- Subtask-Liste -->
+  <div class="subtask-list" *ngIf="subtasks.length > 0">
+    <div *ngFor="let subtask of subtasks; let i = index" class="subtask-item">
+      <span class="subtask-bullet"></span>
+      <span 
+        class="subtask-text" 
+        [class.done]="subtask.done"
+        (click)="toggleSubtaskStatus(i)"
+      >
+        {{ subtask.title }}
+      </span>
+      <span class="subtask-remove" (click)="removeSubtask(i)">✕</span>
     </div>
   </div>
+
+  <!-- Icons -->
+  <span
+    *ngIf="!isSubtaskOpen"
+    class="icon-subtask"
+    (click)="toggleSubtaskIcon()"
+  ></span>
+
+  <div *ngIf="isSubtaskOpen" class="icon-subtask-wrapper">
+    <span class="icon-close" (click)="toggleSubtaskIcon()"></span>
+    <span class="divider"></span>
+    <span class="icon-check" (click)="addSubtask()"></span>
+  </div>
 </div>
+
       <div class="text-bottom-mobile">
         <h5>*</h5>
         <h4>This field is requiered!</h4>
