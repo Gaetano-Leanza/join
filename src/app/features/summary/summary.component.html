@@ -1,0 +1,78 @@
+<section id="summary-wrapper">
+    <div id="headline-wrapper">
+        <div>
+            <h3>Join 360 </h3>
+        </div>
+        <div>
+            <svg width="4" height="63" viewBox="0 0 4 63" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 2V61" stroke="#29ABE2" stroke-width="3" stroke-linecap="round" />
+            </svg>
+
+
+        </div>
+        <div>
+            <h4>Key Metrics at a Glance</h4>
+        </div>
+    </div>
+
+
+    <div id="content-wrapper">
+
+        <div id="left-content">
+
+            <div id="tasks-todo-done">
+                <div id="to-do">
+
+                    <svg width="69" height="70" viewBox="0 0 69 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="34.5" cy="35" r="34.5" fill="currentColor" />
+                        <mask id="mask0_362246_5573" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="18" y="19"
+                            width="33" height="32">
+                            <rect x="18.5" y="19" width="32" height="32" fill="currentColor" />
+                        </mask>
+                        <g mask="url(#mask0_362246_5573)">
+                            <path
+                                d="M25.1667 44.3332H27.0333L38.5333 32.8332L36.6667 30.9665L25.1667 42.4665V44.3332ZM44.2333 30.8998L38.5667 25.2998L40.4333 23.4332C40.9444 22.9221 41.5722 22.6665 42.3167 22.6665C43.0611 22.6665 43.6889 22.9221 44.2 23.4332L46.0667 25.2998C46.5778 25.8109 46.8444 26.4276 46.8667 27.1498C46.8889 27.8721 46.6444 28.4887 46.1333 28.9998L44.2333 30.8998ZM42.3 32.8665L28.1667 46.9998H22.5V41.3332L36.6333 27.1998L42.3 32.8665Z"
+                                fill="white" />
+                        </g>
+                    </svg>
+                    <div id="to-do-cont"><span class="task-number">{{getToDoCount()}}</span> To-do</div>
+                </div>
+
+
+                <div id="done">
+                    <svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="35" cy="35" r="34.5" fill="currentColor" />
+                        <path d="M20.0283 35.0001L31.2571 46.0662L49.9717 23.9341" stroke="white" stroke-width="7"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+
+                    <div id="done-cont"> <span class="task-number">{{getDoneCount()}}</span> Done </div>
+                </div>
+
+            </div>
+
+            <div id="progress-overview">
+                <div>1 urgent</div>
+                <div> upcoming deadline</div>
+
+            </div>
+
+
+            <div id="board-overview">
+                <div id="board-tasks"><span class="task-number">{{getTasksCount()}}</span>
+                    Tasks in <br> Board</div>
+                <div id="progress-cont"><span class="task-number">{{getProgressTaskCount()}}</span> Tasks in
+                    <br>Progress
+                </div>
+                <div id="awaiting-cont"> <span class="task-number">{{getAwaitingTasksCount()}}</span>Awaiting
+                    <br>Feedback
+                </div>
+            </div>
+
+        </div>
+        <div id="right-content">
+            <h5>Good morning! </h5>
+        </div>
+    </div>
+
+</section>

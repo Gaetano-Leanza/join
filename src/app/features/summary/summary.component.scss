@@ -1,0 +1,188 @@
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter/Inter-Regular.ttf') format('ttf');
+    font-weight: 700;
+    font-style: normal;
+}
+
+#summary-wrapper {
+    width: calc(100vw - 230px);
+    height: calc(100vh - 96px);
+    background: #fff;
+    border: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+    max-width: 1500px;
+    overflow: hidden;
+}
+
+#headline-wrapper {
+    width: 100%;
+    max-width: 625px;
+    height: 73px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin-top: 100px;
+    margin-left: 60px;
+    margin-bottom: 50px;
+    gap: 30px;
+}
+
+h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 61px;
+    line-height: 120%;
+    letter-spacing: 0;
+
+}
+
+h4 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 27px;
+    line-height: 120%;
+    letter-spacing: 0;
+}
+
+h5 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 47px;
+    line-height: 120%;
+    letter-spacing: 0;
+}
+
+#content-wrapper {
+    width: 100%;
+    max-width: calc(100vw - 240px - 173px);
+    height: calc(100vh - 96px - 230px);
+    margin-left: 60px;
+    padding: 0 20px;
+}
+
+#left-content {
+    width: 45%;
+    float: left;
+    margin-right: 20px;
+    height: calc(100vh - 96px - 250px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#right-content {
+    width: 45%;
+    float: left;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    height: calc(100vh - 96px - 250px);
+
+
+}
+
+#tasks-todo-done,
+#progress-overview,
+#board-overview {
+    width: 100%;
+    height: 33%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#tasks-todo-done,
+#progress-overview {
+    display: flex;
+    justify-content: space-around;
+}
+
+#board-overview {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+#to-do,
+#done {
+    width: 49%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    gap: 10px;
+}
+
+.task-number {
+    font-size: 64px;
+}
+
+#to-do-cont,
+#done-cont {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: end;
+    margin-top: -15px;
+}
+
+
+#to-do:hover,
+#done:hover {
+    background-color: #2A3647;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    transform: scale(1.03);
+    color: white;
+}
+
+
+
+#to-do:hover svg,
+#done:hover svg {
+    color: #ffffff;
+    stroke: #2A3647;
+    stroke-width: 2px;
+    transition: fill 0.2s, stroke 0.2s;
+}
+
+#to-do svg,
+#done svg {
+    color: #2A3647;
+
+}
+
+#done:hover svg path {
+    stroke: #2A3647;
+}
+
+#board-tasks,
+#progress-cont,
+#awaiting-cont {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 32%;
+    gap: 10px;
+}
+
+#board-tasks:hover,
+#progress-cont:hover,
+#awaiting-cont:hover {
+    color: white;
+    background-color: #2A3647;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    transform: scale(1.03);
+}

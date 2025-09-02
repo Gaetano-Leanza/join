@@ -6,7 +6,7 @@ import { LegalNoticeComponent } from './pages/legal-notice/legal-notice.componen
 import { InfoComponent } from './pages/info/info.component';
 import { AddTaskComponent } from './features/add-task/add-task.component';
 import { BoardComponent } from './features/board/board.component';
-
+import { SummaryComponent } from './features/summary/summary.component';
 /**
  * Defines the main application routes.
  *
@@ -57,4 +57,10 @@ export const routes: Routes = [
     component: InfoComponent, 
     data: { prerender: true } 
   },
+
+  {
+    path: 'summary',
+    component: SummaryComponent,
+    data: { prerender: true }
+  }
 ];
