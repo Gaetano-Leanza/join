@@ -329,7 +329,7 @@
             readonly
             (click)="toggleCategoryDropdown()"
             (focus)="isCategoryInputFocused = true"
-            (blur)="isCategoryInputFocused = false"
+            (blur)="onCategoryBlur()"
             [class.input-focused]="
               isCategoryDropdownOpen || isCategoryInputFocused
             "

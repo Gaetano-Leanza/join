@@ -116,6 +116,24 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     this.toggleCategoryDropdown();
   }
 
+  onCategoryBlur() {
+    // Verzögere das Entfernen des Focus, um sicherzustellen,
+    // dass das Dropdown zuerst geschlossen wird
+    setTimeout(() => {
+      if (!this.isCategoryDropdownOpen) {
+        this.isCategoryInputFocused = false;
+      }
+    }, 100);
+  }
+
+  // Ändere die toggleCategoryDropdown Methode
+  toggleCategoryDropdown() {
+    this.isCategoryDropdownOpen = !this.isCategoryDropdownOpen;
+    if (!this.isCategoryDropdownOpen) {
+      this.isCategoryInputFocused = false;
+    }
+  }
+
   toggleButton1() {
     this.isActive1 = true;
     this.isActive2 = false;
@@ -167,10 +185,6 @@ export class AddTaskComponent implements OnInit, OnDestroy {
         this.isAssignDropdownOpen = false;
       }
     }
-  }
-
-  toggleCategoryDropdown() {
-    this.isCategoryDropdownOpen = !this.isCategoryDropdownOpen;
   }
 
   toggleSubtaskIcon() {
