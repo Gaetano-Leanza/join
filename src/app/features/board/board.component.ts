@@ -127,19 +127,14 @@ export class BoardComponent implements OnDestroy {
   }
 
  getDoneSubtasks(task: Task): number {
-  const subtasks: Subtask[] = this.parseSubtasks(task.subtasks);
-  const doneCount = subtasks.filter((s) => s.done).length;
-  console.log('Task:', task.title, '| Total:', subtasks.length, '| Done:', doneCount);
-  return doneCount;
+  if (!task.subtasks) return 0;
+  return task.subtasks.filter(s => s.done).length;
 }
 
 getSubtaskProgress(task: Task): number {
   if (!task.subtasks || task.subtasks.length === 0) return 0;
-  const subtasks = this.parseSubtasks(task.subtasks);
   const done = this.getDoneSubtasks(task);
-  const percent = subtasks.length === 0 ? 0 : (done / subtasks.length) * 100;
-  console.log('Progress for', task.title, ':', percent, '%');
-  return percent;
+  return Math.round((done / task.subtasks.length) * 100);
 }
 
   /**
@@ -273,10 +268,5 @@ getSubtaskProgress(task: Task): number {
     return task.id || index.toString();
   }
 
-  getDonePredefinedSubtasks(task: Task): number {
-    const predefinedTitles = ['Contact Form', 'Write Legal Imprint'];
-    const subtasks: Subtask[] = this.parseSubtasks(task.subtasks);
 
-    return subtasks.filter((sub) => predefinedTitles.includes(sub.title) && sub.done).length;
-  }
 }
