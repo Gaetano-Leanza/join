@@ -1,7 +1,7 @@
 h3 {
   font-size: 50px;
   padding-left: 100px;
-  padding-top: 130px;
+  padding-top: 80px;
   padding-bottom: 40px;
 }
 
@@ -48,6 +48,10 @@ h5 {
   margin: 0;
   padding: 0;
   line-height: 0.8;
+}
+
+.text-wrapper-mobile {
+  display: none;
 }
 
 .text-bottom {
@@ -810,7 +814,7 @@ h5 {
   align-items: center;
   padding: 8px;
   border-bottom: 1px solid #eee;
-  
+
   &:last-child {
     border-bottom: none;
   }
@@ -828,7 +832,7 @@ h5 {
 .subtask-text {
   flex-grow: 1;
   cursor: pointer;
-  
+
   &.done {
     text-decoration: line-through;
     color: #888;
@@ -893,7 +897,7 @@ h5 {
   background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 4; // Unter dem Icon aber über anderen Elementen
 }
 
@@ -902,28 +906,28 @@ h5 {
   top: 100%;
   left: 0;
   width: 100%;
-  max-height: 100px; 
-  overflow-y: auto; 
+  max-height: 100px;
+  overflow-y: auto;
   margin-top: 5px;
   background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 4;
-  
+
   &::-webkit-scrollbar {
     width: 8px;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: #f1f1f1;
     border-radius: 4px;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background: #888;
     border-radius: 4px;
-    
+
     &:hover {
       background: #555;
     }
@@ -935,7 +939,7 @@ h5 {
   align-items: center;
   padding: 8px;
   border-bottom: 1px solid #eee;
-  
+
   &:last-child {
     border-bottom: none;
   }

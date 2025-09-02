@@ -481,6 +481,19 @@
   }
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden; /* Body selbst bekommt keine Scrollbar */
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* ---------------- Mobile Layout ---------------- */
 @media (max-width: 768px) {
   .text-bottom,
   .content-bottom {
@@ -490,15 +503,26 @@
   .text-bottom-mobile {
     display: flex;
     padding-bottom: 0px;
-    height: 80px;
+    height: 130px;
     width: 300px;
+    overflow-x: hidden;
   }
 
+  .text-wrapper {
+    display: none;
+  }
+
+  .text-wrapper-mobile {
+    display: flex;
+  }
+
+  /* WICHTIG: statt fester Höhe → flex:1 */
   .content-wrapper {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    height: 90vh;
+    flex: 1;              /* nimmt den Rest zwischen Header/Footer */
+    overflow-y: auto;     /* nur dieser Bereich scrollt */
     overflow-x: hidden;
   }
 
@@ -507,9 +531,9 @@
     display: none;
   }
 
+  /* Overflow hier entfernt – sonst wird nach außen gedrückt */
   .content {
-    overflow-y: hidden;
-    overflow-x: hidden;
+    overflow: visible;
   }
 
   .row5 {
@@ -570,7 +594,6 @@
     align-items: flex-end;
     height: 70px;
     width: 94%;
-    width: 94%;
     gap: 20px;
     padding-top: 0px;
     transform: translateX(0px) translateY(-10px);
@@ -611,11 +634,12 @@
     transform: translate(-50%, -0%);
   }
 
-   .cancel-button {
+  .cancel-button {
     height: 38px;
     width: 89px;
   }
 }
+
 
 @media (max-width: 445px) {
   .row1 {
