@@ -755,3 +755,17 @@ h5 {
   border: 2px solid #007bff !important;
   outline: none;
 }
+
+
+// Fehler-Stil für alle Input-Felder
+.input-error {
+  border: 2px solid #ff0000 !important;
+  outline: none;
+}
+
+// Spezifische Selektoren für die verschiedenen Input-Typen
+.left-side .placeholder1.input-error,
+.left-side .placeholder8.input-error,
+.right-side .input-wrapper .placeholder8.input-error {
+  border: 2px solid #ff0000 !important;
+}

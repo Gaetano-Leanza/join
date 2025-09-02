@@ -16,8 +16,9 @@
         [(ngModel)]="title"
         [ngModelOptions]="{ standalone: true }"
         (focus)="isTitleFocused = true"
-        (blur)="isTitleFocused = false"
+        (blur)="isTitleFocused = false; validateField('title')"
         [class.input-focused]="isTitleFocused"
+        [class.input-error]="showTitleError"
       />
       <h4>Description</h4>
       <textarea
@@ -40,8 +41,9 @@
         [(ngModel)]="dueDate"
         [ngModelOptions]="{ standalone: true }"
         (focus)="isDueDateFocused = true"
-        (blur)="isDueDateFocused = false"
+        (blur)="isDueDateFocused = false; validateField('dueDate')"
         [class.input-focused]="isDueDateFocused"
+        [class.input-error]="showDueDateError"
       />
     </div>
     <div class="middle"></div>
@@ -333,6 +335,7 @@
             [class.input-focused]="
               isCategoryDropdownOpen || isCategoryInputFocused
             "
+            [class.input-error]="showCategoryError"
           />
           <span
             class="icon-category"

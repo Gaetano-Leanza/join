@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  OnDestroy,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContactService } from '../contacts/contact-service/contact.service';
 import { Contact } from '../contacts/contact-model/contact.model';
@@ -40,12 +33,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   isActive3 = false;
   isAssignDropdownOpen = false;
   isCategoryDropdownOpen = false;
-  isTitleFocused = false;
-  isDescriptionFocused = false;
-  isDueDateFocused = false;
-  isSubtaskFocused = false;
   isSubtaskOpen = false;
-  isCategoryInputFocused = false;
   selectedContact: Contact | null = null;
   title: string = '';
   description: string = '';
@@ -75,6 +63,18 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   selectedContacts: Contact[] = [];
   isContactSelected: boolean = false;
 
+  // Neue Properties für Focus-Zustände
+  isTitleFocused = false;
+  isDescriptionFocused = false;
+  isDueDateFocused = false;
+  isCategoryInputFocused = false;
+  isSubtaskFocused = false;
+
+  // Neue Properties für Fehlerzustände
+  showTitleError = false;
+  showDueDateError = false;
+  showCategoryError = false;
+
   private dropdownElement: HTMLElement | null = null;
 
   constructor(
@@ -94,10 +94,12 @@ export class AddTaskComponent implements OnInit, OnDestroy {
       error: (err) => console.error('Fehler beim Laden der Kontakte:', err),
     });
 
+    // Event-Listener für Klicks außerhalb des Dropdowns
     document.addEventListener('click', this.handleDocumentClick.bind(this));
   }
 
   ngOnDestroy() {
+    // Event-Listener entfernen, wenn Komponente zerstört wird
     document.removeEventListener('click', this.handleDocumentClick.bind(this));
   }
 
@@ -105,33 +107,9 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     if (this.selectedContacts.length === 0) {
       return '';
     }
-
-    const names = this.selectedContacts.map((contact) => contact.name);
+    
+    const names = this.selectedContacts.map(contact => contact.name);
     return names.join(', ');
-  }
-
-  onCategoryIconClick(event: Event) {
-    event.stopPropagation();
-    this.isCategoryInputFocused = true;
-    this.toggleCategoryDropdown();
-  }
-
-  onCategoryBlur() {
-    // Verzögere das Entfernen des Focus, um sicherzustellen,
-    // dass das Dropdown zuerst geschlossen wird
-    setTimeout(() => {
-      if (!this.isCategoryDropdownOpen) {
-        this.isCategoryInputFocused = false;
-      }
-    }, 100);
-  }
-
-  // Ändere die toggleCategoryDropdown Methode
-  toggleCategoryDropdown() {
-    this.isCategoryDropdownOpen = !this.isCategoryDropdownOpen;
-    if (!this.isCategoryDropdownOpen) {
-      this.isCategoryInputFocused = false;
-    }
   }
 
   toggleButton1() {
@@ -160,7 +138,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
       event.stopPropagation();
     }
     this.isAssignDropdownOpen = !this.isAssignDropdownOpen;
-
+    
     // Dropdown-Element referenzieren
     if (this.isAssignDropdownOpen) {
       setTimeout(() => {
@@ -172,19 +150,58 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   private handleDocumentClick(event: MouseEvent) {
     if (this.isAssignDropdownOpen && this.dropdownElement) {
       const target = event.target as HTMLElement;
-
+      
       // Prüfen, ob das angeklickte Element innerhalb des Dropdowns liegt
       const clickedInside = this.dropdownElement.contains(target);
-
+      
       // Prüfen, ob auf den Input oder das Icon geklickt wurde
       const isInput = target.closest('.placeholder7');
       const isIcon = target.closest('.icon-category');
-
+      
       // Wenn außerhalb geklickt wurde und nicht auf Input/Icon, Dropdown schließen
       if (!clickedInside && !isInput && !isIcon) {
         this.isAssignDropdownOpen = false;
       }
     }
+
+    // Für das Category-Dropdown
+    if (this.isCategoryDropdownOpen) {
+      const target = event.target as HTMLElement;
+      const categoryDropdown = document.querySelector('.category-modal');
+      const clickedInsideCategory = categoryDropdown?.contains(target);
+      const isCategoryInput = target.closest('.placeholder8');
+      const isCategoryIcon = target.closest('.icon-category');
+      
+      if (!clickedInsideCategory && !isCategoryInput && !isCategoryIcon) {
+        this.isCategoryDropdownOpen = false;
+        this.isCategoryInputFocused = false;
+        this.validateField('category'); // Validierung nach Schließen
+      }
+    }
+  }
+
+  toggleCategoryDropdown() {
+    this.isCategoryDropdownOpen = !this.isCategoryDropdownOpen;
+    if (!this.isCategoryDropdownOpen) {
+      this.isCategoryInputFocused = false;
+    }
+  }
+
+  onCategoryIconClick(event: Event) {
+    event.stopPropagation();
+    this.isCategoryInputFocused = true;
+    this.toggleCategoryDropdown();
+  }
+
+  onCategoryBlur() {
+    // Verzögere das Entfernen des Focus, um sicherzustellen, 
+    // dass das Dropdown zuerst geschlossen wird
+    setTimeout(() => {
+      if (!this.isCategoryDropdownOpen) {
+        this.isCategoryInputFocused = false;
+        this.validateField('category');
+      }
+    }, 100);
   }
 
   toggleSubtaskIcon() {
@@ -225,7 +242,23 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   selectCategory(category: string) {
     this.selectedCategory = category;
     this.isCategoryDropdownOpen = false;
+    this.showCategoryError = false; // Fehler entfernen wenn Kategorie ausgewählt
     console.log('Ausgewählte Kategorie:', category);
+  }
+
+  // Validierungsmethode
+  validateField(fieldName: string) {
+    switch (fieldName) {
+      case 'title':
+        this.showTitleError = !this.title.trim();
+        break;
+      case 'dueDate':
+        this.showDueDateError = !this.dueDate;
+        break;
+      case 'category':
+        this.showCategoryError = !this.selectedCategory;
+        break;
+    }
   }
 
   get priority(): string {
@@ -270,6 +303,11 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   }
 
   async createTask() {
+    // Validiere alle Felder bevor du fortfährst
+    this.validateField('title');
+    this.validateField('dueDate');
+    this.validateField('category');
+
     if (!this.isFormValid()) {
       this.showSuccessInfo = true;
       this.successMessage = 'Bitte füllen Sie alle erforderlichen Felder aus.';
@@ -327,5 +365,10 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     this.isSubtaskOpen = false;
     this.subtaskText = '';
     this.currentIndex = 0;
+    
+    // Fehlerzustände zurücksetzen
+    this.showTitleError = false;
+    this.showDueDateError = false;
+    this.showCategoryError = false;
   }
 }
