@@ -21,7 +21,7 @@
         <div id="left-content">
 
             <div id="tasks-todo-done">
-                <div id="to-do">
+                <div id="to-do" (click)="navigateToBoard()">
 
                     <svg width="69" height="70" viewBox="0 0 69 70" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="34.5" cy="35" r="34.5" fill="currentColor" />
@@ -35,37 +35,71 @@
                                 fill="white" />
                         </g>
                     </svg>
-                    <div id="to-do-cont"><span class="task-number">{{getToDoCount()}}</span> To-do</div>
+                    <div id="to-do-cont"><span class="task-number">{{getToDoCount()}}</span>
+                        <span class="category">To-do </span>
+                    </div>
                 </div>
 
 
-                <div id="done">
+                <div id="done" (click)="navigateToBoard()">
                     <svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="35" cy="35" r="34.5" fill="currentColor" />
                         <path d="M20.0283 35.0001L31.2571 46.0662L49.9717 23.9341" stroke="white" stroke-width="7"
                             stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
 
-                    <div id="done-cont"> <span class="task-number">{{getDoneCount()}}</span> Done </div>
+                    <div id="done-cont"> <span class="task-number">{{getDoneCount()}}</span>
+                        <span class="category">Done
+                        </span>
+                    </div>
                 </div>
 
             </div>
 
-            <div id="progress-overview">
-                <div>1 urgent</div>
-                <div> upcoming deadline</div>
+            <div id="progress-overview" (click)="navigateToBoard()">
+                <div id="urgent">
+                    <div id="urgent-container">
+                        <svg class="urgent-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 14L12 9L17 14" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M7 18L12 13L17 18" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <div id="urgent-number"> <span class="task-number">{{getUrgentCount()}}</span><span
+                            class="category"> Urgent</span> </div>
+
+                </div>
+
+
+                <div id="divider"> </div>
+                <div id="upcoming-deadline">
+
+                    <span class="datum" *ngIf="getUpcomingDeadline(); else noDeadline">
+                        {{ getUpcomingDeadline() }}
+                    </span>
+                    <ng-template #noDeadline>
+                        <span>—</span>
+                    </ng-template>
+
+                    Upcoming Deadline
+                </div>
 
             </div>
 
 
             <div id="board-overview">
-                <div id="board-tasks"><span class="task-number">{{getTasksCount()}}</span>
+                <div id="board-tasks" (click)="navigateToBoard()"><span class="task-number">{{getTasksCount()}}</span>
                     Tasks in <br> Board</div>
-                <div id="progress-cont"><span class="task-number">{{getProgressTaskCount()}}</span> Tasks in
-                    <br>Progress
+                <div id="progress-cont" (click)="navigateToBoard()"><span
+                        class="task-number">{{getProgressTaskCount()}}</span> <span class="category">Tasks in
+                        <br>Progress</span>
+
                 </div>
-                <div id="awaiting-cont"> <span class="task-number">{{getAwaitingTasksCount()}}</span>Awaiting
-                    <br>Feedback
+                <div id="awaiting-cont" (click)="navigateToBoard()"> <span
+                        class="task-number">{{getAwaitingTasksCount()}}</span><span class="category">Awaiting
+                        <br>Feedback </span>
                 </div>
             </div>
 

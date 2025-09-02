@@ -186,3 +186,71 @@ h5 {
     transition: transform 0.2s ease;
     transform: scale(1.03);
 }
+
+.urgent-icon {
+    width: 60px;
+    height: 60px;
+    color: #fff;
+    margin-top: -5px;
+}
+
+#urgent-container {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #FF3D00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#urgent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+#urgent-number {
+    display: flex;
+    flex-direction: column;
+}
+
+.category {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+#upcoming-deadline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.datum {
+    font-size: 21px;
+    font-weight: 700;
+}
+
+#progress-overview {
+    width: 90%;
+    height: 22%;
+    border-radius: 30px;
+
+}
+
+#progress-overview:hover {
+    background-color: #2A3647;
+    color: white;
+    transition: transform 0.2s ease;
+    transform: scale(1.03);
+    cursor: pointer;
+}
+
+#divider {
+    width: 2px;
+    height: 60%;
+    background-color: #D1D1D1;
+    margin: 0 20px;
+}
