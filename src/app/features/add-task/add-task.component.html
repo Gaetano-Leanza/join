@@ -20,6 +20,10 @@
         [class.input-focused]="isTitleFocused"
         [class.input-error]="showTitleError"
       />
+      <div class="error-message" *ngIf="showTitleError">
+        This field is required
+      </div>
+
       <h4>Description</h4>
       <textarea
         class="placeholder2"
@@ -45,6 +49,8 @@
         [class.input-focused]="isDueDateFocused"
         [class.input-error]="showDueDateError"
       />
+      <div class="error-message" *ngIf="showDueDateError">This field is required</div>
+
     </div>
     <div class="middle"></div>
     <div class="right-side">
@@ -337,6 +343,7 @@
             "
             [class.input-error]="showCategoryError"
           />
+          
           <span
             class="icon-category"
             [class.open]="isCategoryDropdownOpen"
@@ -368,7 +375,11 @@
             </div>
           </div>
         </div>
+        <div class="error-message" *ngIf="showCategoryError">This field is required</div>
+
       </div>
+      <div class="error-message" *ngIf="showCategoryError">This field is required</div>
+
 
       <div class="row4">
         <h4 class="headline">Subtasks</h4>

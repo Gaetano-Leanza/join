@@ -80,7 +80,7 @@ h5 {
   flex-direction: column;
   justify-content: space-between;
   gap: 15px;
-  height: 255px;
+  height: 250px;
   width: 400px;
 }
 
@@ -688,7 +688,7 @@ h5 {
 
 .contact-checkbox {
   margin-left: auto;
-  pointer-events: none; /* Verhindert, dass die Checkbox die Klicks der Zeile blockiert */
+  pointer-events: none;
 }
 
 .contact-item {
@@ -756,16 +756,40 @@ h5 {
   outline: none;
 }
 
+.left-side .placeholder1.input-error,
+.left-side .placeholder8.input-error,
+.right-side .input-wrapper .placeholder8.input-error {
+  border: 2px solid #ff0000 !important;
+}
 
-// Fehler-Stil für alle Input-Felder
 .input-error {
   border: 2px solid #ff0000 !important;
   outline: none;
 }
 
-// Spezifische Selektoren für die verschiedenen Input-Typen
+.error-message {
+  color: #ff0000;
+  font-size: 14px;
+  margin-top: -15px;
+  display: block;
+  text-align: left;
+}
+
 .left-side .placeholder1.input-error,
 .left-side .placeholder8.input-error,
 .right-side .input-wrapper .placeholder8.input-error {
   border: 2px solid #ff0000 !important;
+}
+
+.left-side .error-message {
+  margin-left: 0;
+}
+
+.right-side .error-message {
+  margin-left: 0;
+  width: 378px;
+}
+
+.row3 {
+  height: 60px;
 }
