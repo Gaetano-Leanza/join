@@ -215,8 +215,7 @@
       <h4>This field is requiered!</h4>
     </div>
     <div>
-      <button class="create-task-button" [class.disabled]="!isFormValid()" [disabled]="!isFormValid()"
-        (click)="createTask()" *ngIf="showCreate || editMode">
+      <button class="create-task-button" [class.disabled]="!isFormValid()" (click)="createTask()" *ngIf="showCreate || editMode">
         <svg width="93" height="77" viewBox="0 0 93 77" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g filter="url(#filter0_d_75918_13938)">
             <rect x="8" y="4" width="77" height="61" rx="10" fill="#2A3647" />
