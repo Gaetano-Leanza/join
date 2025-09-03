@@ -24,18 +24,6 @@ h5 {
   overflow-y: auto;
 }
 
-.input-error {
-  border: 2px solid #d32f2f !important;
-  background-color: #fff0f0;
-}
-
-.error-message {
-  color: #d32f2f;
-  font-size: 0.95em;
-  margin-bottom: 8px;
-  margin-top: -8px;
-}
-
 .delete-subtask-btn {
   background: none;
   border: none;
@@ -53,23 +41,10 @@ h5 {
   cursor: pointer;
 }
 
-
 .content-wrapper {
   display: flex;
   flex-direction: column;
   gap: 5px;
-}
-
-.content-bottom {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: flex-end;
-  height: 260px;
-  width: 96%;
-  margin-bottom: 20px;
-  gap: 20px;
-  padding-top: 50px;
 }
 
 .headline-wrapper {
@@ -134,6 +109,39 @@ h5 {
   padding-left: 25px;
   height: 250px;
   width: 96%;
+}
+
+.content-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 360px;
+  width: 96%;
+  margin-bottom: 20px;
+  padding: 50px 0 0 0;
+}
+
+.text-bottom-mobile {
+  margin-top: 100px;
+}
+
+.create-task-button {
+  margin-top: 200px;
+  height: 47px;
+  width: 61px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.create-task-button svg {
+  transform: translateX(-18px) translateY(-4px);
+  height: 60px;
+}
+
+.create-task-button:hover svg rect {
+  fill: #007cee;
+  stroke: #007cee;
 }
 
 .row1 {
@@ -373,30 +381,6 @@ h5 {
   width: 105px;
 }
 
-.create-task-button {
-  height: 49px;
-  width: 61px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.create-task-button svg {
-  transform: translateX(-18px) translateY(-4px);
-  height: 60px;
-}
-
-.create-task-button:hover svg rect {
-  fill: #007cee;
-  stroke: #007cee;
-}
-
-.text-bottom-mobile {
-  position: absolute;
-  left: 70px;
-  bottom: -130px;
-}
-
 .icon-assign {
   position: absolute;
   top: 50%;
@@ -475,14 +459,12 @@ h5 {
   background: transparent;
   padding: 5px 0;
   padding-left: 10px;
-
 }
 
 .subtask-row input[type="text"]:focus {
   border: 1.5px solid #007cee !important;
   background: #f5faff;
   outline: none;
-
 }
 
 .icon-close {
@@ -508,6 +490,57 @@ h5 {
 .icon-check:hover {
   background: url("/img/haken-hover.svg") no-repeat center;
   background-size: 16px;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.placeholder9 {
+  flex: 1;
+  padding-right: 80px;
+  width: 100%;
+  box-sizing: border-box;
+  height: 40px;
+}
+
+.edit-buttons {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  z-index: 2;
+}
+
+.icon-close,
+.icon-check {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  font-size: 14px;
+  height: 24px;
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: #e0e0e0;
+  }
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  background-color: #ccc;
 }
 
 .avatar-container {
@@ -611,6 +644,128 @@ h5 {
   color: #333;
 }
 
+.input-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.subtask-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 115px;
+  overflow-y: auto;
+  margin-top: 8px;
+}
+
+.subtask-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px;
+  border-radius: 4px;
+  background-color: none;
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+}
+
+.subtask-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 4px;
+
+  &:read-only {
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: none;
+    background: white;
+    border: 1px solid #3f51b5;
+  }
+}
+
+.subtask-container {
+  margin-top: 8px;
+}
+
+.subtask-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px;
+  border-radius: 4px;
+  background-color: #fffefe;
+  margin-bottom: 4px;
+  position: relative;
+  padding-left: 20px; /* Platz für den Aufzählungspunkt */
+}
+
+.subtask-item::before {
+  content: "•"; /* Unicode für Aufzählungspunkt */
+  position: absolute;
+  left: 8px;
+  color: black;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.subtask-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 4px;
+
+  &:read-only {
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: none;
+    background: white;
+    border: 1px solid #3f51b5;
+  }
+}
+
+.subtask-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.subtask-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.subtask-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.edit-buttons {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: #e0e0e0;
+  }
+}
+
 .success-info-modal {
   position: fixed;
   bottom: 104px;
@@ -703,6 +858,60 @@ h5 {
   top: 50%;
   left: 37%;
   transform: translate(-50%, -37%);
+}
+
+.input-error {
+  border: 2px solid #d32f2f !important;
+  background-color: #ffebee !important;
+}
+
+.input-error-priority {
+  border: 2px solid #d32f2f !important;
+  border-radius: 8px;
+  padding: 4px;
+  display: inline-block;
+}
+
+.error-message {
+  color: #d32f2f;
+  font-size: 14px;
+  margin: 4px 0 16px 0;
+  font-weight: 500;
+}
+
+.left-side .placeholder1.input-error,
+.left-side .placeholder8.input-error,
+.right-side .input-wrapper .placeholder8.input-error {
+  border: 2px solid #ff0000 !important;
+}
+
+.input-error {
+  border: 2px solid #ff0000 !important;
+  outline: none;
+}
+
+.error-message {
+  color: #ff0000;
+  font-size: 14px;
+  margin-top: -15px;
+  display: block;
+  text-align: left;
+}
+
+.left-side .placeholder1.input-error,
+.left-side .placeholder8.input-error,
+.right-side .input-wrapper .placeholder8.input-error {
+  border: 2px solid #ff0000 !important;
+}
+
+.left-side .placeholder1:focus,
+.left-side .placeholder2:focus,
+.input-wrapper .placeholder7:focus,
+.left-side .placeholder8:focus,
+.input-wrapper .placeholder9:focus,
+.right-side .input-wrapper .placeholder8:focus {
+  border: 2px solid #007bff !important;
+  outline: none;
 }
 
 @media (max-width: 600px) {
@@ -880,7 +1089,6 @@ h5 {
 }
 
 @media (max-width: 390px) {
-
   .image-button-left,
   .image-button-middle,
   .image-button-right {
@@ -908,7 +1116,6 @@ h5 {
 }
 
 @media (max-width: 370px) {
-
   .image-button-left,
   .image-button-middle,
   .image-button-right {
@@ -936,7 +1143,6 @@ h5 {
 }
 
 @media (max-width: 355px) {
-
   .image-button-left,
   .image-button-middle,
   .image-button-right {

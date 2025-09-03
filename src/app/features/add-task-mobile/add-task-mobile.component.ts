@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContactService } from '../contacts/contact-service/contact.service';
 import { Contact } from '../contacts/contact-model/contact.model';
@@ -24,7 +32,7 @@ interface Subtask {
 export class AddTaskMobileComponent implements OnInit, OnChanges {
   @Output() close = new EventEmitter<void>();
   @Output() taskUpdated = new EventEmitter<Task>(); // Neues Event für Updates
-  
+
   @Input() showHeader: boolean = true;
   @Input() showReset: boolean = true;
   @Input() showCreate: boolean = true;
@@ -64,14 +72,13 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
     '#795548',
   ];
 
-  // Neue Properties für Kontaktauswahl
   selectedContacts: Contact[] = [];
   isContactSelected: boolean = false;
 
   constructor(
     private contactService: ContactService,
     private firestore: Firestore,
-    private taskService: TaskService // TaskService hinzufügen
+    private taskService: TaskService
   ) {}
 
   showSuccessInfo = false;
@@ -83,7 +90,7 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
       next: (contacts) => {
         this.contacts = contacts;
         this.topContacts = contacts.slice(0, 3);
-        
+
         // Wenn wir im Edit-Modus sind und bereits einen Task haben, befülle die Felder
         if (this.editMode && this.taskToEdit) {
           this.populateFormWithTaskData(this.taskToEdit);
@@ -95,12 +102,16 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     // Reagiere auf Änderungen des taskToEdit Inputs
-    if (changes['taskToEdit'] && changes['taskToEdit'].currentValue && this.editMode) {
+    if (
+      changes['taskToEdit'] &&
+      changes['taskToEdit'].currentValue &&
+      this.editMode
+    ) {
       if (this.contacts.length > 0) {
         this.populateFormWithTaskData(changes['taskToEdit'].currentValue);
       }
     }
-    
+
     // Reset form wenn editMode deaktiviert wird
     if (changes['editMode'] && !changes['editMode'].currentValue) {
       this.resetForm();
@@ -121,7 +132,7 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
 
     // Kontakte setzen
     if (task.contacts && task.contacts.length > 0) {
-      this.selectedContacts = this.contacts.filter(contact => 
+      this.selectedContacts = this.contacts.filter((contact) =>
         task.contacts.includes(contact.name)
       );
       this.isContactSelected = this.selectedContacts.length > 0;
@@ -149,6 +160,12 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
         this.isActive2 = true; // Default auf medium
         break;
     }
+  }
+
+  onSubtaskInput() {}
+
+  clearSubtask() {
+    this.subtaskText = '';
   }
 
   getSelectedContactsString(): string {
@@ -202,20 +219,9 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
     if (this.subtaskText.trim()) {
       this.subtasks.push({
         title: this.subtaskText.trim(),
-        done: true,
+        done: false,
       });
-      console.log(
-        'Subtask hinzugefügt:',
-        this.subtaskText.trim(),
-        'done: true'
-      );
-      this.currentIndex++;
-      if (this.currentIndex < this.defaultSubtasks.length) {
-        this.subtaskText = this.defaultSubtasks[this.currentIndex];
-      } else {
-        this.subtaskText = '';
-        this.isSubtaskOpen = false;
-      }
+      this.subtaskText = '';
     }
   }
 
@@ -242,12 +248,27 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
   }
 
   isFormValid(): boolean {
+    const isTitleValid = this.title.trim() !== '';
+    const isDueDateValid = this.dueDate.trim() !== '';
+    const isCategoryValid = this.selectedCategory !== '';
+    const isContactsValid = this.selectedContacts.length > 0;
+    const isPriorityValid = this.isActive1 || this.isActive2 || this.isActive3;
+
+    // Debug-Ausgabe
+    console.log('Form Validation:', {
+      isTitleValid,
+      isDueDateValid,
+      isCategoryValid,
+      isContactsValid,
+      isPriorityValid,
+    });
+
     return (
-      this.title.trim() !== '' &&
-      this.dueDate.trim() !== '' &&
-      this.selectedCategory !== '' &&
-      this.selectedContacts.length > 0 &&
-      (this.isActive1 || this.isActive2 || this.isActive3)
+      isTitleValid &&
+      isDueDateValid &&
+      isCategoryValid &&
+      isContactsValid &&
+      isPriorityValid
     );
   }
 
@@ -272,33 +293,49 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
   }
 
   async createTask() {
+    // Zeige Fehler für alle Felder
+    this.showError = true;
+
     if (!this.isFormValid()) {
-       this.showError = true;
       this.showSuccessInfo = true;
       this.successMessage = 'Please fill in all required fields';
+
+      // Scroll zum ersten Fehler
+      setTimeout(() => {
+        const firstError = document.querySelector('.input-error');
+        if (firstError) {
+          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 100);
+
       setTimeout(() => {
         this.showSuccessInfo = false;
-
-      }, 2000);
+      }, 3000);
       return;
     }
 
+    // Der Rest Ihrer createTask-Logik
     if (this.editMode && this.taskToEdit) {
-      // Task aktualisieren
       await this.updateTask();
     } else {
-      // Neuen Task erstellen
       await this.createNewTask();
     }
+  }
+
+  // Entfernen Sie die resetError() Methode komplett oder ändern Sie sie:
+  resetError() {
+    // Setze nur showSuccessInfo zurück, nicht showError
+    this.showSuccessInfo = false;
   }
 
   private async updateTask() {
     if (!this.taskToEdit) return;
 
-    // Wenn keine Subtasks hinzugefügt -> vorhandene Subtasks beibehalten oder default false Subtasks
-    let subtasksToSave = this.subtasks.length > 0 
-      ? this.subtasks 
-      : this.taskToEdit.subtasks || this.defaultSubtasks.map((title) => ({ title, done: false }));
+    let subtasksToSave =
+      this.subtasks.length > 0
+        ? this.subtasks
+        : this.taskToEdit.subtasks ||
+          this.defaultSubtasks.map((title) => ({ title, done: false }));
 
     const updateData = {
       title: this.title,
@@ -308,19 +345,20 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
       category: this.selectedCategory,
       subtasks: subtasksToSave,
       contacts: this.selectedContacts.map((contact) => contact.name),
-      assignedTo: this.selectedContacts.map((contact) => contact.name).join(', ')
+      assignedTo: this.selectedContacts
+        .map((contact) => contact.name)
+        .join(', '),
     };
 
     try {
       await this.taskService.updateTask(this.taskToEdit.id, updateData);
-      
-      // Emit das aktualisierte Task-Objekt
+
       const updatedTask: Task = {
         ...this.taskToEdit,
-        ...updateData
+        ...updateData,
       };
       this.taskUpdated.emit(updatedTask);
-      
+
       this.successMessage = 'Task updated successfully!';
       this.showSuccessInfo = true;
       setTimeout(() => {
@@ -338,7 +376,6 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
   }
 
   private async createNewTask() {
-    // Wenn keine Subtasks hinzugefügt -> default false Subtasks
     let subtasksToSave =
       this.subtasks.length > 0
         ? this.subtasks
@@ -388,22 +425,21 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
     this.currentIndex = 0;
   }
 
-  // Getter für Button-Text
   get submitButtonText(): string {
     return this.editMode ? 'Update Task' : 'Create Task';
   }
 
-editSubtaskIndex: number | null = null;
+  editSubtaskIndex: number | null = null;
 
-startEditSubtask(index: number) {
-  this.editSubtaskIndex = index;
-}
+  startEditSubtask(index: number) {
+    this.editSubtaskIndex = index;
+  }
 
-saveSubtaskEdit() {
-  this.editSubtaskIndex = null;
-}
+  saveSubtaskEdit() {
+    this.editSubtaskIndex = null;
+  }
 
   removeSubtask(index: number) {
-  this.subtasks.splice(index, 1);
-}
+    this.subtasks.splice(index, 1);
+  }
 }

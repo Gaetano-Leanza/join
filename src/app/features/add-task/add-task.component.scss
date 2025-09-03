@@ -798,17 +798,6 @@ h5 {
   height: 60px;
 }
 
-.subtask-list {
-  position: relative;
-  top: 0;
-  left: 0;
-  width: 100%;
-  margin-top: 10px;
-  background: white;
-  border-radius: 4px;
-  z-index: 10;
-}
-
 .subtask-item {
   display: flex;
   align-items: center;
@@ -848,12 +837,11 @@ h5 {
 
 .input-wrapper {
   position: relative;
-  margin-bottom: 10px; // Stellt sicher, dass Platz für die Subtask-Liste ist
+  margin-bottom: 10px; 
 }
 
 .placeholder9 {
-  // Deine bestehenden Styles
-  padding-right: 40px; // Platz für das Icon lassen
+  padding-right: 40px; 
 }
 
 .icon-subtask {
@@ -867,7 +855,7 @@ h5 {
   background-size: 20px;
   cursor: pointer;
   transition: background-image 0.3s;
-  z-index: 5; // Stellt sicher, dass das Icon über dem Input bleibt
+  z-index: 5; 
 }
 
 .icon-subtask:hover {
@@ -886,19 +874,6 @@ h5 {
   padding: 2px;
   cursor: pointer;
   z-index: 5; // Stellt sicher, dass das Icon über dem Input bleibt
-}
-
-.subtask-list {
-  position: absolute;
-  top: 100%; // Unterhalb des Inputs
-  left: 0;
-  width: 100%;
-  margin-top: 5px;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  z-index: 4; // Unter dem Icon aber über anderen Elementen
 }
 
 .subtask-list {
@@ -948,5 +923,5 @@ h5 {
 .input-wrapper {
   position: relative;
   margin-bottom: 10px;
-  min-height: 40px; // Minimale Höhe für den Wrapper
+  min-height: 40px; 
 }

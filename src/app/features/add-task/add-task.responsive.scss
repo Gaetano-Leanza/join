@@ -481,10 +481,11 @@
   }
 }
 
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
-  overflow: hidden; /* Body selbst bekommt keine Scrollbar */
+  overflow: hidden;
 }
 
 body {
@@ -519,8 +520,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    flex: 1;             
-    overflow-y: auto;     
+    flex: 1;
+    overflow-y: auto;
     overflow-x: hidden;
   }
 
@@ -635,8 +636,148 @@ body {
     height: 38px;
     width: 77px;
   }
-}
 
+  .subtask-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .subtask-bullet {
+    width: 6px;
+    height: 6px;
+    background-color: #000;
+    border-radius: 50%;
+    margin-right: 12px;
+    display: inline-block;
+  }
+
+  .subtask-text {
+    flex-grow: 1;
+    cursor: pointer;
+
+    &.done {
+      text-decoration: line-through;
+      color: #888;
+    }
+  }
+
+  .subtask-remove {
+    color: #ff0000;
+    cursor: pointer;
+    margin-left: 10px;
+    font-weight: bold;
+  }
+
+  .input-wrapper {
+    position: relative;
+    margin-bottom: 10px;
+  }
+
+  .placeholder9 {
+    padding-right: 40px;
+  }
+
+  .icon-subtask {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background: url("/img/Subtasks-icon.svg") no-repeat center;
+    background-size: 20px;
+    cursor: pointer;
+    transition: background-image 0.3s;
+    z-index: 5;
+  }
+
+  .icon-subtask:hover {
+    background-image: url("/img/Subtasks-icon-hover.svg");
+  }
+
+  .icon-subtask-wrapper {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    transform: translateY(-50%);
+    background: white;
+    border-radius: 4px;
+    padding: 2px;
+    cursor: pointer;
+    z-index: 5; // Stellt sicher, dass das Icon über dem Input bleibt
+  }
+
+  .subtask-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 100px;
+    overflow-y: auto;
+    margin-top: 5px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 4;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
+
+      &:hover {
+        background: #555;
+      }
+    }
+  }
+
+  .subtask-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .input-wrapper {
+    position: relative;
+    margin-bottom: 10px;
+    min-height: 40px;
+  }
+
+  .input-error {
+    border: 2px solid #ff0000 !important;
+    outline: none;
+  }
+
+  .error-message {
+    color: #ff0000;
+    font-size: 14px;
+    margin-top: -15px;
+    display: block;
+    text-align: left;
+  }
+}
 
 @media (max-width: 445px) {
   .row1 {
