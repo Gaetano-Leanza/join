@@ -94,7 +94,7 @@
         ]" (cdkDropListDropped)="drop($event)">
         <div *ngIf="todo.length === 0" class="empty-list">No tasks To do</div>
 
-        <div *ngFor="let task of todo; trackBy: trackByTaskId" cdkDrag>
+        <div *ngFor="let task of todo; trackBy: trackByTaskId" cdkDrag [cdkDragStartDelay]="dragDelay">
           <div class="example-box" (click)="openTaskModal(task)">
             <p class="task-category" [style.backgroundColor]="getCategoryColor(task.category)">
               {{ task.category }}
@@ -180,7 +180,7 @@
         <div *ngIf="inprogress.length === 0" class="empty-list">
           No tasks In Progress
         </div>
-        <div *ngFor="let task of inprogress; trackBy: trackByTaskId" cdkDrag>
+        <div *ngFor="let task of inprogress; trackBy: trackByTaskId" cdkDrag [cdkDragStartDelay]="dragDelay">
           <div class="example-box" (click)="openTaskModal(task)">
             <p class="task-category" [style.backgroundColor]="getCategoryColor(task.category)">
               {{ task.category }}
@@ -265,7 +265,7 @@
         <div *ngIf="awaitfeedback.length === 0" class="empty-list">
           No tasks Await Feedback
         </div>
-        <div *ngFor="let task of awaitfeedback; trackBy: trackByTaskId" cdkDrag>
+        <div *ngFor="let task of awaitfeedback; trackBy: trackByTaskId" cdkDrag [cdkDragStartDelay]="dragDelay">
           <div class="example-box" (click)="openTaskModal(task)">
             <p class="task-category" [style.backgroundColor]="getCategoryColor(task.category)">
               {{ task.category }}
@@ -351,7 +351,7 @@
           'awaitFeedbackList'
         ]" (cdkDropListDropped)="drop($event)">
         <div *ngIf="done.length === 0" class="empty-list">No tasks Done</div>
-        <div *ngFor="let task of done; trackBy: trackByTaskId" cdkDrag>
+        <div *ngFor="let task of done; trackBy: trackByTaskId" cdkDrag [cdkDragStartDelay]="dragDelay">
           <div class="example-box" (click)="openTaskModal(task)">
             <p class="task-category" [style.backgroundColor]="getCategoryColor(task.category)">
               {{ task.category }}

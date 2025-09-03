@@ -43,6 +43,7 @@ export class BoardComponent implements OnDestroy {
   }
 
   showModal = false;
+  dragDelay = 0;
 
   todo: Task[] = [];
   inprogress: Task[] = [];
@@ -52,6 +53,22 @@ export class BoardComponent implements OnDestroy {
   selectedTask: Task | null = null;
   selectedContact: (Contact & { id: string }) | null = null;
   private tasksSubscription: Subscription;
+
+  ngOnInit() {
+  this.setDragDelay();
+  window.addEventListener('resize', this.setDragDelay.bind(this));
+}
+
+ngOnDestroy() {
+  window.removeEventListener('resize', this.setDragDelay.bind(this));
+  if (this.tasksSubscription) {
+    this.tasksSubscription.unsubscribe();
+  }
+}
+
+setDragDelay() {
+  this.dragDelay = window.innerWidth <= 1299 ? 300 : 0; // 300ms Long-Press ab 1299px, sonst sofort
+}
 
   private readonly avatarColors = [
     '#F44336',
@@ -120,11 +137,7 @@ export class BoardComponent implements OnDestroy {
       .join('');
   }
 
-  ngOnDestroy() {
-    if (this.tasksSubscription) {
-      this.tasksSubscription.unsubscribe();
-    }
-  }
+ 
 
  getDoneSubtasks(task: Task): number {
   if (!task.subtasks) return 0;
