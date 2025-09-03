@@ -400,7 +400,6 @@
             [class.input-focused]="isSubtaskFocused || subtaskText.length > 0"
             (keydown.enter)="addSubtask()"
           />
-          <!-- Subtask-Liste -->
           <div class="subtask-list" *ngIf="subtasks.length > 0">
             <div
               *ngFor="let subtask of subtasks; let i = index"
@@ -419,8 +418,6 @@
             </div>
           </div>
 
-          <!-- Icons -->
-          <!-- Ersetzen Sie den bestehenden Icon-Code durch diesen: -->
           <div *ngIf="subtaskText.length > 0" class="icon-subtask-wrapper">
             <span class="icon-close" (click)="clearSubtaskInput()"></span>
             <span class="divider"></span>
