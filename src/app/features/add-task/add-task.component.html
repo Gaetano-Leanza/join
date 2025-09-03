@@ -388,7 +388,7 @@
       <div class="row4">
         <h4 class="headline">Subtasks</h4>
 
-        <div class="input-wrapper">
+        <div class="input-wrapper" #subtaskWrapper>
           <input
             class="placeholder9"
             type="text"
@@ -397,15 +397,15 @@
             [ngModelOptions]="{ standalone: true }"
             (focus)="isSubtaskFocused = true"
             (blur)="isSubtaskFocused = false"
-            [class.input-focused]="isSubtaskFocused || isSubtaskOpen"
+            [class.input-focused]="isSubtaskFocused || subtaskText.length > 0"
             (keydown.enter)="addSubtask()"
           />
-
           <!-- Subtask-Liste -->
           <div class="subtask-list" *ngIf="subtasks.length > 0">
             <div
               *ngFor="let subtask of subtasks; let i = index"
               class="subtask-item"
+              (click)="$event.stopPropagation()"
             >
               <span class="subtask-bullet"></span>
               <span
@@ -420,14 +420,9 @@
           </div>
 
           <!-- Icons -->
-          <span
-            *ngIf="!isSubtaskOpen"
-            class="icon-subtask"
-            (click)="toggleSubtaskIcon()"
-          ></span>
-
-          <div *ngIf="isSubtaskOpen" class="icon-subtask-wrapper">
-            <span class="icon-close" (click)="toggleSubtaskIcon()"></span>
+          <!-- Ersetzen Sie den bestehenden Icon-Code durch diesen: -->
+          <div *ngIf="subtaskText.length > 0" class="icon-subtask-wrapper">
+            <span class="icon-close" (click)="clearSubtaskInput()"></span>
             <span class="divider"></span>
             <span class="icon-check" (click)="addSubtask()"></span>
           </div>
@@ -435,7 +430,7 @@
 
         <div class="text-bottom-mobile">
           <h5>*</h5>
-          <h4>This field is requiered!</h4>
+          <h4>This field is required!</h4>
         </div>
 
         <div class="content-bottom-mobile">
@@ -526,8 +521,7 @@
         </div>
       </div>
     </div>
-      <div class="row5"></div>
-
+    <div class="row5"></div>
   </div>
 
   <div class="row5"></div>

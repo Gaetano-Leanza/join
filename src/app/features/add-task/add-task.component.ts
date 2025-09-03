@@ -33,7 +33,6 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   isActive3 = false;
   isAssignDropdownOpen = false;
   isCategoryDropdownOpen = false;
-  isSubtaskOpen = false;
   selectedContact: Contact | null = null;
   title: string = '';
   description: string = '';
@@ -202,11 +201,8 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     }, 100);
   }
 
-  toggleSubtaskIcon() {
-    this.isSubtaskOpen = !this.isSubtaskOpen;
-    if (this.isSubtaskOpen) {
-      this.subtaskText = '';
-    }
+  clearSubtaskInput() {
+    this.subtaskText = '';
   }
 
   addSubtask() {
@@ -217,7 +213,6 @@ export class AddTaskComponent implements OnInit, OnDestroy {
       });
       console.log('Subtask hinzugefügt:', this.subtaskText.trim());
       this.subtaskText = '';
-      this.isSubtaskOpen = false;
     }
   }
 
@@ -347,7 +342,6 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     this.isActive1 = false;
     this.isActive2 = false;
     this.isActive3 = false;
-    this.isSubtaskOpen = false;
     this.subtaskText = '';
     
     // Fehlerzustände zurücksetzen
