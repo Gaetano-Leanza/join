@@ -13,6 +13,8 @@ import { FormsModule } from '@angular/forms';
 import { Firestore, collection, addDoc } from '@angular/fire/firestore';
 import { fadeInOutInfo } from '../contacts/modal/modal.animations';
 import { getAvatarColor, getInitials } from './avatar-utils';
+import { Router } from '@angular/router';
+
 
 interface Subtask {
   title: string;
@@ -33,6 +35,9 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   @Input() showReset: boolean = true;
   @Input() showCreate: boolean = true;
 
+
+    
+  
   getInitials = getInitials;
   getAvatarColor = getAvatarColor;
   isActive1 = false;
@@ -80,7 +85,8 @@ export class AddTaskComponent implements OnInit, OnDestroy {
 
   constructor(
     private contactService: ContactService,
-    private firestore: Firestore
+    private firestore: Firestore,
+    private router: Router
   ) {}
 
   showSuccessInfo = false;
@@ -312,12 +318,9 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     try {
       const taskCollection = collection(this.firestore, 'tasks');
       await addDoc(taskCollection, taskData);
-      this.successMessage = 'Task erfolgreich erstellt!';
-      this.showSuccessInfo = true;
-      setTimeout(() => {
-        this.showSuccessInfo = false;
-      }, 2000);
+      
       this.resetForm();
+      this.navigateToBoard();
     } catch (error) {
       console.error('Fehler beim Erstellen des Tasks: ', error);
     }
@@ -340,4 +343,8 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     this.showDueDateError = false;
     this.showCategoryError = false;
   }
+
+  navigateToBoard() {
+  this.router.navigate(['/board']);
+}
 }
