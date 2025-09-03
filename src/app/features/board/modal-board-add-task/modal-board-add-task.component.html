@@ -1,6 +1,6 @@
 <div class="modal-backdrop" (click)="close.emit()">
     <div class="modal-content" (click)="$event.stopPropagation()" @slideInModal>
         <button (click)="close.emit()" id="close"></button>
-        <app-add-task></app-add-task>
+        <app-add-task (taskCreated)="close.emit()"></app-add-task>
     </div>
 </div>

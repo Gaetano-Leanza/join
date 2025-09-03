@@ -34,6 +34,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   @Input() showHeader: boolean = true;
   @Input() showReset: boolean = true;
   @Input() showCreate: boolean = true;
+@Output() taskCreated = new EventEmitter<void>();
 
 
     
@@ -321,6 +322,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
       
       this.resetForm();
       this.navigateToBoard();
+      this.taskCreated.emit();
     } catch (error) {
       console.error('Fehler beim Erstellen des Tasks: ', error);
     }
