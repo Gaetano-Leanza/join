@@ -493,7 +493,6 @@ body {
   height: 100vh;
 }
 
-/* ---------------- Mobile Layout ---------------- */
 @media (max-width: 768px) {
   .text-bottom,
   .content-bottom {
@@ -516,13 +515,12 @@ body {
     display: flex;
   }
 
-  /* WICHTIG: statt fester Höhe → flex:1 */
   .content-wrapper {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    flex: 1;              /* nimmt den Rest zwischen Header/Footer */
-    overflow-y: auto;     /* nur dieser Bereich scrollt */
+    flex: 1;             
+    overflow-y: auto;     
     overflow-x: hidden;
   }
 
@@ -531,7 +529,6 @@ body {
     display: none;
   }
 
-  /* Overflow hier entfernt – sonst wird nach außen gedrückt */
   .content {
     overflow: visible;
   }
@@ -636,7 +633,7 @@ body {
 
   .cancel-button {
     height: 38px;
-    width: 89px;
+    width: 77px;
   }
 }
 
