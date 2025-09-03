@@ -14,11 +14,11 @@
         type="text"
         placeholder="Enter a title"
         [(ngModel)]="title"
-        [ngClass]="{ 'input-error': showError && title.trim() === '' }"
+        [ngClass]="{ 'input-error': titleError }"
+        (input)="onTitleInput()"
       />
-      <div class="error-message" *ngIf="showError && title.trim() === ''">
-        Title is required.
-      </div>
+      <div class="error-message" *ngIf="titleError">Title is required</div>
+
       <h4>Description</h4>
       <textarea
         class="placeholder2"
@@ -32,13 +32,13 @@
         <h5>*</h5>
       </div>
       <input
-        class="placeholder1"
         type="date"
         [(ngModel)]="dueDate"
-        [ngClass]="{ 'input-error': showError && dueDate.trim() === '' }"
+        [ngClass]="{ 'input-error': dueDateError }"
+        (input)="onDueDateInput()"
       />
-      <div class="error-message" *ngIf="showError && dueDate.trim() === ''">
-        Due date is required.
+      <div class="error-message" *ngIf="dueDateError">
+        Due date is required
       </div>
     </div>
     <div class="right-side">
@@ -375,7 +375,6 @@
               (input)="onSubtaskInput()"
             />
 
-            <!-- Nur diese Icons sollten vorhanden sein -->
             <div *ngIf="subtaskText.length > 0" class="edit-buttons">
               <button class="icon-close" (click)="clearSubtask()" type="button">
                 ✖

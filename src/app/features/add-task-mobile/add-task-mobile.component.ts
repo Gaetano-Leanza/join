@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { Firestore, collection, addDoc } from '@angular/fire/firestore';
 import { fadeInOutInfo } from '../contacts/modal/modal.animations';
 import { getAvatarColor, getInitials } from './avatar-utils';
-import { Task, TaskService } from '../../services/task.service'; // Task importieren
+import { Task, TaskService } from '../../services/task.service';
 
 interface Subtask {
   title: string;
@@ -31,13 +31,13 @@ interface Subtask {
 })
 export class AddTaskMobileComponent implements OnInit, OnChanges {
   @Output() close = new EventEmitter<void>();
-  @Output() taskUpdated = new EventEmitter<Task>(); // Neues Event für Updates
+  @Output() taskUpdated = new EventEmitter<Task>();
 
   @Input() showHeader: boolean = true;
   @Input() showReset: boolean = true;
   @Input() showCreate: boolean = true;
-  @Input() editMode: boolean = false; // Neuer Input für Edit-Modus
-  @Input() taskToEdit: Task | null = null; // Neuer Input für zu editierenden Task
+  @Input() editMode: boolean = false;
+  @Input() taskToEdit: Task | null = null;
 
   getInitials = getInitials;
   getAvatarColor = getAvatarColor;
@@ -74,6 +74,15 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
 
   selectedContacts: Contact[] = [];
   isContactSelected: boolean = false;
+  showSuccessInfo = false;
+  successMessage = '';
+  showError = false;
+  
+  // Spezifische Fehler-Tracking
+  titleError = false;
+  dueDateError = false;
+  categoryError = false;
+  priorityError = false;
 
   constructor(
     private contactService: ContactService,
@@ -81,17 +90,12 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
     private taskService: TaskService
   ) {}
 
-  showSuccessInfo = false;
-  successMessage = '';
-  showError = false;
-
   ngOnInit() {
     this.contactService.getContacts().subscribe({
       next: (contacts) => {
         this.contacts = contacts;
         this.topContacts = contacts.slice(0, 3);
 
-        // Wenn wir im Edit-Modus sind und bereits einen Task haben, befülle die Felder
         if (this.editMode && this.taskToEdit) {
           this.populateFormWithTaskData(this.taskToEdit);
         }
@@ -101,7 +105,6 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // Reagiere auf Änderungen des taskToEdit Inputs
     if (
       changes['taskToEdit'] &&
       changes['taskToEdit'].currentValue &&
@@ -112,7 +115,6 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
       }
     }
 
-    // Reset form wenn editMode deaktiviert wird
     if (changes['editMode'] && !changes['editMode'].currentValue) {
       this.resetForm();
     }
@@ -124,13 +126,9 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
     this.dueDate = task.dueDate || '';
     this.selectedCategory = task.category || '';
 
-    // Priority buttons setzen
     this.setPriorityButtons(task.priority);
-
-    // Subtasks setzen
     this.subtasks = task.subtasks ? [...task.subtasks] : [];
 
-    // Kontakte setzen
     if (task.contacts && task.contacts.length > 0) {
       this.selectedContacts = this.contacts.filter((contact) =>
         task.contacts.includes(contact.name)
@@ -157,9 +155,44 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
         this.isActive3 = true;
         break;
       default:
-        this.isActive2 = true; // Default auf medium
+        this.isActive2 = true;
         break;
     }
+  }
+
+  // Validation Methods
+  onTitleInput() {
+    console.log('Title input:', this.title);
+    this.titleError = this.title.trim() === '';
+    this.updateShowError();
+  }
+
+  onDueDateInput() {
+    console.log('Due date input:', this.dueDate);
+    this.dueDateError = this.dueDate.trim() === '';
+    this.updateShowError();
+  }
+
+  private updateShowError() {
+    // Wenn alle Felder valid sind, verstecke Fehler
+    const hasAnyError = this.titleError || this.dueDateError || this.categoryError || this.priorityError;
+    if (!hasAnyError) {
+      this.showError = false;
+    }
+  }
+
+  private validateAllFields() {
+    this.titleError = this.title.trim() === '';
+    this.dueDateError = this.dueDate.trim() === '';
+    this.categoryError = this.selectedCategory === '';
+    this.priorityError = !(this.isActive1 || this.isActive2 || this.isActive3);
+    
+    console.log('Validation results:', {
+      titleError: this.titleError,
+      dueDateError: this.dueDateError,
+      categoryError: this.categoryError,
+      priorityError: this.priorityError
+    });
   }
 
   onSubtaskInput() {}
@@ -172,7 +205,6 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
     if (this.selectedContacts.length === 0) {
       return '';
     }
-
     const names = this.selectedContacts.map((contact) => contact.name);
     return names.join(', ');
   }
@@ -181,6 +213,8 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
     this.isActive1 = true;
     this.isActive2 = false;
     this.isActive3 = false;
+    this.priorityError = false;
+    this.updateShowError();
     console.log('Button 1 ist aktiv');
   }
 
@@ -188,6 +222,8 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
     this.isActive1 = false;
     this.isActive2 = true;
     this.isActive3 = false;
+    this.priorityError = false;
+    this.updateShowError();
     console.log('Button 2 ist aktiv');
   }
 
@@ -195,6 +231,8 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
     this.isActive1 = false;
     this.isActive2 = false;
     this.isActive3 = true;
+    this.priorityError = false;
+    this.updateShowError();
     console.log('Button 3 ist aktiv');
   }
 
@@ -233,6 +271,8 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
   selectCategory(category: string) {
     this.selectedCategory = category;
     this.isCategoryDropdownOpen = false;
+    this.categoryError = false;
+    this.updateShowError();
     console.log('Ausgewählte Kategorie:', category);
   }
 
@@ -251,25 +291,29 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
     const isTitleValid = this.title.trim() !== '';
     const isDueDateValid = this.dueDate.trim() !== '';
     const isCategoryValid = this.selectedCategory !== '';
-    const isContactsValid = this.selectedContacts.length > 0;
     const isPriorityValid = this.isActive1 || this.isActive2 || this.isActive3;
 
-    // Debug-Ausgabe
     console.log('Form Validation:', {
       isTitleValid,
       isDueDateValid,
       isCategoryValid,
-      isContactsValid,
       isPriorityValid,
     });
 
-    return (
-      isTitleValid &&
-      isDueDateValid &&
-      isCategoryValid &&
-      isContactsValid &&
-      isPriorityValid
-    );
+    return isTitleValid && isDueDateValid && isCategoryValid && isPriorityValid;
+  }
+
+  // Getter für Template
+  get hasTitleError(): boolean {
+    return this.showError && this.title.trim() === '';
+  }
+
+  get hasDueDateError(): boolean {
+    return this.showError && this.dueDate.trim() === '';
+  }
+
+  get hasCategoryError(): boolean {
+    return this.showError && this.selectedCategory === '';
   }
 
   toggleContactSelection(contact: Contact): void {
@@ -293,14 +337,16 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
   }
 
   async createTask() {
-    // Zeige Fehler für alle Felder
+    console.log('CreateTask aufgerufen');
+    
+    // Validiere alle Felder
+    this.validateAllFields();
     this.showError = true;
 
     if (!this.isFormValid()) {
       this.showSuccessInfo = true;
       this.successMessage = 'Please fill in all required fields';
 
-      // Scroll zum ersten Fehler
       setTimeout(() => {
         const firstError = document.querySelector('.input-error');
         if (firstError) {
@@ -314,18 +360,14 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
       return;
     }
 
-    // Der Rest Ihrer createTask-Logik
+    // Form ist valid
+    this.showError = false;
+
     if (this.editMode && this.taskToEdit) {
       await this.updateTask();
     } else {
       await this.createNewTask();
     }
-  }
-
-  // Entfernen Sie die resetError() Methode komplett oder ändern Sie sie:
-  resetError() {
-    // Setze nur showSuccessInfo zurück, nicht showError
-    this.showSuccessInfo = false;
   }
 
   private async updateTask() {
@@ -423,6 +465,11 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
     this.isSubtaskOpen = false;
     this.subtaskText = '';
     this.currentIndex = 0;
+    this.showError = false;
+    this.titleError = false;
+    this.dueDateError = false;
+    this.categoryError = false;
+    this.priorityError = false;
   }
 
   get submitButtonText(): string {

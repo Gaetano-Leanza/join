@@ -90,7 +90,7 @@ h5 {
 }
 
 .left-side {
-  padding-left: 25px;
+  padding-left: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -106,7 +106,7 @@ h5 {
   flex-direction: column;
   justify-content: space-between;
   gap: 15px;
-  padding-left: 25px;
+  padding-left: 20px;
   height: 250px;
   width: 96%;
 }
@@ -135,8 +135,8 @@ h5 {
 }
 
 .create-task-button svg {
-  transform: translateX(-18px) translateY(-4px);
-  height: 60px;
+  transform: translateX(-20px) translateY(-6px);
+  height: 58px;
 }
 
 .create-task-button:hover svg rect {
@@ -703,11 +703,11 @@ h5 {
   background-color: #fffefe;
   margin-bottom: 4px;
   position: relative;
-  padding-left: 20px; /* Platz für den Aufzählungspunkt */
+  padding-left: 20px;
 }
 
 .subtask-item::before {
-  content: "•"; /* Unicode für Aufzählungspunkt */
+  content: "•";
   position: absolute;
   left: 8px;
   color: black;
@@ -860,29 +860,11 @@ button {
   transform: translate(-50%, -37%);
 }
 
-.input-error {
-  border: 2px solid #d32f2f !important;
-  background-color: #ffebee !important;
-}
-
 .input-error-priority {
   border: 2px solid #d32f2f !important;
   border-radius: 8px;
   padding: 4px;
   display: inline-block;
-}
-
-.error-message {
-  color: #d32f2f;
-  font-size: 14px;
-  margin: 4px 0 16px 0;
-  font-weight: 500;
-}
-
-.left-side .placeholder1.input-error,
-.left-side .placeholder8.input-error,
-.right-side .input-wrapper .placeholder8.input-error {
-  border: 2px solid #ff0000 !important;
 }
 
 .input-error {
@@ -893,7 +875,7 @@ button {
 .error-message {
   color: #ff0000;
   font-size: 14px;
-  margin-top: -15px;
+  margin-top: -25px;
   display: block;
   text-align: left;
 }
@@ -1042,11 +1024,6 @@ button {
     height: 39px;
     width: 103px;
   }
-
-  .text-bottom-mobile {
-    position: absolute;
-    left: 45px;
-  }
 }
 
 @media (max-width: 470px) {
@@ -1065,26 +1042,19 @@ button {
   .row1 {
     gap: 10px;
   }
-}
 
-@media (max-width: 430px) {
-  .text-bottom-mobile {
-    position: absolute;
-    left: 40px;
+  .create-task-button {
+    margin-top: 300px;
+    height: 47px;
+    width: 61px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
   }
-}
 
-@media (max-width: 420px) {
-  .text-bottom-mobile {
-    position: absolute;
-    left: 35px;
-  }
-}
-
-@media (max-width: 400px) {
-  .text-bottom-mobile {
-    position: absolute;
-    left: 30px;
+  .create-task-button svg {
+    transform: translateX(-20px) translateY(-6px);
+    height: 58px;
   }
 }
 
@@ -1172,5 +1142,13 @@ button {
 @media (max-width: 330px) {
   .row1 {
     gap: 5px;
+  }
+}
+
+@media (max-width: 380px), (max-height: 700px) {
+  .content {
+    max-height: 80vh;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 }
