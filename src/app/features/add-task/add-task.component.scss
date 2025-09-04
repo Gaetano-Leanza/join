@@ -110,6 +110,7 @@ h5 {
   border-radius: 8px;
   height: 45px;
   width: 130px;
+
   &.input-focused {
     border: 1px solid #007bff !important; // Blauer Border
     outline: none;
@@ -122,6 +123,7 @@ h5 {
   border-radius: 8px;
   height: 35px;
   width: 378px;
+
   &.input-focused {
     border: 1px solid #007bff !important; // Blauer Border
     outline: none;
@@ -311,6 +313,8 @@ h5 {
   margin-bottom: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
+  border: none;
+
 }
 
 .create-task-button svg {
@@ -938,7 +942,8 @@ h5 {
 .icon-edit,
 .icon-delete {
   cursor: pointer;
-  color: #000000; /* Schwarz */
+  color: #000000;
+  /* Schwarz */
   font-size: 16px;
   line-height: 16px;
   opacity: 0.7;
