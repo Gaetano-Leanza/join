@@ -44,8 +44,8 @@ button:hover {
 
 #close {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 5%;
+  left: 93%;
   background: url("/img/close.svg") no-repeat center;
   border: none;
   width: 24px;
@@ -79,5 +79,9 @@ button:hover {
     padding-left: 0px;
     transform-origin: center;
     height: 90vh;
+  }
+
+  #close {
+    left: 90%;
   }
 }
