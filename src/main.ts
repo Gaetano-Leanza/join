@@ -40,7 +40,7 @@ const getFirebaseProviders = () => {
     console.log('SSR context detected - skipping Firebase providers');
     return [];
   }
-  
+
   console.log('Browser context detected - adding Firebase providers');
   return [
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
@@ -57,6 +57,7 @@ bootstrapApplication(AppComponent, {
   providers: [
     ...(appConfig.providers || []),
     provideAnimations(),
-    ...getFirebaseProviders(), provideFirebaseApp(() => initializeApp({ projectId: "join-e1f64", appId: "1:969006467578:web:52d944e5ed232984783c43", storageBucket: "join-e1f64.firebasestorage.app", apiKey: "AIzaSyD1fse1ML6Ie-iFClg_2Ukr-G1FEeQUHac", authDomain: "join-e1f64.firebaseapp.com", messagingSenderId: "969006467578", measurementId: "G-Y12RXDEX3N" })), provideAuth(() => getAuth())
+    ...getFirebaseProviders(),
+    provideAuth(() => getAuth())
   ]
 }).catch(err => console.error(err));

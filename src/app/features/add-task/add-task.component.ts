@@ -15,7 +15,6 @@ import { fadeInOutInfo } from '../contacts/modal/modal.animations';
 import { getAvatarColor, getInitials } from './avatar-utils';
 import { Router } from '@angular/router';
 
-
 interface Subtask {
   title: string;
   done: boolean;
@@ -34,11 +33,8 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   @Input() showHeader: boolean = true;
   @Input() showReset: boolean = true;
   @Input() showCreate: boolean = true;
-@Output() taskCreated = new EventEmitter<void>();
+  @Output() taskCreated = new EventEmitter<void>();
 
-
-    
-  
   getInitials = getInitials;
   getAvatarColor = getAvatarColor;
   isActive1 = false;
@@ -56,6 +52,9 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   hoveredOption: string = '';
   subtaskText: string = '';
   subtasks: Subtask[] = [];
+  editingIndex: number | null = null;
+  previousValue: string = '';
+  
   private readonly avatarColors = [
     '#F44336',
     '#E91E63',
@@ -222,9 +221,25 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     this.subtasks.splice(index, 1);
   }
 
-  toggleSubtaskStatus(index: number) {
-    this.subtasks[index].done = !this.subtasks[index].done;
-    console.log('Subtask Status geändert:', this.subtasks[index]);
+  startEditing(index: number) {
+    this.editingIndex = index;
+    this.previousValue = this.subtasks[index].title;
+  }
+
+  stopEditing() {
+    if (this.editingIndex !== null) {
+      if (!this.subtasks[this.editingIndex].title.trim()) {
+        this.subtasks[this.editingIndex].title = this.previousValue;
+      }
+      this.editingIndex = null;
+    }
+  }
+
+  cancelEditing() {
+    if (this.editingIndex !== null) {
+      this.subtasks[this.editingIndex].title = this.previousValue;
+      this.editingIndex = null;
+    }
   }
 
   selectCategory(category: string) {
@@ -344,9 +359,10 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     this.showTitleError = false;
     this.showDueDateError = false;
     this.showCategoryError = false;
+    this.editingIndex = null;
   }
 
   navigateToBoard() {
-  this.router.navigate(['/board']);
-}
+    this.router.navigate(['/board']);
+  }
 }

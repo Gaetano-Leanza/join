@@ -211,16 +211,33 @@
           <input class="placeholder9" type="text" placeholder="Add new subtask" [(ngModel)]="subtaskText"
             [ngModelOptions]="{ standalone: true }" (focus)="isSubtaskFocused = true" (blur)="isSubtaskFocused = false"
             [class.input-focused]="isSubtaskFocused || subtaskText.length > 0" (keydown.enter)="addSubtask()" />
-          <div class="subtask-list" *ngIf="subtasks.length > 0">
-            <div *ngFor="let subtask of subtasks; let i = index" class="subtask-item"
-              (click)="$event.stopPropagation()">
-              <span class="subtask-bullet"></span>
-              <span class="subtask-text" [class.done]="subtask.done" (click)="toggleSubtaskStatus(i)">
-                {{ subtask.title }}
-              </span>
-              <span class="subtask-remove" (click)="removeSubtask(i)">✕</span>
-            </div>
-          </div>
+         
+         <div class="subtask-list" *ngIf="subtasks.length > 0">
+  <div *ngFor="let subtask of subtasks; let i = index" class="subtask-item">
+    <span class="subtask-bullet"></span>
+    
+    <!-- Anzeigemodus -->
+    <span 
+      *ngIf="editingIndex !== i"
+      class="subtask-text"
+      (dblclick)="startEditing(i)">
+      {{ subtask.title }}
+    </span>
+    
+    <!-- Bearbeitungsmodus -->
+    <input 
+      *ngIf="editingIndex === i"
+      type="text"
+      [(ngModel)]="subtask.title"
+      (blur)="stopEditing()"
+      (keydown.enter)="stopEditing()"
+      (keydown.escape)="cancelEditing()"
+      class="subtask-edit-input"
+      autofocus>
+    
+    <span class="subtask-remove" (click)="removeSubtask(i)">✕</span>
+  </div>
+</div>
 
           <div *ngIf="subtaskText.length > 0" class="icon-subtask-wrapper">
             <span class="icon-close" (click)="clearSubtaskInput()"></span>
