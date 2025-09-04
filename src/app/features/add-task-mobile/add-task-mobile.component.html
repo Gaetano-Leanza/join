@@ -361,62 +361,59 @@
 
       <div class="row4">
         <h4 class="headline">Subtasks</h4>
-        <div class="input-wrapper">
-          <div class="input-container">
-            <input
-              class="placeholder9"
-              type="text"
-              placeholder="Add new subtask"
-              [(ngModel)]="subtaskText"
-              [ngModelOptions]="{ standalone: true }"
-              (keydown.enter)="addSubtask()"
-              (input)="onSubtaskInput()"
-            />
 
-            <div *ngIf="subtaskText.length > 0" class="edit-buttons">
-              <button class="icon-close" (click)="clearSubtask()" type="button">
-                ✖
-              </button>
-              <span class="divider"></span>
-              <button class="icon-check" (click)="addSubtask()" type="button">
-                ✔
-              </button>
-            </div>
-          </div>
+        <div class="input-wrapper" #subtaskWrapper>
+          <input
+            class="placeholder9"
+            type="text"
+            placeholder="Add new subtask"
+            [(ngModel)]="subtaskText"
+            [ngModelOptions]="{ standalone: true }"
+            (focus)="isSubtaskFocused = true"
+            (blur)="isSubtaskFocused = false"
+            [class.input-focused]="isSubtaskFocused || subtaskText.length > 0"
+            (keydown.enter)="addSubtask()"
+          />
 
-          <div class="subtask-container">
+          <div class="subtask-list" *ngIf="subtasks.length > 0">
             <div
               *ngFor="let subtask of subtasks; let i = index"
               class="subtask-item"
             >
+              <span class="subtask-bullet"></span>
+
+              <!-- Anzeigemodus -->
+              <span *ngIf="editSubtaskIndex !== i" class="subtask-text">
+                {{ subtask.title }}
+              </span>
+
+              <!-- Bearbeitungsmodus -->
               <input
+                *ngIf="editSubtaskIndex === i"
                 type="text"
                 [(ngModel)]="subtask.title"
-                [readonly]="editSubtaskIndex !== i"
-                (focus)="startEditSubtask(i)"
-                class="subtask-input"
+                (blur)="saveSubtaskEdit()"
+                (keydown.enter)="saveSubtaskEdit()"
+                (keydown.escape)="cancelSubtaskEdit()"
+                class="subtask-edit-input"
+                autofocus
               />
-              <div class="subtask-actions">
-                <button
-                  *ngIf="editMode && editSubtaskIndex === i"
-                  class="save-subtask-btn"
-                  (click)="saveSubtaskEdit()"
-                  aria-label="Save subtask"
-                  type="button"
+
+              <!-- Aktions-Icons -->
+              <div class="subtask-actions" *ngIf="editSubtaskIndex !== i">
+                <span class="icon-edit" (click)="startEditSubtask(i)"
+                  >&#9998;</span
                 >
-                  ✔️
-                </button>
-                <button
-                  *ngIf="editMode"
-                  class="delete-subtask-btn"
-                  (click)="removeSubtask(i)"
-                  aria-label="Delete subtask"
-                  type="button"
-                >
-                  X
-                </button>
+                <span class="divider"></span>
+                <span class="icon-delete" (click)="removeSubtask(i)">🗑️</span>
               </div>
             </div>
+          </div>
+
+          <div *ngIf="subtaskText.length > 0" class="icon-subtask-wrapper">
+            <span class="icon-close" (click)="clearSubtask()"></span>
+            <span class="divider"></span>
+            <span class="icon-check" (click)="addSubtask()"></span>
           </div>
         </div>
       </div>

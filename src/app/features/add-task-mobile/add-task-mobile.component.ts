@@ -44,6 +44,8 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
   isActive1 = false;
   isActive2 = false;
   isActive3 = false;
+  isSubtaskFocused = false;
+  previousSubtaskValue = '';
   isAssignDropdownOpen = false;
   isCategoryDropdownOpen = false;
   isSubtaskOpen = false;
@@ -160,6 +162,31 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
     }
   }
 
+  startEditSubtask(index: number) {
+    this.editSubtaskIndex = index;
+    this.previousSubtaskValue = this.subtasks[index].title;
+  }
+
+  saveSubtaskEdit() {
+    if (this.editSubtaskIndex !== null) {
+      if (!this.subtasks[this.editSubtaskIndex].title.trim()) {
+        this.subtasks[this.editSubtaskIndex].title = this.previousSubtaskValue;
+      }
+      this.editSubtaskIndex = null;
+    }
+  }
+
+  cancelSubtaskEdit() {
+    if (this.editSubtaskIndex !== null) {
+      this.subtasks[this.editSubtaskIndex].title = this.previousSubtaskValue;
+      this.editSubtaskIndex = null;
+    }
+  }
+
+  clearSubtask() {
+    this.subtaskText = '';
+  }
+
   // Validation Methods
   onTitleInput() {
     console.log('Title input:', this.title);
@@ -200,10 +227,6 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
   }
 
   onSubtaskInput() {}
-
-  clearSubtask() {
-    this.subtaskText = '';
-  }
 
   getSelectedContactsString(): string {
     if (this.selectedContacts.length === 0) {
@@ -481,14 +504,6 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
   }
 
   editSubtaskIndex: number | null = null;
-
-  startEditSubtask(index: number) {
-    this.editSubtaskIndex = index;
-  }
-
-  saveSubtaskEdit() {
-    this.editSubtaskIndex = null;
-  }
 
   removeSubtask(index: number) {
     this.subtasks.splice(index, 1);
