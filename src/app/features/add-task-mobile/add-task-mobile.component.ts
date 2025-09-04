@@ -77,7 +77,7 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
   showSuccessInfo = false;
   successMessage = '';
   showError = false;
-  
+
   // Spezifische Fehler-Tracking
   titleError = false;
   dueDateError = false;
@@ -175,7 +175,11 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
 
   private updateShowError() {
     // Wenn alle Felder valid sind, verstecke Fehler
-    const hasAnyError = this.titleError || this.dueDateError || this.categoryError || this.priorityError;
+    const hasAnyError =
+      this.titleError ||
+      this.dueDateError ||
+      this.categoryError ||
+      this.priorityError;
     if (!hasAnyError) {
       this.showError = false;
     }
@@ -186,12 +190,12 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
     this.dueDateError = this.dueDate.trim() === '';
     this.categoryError = this.selectedCategory === '';
     this.priorityError = !(this.isActive1 || this.isActive2 || this.isActive3);
-    
+
     console.log('Validation results:', {
       titleError: this.titleError,
       dueDateError: this.dueDateError,
       categoryError: this.categoryError,
-      priorityError: this.priorityError
+      priorityError: this.priorityError,
     });
   }
 
@@ -338,7 +342,7 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
 
   async createTask() {
     console.log('CreateTask aufgerufen');
-    
+
     // Validiere alle Felder
     this.validateAllFields();
     this.showError = true;

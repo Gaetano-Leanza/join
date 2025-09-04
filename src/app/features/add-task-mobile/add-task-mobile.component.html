@@ -37,9 +37,7 @@
         [ngClass]="{ 'input-error': dueDateError }"
         (input)="onDueDateInput()"
       />
-      <div class="error-message" *ngIf="dueDateError">
-        Due date is required
-      </div>
+      <div class="error-message" *ngIf="dueDateError">Due date is required</div>
     </div>
     <div class="right-side">
       <div class="row1-wrapper">
