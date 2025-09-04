@@ -1050,6 +1050,7 @@ button {
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
+    border: none;
   }
 
   .create-task-button svg {
@@ -1059,6 +1060,7 @@ button {
 }
 
 @media (max-width: 390px) {
+
   .image-button-left,
   .image-button-middle,
   .image-button-right {
@@ -1086,6 +1088,7 @@ button {
 }
 
 @media (max-width: 370px) {
+
   .image-button-left,
   .image-button-middle,
   .image-button-right {
@@ -1113,6 +1116,7 @@ button {
 }
 
 @media (max-width: 355px) {
+
   .image-button-left,
   .image-button-middle,
   .image-button-right {
@@ -1145,7 +1149,8 @@ button {
   }
 }
 
-@media (max-width: 380px), (max-height: 700px) {
+@media (max-width: 380px),
+(max-height: 700px) {
   .content {
     max-height: 80vh;
   }

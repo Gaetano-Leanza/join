@@ -443,7 +443,7 @@ export class AddTaskMobileComponent implements OnInit, OnChanges {
     try {
       const taskCollection = collection(this.firestore, 'tasks');
       await addDoc(taskCollection, taskData);
-      this.successMessage = 'Task erfolgreich erstellt!';
+      this.successMessage = 'Task created successfully!';
       this.showSuccessInfo = true;
       setTimeout(() => {
         this.showSuccessInfo = false;

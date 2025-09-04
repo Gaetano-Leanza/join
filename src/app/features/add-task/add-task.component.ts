@@ -311,7 +311,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
 
     if (!this.isFormValid()) {
       this.showSuccessInfo = true;
-      this.successMessage = 'Bitte füllen Sie alle erforderlichen Felder aus.';
+      this.successMessage = 'Please fill in all required fields';
       setTimeout(() => {
         this.showSuccessInfo = false;
       }, 2000);
