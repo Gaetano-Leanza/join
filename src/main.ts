@@ -8,6 +8,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { setLogLevel, LogLevel } from '@angular/fire';
 import { AppComponent } from './app/app.component';
 import { appConfig } from './app/app.config';
+import { getAuth, provideAuth } from '@angular/fire/auth';
 
 /**
  * Firebase configuration.
@@ -56,6 +57,6 @@ bootstrapApplication(AppComponent, {
   providers: [
     ...(appConfig.providers || []),
     provideAnimations(),
-    ...getFirebaseProviders()
+    ...getFirebaseProviders(), provideFirebaseApp(() => initializeApp({ projectId: "join-e1f64", appId: "1:969006467578:web:52d944e5ed232984783c43", storageBucket: "join-e1f64.firebasestorage.app", apiKey: "AIzaSyD1fse1ML6Ie-iFClg_2Ukr-G1FEeQUHac", authDomain: "join-e1f64.firebaseapp.com", messagingSenderId: "969006467578", measurementId: "G-Y12RXDEX3N" })), provideAuth(() => getAuth())
   ]
 }).catch(err => console.error(err));
