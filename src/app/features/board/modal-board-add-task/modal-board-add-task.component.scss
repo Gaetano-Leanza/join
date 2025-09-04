@@ -76,7 +76,7 @@ button:hover {
 @media (max-width: 768px) {
   .modal-content app-add-task {
     display: block;
-    transform: scale(1.0) translateY(30px);
+    transform: scale(0.95) translateY(0px);
     padding-left: 0px;
     transform-origin: center;
     height: 90vh;
