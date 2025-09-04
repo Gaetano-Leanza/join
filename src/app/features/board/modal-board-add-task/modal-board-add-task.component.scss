@@ -55,6 +55,8 @@ button:hover {
 }
 
 
+
+
 @media (max-width: 1200px) {
   .modal-content app-add-task {
     display: block;
@@ -79,10 +81,17 @@ button:hover {
     transform: scale(0.95) translateY(0px);
     padding-left: 0px;
     transform-origin: center;
-    height: 90vh;
+    scrollbar-width: none;
+    height: 550px;
   }
 
   #close {
     left: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-content ::ng-deep .row5 {
+    display: none !important;
   }
 }

@@ -34,6 +34,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   @Input() showReset: boolean = true;
   @Input() showCreate: boolean = true;
   @Output() taskCreated = new EventEmitter<void>();
+  @Input() isModal = false;
 
   getInitials = getInitials;
   getAvatarColor = getAvatarColor;
