@@ -44,6 +44,7 @@ button:hover {
 
 #close {
   position: absolute;
+  z-index: 1;
   top: 5%;
   left: 93%;
   background: url("/img/close.svg") no-repeat center;
@@ -75,7 +76,7 @@ button:hover {
 @media (max-width: 768px) {
   .modal-content app-add-task {
     display: block;
-    transform: scale(0.85) translateY(45px);
+    transform: scale(1.0) translateY(30px);
     padding-left: 0px;
     transform-origin: center;
     height: 90vh;
