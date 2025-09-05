@@ -5,51 +5,22 @@
 
   <div class="signup-container">
     <div class="headline">
-      <img
-        (click)="goBack()"
-        src="public/img/arrow-left.svg"
-        alt="Arrow left"
-      />
+      <img (click)="goBack()" src="public/img/arrow-left.svg" alt="Arrow left" />
       <h1>Sign up</h1>
     </div>
 
     <form (ngSubmit)="signup()" #signupForm="ngForm">
       <div class="input-container">
-        <input
-          type="text"
-          placeholder="Name"
-          name="name"
-          [(ngModel)]="name"
-          required
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          name="email"
-          [(ngModel)]="email"
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          name="password"
-          [(ngModel)]="password"
-          required
-        />
-      <input
-          type="confirm-password"
-          placeholder="Confirm Password"
-          name="confirm-password"
-          [(ngModel)]="password"
-          required
-        />
+        <input type="text" placeholder="Name" name="name" [(ngModel)]="name" required />
+        <input type="email" placeholder="Email" name="email" [(ngModel)]="email" required />
+        <input type="password" placeholder="Password" name="password" [(ngModel)]="password" required />
+        <input type="confirm-password" placeholder="Confirm Password" name="confirm-password" [(ngModel)]="password"
+          required />
       </div>
 
       <div class="checkbox-container">
         <input type="checkbox" id="privacy-policy" name="privacy-policy" />
-        <label for="privacy-policy"
-          >I accept the <a href="#">Privacy Policy</a></label
-        >
+        <label for="privacy-policy">I accept the <a href="#">Privacy Policy</a></label>
       </div>
 
       <div class="button-container">

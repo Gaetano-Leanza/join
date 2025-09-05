@@ -19,6 +19,7 @@
     overflow-y: auto;
     max-width: 1500px;
     overflow: hidden;
+    background-color: #f6f7f8;
 }
 
 #headline-wrapper {
@@ -100,7 +101,6 @@ h5 {
     display: flex;
     flex-direction: row;
     align-items: center;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
 
 }
 
@@ -114,6 +114,9 @@ h5 {
     display: flex;
     justify-content: space-between;
     padding: 0 10px;
+    gap: 20px;
+
+
 }
 
 #to-do,
@@ -125,6 +128,9 @@ h5 {
     align-items: center;
     height: 80%;
     gap: 10px;
+    border-radius: 30px;
+
+    background-color: white;
 }
 
 .task-number {
@@ -144,11 +150,12 @@ h5 {
 #to-do:hover,
 #done:hover {
     background-color: #2A3647;
-    border-radius: 30px;
     cursor: pointer;
     transition: transform 125ms ease;
     transform: scale(1.03);
     color: white;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+
 }
 
 
@@ -181,7 +188,8 @@ h5 {
     justify-content: center;
     height: 100%;
     width: 100%;
-    gap: 10px;
+    background-color: white;
+    border-radius: 30px;
 }
 
 #board-tasks:hover,
@@ -189,11 +197,17 @@ h5 {
 #awaiting-cont:hover {
     color: white;
     background-color: #2A3647;
-    border-radius: 30px;
     cursor: pointer;
     transition: transform 125ms ease;
     transform: scale(1.03);
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+
+
+}
+
+#progress-overview {
+    padding: 15px 5px;
+    background-color: white;
 
 }
 
@@ -203,6 +217,8 @@ h5 {
     transition: transform 125ms ease;
     transform: scale(1.03);
     cursor: pointer;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+
 }
 
 .urgent-icon {

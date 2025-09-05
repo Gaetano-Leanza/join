@@ -71,4 +71,11 @@ export const routes: Routes = [
     component: SummaryComponent,
     data: { prerender: true },
   },
+
+  {
+    path: 'app-signup',
+    component: SignupComponent,
+        data: { prerender: true },
+
+  },
 ];
