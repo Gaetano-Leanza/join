@@ -3,15 +3,25 @@
         <div>
             <h3>Join 360 </h3>
         </div>
-        <div>
+        <div id="divider-vertical">
             <svg width="4" height="63" viewBox="0 0 4 63" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M2 2V61" stroke="#29ABE2" stroke-width="3" stroke-linecap="round" />
             </svg>
 
 
         </div>
-        <div>
-            <h4>Key Metrics at a Glance</h4>
+
+
+
+
+        <h4>Key Metrics at a Glance</h4>
+
+
+        <div id="line">
+            <svg class="divider-horizontal" width="94" height="4" viewBox="0 0 94 4" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M92 2L2 2" stroke="#29ABE2" stroke-width="3" stroke-linecap="round" />
+            </svg>
         </div>
     </div>
 
@@ -61,14 +71,14 @@
                     <div id="urgent-container">
                         <svg class="urgent-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7 14L12 9L17 14" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                            <path d="M7 14L12 9L17 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" />
-                            <path d="M7 18L12 13L17 18" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                            <path d="M7 18L12 13L17 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" />
                         </svg>
                     </div>
-                    <div id="urgent-number"> <span class="task-number">{{getUrgentCount()}}</span><span
-                            class="category"> Urgent</span> </div>
+                    <div id="urgent-number"> <span class="task-number">{{getUrgentCount()}}
+                        </span><span class="category"> Urgent</span> </div>
 
                 </div>
 
@@ -83,7 +93,7 @@
                         <span>—</span>
                     </ng-template>
 
-                    Upcoming Deadline
+                    <span class="text-deadline"> Upcoming Deadline</span>
                 </div>
 
             </div>
@@ -91,7 +101,8 @@
 
             <div id="board-overview">
                 <div id="board-tasks" (click)="navigateToBoard()"><span class="task-number">{{getTasksCount()}}</span>
-                    Tasks in <br> Board</div>
+                    <span class="category"> Tasks in <br> Board </span>
+                </div>
                 <div id="progress-cont" (click)="navigateToBoard()"><span
                         class="task-number">{{getProgressTaskCount()}}</span> <span class="category">Tasks in
                         <br>Progress</span>
@@ -105,7 +116,9 @@
 
         </div>
         <div id="right-content">
-            <h5>Good morning! </h5>
+            <h5>{{getGreeting()}}, <br>
+                <span id="username">{{username}} </span>
+            </h5>
         </div>
     </div>
 

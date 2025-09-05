@@ -9,17 +9,23 @@ import { Router } from '@angular/router';
   imports: [CommonModule],
   standalone: true,
   templateUrl: './summary.component.html',
-  styleUrl: './summary.component.scss'
+  styleUrls: ['./summary.component.scss', './summary.responsive.scss']
 })
 export class SummaryComponent {
   tasks: Task[] = [];
+  username: string = '';
+  
 
-  constructor(private router: Router,private taskService: TaskService) {}
+  constructor(
+          private router: Router,
+          private taskService: TaskService,
+        ) {}
 
   ngOnInit() {
     this.taskService.getTasks().subscribe(tasks => {
       this.tasks = tasks;
     });
+    this.username = 'Sophia Müller'; // Testname
   }
 getToDoCount(): number {
   return this.tasks ? this.tasks.filter((task: Task) => task.progress === 'toDo').length : 0;
@@ -67,6 +73,17 @@ getUpcomingDeadline(): string | null {
 
   navigateToBoard() {
   this.router.navigate(['/board']);
+}
+
+getGreeting():string {
+  const hour = new Date().getHours();
+  if (hour < 12) {
+    return 'Good Morning';
+  } else if (hour < 18) {
+    return 'Good Afternoon';
+  } else {
+    return 'Good Evening';
+  }
 }
 }
 

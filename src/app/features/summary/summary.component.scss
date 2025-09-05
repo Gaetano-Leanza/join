@@ -5,6 +5,10 @@
     font-style: normal;
 }
 
+#line {
+    display: none;
+}
+
 #summary-wrapper {
     width: calc(100vw - 230px);
     height: calc(100vh - 96px);
@@ -59,21 +63,22 @@ h5 {
 }
 
 #content-wrapper {
+    display: flex;
     width: 100%;
     max-width: calc(100vw - 240px - 173px);
     height: calc(100vh - 96px - 230px);
     margin-left: 60px;
-    padding: 0 20px;
+    gap: 20px;
+
 }
 
 #left-content {
     width: 45%;
-    float: left;
-    margin-right: 20px;
     height: calc(100vh - 96px - 250px);
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 20px;
 }
 
 #right-content {
@@ -95,6 +100,8 @@ h5 {
     display: flex;
     flex-direction: row;
     align-items: center;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+
 }
 
 #tasks-todo-done,
@@ -111,12 +118,12 @@ h5 {
 
 #to-do,
 #done {
-    width: 49%;
+    width: 46%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    height: 80%;
     gap: 10px;
 }
 
@@ -130,7 +137,7 @@ h5 {
     flex-direction: column;
     align-items: start;
     justify-content: end;
-    margin-top: -15px;
+
 }
 
 
@@ -139,7 +146,7 @@ h5 {
     background-color: #2A3647;
     border-radius: 30px;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: transform 125ms ease;
     transform: scale(1.03);
     color: white;
 }
@@ -151,12 +158,13 @@ h5 {
     color: #ffffff;
     stroke: #2A3647;
     stroke-width: 2px;
-    transition: fill 0.2s, stroke 0.2s;
+    transition: fill 125ms, stroke 125ms;
 }
 
 #to-do svg,
 #done svg {
     color: #2A3647;
+    max-width: 60px;
 
 }
 
@@ -172,7 +180,7 @@ h5 {
     align-items: center;
     justify-content: center;
     height: 100%;
-    width: 32%;
+    width: 100%;
     gap: 10px;
 }
 
@@ -183,8 +191,18 @@ h5 {
     background-color: #2A3647;
     border-radius: 30px;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: transform 125ms ease;
     transform: scale(1.03);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+
+}
+
+#progress-overview:hover {
+    background-color: #2A3647;
+    color: white;
+    transition: transform 125ms ease;
+    transform: scale(1.03);
+    cursor: pointer;
 }
 
 .urgent-icon {
@@ -217,8 +235,12 @@ h5 {
 }
 
 .category {
-    font-size: 14px;
+    font-size: 20px;
     font-weight: 400;
+}
+
+.text-deadline {
+    font-size: 16px;
 }
 
 #upcoming-deadline {
@@ -226,6 +248,7 @@ h5 {
     flex-direction: column;
     align-items: center;
     gap: 5px;
+    font-size: 16px;
 }
 
 .datum {
@@ -234,23 +257,24 @@ h5 {
 }
 
 #progress-overview {
-    width: 90%;
-    height: 22%;
+    width: 95%;
+    height: 25%;
     border-radius: 30px;
 
 }
 
-#progress-overview:hover {
-    background-color: #2A3647;
-    color: white;
-    transition: transform 0.2s ease;
-    transform: scale(1.03);
-    cursor: pointer;
-}
+
 
 #divider {
     width: 2px;
     height: 60%;
     background-color: #D1D1D1;
     margin: 0 20px;
+}
+
+#username {
+    color: #29ABE2;
+    font-size: 64px;
+    font-weight: 700;
+    inline-size: 0.5rem;
 }
