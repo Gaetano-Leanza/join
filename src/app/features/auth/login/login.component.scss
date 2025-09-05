@@ -68,8 +68,25 @@ form {
     input {
       padding: 0.8rem;
       border-radius: 10px;
+      padding-right: 2.5rem;
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 20px;
       border: 1px solid #ccc;
+
+      &:focus {
+        outline: none;
+        border: 2px solid #29abe2;
+      }
     }
+  }
+
+  .email-input {
+    background-image: url("/img/mail.png");
+  }
+
+  .password-input {
+    background-image: url("/img/lock.png");
   }
 
   .button-container {

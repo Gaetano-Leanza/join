@@ -10,22 +10,25 @@
     </div>
 
     <form (ngSubmit)="login()" #signupForm="ngForm">
-      <div class="input-container">
-        <input
-          type="email"
-          placeholder="Email"
-          name="email"
-          [(ngModel)]="email"
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          name="password"
-          [(ngModel)]="password"
-          required
-        />
-      </div>
+    <div class="input-container"> 
+  <input
+    type="email"
+    placeholder="Email"
+    name="email"
+    [(ngModel)]="email"
+    required
+    class="email-input"
+  />
+  <input
+    type="password"
+    placeholder="Password"
+    name="password"
+    [(ngModel)]="password"
+    required
+    class="password-input"
+  />
+</div>
+
 
       <div class="button-container">
         <button class="logIn" type="submit" [disabled]="!signupForm.form.valid">
