@@ -1,1 +1,39 @@
-<p>login works!</p>
+<div class="main-container">
+  <div class="logo-container">
+    <img src="public/img/mobile-logo.svg" alt="Logo" />
+  </div>
+
+  <div class="signup-container">
+    <div class="headline">
+      <h1>Log in</h1>
+    </div>
+
+    <form (ngSubmit)="login()" #signupForm="ngForm">
+      <div class="input-container">
+        <input
+          type="email"
+          placeholder="Email"
+          name="email"
+          [(ngModel)]="email"
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          name="password"
+          [(ngModel)]="password"
+          required
+        />
+      </div>
+
+      <div class="button-container">
+        <button class="logIn" type="submit" [disabled]="!signupForm.form.valid">
+          Log in
+        </button>
+        <button class="guest" type="submit" [disabled]="!signupForm.form.valid">
+          Guest Log in
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
