@@ -77,7 +77,18 @@ form {
       &:focus {
         outline: none;
         border: 2px solid #29abe2;
+        box-shadow: 0 0 6px rgba(41, 171, 226, 0.5);
       }
+
+      &.invalid {
+        border: 2px solid red;
+      }
+    }
+
+    .error {
+      color: red;
+      font-size: 0.9rem;
+      margin-top: -4px;
     }
   }
 

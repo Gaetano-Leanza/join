@@ -10,31 +10,43 @@
     </div>
 
     <form (ngSubmit)="login()" #signupForm="ngForm">
-    <div class="input-container"> 
-  <input
-    type="email"
-    placeholder="Email"
-    name="email"
-    [(ngModel)]="email"
-    required
-    class="email-input"
-  />
-  <input
-    type="password"
-    placeholder="Password"
-    name="password"
-    [(ngModel)]="password"
-    required
-    class="password-input"
-  />
-</div>
+      <div class="input-container"> 
+        <!-- Email -->
+        <input
+          type="email"
+          placeholder="Email"
+          name="email"
+          [(ngModel)]="email"
+          required
+          #emailRef="ngModel"
+          class="email-input"
+          [ngClass]="{'invalid': emailRef.invalid && (emailRef.touched || signupForm.submitted)}"
+        />
+        <div class="error" *ngIf="emailRef.invalid && (emailRef.touched || signupForm.submitted)">
+          This field is required
+        </div>
 
+        <!-- Password -->
+        <input
+          type="password"
+          placeholder="Password"
+          name="password"
+          [(ngModel)]="password"
+          required
+          #passwordRef="ngModel"
+          class="password-input"
+          [ngClass]="{'invalid': passwordRef.invalid && (passwordRef.touched || signupForm.submitted)}"
+        />
+        <div class="error" *ngIf="passwordRef.invalid && (passwordRef.touched || signupForm.submitted)">
+          This field is required
+        </div>
+      </div>
 
       <div class="button-container">
-        <button class="logIn" type="submit" [disabled]="!signupForm.form.valid">
+        <button class="logIn" type="submit">
           Log in
         </button>
-        <button class="guest" type="submit" [disabled]="!signupForm.form.valid">
+        <button class="guest" type="submit">
           Guest Log in
         </button>
       </div>
