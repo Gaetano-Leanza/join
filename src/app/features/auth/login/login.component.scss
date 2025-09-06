@@ -14,7 +14,7 @@
 .signUp-container {
   position: absolute;
   top: 150px;
-  right: 50px;   
+  right: 50px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -162,4 +162,24 @@ form {
       }
     }
   }
+}
+
+.bottom-container {
+  position: absolute;
+  bottom: -30px;
+  display: flex; 
+  gap: 20px; 
+  justify-content: center;
+  font-size: 18px;
+}
+
+.bottom-container a {
+  color: gray;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.bottom-container a:hover {
+  color: #29abe2;
+  text-decoration: underline;
 }
