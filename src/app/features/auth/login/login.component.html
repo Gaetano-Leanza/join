@@ -1,6 +1,8 @@
 <div class="main-container">
-  <div class="logo-container">
-    <img src="public/img/mobile-logo.svg" alt="Logo" />
+  <div class="signUp-container">
+    Not a Join user?
+    <button class="signUp" type="submit">Sign up</button>
+    
   </div>
 
   <div class="login-container">
@@ -10,7 +12,7 @@
     </div>
 
     <form (ngSubmit)="login()" #signupForm="ngForm">
-      <div class="input-container"> 
+      <div class="input-container">
         <!-- Email -->
         <input
           type="email"
@@ -20,10 +22,22 @@
           required
           #emailRef="ngModel"
           class="email-input"
-          [ngClass]="{'invalid': emailRef.invalid && (emailRef.touched || signupForm.submitted)}"
+          [ngClass]="{
+            invalid:
+              emailRef.invalid && (emailRef.touched || signupForm.submitted)
+          }"
         />
-        <div class="error" *ngIf="emailRef.invalid && (emailRef.touched || signupForm.submitted)">
+        <div
+          class="error"
+          *ngIf="emailRef.errors?.['required'] && (emailRef.touched || signupForm.submitted)"
+        >
           This field is required
+        </div>
+        <div
+          class="error"
+          *ngIf="emailRef.errors?.['email'] && (emailRef.touched || signupForm.submitted)"
+        >
+          Please enter a valid e-mail
         </div>
 
         <!-- Password -->
@@ -35,20 +49,25 @@
           required
           #passwordRef="ngModel"
           class="password-input"
-          [ngClass]="{'invalid': passwordRef.invalid && (passwordRef.touched || signupForm.submitted)}"
+          [ngClass]="{
+            invalid:
+              passwordRef.invalid &&
+              (passwordRef.touched || signupForm.submitted)
+          }"
         />
-        <div class="error" *ngIf="passwordRef.invalid && (passwordRef.touched || signupForm.submitted)">
+        <div
+          class="error"
+          *ngIf="
+            passwordRef.invalid && (passwordRef.touched || signupForm.submitted)
+          "
+        >
           This field is required
         </div>
       </div>
 
       <div class="button-container">
-        <button class="logIn" type="submit">
-          Log in
-        </button>
-        <button class="guest" type="submit">
-          Guest Log in
-        </button>
+        <button class="logIn" type="submit">Log in</button>
+        <button class="guest" type="submit">Guest Log in</button>
       </div>
     </form>
   </div>
