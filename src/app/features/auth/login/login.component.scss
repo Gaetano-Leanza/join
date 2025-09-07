@@ -8,12 +8,11 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #f6f7f8;
 }
 
 .signUp-container {
   position: absolute;
-  top: 150px;
+  top: 50px;
   right: 50px;
   display: flex;
   flex-direction: row;
@@ -166,11 +165,12 @@ form {
 
 .bottom-container {
   position: absolute;
-  bottom: -30px;
+  bottom: 10px;
   display: flex; 
   gap: 20px; 
   justify-content: center;
   font-size: 18px;
+  width: 100%;
 }
 
 .bottom-container a {

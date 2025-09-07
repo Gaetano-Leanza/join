@@ -1,7 +1,14 @@
-<!--  <app-splash-screen *ngIf="showSplash"></app-splash-screen> -->
-<app-navbar></app-navbar>
+<!-- Optional: Splash -->
+<!-- <app-splash-screen *ngIf="showSplash"></app-splash-screen> -->
 
-<div class="main-content">
-  <app-header></app-header>
-  <router-outlet></router-outlet>
+<div *ngIf="showLayout">
+  <app-navbar></app-navbar>
+
+  <div class="main-content">
+    <app-header></app-header>
+    <router-outlet></router-outlet>
+  </div>
 </div>
+
+<!-- Router-Outet ohne Layout (Login, Signup) -->
+<router-outlet *ngIf="!showLayout"></router-outlet>
