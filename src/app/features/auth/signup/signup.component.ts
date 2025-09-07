@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
 })
@@ -34,6 +34,24 @@ export class SignupComponent {
   password = '';
 
   /**
+   * The confirmation of the password for validation.
+   * @type {string}
+   */
+  confirmPassword = '';
+
+  /**
+   * Tracks the state of the privacy policy checkbox.
+   * @type {boolean}
+   */
+  privacyPolicyAccepted = false;
+
+  /**
+   * Flag to control the visibility of the success message.
+   * @type {boolean}
+   */
+  isSignedUp = false;
+
+  /**
    * Creates an instance of the SignupComponent.
    * @param {Router} router - The Angular Router service for navigation.
    */
@@ -41,16 +59,21 @@ export class SignupComponent {
 
   /**
    * Handles the user signup process.
-   * It logs the user's details and navigates to the login page upon completion.
+   * It validates the password confirmation, shows a success message,
+   * and navigates to the login page upon completion.
    * @returns {void}
    */
   signup() {
-    // Your registration logic goes here
-    console.log('Name:', this.name);
-    console.log('Email:', this.email);
-    console.log('Password:', this.password);
-    // Navigate to the login page after successful signup
-    this.router.navigate(['/']);
+    if (this.password !== this.confirmPassword) {
+      alert('Passwords do not match!');
+      return;
+    }
+
+    this.isSignedUp = true;
+
+    setTimeout(() => {
+      this.router.navigate(['/']);
+    }, 2000);
   }
 
   /**
@@ -61,3 +84,4 @@ export class SignupComponent {
     this.router.navigate(['/']);
   }
 }
+

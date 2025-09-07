@@ -1,33 +1,94 @@
 <div class="main-container">
   <div class="logo-container">
-    <img src="public/img/mobile-logo.svg" alt="Logo" />
+    <img src="public/img/logo-sign-up.svg" alt="Logo" />
   </div>
 
   <div class="signup-container">
     <div class="headline">
-      <img (click)="goBack()" src="public/img/arrow-left.svg" alt="Arrow left" />
+      <img
+        (click)="goBack()"
+        src="public/img/arrow-left.svg"
+        alt="Arrow left"
+        class="arrow-back"
+      />
       <h1>Sign up</h1>
     </div>
 
     <form (ngSubmit)="signup()" #signupForm="ngForm">
       <div class="input-container">
-        <input type="text" placeholder="Name" name="name" [(ngModel)]="name" required />
-        <input type="email" placeholder="Email" name="email" [(ngModel)]="email" required />
-        <input type="password" placeholder="Password" name="password" [(ngModel)]="password" required />
-        <input type="confirm-password" placeholder="Confirm Password" name="confirm-password" [(ngModel)]="password"
-          required />
+        <div class="input-field">
+          <input
+            type="text"
+            placeholder="Name"
+            name="name"
+            [(ngModel)]="name"
+            required
+            #nameInput="ngModel"
+            [class.error]="nameInput.invalid && nameInput.touched"
+          />
+          <img src="public/img/person.svg" alt="Person Icon" />
+        </div>
+        <div class="input-field">
+          <input
+            type="email"
+            placeholder="Email"
+            name="email"
+            [(ngModel)]="email"
+            required
+            email
+            #emailInput="ngModel"
+            [class.error]="emailInput.invalid && emailInput.touched"
+          />
+          <img src="public/img/mail.svg" alt="Mail Icon" />
+        </div>
+        <div class="input-field">
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            [(ngModel)]="password"
+            required
+            minlength="6"
+            #passwordInput="ngModel"
+            [class.error]="passwordInput.invalid && passwordInput.touched"
+          />
+          <img src="public/img/lock.png" alt="Lock Icon" />
+        </div>
+        <div class="input-field">
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            name="confirmPassword"
+            [(ngModel)]="confirmPassword"
+            required
+            #confirmPasswordInput="ngModel"
+            [class.error]="
+              (confirmPasswordInput.invalid ||
+                password.valueOf !== confirmPassword.valueOf) &&
+              confirmPasswordInput.touched
+            "
+          />
+          <img src="public/img/lock.png" alt="Lock Icon" />
+        </div>
       </div>
 
       <div class="checkbox-container">
-        <input type="checkbox" id="privacy-policy" name="privacy-policy" />
-        <label for="privacy-policy">I accept the <a href="#">Privacy Policy</a></label>
+        <input type="checkbox" id="privacy-policy" name="privacy-policy" required />
+        <label for="privacy-policy"
+          >I accept the <a routerLink="/privacy-policy">Privacy Policy</a></label
+        >
       </div>
 
       <div class="button-container">
-        <button type="submit" [disabled]="!signupForm.form.valid">
+        <button type="submit" class="signup-btn" [disabled]="!signupForm.form.valid">
           Sign up
         </button>
       </div>
     </form>
   </div>
+
+  <div class="success-message" [class.show]="isSignedUp">
+    You're successfully registered
+  </div>
 </div>
+
