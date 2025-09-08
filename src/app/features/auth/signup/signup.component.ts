@@ -51,17 +51,42 @@ export class SignupComponent {
    */
   isSignedUp = false;
 
-    /**
+  /**
    * Flag to show a password mismatch error.
    * @type {boolean}
    */
-    passwordMismatch = false;
+  passwordMismatch = false;
+
+  /**
+   * Flag to control the visibility of the password field.
+   * @type {boolean}
+   */
+  showPassword = false;
+
+  /**
+   * Flag to control the visibility of the confirm password field.
+   * @type {boolean}
+   */
+  showConfirmPassword = false;
 
   /**
    * Creates an instance of the SignupComponent.
    * @param {Router} router - The Angular Router service for navigation.
    */
   constructor(private router: Router) {}
+
+  /**
+   * Toggles the visibility of the specified password field.
+   * @param {'password' | 'confirmPassword'} field - The password field to toggle.
+   * @returns {void}
+   */
+  togglePasswordVisibility(field: 'password' | 'confirmPassword'): void {
+    if (field === 'password') {
+      this.showPassword = !this.showPassword;
+    } else if (field === 'confirmPassword') {
+      this.showConfirmPassword = !this.showConfirmPassword;
+    }
+  }
 
   /**
    * Handles the user signup process.
