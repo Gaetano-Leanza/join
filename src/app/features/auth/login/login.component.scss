@@ -6,6 +6,24 @@
   display: none;
 }
 
+
+.splash-logo {
+  margin-top: 15px;
+}
+
+#mobile-header {
+  display: none;
+}
+
+#signUp-text-botton {
+  display: flex;
+  gap: 30px;
+}
+
+#signUp-text {
+  padding-top: 10px;
+}
+
 .main-container {
   display: flex;
   flex-direction: column;
@@ -30,11 +48,6 @@
   margin-bottom: 2rem;
 }
 
-.splash-logo {
-  width: 101px;
-  height: 122px;
-  animation: logo-move 1.2s cubic-bezier(0.7, 0.2, 0.2, 1) forwards;
-}
 
 .login-container {
   display: flex;
@@ -263,6 +276,13 @@ form {
     display: none;
   }
 
+  #mobile-header {
+    display: block;
+    position: absolute;
+    top: 40px;
+    left: 30px;
+  }
+
   .signUp-container-mobile {
     display: flex;
     align-items: center;
@@ -278,13 +298,7 @@ form {
     padding-left: 40px;
     padding-bottom: 30px;
   }
-<<<<<<< HEAD
 
-  .login-container {
-    height: 500px;
-  }
-}
-=======
 
   .login-container {
     height: 500px;
@@ -307,6 +321,16 @@ form {
     width: 80%;
     padding: 10px;
   }
+
+  #logo-move {
+    width: 70%;
+    height: 70%;
+  }
+
+  #mobile-header {
+    top: 20px;
+    left: 20px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -320,6 +344,16 @@ form {
 @media (max-width: 550px) {
   .login-container {
     width: 85%;
+  }
+
+  #logo-move {
+    width: 40%;
+    height: 40%;
+  }
+
+  #mobile-header {
+    top: 0;
+    left: 10px;
   }
 }
 
@@ -343,7 +377,8 @@ form {
   }
 }
 
-@media (max-width: 380px), (max-height: 700px) {
+@media (max-width: 380px),
+(max-height: 700px) {
   .signUp-container-mobile {
     margin-top: 30px;
   }
@@ -352,4 +387,3 @@ form {
     height: 450px;
   }
 }
->>>>>>> 6418c5c2cb0ba29f5bdc786a91cacb354f2a920d
