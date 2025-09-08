@@ -1,4 +1,12 @@
-<section id="summary-wrapper">
+<div *ngIf="showSplash" class="spalsch-screen">
+    <div class="splash-greeting">{{getGreeting()}}, <br>
+        <span class="splash-username">{{username}} </span>
+
+    </div>
+
+</div>
+
+<section id="summary-wrapper" [hidden]="showSplash">
     <div id="headline-wrapper">
         <div>
             <h3>Join 360 </h3>
@@ -101,12 +109,11 @@
 
             <div id="board-overview">
                 <div id="board-tasks" (click)="navigateToBoard()"><span class="task-number">{{getTasksCount()}}</span>
-                    <span class="category"> Tasks in <br> Board </span>
+                    <span class="category"> Tasks in <br>Board </span>
                 </div>
                 <div id="progress-cont" (click)="navigateToBoard()"><span
                         class="task-number">{{getProgressTaskCount()}}</span> <span class="category">Tasks in
                         <br>Progress</span>
-
                 </div>
                 <div id="awaiting-cont" (click)="navigateToBoard()"> <span
                         class="task-number">{{getAwaitingTasksCount()}}</span><span class="category">Awaiting

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,HostListener } from '@angular/core';
 import { Task } from '../../services/task.service';
 import { TaskService } from '../../services/task.service';
 import { CommonModule } from '@angular/common';
@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./summary.component.scss', './summary.responsive.scss']
 })
 export class SummaryComponent {
+  showSplash = false;
   tasks: Task[] = [];
   username: string = '';
   
@@ -22,11 +23,35 @@ export class SummaryComponent {
         ) {}
 
   ngOnInit() {
-    this.taskService.getTasks().subscribe(tasks => {
-      this.tasks = tasks;
-    });
-    this.username = 'Sophia Müller'; // Testname
+  this.taskService.getTasks().subscribe(tasks => {
+    this.tasks = tasks;
+  });
+  this.username = 'Sophia Müller';
+   this.applySplashRule();
   }
+  @HostListener('window:resize')
+  onResize() {
+    this.applySplashRule(); // prüfe auch beim Resize
+  }
+private applySplashRule() {
+    const isNarrow = window.innerWidth < 1361;
+    const splashShown = sessionStorage.getItem('summarySplashShown');
+
+    if (isNarrow && !splashShown) {
+      // Splash kurz zeigen
+      this.showSplash = true;
+      setTimeout(() => {
+        this.showSplash = false;
+        sessionStorage.setItem('summarySplashShown', 'true'); // nur einmal pro Tab
+      }, 2000);
+    } else if (!isNarrow) {
+      // Bei breiter Ansicht Splash nie anzeigen
+      this.showSplash = false;
+      // Optional: Flag zurücksetzen, damit er beim nächsten Wechsel auf <1360 wieder erscheint
+      sessionStorage.removeItem('summarySplashShown');
+    }
+  }
+
 getToDoCount(): number {
   return this.tasks ? this.tasks.filter((task: Task) => task.progress === 'toDo').length : 0;
 }
@@ -77,13 +102,10 @@ getUpcomingDeadline(): string | null {
 
 getGreeting():string {
   const hour = new Date().getHours();
-  if (hour < 12) {
-    return 'Good Morning';
-  } else if (hour < 18) {
-    return 'Good Afternoon';
-  } else {
-    return 'Good Evening';
-  }
+  if (hour < 12) return 'Good Morning';
+  else if (hour < 18)  return 'Good Afternoon';
+   else  return 'Good Evening';
+
 }
 }
 

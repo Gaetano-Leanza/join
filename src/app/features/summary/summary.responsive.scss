@@ -24,7 +24,7 @@
         flex-direction: column;
         gap: 0;
         align-items: start;
-        margin-left: 5px;
+        margin-left: 20px;
     }
 
 
@@ -41,6 +41,19 @@
         width: 130px !important;
         height: auto;
     }
+
+    h3 {
+        font-size: 56px;
+    }
+
+    h4 {
+        font-size: 26px;
+    }
+
+    .task-number {
+        font-size: 46px;
+    }
+
 
 }
 
@@ -62,11 +75,33 @@
         margin-left: 20px;
     }
 
+    h3 {
+        font-size: 50px;
+    }
+
+    h4 {
+        font-size: 24px;
+    }
+
+    .task-number {
+        font-size: 40px;
+    }
 }
+
+@media (max-width: 700px) {
+
+    #board-tasks,
+    #progress-cont,
+    #awaiting-cont {
+        height: 80%;
+        padding: 0 20px;
+    }
+}
+
 
 @media (max-width: 500px) {
     #headline-wrapper {
-        margin-left: 0;
+        margin-left: 20px;
         margin-top: 10px;
         gap: 8px;
     }
@@ -76,14 +111,120 @@
     }
 
     h4 {
-        font-size: 18px;
+        font-size: 16px;
     }
 
     .task-number {
         font-size: 32px;
     }
 
+    .datum,
+    .category,
+    .text-deadline {
+        font-size: 18px;
+    }
+
     .divider-horizontal {
         width: 80px !important;
+    }
+
+    svg,
+    #urgent-container {
+        width: 40px;
+        height: 40px;
+    }
+
+    #to-do,
+    #done {
+        height: 70%;
+    }
+
+    #board-tasks,
+    #progress-cont,
+    #awaiting-cont {
+        height: 90%;
+        width: 30%;
+        gap: 5px;
+
+    }
+
+
+
+}
+
+
+
+@media (max-width: 400px) {
+
+    #tasks-todo-done {
+        gap: 20px;
+
+    }
+
+    #board-overview {
+        gap: 10px;
+    }
+
+    #board-tasks,
+    #progress-cont,
+    #awaiting-cont {
+        height: 80%;
+        width: 30%;
+        padding: 0 5px;
+    }
+
+
+
+    h3 {
+        font-size: 30px;
+    }
+
+    h4 {
+        font-size: 14px;
+    }
+
+    .task-number {
+        font-size: 28px;
+    }
+
+    .datum,
+    .category,
+    .text-deadline {
+        font-size: 16px;
+    }
+
+    .divider-horizontal {
+        width: 80px !important;
+    }
+}
+
+
+@media (max-width: 350px) {
+
+
+
+    #left-content {
+        gap: 10px;
+        border-radius: 20px;
+
+    }
+
+    #progress-overview {
+        height: 35%;
+    }
+
+    #board-tasks,
+    #progress-cont,
+    #awaiting-cont {
+        width: 33%;
+    }
+
+    #to-do,
+    #done {
+        width: 45%;
+    }
+
+    #board-overview {
+        padding: 0;
     }
 }
