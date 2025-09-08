@@ -85,6 +85,7 @@ h1 {
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-size: 16px;
 
   &:hover {
     background-color: #29abe2;
@@ -277,8 +278,78 @@ form {
     padding-left: 40px;
     padding-bottom: 30px;
   }
+<<<<<<< HEAD
 
   .login-container {
     height: 500px;
   }
 }
+=======
+
+  .login-container {
+    height: 500px;
+    width: 80%;
+  }
+}
+
+@media (max-width: 650px) {
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-right: 40px;
+    padding-left: 40px;
+    padding-bottom: 30px;
+  }
+
+  .login-container {
+    height: 500px;
+    width: 80%;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .login-container {
+    height: 500px;
+    width: 80%;
+    padding: 0px;
+  }
+}
+
+@media (max-width: 550px) {
+  .login-container {
+    width: 85%;
+  }
+}
+
+@media (max-width: 500px) {
+  .login-container {
+    width: 90%;
+  }
+
+  form {
+    width: 80%;
+  }
+}
+
+@media (max-width: 450px) {
+  .login-container {
+    width: 95%;
+  }
+
+  form {
+    width: 85%;
+  }
+}
+
+@media (max-width: 380px), (max-height: 700px) {
+  .signUp-container-mobile {
+    margin-top: 30px;
+  }
+
+  .login-container {
+    height: 450px;
+  }
+}
+>>>>>>> 6418c5c2cb0ba29f5bdc786a91cacb354f2a920d
