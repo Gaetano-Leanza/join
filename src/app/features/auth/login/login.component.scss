@@ -326,3 +326,13 @@ form {
     width: 85%;
   }
 }
+
+@media (max-width: 380px), (max-height: 700px) {
+  .signUp-container-mobile {
+    margin-top: 30px;
+  }
+
+  .login-container {
+    height: 450px;
+  }
+}
