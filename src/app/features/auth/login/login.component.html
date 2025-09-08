@@ -10,55 +10,59 @@
       <div class="divider"></div>
     </div>
 
-    <form (ngSubmit)="login()" #signupForm="ngForm">
+    <form (ngSubmit)="login()" #loginForm="ngForm">
       <div class="input-container">
-        <input
-          type="email"
-          placeholder="Email"
-          name="email"
-          [(ngModel)]="email"
-          required
-          #emailRef="ngModel"
-          class="email-input"
-          [ngClass]="{
-            invalid:
-              emailRef.invalid && (emailRef.touched || signupForm.submitted)
-          }"
-        />
-        <div
-          class="error"
-          *ngIf="emailRef.errors?.['required'] && (emailRef.touched || signupForm.submitted)"
-        >
-          This field is required
-        </div>
-        <div
-          class="error"
-          *ngIf="emailRef.errors?.['email'] && (emailRef.touched || signupForm.submitted)"
-        >
-          Please enter a valid e-mail
+        <div class="input-field-wrapper">
+          <input
+            type="text"
+            placeholder="Email"
+            name="name"
+            [(ngModel)]="name"
+            required
+            #nameRef="ngModel"
+            class="email-input"
+            [ngClass]="{
+              invalid: nameRef.invalid && (nameRef.touched || loginForm.submitted)
+            }"
+          />
+          <div class="field-error-placeholder">
+            <div 
+              class="field-error-message" 
+              [class.visible]="nameRef.errors?.['required'] && (nameRef.touched || loginForm.submitted)"
+            >
+              Name is required
+            </div>
+          </div>
         </div>
 
-        <input
-          type="password"
-          placeholder="Password"
-          name="password"
-          [(ngModel)]="password"
-          required
-          #passwordRef="ngModel"
-          class="password-input"
-          [ngClass]="{
-            invalid:
-              passwordRef.invalid &&
-              (passwordRef.touched || signupForm.submitted)
-          }"
-        />
-        <div
-          class="error"
-          *ngIf="
-            passwordRef.invalid && (passwordRef.touched || signupForm.submitted)
-          "
-        >
-          This field is required
+        <div class="input-field-wrapper">
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            [(ngModel)]="password"
+            required
+            #passwordRef="ngModel"
+            class="password-input"
+            [ngClass]="{
+              invalid: passwordRef.invalid && (passwordRef.touched || loginForm.submitted)
+            }"
+          />
+          <div class="field-error-placeholder">
+            <div 
+              class="field-error-message" 
+              [class.visible]="passwordRef.errors?.['required'] && (passwordRef.touched || loginForm.submitted)"
+            >
+              Password is required
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Platzhalter für allgemeine Fehlermeldungen -->
+      <div class="error-placeholder">
+        <div class="error-message" [class.visible]="errorMessage">
+          {{ errorMessage }}
         </div>
       </div>
 

@@ -12,7 +12,9 @@ import {
   deleteDoc,
   DocumentData,
   DocumentReference,
-  UpdateData
+  UpdateData,
+  where,
+  getDocs
 } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 
@@ -59,6 +61,37 @@ export class FirebaseService {
       return null;
     }
     return runInInjectionContext(this.injector, operation);
+  }
+
+  /**
+   * @description Validates user credentials by checking name and password
+   * @param name Username
+   * @param password Password
+   * @returns Promise with boolean (true if valid)
+   */
+  async validateUser(name: string, password: string): Promise<boolean> {
+    if (!this.isFirestoreAvailable()) {
+      console.warn('validateUser skipped (SSR)');
+      return false;
+    }
+
+    try {
+      const result = this.firestoreOperation(async () => {
+        const usersRef = collection(this.firestore!, 'users');
+        const q = query(
+          usersRef, 
+          where('name', '==', name), 
+          where('password', '==', password)
+        );
+        const querySnapshot = await getDocs(q);
+        return !querySnapshot.empty;
+      });
+      
+      return await (result || Promise.resolve(false));
+    } catch (error) {
+      console.error('Error validating user:', error);
+      return false;
+    }
   }
 
   /**
