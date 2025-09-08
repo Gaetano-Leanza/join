@@ -51,6 +51,12 @@ export class SignupComponent {
    */
   isSignedUp = false;
 
+    /**
+   * Flag to show a password mismatch error.
+   * @type {boolean}
+   */
+    passwordMismatch = false;
+
   /**
    * Creates an instance of the SignupComponent.
    * @param {Router} router - The Angular Router service for navigation.
@@ -59,16 +65,17 @@ export class SignupComponent {
 
   /**
    * Handles the user signup process.
-   * It validates the password confirmation, shows a success message,
+   * It validates the password confirmation, shows an error or success message,
    * and navigates to the login page upon completion.
    * @returns {void}
    */
   signup() {
     if (this.password !== this.confirmPassword) {
-      alert('Passwords do not match!');
+      this.passwordMismatch = true;
       return;
     }
 
+    this.passwordMismatch = false;
     this.isSignedUp = true;
 
     setTimeout(() => {
