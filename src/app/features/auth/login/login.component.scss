@@ -19,13 +19,21 @@
   top: 50px;
   right: 50px;
   display: flex;
+  justify-content: space-between;
   flex-direction: row;
   align-items: center;
   gap: 20px;
+  width: 90%;
 }
 
 .logo-container {
   margin-bottom: 2rem;
+}
+
+.splash-logo {
+  width: 101px;
+  height: 122px;
+  animation: logo-move 1.2s cubic-bezier(0.7, 0.2, 0.2, 1) forwards;
 }
 
 .login-container {
@@ -152,6 +160,7 @@ form {
         transform: translateY(-3px);
       }
     }
+
     .guest {
       padding: 0.7rem 1.2rem;
       font-weight: 700;
@@ -260,16 +269,16 @@ form {
     margin-top: 70px;
   }
 
-    .button-container {
+  .button-container {
     display: flex;
     flex-direction: column;
     width: 100%;
     padding-right: 40px;
     padding-left: 40px;
     padding-bottom: 30px;
-}
+  }
 
-.login-container {
-  height: 500px;
-}
+  .login-container {
+    height: 500px;
+  }
 }

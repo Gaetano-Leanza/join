@@ -3,11 +3,12 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FirebaseService } from '../../../services/firebase.service';
+import { SplashScreenComponent } from '../../../splash-screen/splash-screen.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule,SplashScreenComponent ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
@@ -15,12 +16,20 @@ export class LoginComponent {
   name = '';
   password = '';
   errorMessage = '';
+  showSplash = true;
+  ngOnInit() {
+    setTimeout(() => {
+      this.showSplash = false;
+    }, 1200); // Dauer der Splash-Animation in ms
+  }
 
   constructor(
     private router: Router,
     private firebaseService: FirebaseService
   ) {}
 
+
+  
   /**
    * Handles the user login process.
    * Validates credentials and navigates to summary on success.

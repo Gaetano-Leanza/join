@@ -3,7 +3,6 @@ import { Router, RouterModule, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../app/shared/header/header.component';
 import { NavbarComponent } from '../app/shared/navbar/navbar.component';
-import { SplashScreenComponent } from "./splash-screen/splash-screen.component";
 import { filter } from 'rxjs/operators';
 
 /**
@@ -18,7 +17,6 @@ import { filter } from 'rxjs/operators';
     CommonModule,
     HeaderComponent,
     NavbarComponent,
-    SplashScreenComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
