@@ -7,8 +7,7 @@ import { InfoComponent } from './pages/info/info.component';
 import { AddTaskComponent } from './features/add-task/add-task.component';
 import { BoardComponent } from './features/board/board.component';
 import { SummaryComponent } from './features/summary/summary.component';
-
-// Importiere Login- und Signup-Komponenten
+import { AuthGuard } from './auth.guard';  
 import { LoginComponent } from './features/auth/login/login.component';
 import { SignupComponent } from './features/auth/signup/signup.component';
 
@@ -28,18 +27,21 @@ export const routes: Routes = [
     path: 'task',
     component: AddTaskComponent,
     data: { prerender: true },
+    canActivate: [AuthGuard]
   },
   // Route for the Board component
   {
     path: 'board',
     component: BoardComponent,
     data: { prerender: true },
+    canActivate: [AuthGuard]
   },
   // Route for the contacts layout
   {
     path: 'contacts',
     component: ContactLayoutComponent,
     data: { prerender: true },
+    canActivate: [AuthGuard]
   },
   // Route for the Contact Detail component
   {
@@ -70,6 +72,7 @@ export const routes: Routes = [
     path: 'summary',
     component: SummaryComponent,
     data: { prerender: true },
+    canActivate: [AuthGuard]
   },
 
   {
