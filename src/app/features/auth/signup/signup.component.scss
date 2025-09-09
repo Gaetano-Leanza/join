@@ -51,7 +51,7 @@
         font-weight: 700;
       }
     }
-    
+
     .header-line {
       width: 100px;
       height: 3px;
@@ -74,15 +74,15 @@
         margin-bottom: 1.5rem;
 
         .password-error-message {
-            color: #ff8181;
-            font-size: 0.875rem;
-            margin-top: -1rem;
-            text-align: center;
+          color: red;
+          font-size: 0.9rem;
+          margin-top: -4px;
         }
       }
 
       .input-field {
         position: relative;
+        border-color: #29abe2;
 
         input {
           width: 100%;
@@ -204,4 +204,3 @@
     transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s;
   }
 }
-
