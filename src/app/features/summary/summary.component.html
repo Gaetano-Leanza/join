@@ -123,8 +123,10 @@
 
         </div>
         <div id="right-content">
-            <h5>{{getGreeting()}}, <br>
-                <span id="username">{{username}} </span>
+            <h5>{{getGreeting()}}! <br>
+                <ng-container *ngIf="username !== 'Guest'">, <br>
+                    <span id="username">{{ username }}</span>
+                </ng-container>
             </h5>
         </div>
     </div>

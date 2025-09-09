@@ -53,8 +53,8 @@ export class LoginComponent {
 
       if (isValid) {
         // Successful login - navigate to summary
-        console.log('Login successful');
-        this.router.navigate(['/summary']);
+        sessionStorage.setItem('username', this.name); // <-- Username speichern
+  this.router.navigate(['/summary']);
       } else {
         this.errorMessage =
           'Invalid login credentials. Please check your name and password.';
@@ -71,4 +71,9 @@ export class LoginComponent {
   goBack(): void {
     this.router.navigate(['/']);
   }
+
+  guestLogin() {
+    sessionStorage.setItem('username','Guest');
+    this.router.navigate(['/summary']);
+}
 }

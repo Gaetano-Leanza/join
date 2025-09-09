@@ -26,7 +26,7 @@ export class SummaryComponent {
   this.taskService.getTasks().subscribe(tasks => {
     this.tasks = tasks;
   });
-  this.username = 'Sophia Müller';
+  this.username = sessionStorage.getItem('username') || 'Guest';
    this.applySplashRule();
   }
   @HostListener('window:resize')
@@ -104,9 +104,12 @@ getGreeting():string {
   const hour = new Date().getHours();
   if (hour < 12) return 'Good Morning';
   else if (hour < 18)  return 'Good Afternoon';
+  else if (this.username === 'Guest') return 'Guten Morgen!';
    else  return 'Good Evening';
 
 }
+
+
 }
 
 

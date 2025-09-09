@@ -27,6 +27,11 @@ export class HeaderComponent {
    * @description Whether the header menu is currently open.
    */
   isMenuOpen = false;
+username: string = 'G';
+ ngOnInit() {
+    this.username = sessionStorage.getItem('username') || 'Guest';
+  }
+
 
   /**
    * @description Creates an instance of the HeaderComponent.
