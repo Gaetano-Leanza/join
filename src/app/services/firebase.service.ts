@@ -69,30 +69,36 @@ export class FirebaseService {
    * @param password Password
    * @returns Promise with boolean (true if valid)
    */
-  async validateUser(email: string, password: string): Promise<boolean> {
-    if (!this.isFirestoreAvailable()) {
-      console.warn('validateUser skipped (SSR)');
-      return false;
-    }
-
-    try {
-      const result = this.firestoreOperation(async () => {
-        const usersRef = collection(this.firestore!, 'users');
-        const q = query(
-          usersRef, 
-          where('email', '==', email), 
-          where('password', '==', password)
-        );
-        const querySnapshot = await getDocs(q);
-        return !querySnapshot.empty;
-      });
-      
-      return await (result || Promise.resolve(false));
-    } catch (error) {
-      console.error('Error validating user:', error);
-      return false;
-    }
+ async validateUser(email: string, password: string): Promise<any> {
+  if (!this.isFirestoreAvailable()) {
+    console.warn('validateUser skipped (SSR)');
+    return null;
   }
+
+  try {
+    const result = this.firestoreOperation(async () => {
+      const usersRef = collection(this.firestore!, 'users');
+      const q = query(
+        usersRef, 
+        where('email', '==', email), 
+        where('password', '==', password)
+      );
+      const querySnapshot = await getDocs(q);
+      
+      if (!querySnapshot.empty) {
+        // Rückgabe des ersten gefundenen Benutzers (inklusive aller Daten)
+        const userDoc = querySnapshot.docs[0];
+        return { id: userDoc.id, ...userDoc.data() };
+      }
+      return null;
+    });
+    
+    return await (result || Promise.resolve(null));
+  } catch (error) {
+    console.error('Error validating user:', error);
+    return null;
+  }
+}
 
   /**
    * @description Fetches all documents from a collection, sorted by the 'name' field.

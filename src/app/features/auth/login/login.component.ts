@@ -8,15 +8,16 @@ import { SplashScreenComponent } from '../../../splash-screen/splash-screen.comp
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule,SplashScreenComponent ],
+  imports: [CommonModule, FormsModule, RouterModule, SplashScreenComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  name = '';
+  email = '';  // Geändert von 'name' zu 'email' für bessere Klarheit
   password = '';
   errorMessage = '';
   showSplash = true;
+  
   ngOnInit() {
     setTimeout(() => {
       this.showSplash = false;
@@ -28,8 +29,6 @@ export class LoginComponent {
     private firebaseService: FirebaseService
   ) {}
 
-
-  
   /**
    * Handles the user login process.
    * Validates credentials and navigates to summary on success.
@@ -39,25 +38,28 @@ export class LoginComponent {
     this.errorMessage = '';
 
     // Validate inputs
-    if (!this.name.trim() || !this.password.trim()) {
+    if (!this.email.trim() || !this.password.trim()) {
       this.errorMessage = 'Please fill in all fields';
       return;
     }
 
     try {
-      // Validate user credentials
-      const isValid = await this.firebaseService.validateUser(
-        this.name,
+      // Validate user credentials - validateUser gibt jetzt das User-Objekt zurück
+      const userData = await this.firebaseService.validateUser(
+        this.email,
         this.password
       );
 
-      if (isValid) {
-        // Successful login - navigate to summary
-        sessionStorage.setItem('username', this.name); // <-- Username speichern
-  this.router.navigate(['/summary']);
+      if (userData) {
+        // Successful login - speichere sowohl Name als auch Email
+        sessionStorage.setItem('username', userData.name); // Name für Anzeige
+        sessionStorage.setItem('userEmail', userData.email); // Email für weitere Referenz
+        sessionStorage.setItem('userId', userData.id); // User ID für weitere Operationen
+        
+        this.router.navigate(['/summary']);
       } else {
         this.errorMessage =
-          'Invalid login credentials. Please check your name and password.';
+          'Invalid login credentials. Please check your email and password.';
       }
     } catch (error) {
       this.errorMessage = 'Login error. Please try again later.';
@@ -73,7 +75,7 @@ export class LoginComponent {
   }
 
   guestLogin() {
-    sessionStorage.setItem('username','Guest');
+    sessionStorage.setItem('username', 'Guest');
     this.router.navigate(['/summary']);
-}
+  }
 }

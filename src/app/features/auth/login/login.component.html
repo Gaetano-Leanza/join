@@ -64,15 +64,15 @@
     <form (ngSubmit)="login()" #loginForm="ngForm">
       <div class="input-container">
         <div class="input-field-wrapper">
-          <input type="text" placeholder="Email" name="name" [(ngModel)]="name" required #nameRef="ngModel"
+          <input type="email" placeholder="Email" name="email" [(ngModel)]="email" required #emailRef="ngModel"
             class="email-input" [ngClass]="{
               invalid:
-                nameRef.invalid && (nameRef.touched || loginForm.submitted)
+                emailRef.invalid && (emailRef.touched || loginForm.submitted)
             }" />
           <div class="field-error-placeholder">
             <div class="field-error-message"
-              [class.visible]="nameRef.errors?.['required'] && (nameRef.touched || loginForm.submitted)">
-              Name is required
+              [class.visible]="emailRef.errors?.['required'] && (emailRef.touched || loginForm.submitted)">
+              Email is required
             </div>
           </div>
         </div>
