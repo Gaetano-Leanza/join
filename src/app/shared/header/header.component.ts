@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { Router, RouterLink, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs/operators';
-
+import { getInitials } from '../../../app/features/add-task/avatar-utils'
+import { get } from 'http';
 /**
  * @description The main header component of the application.
  *
@@ -82,4 +83,9 @@ username: string = 'G';
   isInfoPage(): boolean {
     return this.router.url === '/info';
   }
+
+ getInitials(): string {
+  const username = sessionStorage.getItem('username') || '';
+  return getInitials(username);
+}
 }
