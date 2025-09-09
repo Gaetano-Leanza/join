@@ -53,7 +53,7 @@ h1 {
     transition: border-color 0.2s ease;
 
     &:focus {
-      border-color: #4589ff !important;
+      border: 2px solid #4589ff !important;
     }
 
   }

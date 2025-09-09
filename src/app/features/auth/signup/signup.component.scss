@@ -122,9 +122,11 @@
         label {
           margin-left: 0.5rem;
         }
+
         a {
           color: #29abe2;
           text-decoration: none;
+
           &:hover {
             text-decoration: underline;
           }
@@ -179,6 +181,7 @@
       color: #a8a8a8;
       text-decoration: none;
       transition: color 0.3s;
+
       &:hover {
         color: #29abe2;
       }
@@ -188,8 +191,13 @@
 
 .success-message {
   position: absolute;
-  bottom: 2rem;
-  right: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 104px;
+  right: 45%;
+  width: 300px;
+  height: 70px;
   background-color: #2a3647;
   color: white;
   padding: 1rem 2rem;
@@ -208,4 +216,3 @@
     transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s;
   }
 }
-

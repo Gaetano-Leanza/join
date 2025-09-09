@@ -3,6 +3,8 @@ import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FirebaseService } from '../../../services/firebase.service';
+import { fadeInOutInfo } from '../../contacts/modal/modal.animations';
+
 
 /**
  * @Component
@@ -13,6 +15,7 @@ import { FirebaseService } from '../../../services/firebase.service';
 @Component({
   selector: 'app-signup',
   standalone: true,
+  animations: [fadeInOutInfo],
   imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss', './signup.responsive.scss'],
