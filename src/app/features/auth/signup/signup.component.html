@@ -93,7 +93,8 @@
           [(ngModel)]="privacyPolicyAccepted"
         />
         <label for="privacy-policy"
-          >I accept the <a routerLink="/privacy-policy">Privacy Policy</a></label
+          >I accept the
+          <a routerLink="/privacy-policy">Privacy Policy</a></label
         >
       </div>
 
@@ -101,9 +102,9 @@
         <button
           type="submit"
           class="signup-btn"
-          [disabled]="!signupForm.form.valid"
+          [disabled]="!signupForm.form.valid || isLoading"
         >
-          Sign up
+          {{ isLoading ? "Wird erstellt..." : "Sign up" }}
         </button>
       </div>
     </form>
@@ -118,4 +119,3 @@
     You're successfully registered
   </div>
 </div>
-
