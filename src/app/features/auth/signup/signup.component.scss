@@ -82,7 +82,6 @@
 
       .input-field {
         position: relative;
-        border-color: #29abe2;
 
         input {
           width: 100%;
@@ -93,8 +92,14 @@
           box-sizing: border-box;
           font-size: 1rem;
 
+          &:focus {
+            outline: none;
+            border: 2px solid #29abe2;
+            box-shadow: 0 0 6px rgba(41, 171, 226, 0.5);
+          }
+
           &.error {
-            border-color: #ff8181;
+            border: 2px solid #ff8181;
           }
         }
 
@@ -191,7 +196,6 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
-
   opacity: 0;
   transform: translateY(20px);
   visibility: hidden;
@@ -204,3 +208,4 @@
     transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s;
   }
 }
+
