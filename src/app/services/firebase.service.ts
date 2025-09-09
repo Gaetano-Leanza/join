@@ -65,11 +65,11 @@ export class FirebaseService {
 
   /**
    * @description Validates user credentials by checking name and password
-   * @param name Username
+   * @param email Username
    * @param password Password
    * @returns Promise with boolean (true if valid)
    */
-  async validateUser(name: string, password: string): Promise<boolean> {
+  async validateUser(email: string, password: string): Promise<boolean> {
     if (!this.isFirestoreAvailable()) {
       console.warn('validateUser skipped (SSR)');
       return false;
@@ -80,7 +80,7 @@ export class FirebaseService {
         const usersRef = collection(this.firestore!, 'users');
         const q = query(
           usersRef, 
-          where('name', '==', name), 
+          where('email', '==', email), 
           where('password', '==', password)
         );
         const querySnapshot = await getDocs(q);
