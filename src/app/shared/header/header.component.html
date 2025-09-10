@@ -2,7 +2,7 @@
   <section id="header">
     <div id="header_content">
       <p class="headline">Kanban Project Management Tool</p>
-      <div id="header_left">
+      <div id="header_left" *ngIf="!isSignupPolicyOrLegalPage">
         <a routerLink="/info">
           <img id="info" src="/img/help.svg" alt="Info" *ngIf="!isClicked">
         </a>

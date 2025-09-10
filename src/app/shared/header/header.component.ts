@@ -89,4 +89,9 @@ export class HeaderComponent implements OnInit {
     const username = sessionStorage.getItem('username') || '';
     return getInitials(username);
   }
+
+  get isSignupPolicyOrLegalPage(): boolean {
+  const url = this.router.url;
+  // Prüft, ob du auf /signup/privacy-policy oder /signup/legal-notice bist
+ return url === '/privacy-policy' || url === '/legal-notice';}
 }
