@@ -10,10 +10,9 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [RouterLink, RouterModule],
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
-
   /**
    * @description Indicates if the navigation menu is currently open.
    */
@@ -22,10 +21,10 @@ export class NavbarComponent {
    * @description Indicates if a menu item has been clicked.
    */
   isClicked = true;
-
   /**
    * @description Closes the navigation menu.
    */
+
   closeMenu(): void {
     this.isMenuOpen = false;
     this.isClicked = true;

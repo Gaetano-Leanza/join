@@ -12,58 +12,58 @@ import {
 import { Observable } from 'rxjs';
 
 /**
- * Interface für ein Subtask-Dokument.
+ * @description Interface for a Subtask document.
  */
 export interface Subtask {
-  /** Titel der Subtask */
+  /** The title of the subtask. */
   title: string;
-  /** Status, ob die Subtask erledigt ist */
+  /** The completion status of the subtask. */
   done: boolean;
 }
 
 /**
- * Interface für ein Task-Dokument in Firestore.
+ * @description Interface for a Task document in Firestore.
  */
 export interface Task {
-  /** Eindeutige ID des Tasks */
+  /** The unique identifier of the task. */
   id: string;
 
-  /** Titel des Tasks */
+  /** The title of the task. */
   title: string;
 
-  /** Beschreibung des Tasks */
+  /** The description of the task. */
   description: string;
 
-  /** Fälligkeitsdatum als ISO-String */
+  /** The due date of the task as an ISO string. */
   dueDate: string;
 
-  /** Priorität des Tasks */
+  /** The priority of the task. */
   priority: 'low' | 'medium' | 'urgent';
 
-  /** Fortschrittsstatus des Tasks */
+  /** The progress status of the task. */
   progress: 'toDo' | 'inProgress' | 'awaitFeedback' | 'done';
 
-  /** Kategorie des Tasks */
+  /** The category of the task. */
   category: string;
 
-  /** Farbe der Kategorie für UI */
+  /** The color associated with the category for UI purposes. */
   categoryColor: string;
 
-  /** Zugewiesene Person (oder Personen-Name) */
+  /** The name of the person or people assigned to the task. */
   assignedTo: string;
 
-  /** Zugewiesene Kontakte */
-  contacts: string[];   // <-- angepasst auf Array
+  /** A list of contacts assigned to the task. */
+  contacts: string[];
 
-  /** Liste der Subtasks */
-  subtasks: Subtask[];  // <-- angepasst auf Subtask-Array
+  /** A list of subtasks associated with the task. */
+  subtasks: Subtask[];
 
-  /** Optionaler Status (z. B. für zusätzliche Labels) */
+  /** An optional status for additional labeling. */
   status?: string;
 }
 
 /**
- * Interface für Task-Updates (alle Felder optional).
+ * @description Interface for task updates, where all fields are optional.
  */
 export interface TaskUpdate {
   title?: string;
@@ -71,7 +71,7 @@ export interface TaskUpdate {
   description?: string;
   priority?: 'urgent' | 'medium' | 'low';
   progress?: 'toDo' | 'inProgress' | 'awaitFeedback' | 'done';
-  subtasks?: Subtask[];   // <-- auch hier angepasst
+  subtasks?: Subtask[];
   assignedTo?: string;
   dueDate?: string;
   contacts?: string[];
@@ -80,24 +80,26 @@ export interface TaskUpdate {
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
-  /** Firestore-Instanz */
+  /** The Firestore instance. */
   private firestore: Firestore = inject(Firestore);
 
-  /** Referenz zur Task-Collection in Firestore */
+  /** A reference to the 'tasks' collection in Firestore. */
   private taskCollection = collection(this.firestore, 'tasks');
 
   /**
-   * Holt alle Tasks aus Firestore als Observable (Realtime-Updates).
-   * @returns Observable-Liste aller Tasks
+   * @description Fetches all tasks from Firestore as an Observable for real-time updates.
+   * @returns An Observable list of all tasks.
    */
   getTasks(): Observable<Task[]> {
-    return collectionData(this.taskCollection, { idField: 'id' }) as Observable<Task[]>;
+    return collectionData(this.taskCollection, { idField: 'id' }) as Observable<
+      Task[]
+    >;
   }
 
   /**
-   * Holt ein einzelnes Task anhand der ID.
-   * @param taskId Die ID des Tasks
-   * @returns Observable des Tasks
+   * @description Fetches a single task by its ID.
+   * @param taskId The ID of the task.
+   * @returns An Observable of the task.
    */
   getTaskById(taskId: string): Observable<Task> {
     const taskDoc = doc(this.firestore, `tasks/${taskId}`);
@@ -105,19 +107,19 @@ export class TaskService {
   }
 
   /**
-   * Fügt ein neues Task in Firestore hinzu.
-   * @param task Das Task-Objekt, das hinzugefügt werden soll
-   * @returns Promise mit Referenz des erstellten Dokuments
+   * @description Adds a new task to Firestore.
+   * @param task The task object to be added.
+   * @returns A Promise with the reference of the created document.
    */
   addTask(task: Task) {
     return addDoc(this.taskCollection, task);
   }
 
   /**
-   * Aktualisiert ein bestehendes Task.
-   * @param taskId Die ID des zu aktualisierenden Tasks
-   * @param data Teilweise Task-Daten, die aktualisiert werden sollen
-   * @returns Promise<void>
+   * @description Updates an existing task.
+   * @param taskId The ID of the task to be updated.
+   * @param data Partial task data to be updated.
+   * @returns A Promise that resolves when the update is complete.
    */
   updateTask(taskId: string, data: Partial<Task>) {
     const taskDoc = doc(this.firestore, `tasks/${taskId}`);
@@ -125,9 +127,9 @@ export class TaskService {
   }
 
   /**
-   * Löscht ein Task anhand der ID.
-   * @param taskId Die ID des zu löschenden Tasks
-   * @returns Promise<void>
+   * @description Deletes a task by its ID.
+   * @param taskId The ID of the task to be deleted.
+   * @returns A Promise that resolves when the deletion is complete.
    */
   deleteTask(taskId: string) {
     const taskDoc = doc(this.firestore, `tasks/${taskId}`);
@@ -135,10 +137,10 @@ export class TaskService {
   }
 
   /**
-   * Aktualisiert nur den Status eines Tasks.
-   * @param id Die ID des Tasks
-   * @param newStatus Neuer Statuswert (toDo, inProgress, awaitFeedback, done)
-   * @returns Promise<void>
+   * @description Updates only the progress status of a task.
+   * @param id The ID of the task.
+   * @param newStatus The new progress status value ('toDo', 'inProgress', 'awaitFeedback', 'done').
+   * @returns A Promise that resolves when the update is complete.
    */
   updateTaskStatus(id: string, newStatus: string) {
     const taskDoc = doc(this.firestore, `tasks/${id}`);
