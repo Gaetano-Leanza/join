@@ -4,50 +4,52 @@ import { Task } from '../../../services/task.service';
 import { AddTaskMobileComponent } from '../../add-task-mobile/add-task-mobile.component';
 
 /**
- * @description Component for editing a task within a modal on the board.
+ * A modal component used for editing a task on the main board.
+ * It serves as a container for the mobile task editing form.
  */
 @Component({
   selector: 'app-board-modal-edit',
+  standalone: true,
   imports: [CommonModule, AddTaskMobileComponent],
   templateUrl: './board-modal-edit.component.html',
-  styleUrl: './board-modal-edit.component.scss'
+  styleUrls: ['./board-modal-edit.component.scss'],
 })
 export class BoardModalEditComponent {
   /**
-   * @description The task object to be edited.
+   * The task object to be edited.
    */
   @Input() task!: Task;
   /**
-   * @description Emits an event to close the modal.
+   * Emits an event when the edit modal should be closed.
    */
   @Output() close = new EventEmitter<void>();
   /**
-   * @description Emits the updated task when changes are saved.
+   * Emits the updated task object after changes have been saved.
    */
   @Output() saved = new EventEmitter<Task>();
 
   /**
-   * @description Controls the visibility of the edit modal.
+   * Controls the visibility of the edit modal dialog.
    */
   showEditModal = false;
 
   /**
-   * @description Opens the edit modal.
+   * Opens the edit modal.
    */
   openEditModal() {
     this.showEditModal = true;
   }
 
   /**
-   * @description Closes the edit modal.
+   * Closes the edit modal.
    */
   closeEditModal() {
     this.showEditModal = false;
   }
 
   /**
-   * @description Handles the event when a task is updated in the child component.
-   * @param updatedTask The task object with updated values.
+   * Handles the task update event from the child component.
+   * @param {Task} updatedTask The task object containing the new values.
    */
   onTaskUpdated(updatedTask: Task) {
     this.saved.emit(updatedTask);
@@ -55,7 +57,7 @@ export class BoardModalEditComponent {
   }
 
   /**
-   * @description Saves the current task and emits the 'saved' and 'close' events.
+   * Saves the task and emits the corresponding events to the parent component.
    */
   onSave() {
     this.saved.emit(this.task);

@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ModalBoardComponent } from './modal-board/modal-board.component';
@@ -12,11 +12,17 @@ import { map, Subscription } from 'rxjs';
 
 // Services
 import { TaskService, Task, Subtask } from '../../services/task.service';
-import { ContactService } from '../contacts/contact-service/contact.service';
 
 // Models
 import { Contact } from '../contacts/contact-model/contact.model';
 import { ModalBoardAddTaskComponent } from './modal-board-add-task/modal-board-add-task.component';
+
+/**
+ * @Component BoardComponent
+ * This component displays the main task board, allowing users to view and manage tasks
+ * in different progress columns (To Do, In Progress, Await Feedback, Done).
+ * It supports drag-and-drop functionality to move tasks between columns.
+ */
 @Component({
   selector: 'app-board',
   standalone: true,
@@ -28,48 +34,31 @@ import { ModalBoardAddTaskComponent } from './modal-board-add-task/modal-board-a
     ModalBoardComponent,
   ],
   templateUrl: './board.component.html',
-  styleUrls: ['./board.component.scss','./board.responsive.scss'],
+  styleUrls: ['./board.component.scss', './board.responsive.scss'],
 })
-export class BoardComponent implements OnDestroy {
-  public getCategoryColor(category: string): string {
-    switch (category) {
-      case 'User Story':
-        return ' #0038FF';
-      case 'Technical Task':
-        return ' #1FD7C1';
-      default:
-        return '#CCCCCC';
-    }
-  }
-
+export class BoardComponent implements OnInit, OnDestroy {
+  /** Flag to control the visibility of the "Add Task" modal. */
   showModal = false;
+  /** Delay in milliseconds for starting a drag operation, adjusted for device width. */
   dragDelay = 0;
 
+  /** Array of tasks in the 'To Do' column. */
   todo: Task[] = [];
+  /** Array of tasks in the 'In Progress' column. */
   inprogress: Task[] = [];
+  /** Array of tasks in the 'Await Feedback' column. */
   awaitfeedback: Task[] = [];
+  /** Array of tasks in the 'Done' column. */
   done: Task[] = [];
 
+  /** The currently selected task to be displayed in a modal. */
   selectedTask: Task | null = null;
+  /** The currently selected contact. */
   selectedContact: (Contact & { id: string }) | null = null;
+  /** Subscription to the tasks observable from TaskService. */
   private tasksSubscription: Subscription;
 
-  ngOnInit() {
-  this.setDragDelay();
-  window.addEventListener('resize', this.setDragDelay.bind(this));
-}
-
-ngOnDestroy() {
-  window.removeEventListener('resize', this.setDragDelay.bind(this));
-  if (this.tasksSubscription) {
-    this.tasksSubscription.unsubscribe();
-  }
-}
-
-setDragDelay() {
-  this.dragDelay = window.innerWidth <= 1299 ? 300 : 0; // 300ms Long-Press ab 1299px, sonst sofort
-}
-
+  /** A predefined list of colors for user avatars. */
   private readonly avatarColors = [
     '#F44336',
     '#E91E63',
@@ -83,10 +72,17 @@ setDragDelay() {
     '#795548',
   ];
 
+  /** The search term entered by the user to filter tasks. */
   searchTerm: string = '';
+  /** A message to display when no tasks match the search criteria. */
   noTasksMessage: string = '';
+  /** A local copy of all tasks to perform filtering on. */
   private allTasks: Task[] = [];
 
+  /**
+   * @constructor
+   * @param {TaskService} taskService - The service for managing task data.
+   */
   constructor(private taskService: TaskService) {
     this.tasksSubscription = this.taskService
       .getTasks()
@@ -97,13 +93,63 @@ setDragDelay() {
       });
   }
 
+  /**
+   * Lifecycle hook that runs when the component is initialized.
+   */
+  ngOnInit() {
+    this.setDragDelay();
+    window.addEventListener('resize', this.setDragDelay.bind(this));
+  }
+
+  /**
+   * Lifecycle hook that runs when the component is destroyed.
+   * Unsubscribes from observables and removes event listeners to prevent memory leaks.
+   */
+  ngOnDestroy() {
+    window.removeEventListener('resize', this.setDragDelay.bind(this));
+    if (this.tasksSubscription) {
+      this.tasksSubscription.unsubscribe();
+    }
+  }
+
+  /**
+   * Sets the drag-and-drop delay based on the window width.
+   * A longer delay is used on smaller screens to support touch-based scrolling.
+   */
+  setDragDelay() {
+    this.dragDelay = window.innerWidth <= 1299 ? 300 : 0;
+  }
+
+  /**
+   * Returns a hex color code based on the task category.
+   * @param {string} category - The category of the task.
+   * @returns {string} The corresponding color code.
+   */
+  public getCategoryColor(category: string): string {
+    switch (category) {
+      case 'User Story':
+        return ' #0038FF';
+      case 'Technical Task':
+        return ' #1FD7C1';
+      default:
+        return '#CCCCCC';
+    }
+  }
+
+  /**
+   * Filters the tasks displayed on the board based on the search term.
+   */
   filterTasks(): void {
     const search = this.searchTerm.trim().toLowerCase();
 
     if (!search) {
       this.todo = this.allTasks.filter((t) => t.progress === 'toDo');
-      this.inprogress = this.allTasks.filter((t) => t.progress === 'inProgress');
-      this.awaitfeedback = this.allTasks.filter((t) => t.progress === 'awaitFeedback');
+      this.inprogress = this.allTasks.filter(
+        (t) => t.progress === 'inProgress'
+      );
+      this.awaitfeedback = this.allTasks.filter(
+        (t) => t.progress === 'awaitFeedback'
+      );
       this.done = this.allTasks.filter((t) => t.progress === 'done');
       this.noTasksMessage = '';
       return;
@@ -122,11 +168,23 @@ setDragDelay() {
     this.noTasksMessage = filtered.length === 0 ? 'No results found' : '';
   }
 
+  /**
+   * Generates a color for an avatar based on a name.
+   * @param {string} name - The name of the user.
+   * @returns {string} A hex color code.
+   */
   getAvatarColor(name: string): string {
     if (!name) return this.avatarColors[0];
-    return this.avatarColors[name.trim().charCodeAt(0) % this.avatarColors.length];
+    return this.avatarColors[
+      name.trim().charCodeAt(0) % this.avatarColors.length
+    ];
   }
 
+  /**
+   * Extracts initials from a full name.
+   * @param {string} name - The full name.
+   * @returns {string} The initials (e.g., "JD" for "John Doe").
+   */
   getInitials(name: string): string {
     if (!name) return '';
     return name
@@ -137,22 +195,32 @@ setDragDelay() {
       .join('');
   }
 
- 
-
- getDoneSubtasks(task: Task): number {
-  if (!task.subtasks) return 0;
-  return task.subtasks.filter(s => s.done).length;
-}
-
-getSubtaskProgress(task: Task): number {
-  if (!task.subtasks || task.subtasks.length === 0) return 0;
-  const done = this.getDoneSubtasks(task);
-  return Math.round((done / task.subtasks.length) * 100);
-}
+  /**
+   * Calculates the number of completed subtasks for a given task.
+   * @param {Task} task - The task to check.
+   * @returns {number} The count of subtasks where `done` is true.
+   */
+  getDoneSubtasks(task: Task): number {
+    if (!task.subtasks) return 0;
+    return task.subtasks.filter((s) => s.done).length;
+  }
 
   /**
-   * Normalize raw task data from Firestore into Task.
-   * Now normalizes contacts to a string[] (supports old assignedTo string and new contacts array).
+   * Calculates the progress of subtasks as a percentage.
+   * @param {Task} task - The task containing the subtasks.
+   * @returns {number} The completion percentage (0-100).
+   */
+  getSubtaskProgress(task: Task): number {
+    if (!task.subtasks || task.subtasks.length === 0) return 0;
+    const done = this.getDoneSubtasks(task);
+    return Math.round((done / task.subtasks.length) * 100);
+  }
+
+  /**
+   * Normalizes raw task data from Firestore into a structured Task object.
+   * @private
+   * @param {any} task - The raw task data from Firestore.
+   * @returns {Task} A structured Task object.
    */
   private mapTask(task: any): Task {
     return {
@@ -166,12 +234,17 @@ getSubtaskProgress(task: Task): number {
       progress: task.progress || 'toDo',
       subtasks: task.subtasks || [],
       title: task.title || task.titile || '',
-      // normalize contacts: supports array | comma-separated string | single assignedTo string
       contacts: this.parseContacts(task.contacts ?? task.assignedTo),
       status: task.status || '',
     };
   }
 
+  /**
+   * Parses the subtasks field from various possible formats into a consistent Subtask array.
+   * @private
+   * @param {any} subtasks - The subtasks data.
+   * @returns {Subtask[]} An array of Subtask objects.
+   */
   private parseSubtasks(subtasks: any): Subtask[] {
     if (!subtasks) return [];
     if (Array.isArray(subtasks)) {
@@ -190,12 +263,10 @@ getSubtaskProgress(task: Task): number {
   }
 
   /**
-   * Parse contacts into a string array.
-   * Accepts:
-   * - array of strings,
-   * - comma-separated string,
-   * - single string (assignedTo)
-   * - array of objects with name property (defensive)
+   * Parses the contacts field from various possible formats into a string array.
+   * @private
+   * @param {any} contacts - The contacts data, which could be an array, a string, or null.
+   * @returns {string[]} An array of contact names.
    */
   private parseContacts(contacts: any): string[] {
     if (!contacts) return [];
@@ -204,24 +275,31 @@ getSubtaskProgress(task: Task): number {
         .map((c) => {
           if (!c) return '';
           if (typeof c === 'string') return c;
-          // if object, try to extract common fields
-          if (typeof c === 'object') return (c.name || c.fullName || c.displayName || '').toString();
+          if (typeof c === 'object')
+            return (c.name || c.fullName || c.displayName || '').toString();
           return c.toString();
         })
         .filter((c) => !!c);
     }
     if (typeof contacts === 'string') {
-      // support comma-separated or single name
       if (contacts.includes(',')) {
-        return contacts.split(',').map((s) => s.trim()).filter((s) => !!s);
+        return contacts
+          .split(',')
+          .map((s) => s.trim())
+          .filter((s) => !!s);
       }
       if (contacts.trim().length === 0) return [];
       return [contacts.trim()];
     }
-    // fallback
     return [];
   }
 
+  /**
+   * Maps a string priority to the `Task['priority']` type.
+   * @private
+   * @param {string} priority - The priority string (e.g., 'low', 'medium', 'urgent').
+   * @returns {Task['priority']} The mapped priority type, defaulting to 'medium'.
+   */
   private mapPriority(priority: string): Task['priority'] {
     const priorityMap: Record<string, Task['priority']> = {
       low: 'low',
@@ -231,9 +309,17 @@ getSubtaskProgress(task: Task): number {
     return priorityMap[priority?.toLowerCase()] || 'medium';
   }
 
+  /**
+   * Handles the drop event when a task is moved within or between columns.
+   * @param {CdkDragDrop<Task[]>} event - The drag-and-drop event object.
+   */
   async drop(event: CdkDragDrop<Task[]>) {
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
     } else {
       const task = event.previousContainer.data[event.previousIndex];
       const newProgress = this.getProgressFromContainerId(event.container.id);
@@ -257,13 +343,23 @@ getSubtaskProgress(task: Task): number {
               event.currentIndex,
               event.previousIndex
             );
-            task.progress = this.getProgressFromContainerId(event.previousContainer.id) || task.progress;
+            task.progress =
+              this.getProgressFromContainerId(event.previousContainer.id) ||
+              task.progress;
           });
       }
     }
   }
 
-  private getProgressFromContainerId(containerId: string): Task['progress'] | null {
+  /**
+   * Determines the progress status from the ID of the drop container.
+   * @private
+   * @param {string} containerId - The ID of the CDK drop list container.
+   * @returns {Task['progress'] | null} The corresponding progress status or null if not found.
+   */
+  private getProgressFromContainerId(
+    containerId: string
+  ): Task['progress'] | null {
     const progressMap: Record<string, Task['progress']> = {
       todoList: 'toDo',
       inProgressList: 'inProgress',
@@ -273,13 +369,21 @@ getSubtaskProgress(task: Task): number {
     return progressMap[containerId] || null;
   }
 
+  /**
+   * Opens a modal to display the details of a selected task.
+   * @param {Task} task - The task to be displayed.
+   */
   openTaskModal(task: Task) {
     this.selectedTask = task;
   }
 
+  /**
+   * A trackBy function for Angular's ngFor to improve performance when rendering lists.
+   * @param {number} index - The index of the item.
+   * @param {Task} task - The task object.
+   * @returns {string} The unique ID of the task.
+   */
   trackByTaskId(index: number, task: Task): string {
     return task.id || index.toString();
   }
-
-
 }
