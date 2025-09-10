@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -12,50 +12,58 @@ import { SplashScreenComponent } from '../../../splash-screen/splash-screen.comp
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
-  email = '';  // Geändert von 'name' zu 'email' für bessere Klarheit
+export class LoginComponent implements OnInit {
+  /** The email address entered by the user. */
+  email = '';
+  /** The password entered by the user. */
   password = '';
+  /** A message to display in case of a login error. */
   errorMessage = '';
+  /** Controls the visibility of the splash screen. */
   showSplash = true;
-  
-  ngOnInit() {
-    setTimeout(() => {
-      this.showSplash = false;
-    }, 1200); // Dauer der Splash-Animation in ms
-  }
 
+  /**
+   * @constructor
+   * @param {Router} router - The Angular Router for navigation.
+   * @param {FirebaseService} firebaseService - The service for handling Firebase operations.
+   */
   constructor(
     private router: Router,
     private firebaseService: FirebaseService
   ) {}
 
   /**
+   * A lifecycle hook that runs after the component has been initialized.
+   * It hides the splash screen after a short delay.
+   */
+  ngOnInit() {
+    setTimeout(() => {
+      this.showSplash = false;
+    }, 1200);
+  }
+
+  /**
    * Handles the user login process.
-   * Validates credentials and navigates to summary on success.
+   * It validates the user's credentials and navigates to the summary page on success.
    */
   async login(): Promise<void> {
-    // Reset error message
     this.errorMessage = '';
 
-    // Validate inputs
     if (!this.email.trim() || !this.password.trim()) {
       this.errorMessage = 'Please fill in all fields';
       return;
     }
 
     try {
-      // Validate user credentials - validateUser gibt jetzt das User-Objekt zurück
       const userData = await this.firebaseService.validateUser(
         this.email,
         this.password
       );
 
       if (userData) {
-        // Successful login - speichere sowohl Name als auch Email
-        sessionStorage.setItem('username', userData.name); // Name für Anzeige
-        sessionStorage.setItem('userEmail', userData.email); // Email für weitere Referenz
-        sessionStorage.setItem('userId', userData.id); // User ID für weitere Operationen
-        
+        sessionStorage.setItem('username', userData.name);
+        sessionStorage.setItem('userEmail', userData.email);
+        sessionStorage.setItem('userId', userData.id);
         this.router.navigate(['/summary']);
       } else {
         this.errorMessage =
@@ -68,12 +76,15 @@ export class LoginComponent {
   }
 
   /**
-   * Navigates the user back to the previous page.
+   * Navigates the user to the root page.
    */
   goBack(): void {
     this.router.navigate(['/']);
   }
 
+  /**
+   * Logs in a guest user and navigates to the summary page.
+   */
   guestLogin() {
     sessionStorage.setItem('username', 'Guest');
     this.router.navigate(['/summary']);
