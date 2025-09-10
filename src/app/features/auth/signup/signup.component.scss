@@ -173,7 +173,6 @@
     justify-content: center;
     gap: 2rem;
     width: 100%;
-    position: absolute;
     bottom: 2rem;
 
     a {
@@ -213,5 +212,12 @@
     transform: translateY(0);
     visibility: visible;
     transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s;
+  }
+}
+
+@media (max-height: 700px) {
+  .main-container .signup-container {
+    height: 690px !important;
+    margin-bottom: 1rem;
   }
 }
