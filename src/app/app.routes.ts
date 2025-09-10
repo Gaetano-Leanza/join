@@ -7,19 +7,19 @@ import { InfoComponent } from './pages/info/info.component';
 import { AddTaskComponent } from './features/add-task/add-task.component';
 import { BoardComponent } from './features/board/board.component';
 import { SummaryComponent } from './features/summary/summary.component';
-import { AuthGuard } from './auth.guard';  
+import { AuthGuard } from './auth.guard';
 import { LoginComponent } from './features/auth/login/login.component';
 import { SignupComponent } from './features/auth/signup/signup.component';
 
 /**
- * Defines the main application routes.
+ * @description Defines the main application routes.
  *
  * Each route is associated with a component and can include data for prerendering.
  */
 export const routes: Routes = [
-  // Die Login-Seite ist jetzt die Standard-Route
+  // The login page is now the default route
   { path: '', component: LoginComponent },
-  // Route für die Sign-up-Seite
+  // Route for the sign-up page
   { path: 'sign-up', component: SignupComponent },
 
   // Route for the Add Task component
@@ -27,21 +27,21 @@ export const routes: Routes = [
     path: 'task',
     component: AddTaskComponent,
     data: { prerender: true },
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   // Route for the Board component
   {
     path: 'board',
     component: BoardComponent,
     data: { prerender: true },
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   // Route for the contacts layout
   {
     path: 'contacts',
     component: ContactLayoutComponent,
     data: { prerender: true },
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   // Route for the Contact Detail component
   {
@@ -72,13 +72,12 @@ export const routes: Routes = [
     path: 'summary',
     component: SummaryComponent,
     data: { prerender: true },
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
 
   {
     path: 'app-signup',
     component: SignupComponent,
-        data: { prerender: true },
-
+    data: { prerender: true },
   },
 ];
