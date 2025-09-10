@@ -16,14 +16,23 @@ import { Contact } from '../contact-model/contact.model';
   standalone: true,
   imports: [CommonModule],
   template: `
+       
     <ng-container *ngIf="contact$ | async as contact; else noContact">
+           
       <h2>{{ contact.name }}</h2>
+           
       <p><strong>Email:</strong> {{ contact.email }}</p>
+           
       <p><strong>Phone:</strong> {{ contact.phone }}</p>
+         
     </ng-container>
+       
     <ng-template #noContact>
+           
       <p>Contact not found.</p>
+         
     </ng-template>
+     
   `,
 })
 export class ContactDetailComponent {
@@ -32,12 +41,12 @@ export class ContactDetailComponent {
    * Returns `undefined` if no contact is found.
    */
   contact$: Observable<Contact | undefined> | undefined;
-
   /**
    * @description Creates a new instance of the ContactDetailComponent.
    * @param route - For reading URL parameters (specifically the contact ID).
    * @param contactService - Service for contact management and retrieval.
    */
+
   constructor(
     private route: ActivatedRoute,
     private contactService: ContactService

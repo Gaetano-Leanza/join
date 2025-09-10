@@ -39,10 +39,10 @@ export class ContactsComponent implements OnInit {
    * @description The contact service for data operations.
    */
   private contactService = inject(ContactService);
-
   /**
    * @description Observable for managing contact state.
    */
+
   contacts$!: Observable<Contact[]>;
   /**
    * @description The currently selected contact.
@@ -64,10 +64,10 @@ export class ContactsComponent implements OnInit {
   ngOnInit(): void {
     this.loadContacts();
   }
-
   /**
    * @description Loads contacts with error handling and a loading indicator.
    */
+
   private loadContacts(): void {
     this.loading = true;
     this.error = null;
@@ -81,28 +81,28 @@ export class ContactsComponent implements OnInit {
       })
     );
   }
-
   /**
    * @description Opens the modal to edit a specific contact.
    * @param contact The contact to be edited.
    */
+
   editContact(contact: Contact): void {
     this.selectedContact = { ...contact };
     this.modalOpen = true;
   }
-
   /**
    * @description Selects a contact from the list.
    * @param contact The contact to select.
    */
+
   selectContact(contact: Contact): void {
     this.selectedContact = contact;
   }
-
   /**
    * @description Closes the modal and handles the result.
    * @param success A boolean indicating if the operation was successful.
    */
+
   closeModal(success: boolean): void {
     this.modalOpen = false;
     if (success) {
