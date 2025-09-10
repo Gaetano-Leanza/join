@@ -10,9 +10,11 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './privacy-policy.component.html',
-  styleUrls: ['./privacy-policy.component.scss', './privacy-policy.responsive.scss']
+  styleUrls: [
+    './privacy-policy.component.scss',
+    './privacy-policy.responsive.scss',
+  ],
 })
 export class PrivacyPolicyComponent {
-
   constructor() {}
 }
