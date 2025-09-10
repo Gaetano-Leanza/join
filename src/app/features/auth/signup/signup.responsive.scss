@@ -3,6 +3,10 @@
     width: 80px;
     height: auto;
   }
+
+  .input-container {
+    gap: 1rem;
+  }
 }
 
 @media (max-width: 600px) {
@@ -12,7 +16,8 @@
     align-items: center;
     padding: 1rem;
     height: auto;
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden !important;
   }
 
   .logo-container {
@@ -67,6 +72,7 @@
     box-shadow: none;
     background-color: transparent;
     margin-bottom: 0;
+    margin-top: 70px;
   }
 
   .headline h1 {
@@ -78,6 +84,21 @@
     position: absolute;
     right: 20%;
   }
+
+  .logo-container img {
+    width: 50px;
+    height: auto;
+    margin-top: -60px;
+  }
+
+  footer {
+
+    gap: 1rem;
+    margin-bottom: 2.4rem;
+    display: flex;
+    flex-direction: row;
+  }
+
 }
 
 @media (max-width: 430px) {
@@ -93,6 +114,14 @@
 
   .headline h1 {
     font-size: 30px;
+  }
+
+  footer {
+
+    gap: 0.5rem;
+    margin-bottom: 6.5rem;
+    display: flex;
+    flex-direction: row;
   }
 }
 
@@ -114,5 +143,55 @@
   .checkbox-container {
     margin: 0 !important;
     margin-bottom: 10px !important;
+  }
+}
+
+
+@media (max-width: 380px),
+(max-height: 700px) {
+  .signup-container {
+    margin-top: 80px;
+    height: 610px !important;
+
+  }
+
+  .input-container {
+    gap: 0.7rem !important;
+  }
+
+  .logo-container img {
+    width: 40px;
+    height: auto;
+    margin-top: -50px;
+  }
+
+  footer {
+
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 360px),
+(max-height: 640px) {
+
+  form {
+    margin-top: 1rem;
+  }
+
+  .signup-container {
+    margin-top: 70px;
+    height: 620px !important;
+    gap: 10px;
+  }
+
+  footer {
+    margin-bottom: 1rem;
+  }
+
+  .input-container {
+    gap: 0.5rem;
   }
 }
