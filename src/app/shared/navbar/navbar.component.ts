@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 /**
@@ -8,7 +9,7 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, RouterModule],
+  imports: [RouterLink, RouterModule,CommonModule],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
@@ -25,8 +26,20 @@ export class NavbarComponent {
    * @description Closes the navigation menu.
    */
 
+
+   constructor(private router: Router) {}
   closeMenu(): void {
     this.isMenuOpen = false;
     this.isClicked = true;
   }
+
+    get isSignupPolicyOrLegalPage(): boolean {
+  const url = this.router.url;
+   return url === '/privacy-policy' || url === '/legal-notice';
+}
+
+   get isSignupLogIn(): boolean {
+  const url = this.router.url;
+   return url === '/privacy-policy' || url === '/legal-notice';
+}
 }
