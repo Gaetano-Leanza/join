@@ -100,7 +100,7 @@
   .signup-container {
     width: 100%;
     max-width: 290px;
-    height: auto;
+    height: 595px !important;
     padding: 0.5rem;
     box-shadow: none;
     background-color: transparent;
@@ -109,5 +109,10 @@
 
   .headline h1 {
     font-size: 40px;
+  }
+
+  .checkbox-container {
+    margin: 0 !important;
+    margin-bottom: 10px !important;
   }
 }
