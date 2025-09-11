@@ -3,6 +3,7 @@ import { Router, RouterLink, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs/operators';
 import { getInitials } from '../../../app/features/add-task/avatar-utils';
+import { UserStateService } from '../../services/userstate.service';
 
 /**
  * @description The main header component of the application.
@@ -45,9 +46,7 @@ export class HeaderComponent implements OnInit {
    * except on specific pages like '/privacy-policy' or '/legal-notice'.
    */
 
-  constructor(private router: Router) {
-    
-  }
+  constructor(private router: Router, public userState: UserStateService) {}
   /**
    * @description Toggles the menu status.
    * Opens it if closed, closes it if open.
@@ -80,11 +79,10 @@ export class HeaderComponent implements OnInit {
     const username = sessionStorage.getItem('username') || '';
     return getInitials(username);
   }
-  
-logout(): void {
-  sessionStorage.clear();
-  this.router.navigate(['/']);
-  this.closeMenu();
-}
 
+  logout(): void {
+    this.userState.logout(); // Status für Navbar auf false setzen
+    this.closeMenu();
+    this.router.navigate(['/']); // Navigation zur Startseite
+  }
 }
