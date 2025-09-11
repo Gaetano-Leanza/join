@@ -5,7 +5,12 @@
 
   <div class="signup-container">
     <div class="headline">
-      <img (click)="goBack()" src="img/arrow-left.svg" alt="Arrow left" class="arrow-back" />
+      <img
+        (click)="goBack()"
+        src="img/arrow-left.svg"
+        alt="Arrow left"
+        class="arrow-back"
+      />
       <h1>Sign up</h1>
     </div>
     <div class="header-line"></div>
@@ -13,31 +18,80 @@
     <form (ngSubmit)="signup()" #signupForm="ngForm">
       <div class="input-container">
         <div class="input-field">
-          <input type="text" placeholder="Name" name="name" [(ngModel)]="name" required #nameInput="ngModel"
-            [class.error]="nameInput.invalid && nameInput.touched" />
+          <input
+            type="text"
+            placeholder="Name"
+            name="name"
+            [(ngModel)]="name"
+            required
+            #nameInput="ngModel"
+            [class.error]="nameInput.invalid && nameInput.touched"
+          />
           <img src="img/person.svg" alt="Person Icon" />
         </div>
         <div class="input-field">
-          <input type="email" placeholder="Email" name="email" [(ngModel)]="email" required email #emailInput="ngModel"
-            [class.error]="emailInput.invalid && emailInput.touched" />
+          <input
+            type="email"
+            placeholder="Email"
+            name="email"
+            [(ngModel)]="email"
+            required
+            email
+            #emailInput="ngModel"
+            [class.error]="emailInput.invalid && emailInput.touched"
+          />
           <img src="img/mail.svg" alt="Mail Icon" />
         </div>
-        <div class="input-field">
-          <input [type]="showPassword ? 'text' : 'password'" placeholder="Password" name="password"
-            [(ngModel)]="password" required minlength="6" #passwordInput="ngModel"
-            [class.error]="passwordInput.invalid && passwordInput.touched" />
-          <img [src]="showPassword ? 'img/visibility.svg' : 'img/lock.png'" alt="Toggle Password Visibility"
-            (click)="togglePasswordVisibility('password')" />
+        <div
+          *ngIf="emailInput.invalid && emailInput.touched"
+          class="password-error-message"
+        >
+          Please enter a valid email address.
         </div>
+
         <div class="input-field">
-          <input [type]="showConfirmPassword ? 'text' : 'password'" placeholder="Confirm Password"
-            name="confirmPassword" [(ngModel)]="confirmPassword" required #confirmPasswordInput="ngModel" [class.error]="
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="Password"
+            name="password"
+            [(ngModel)]="password"
+            required
+            minlength="6"
+            #passwordInput="ngModel"
+            [class.error]="passwordInput.invalid && passwordInput.touched"
+          />
+          <img
+            [src]="showPassword ? 'img/visibility.svg' : 'img/lock.png'"
+            alt="Toggle Password Visibility"
+            (click)="togglePasswordVisibility('password')"
+          />
+        </div>
+        <div
+          *ngIf="passwordInput.errors?.['minlength'] && passwordInput.touched"
+          class="password-error-message"
+        >
+          Password must be at least 6 characters long.
+        </div>
+
+        <div class="input-field">
+          <input
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            placeholder="Confirm Password"
+            name="confirmPassword"
+            [(ngModel)]="confirmPassword"
+            required
+            #confirmPasswordInput="ngModel"
+            [class.error]="
               (confirmPasswordInput.touched &&
                 passwordInput.value !== confirmPasswordInput.value) ||
               passwordMismatch
-            " />
-          <img [src]="showConfirmPassword ? 'img/visibility.svg' : 'img/lock.png'" alt="Toggle Password Visibility"
-            (click)="togglePasswordVisibility('confirmPassword')" />
+            "
+          />
+          <img
+            [src]="showConfirmPassword ? 'img/visibility.svg' : 'img/lock.png'"
+            alt="Toggle Password Visibility"
+            (click)="togglePasswordVisibility('confirmPassword')"
+          />
         </div>
         <div *ngIf="passwordMismatch" class="password-error-message">
           Your password's dont match. Please try again.
@@ -45,14 +99,26 @@
       </div>
 
       <div class="checkbox-container">
-        <input type="checkbox" id="privacy-policy" name="privacyPolicy" required [(ngModel)]="privacyPolicyAccepted" />
-        <label for="privacy-policy">I accept the
-          <a routerLink="/privacy-policy">Privacy Policy</a></label>
+        <input
+          type="checkbox"
+          id="privacy-policy"
+          name="privacyPolicy"
+          required
+          [(ngModel)]="privacyPolicyAccepted"
+        />
+        <label for="privacy-policy"
+          >I accept the
+          <a routerLink="/privacy-policy">Privacy Policy</a></label
+        >
       </div>
 
       <div class="button-container">
-        <button type="submit" class="signup-btn" [disabled]="!signupForm.form.valid || isLoading">
-          {{ isLoading ? "Wird erstellt..." : "Sign up" }}
+        <button
+          type="submit"
+          class="signup-btn"
+          [disabled]="!signupForm.form.valid || isLoading"
+        >
+          {{ isLoading ? "Creating account..." : "Sign up" }}
         </button>
       </div>
     </form>
@@ -67,3 +133,4 @@
     You're successfully registered
   </div>
 </div>
+
