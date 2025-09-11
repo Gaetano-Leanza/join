@@ -72,17 +72,23 @@
         gap: 0.5rem;
         margin-top: 2rem;
         margin-bottom: 1.5rem;
+      }
 
-        .password-error-message {
-          color: #ff8181;
-          font-size: 0.875rem;
-          height: 1.2rem;
-        }
+      .input-field-wrapper {
+        position: relative;
+        padding-bottom: 1.5rem;
+      }
+
+      .error-message {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        color: #ff8181;
+        font-size: 0.875rem;
       }
 
       .input-field {
         position: relative;
-        margin-bottom: 0.5rem;
 
         input {
           width: 100%;
