@@ -114,6 +114,24 @@ nav a:hover:not(.active) {
   font-family: 'Inter', sans-serif;
 }
 
+.login-link-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.login-link {
+  padding-left: 50px;
+}
+
+.loginImg {
+  height: 30px;
+  width: 30px;
+  margin-left: 0px;
+  margin-left: -8px;
+}
+
 
 @media (max-width: 768px) {
   #navbar {
