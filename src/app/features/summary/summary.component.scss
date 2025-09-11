@@ -9,6 +9,10 @@
     display: none;
 }
 
+body {
+    background-color: #f6f7f8;
+}
+
 .spalsch-screen {
     position: fixed;
     inset: 0;
@@ -33,14 +37,12 @@
 #summary-wrapper {
     width: calc(100vw - 230px);
     height: calc(100vh - 96px);
-    background: #fff;
     border: none;
     padding: 0;
     margin: 0;
     overflow-y: auto;
     max-width: 1500px;
     overflow: hidden;
-    background-color: #f6f7f8;
 }
 
 #headline-wrapper {
