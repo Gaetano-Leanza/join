@@ -80,6 +80,11 @@ export class HeaderComponent implements OnInit {
     const username = sessionStorage.getItem('username') || '';
     return getInitials(username);
   }
-
+  
+logout(): void {
+  sessionStorage.clear();
+  this.router.navigate(['/']);
+  this.closeMenu();
+}
 
 }
