@@ -33,17 +33,18 @@
   background-color: #f6f7f8;
 
 }
-
 .signUp-container {
   position: absolute;
   top: 50px;
-  right: 50px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: space-between;
   flex-direction: row;
   align-items: center;
   gap: 20px;
   width: 90%;
+  max-width: 1900px;
 }
 
 .logo-container {
