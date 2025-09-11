@@ -1,13 +1,13 @@
 .legal-container {
+  width: calc(100vw - 330px);
   padding: 2rem;
-  max-width: 800px;
+  max-width: 1600px;
+  height: calc(100vh - 96px);
   max-height: 90vh;
   overflow-y: auto;
   scrollbar-width: none;
-  margin: 0 auto;
+  margin: 0 50px;
   font-family: 'Inter', sans-serif;
-
-
 }
 
 .legal-header {
