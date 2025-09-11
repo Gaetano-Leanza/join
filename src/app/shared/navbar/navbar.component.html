@@ -2,46 +2,30 @@
   <div id="navbar_content">
     <img id="logo" src="/img/Capa 2.svg" alt="Join logo" />
 
-    @if (showNavigationLinks) {
-      <nav>
-        <a routerLink="/summary" routerLinkActive="active" (click)="closeMenu()">
-          <div>
-            <img src="/img/Vector.svg" alt="Summary" />
-            <p>Summary</p>
-          </div>
-        </a>
+    <!-- Navigation wenn Zugriff besteht -->
+    <nav *ngIf="showAppLinks">
+      <a routerLink="/summary" routerLinkActive="active" (click)="closeMenu()">
+        <div><img src="/img/Vector.svg" alt="Summary" /><p>Summary</p></div>
+      </a>
+      <a routerLink="/task" routerLinkActive="active" (click)="closeMenu()">
+        <div><img src="/img/Icons.svg" alt="Add Task" /><p>Add Task</p></div>
+      </a>
+      <a routerLink="/board" routerLinkActive="active" (click)="closeMenu()">
+        <div><img src="/img/Icons (1).svg" alt="Board" /><p>Board</p></div>
+      </a>
+      <a routerLink="/contacts" routerLinkActive="active" (click)="closeMenu()">
+        <div><img src="/img/Icons (2).svg" alt="Contacts" /><p>Contacts</p></div>
+      </a>
+    </nav>
 
-        <a routerLink="/task" routerLinkActive="active" (click)="closeMenu()">
-          <div>
-            <img src="/img/Icons.svg" alt="Add Task" />
-            <p>Add Task</p>
-          </div>
-        </a>
+    <!-- Login-Link -->
+    <nav *ngIf="showLoginLink">
+      <a (click)="navigateToLogin(); closeMenu()" class="login-link">
+        <div><p>Log in</p></div>
+      </a>
+    </nav>
 
-        <a routerLink="/board" routerLinkActive="active" (click)="closeMenu()">
-          <div>
-            <img src="/img/Icons (1).svg" alt="Board" />
-            <p>Board</p>
-          </div>
-        </a>
-
-        <a routerLink="/contacts" routerLinkActive="active" (click)="closeMenu()">
-          <div>
-            <img src="/img/Icons (2).svg" alt="Contacts" />
-            <p>Contacts</p>
-          </div>
-        </a>
-      </nav>
-    } @else {
-      <nav>
-        <a (click)="navigateToLogin(); closeMenu()" class="login-link">
-          <div>
-            <p>Log in</p>
-          </div>
-        </a>
-      </nav>
-    }
-
+    <!-- Policy-Links -->
     <div id="privacy">
       <a routerLink="/privacy-policy" routerLinkActive="active" (click)="closeMenu()">Privacy Policy</a>
       <a routerLink="/legal-notice" routerLinkActive="active" (click)="closeMenu()">Legal notice</a>

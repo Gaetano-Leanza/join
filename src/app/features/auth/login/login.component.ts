@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FirebaseService } from '../../../services/firebase.service';
 import { SplashScreenComponent } from '../../../splash-screen/splash-screen.component';
+import { UserStateService } from '../../../services/userstate.service';
 
 @Component({
   selector: 'app-login',
@@ -13,39 +14,23 @@ import { SplashScreenComponent } from '../../../splash-screen/splash-screen.comp
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  /** The email address entered by the user. */
   email = '';
-  /** The password entered by the user. */
   password = '';
-  /** A message to display in case of a login error. */
   errorMessage = '';
-  /** Controls the visibility of the splash screen. */
   showSplash = true;
 
-  /**
-   * @constructor
-   * @param {Router} router - The Angular Router for navigation.
-   * @param {FirebaseService} firebaseService - The service for handling Firebase operations.
-   */
   constructor(
     private router: Router,
-    private firebaseService: FirebaseService
+    private firebaseService: FirebaseService,
+    private userState: UserStateService // <-- hinzugefügt
   ) {}
 
-  /**
-   * A lifecycle hook that runs after the component has been initialized.
-   * It hides the splash screen after a short delay.
-   */
   ngOnInit() {
     setTimeout(() => {
       this.showSplash = false;
     }, 1200);
   }
 
-  /**
-   * Handles the user login process.
-   * It validates the user's credentials and navigates to the summary page on success.
-   */
   async login(): Promise<void> {
     this.errorMessage = '';
 
@@ -61,9 +46,15 @@ export class LoginComponent implements OnInit {
       );
 
       if (userData) {
+        // SessionStorage setzen
         sessionStorage.setItem('username', userData.name);
         sessionStorage.setItem('userEmail', userData.email);
         sessionStorage.setItem('userId', userData.id);
+
+        // UserStateService benachrichtigen
+        this.userState.setAccess(true);
+
+        // Navigation
         this.router.navigate(['/summary']);
       } else {
         this.errorMessage =
@@ -75,18 +66,18 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  /**
-   * Navigates the user to the root page.
-   */
   goBack(): void {
     this.router.navigate(['/']);
   }
 
-  /**
-   * Logs in a guest user and navigates to the summary page.
-   */
   guestLogin() {
+    // GuestLogin in SessionStorage
     sessionStorage.setItem('username', 'Guest');
+
+    // UserStateService benachrichtigen
+    this.userState.setAccess(true);
+
+    // Navigation
     this.router.navigate(['/summary']);
   }
 }

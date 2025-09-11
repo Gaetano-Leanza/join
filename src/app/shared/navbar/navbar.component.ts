@@ -1,14 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, RouterLink, NavigationEnd } from '@angular/router';
+import { Router, RouterLink, RouterModule, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { Auth, authState } from '@angular/fire/auth';
 import { Subscription, filter } from 'rxjs';
-import { AuthService } from '../../services/auth.service';
+import { UserStateService } from '../../services/userstate.service';
 
-/**
- * @description The navigation bar component for the application.
- */
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -17,86 +12,68 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-  /**
-   * @description Indicates if the navigation menu is currently open.
-   */
   isMenuOpen = false;
-  /**
-   * @description Indicates if a menu item has been clicked.
-   */
   isClicked = true;
-  
-  /**
-   * @description Tracks if user is logged in
-   */
-  isLoggedIn = false;
-  
-  /**
-   * @description Current route path
-   */
+
+  hasAccessToSummary = false;
   currentRoute = '';
-  
-  /**
-   * @description Subscription to auth state changes
-   */
-  private authSub!: Subscription;
-  
-  /**
-   * @description Subscription to router events
-   */
+
+  private userStateSub!: Subscription;
   private routerSub!: Subscription;
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    private userStateService: UserStateService
   ) {}
 
   ngOnInit() {
-    // Sofortigen Auth-Status abrufen
-    this.isLoggedIn = this.authService.getCurrentAuthState();
-    
-    // Auth-Status-Änderungen überwachen
-    this.authSub = this.authService.isLoggedIn$.subscribe(isLoggedIn => {
-      this.isLoggedIn = isLoggedIn;
-    });
+    console.log('[Navbar] ngOnInit gestartet');
 
-    // Aktuelle Route sofort setzen
+    // Subscription auf UserState
+    this.userStateSub = this.userStateService.hasAccessToSummary$.subscribe(
+      (access) => {
+        console.log('[Navbar] UserState update (hasAccessToSummary$):', access);
+        this.hasAccessToSummary = access;
+      }
+    );
+
     this.currentRoute = this.router.url;
-    
-    // Router-Änderungen überwachen
+    console.log('[Navbar] initial currentRoute:', this.currentRoute);
+
+    // Router-Events
     this.routerSub = this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
+      .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         this.currentRoute = event.url;
+        console.log('[Navbar] route changed:', this.currentRoute);
       });
   }
 
   ngOnDestroy() {
-    // Clean up subscriptions
-    if (this.authSub) {
-      this.authSub.unsubscribe();
-    }
-    if (this.routerSub) {
-      this.routerSub.unsubscribe();
-    }
+    if (this.userStateSub) this.userStateSub.unsubscribe();
+    if (this.routerSub) this.routerSub.unsubscribe();
   }
 
-  /**
-   * @description Determines if navigation links should be shown
-   */
-  get showNavigationLinks(): boolean {
-    const isPolicyPage = 
-      this.currentRoute.includes('/privacy-policy') || 
-      this.currentRoute.includes('/legal-notice');
-    
-    return this.isLoggedIn || !isPolicyPage;
+  /** Prüft, ob aktuelle Seite Policy ist */
+  get isOnPolicyPage(): boolean {
+    return (
+      this.currentRoute.includes('/privacy-policy') ||
+      this.currentRoute.includes('/legal-notice')
+    );
   }
 
-  /**
-   * @description Navigates to login page
-   */
+  /** App-Navigation anzeigen? */
+  get showAppLinks(): boolean {
+    return this.hasAccessToSummary; // Policy-Seiten werden hier nicht ausgeschlossen
+  }
+
+  /** Login-Link anzeigen? */
+  get showLoginLink(): boolean {
+    return !this.hasAccessToSummary && !this.isOnPolicyPage;
+  }
+
   navigateToLogin() {
-    this.router.navigate(['/login']).then(success => {
+    this.router.navigate(['/login']).then((success) => {
       if (!success) {
         console.error('Navigation to login failed');
         this.router.navigate(['/']);
@@ -104,9 +81,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
   }
 
-  /**
-   * @description Closes the navigation menu.
-   */
   closeMenu(): void {
     this.isMenuOpen = false;
     this.isClicked = true;
