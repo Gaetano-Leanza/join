@@ -174,7 +174,10 @@
   }
 }
 
-@media (max-width: 360px),
+
+
+
+@media (max-width: 380px),
 (max-height: 640px) {
 
   form {
@@ -187,6 +190,11 @@
     gap: 10px;
   }
 
+  .error-message {
+    font-size: 12px;
+    margin-top: 5px;
+  }
+
   footer {
     margin-bottom: 1rem;
   }
@@ -195,4 +203,3 @@
     gap: 0.5rem;
   }
 }
-

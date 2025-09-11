@@ -61,14 +61,14 @@
           <div class="input-field">
             <input [type]="showConfirmPassword ? 'text' : 'password'" placeholder="Confirm Password"
               name="confirmPassword" [(ngModel)]="confirmPassword" required #confirmPasswordInput="ngModel"
-              [class.error]="
-                (confirmPasswordInput.touched &&
-                  passwordInput.value !== confirmPasswordInput.value) ||
-                passwordMismatch
-              " />
+              [class.error]="confirmPasswordInput.invalid && confirmPasswordInput.touched || passwordMismatch" />
             <img [src]="
                 showConfirmPassword ? 'img/visibility.svg' : 'img/lock.png'
               " alt="Toggle Password Visibility" (click)="togglePasswordVisibility('confirmPassword')" />
+          </div>
+          <div *ngIf="confirmPasswordInput.errors?.['required'] && confirmPasswordInput.touched"
+            class="password-error-message">
+            <span class="error-message">Password is required</span>
           </div>
           <div *ngIf="passwordMismatch">
             <span class="error-message"> Your password's dont match. Please try again.</span>

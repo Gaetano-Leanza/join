@@ -33,6 +33,7 @@
   background-color: #f6f7f8;
 
 }
+
 .signUp-container {
   position: absolute;
   top: 50px;
@@ -51,6 +52,11 @@
   margin-bottom: 2rem;
 }
 
+app-splash-screen {
+  position: fixed;
+  z-index: 9999;
+  transition: left 1s cubic-bezier(0.87, -0.41, .19, 1.44), top 1s cubic-bezier(0.87, -0.41, .19, 1.44);
+}
 
 .login-container {
   display: flex;
