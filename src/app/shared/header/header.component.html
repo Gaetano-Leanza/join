@@ -2,13 +2,13 @@
   <section id="header">
     <div id="header_content">
       <p class="headline">Kanban Project Management Tool</p>
-      <div id="header_left" *ngIf="!isSignupPolicyOrLegalPage">
+      <div id="header_left">
         <a routerLink="/info">
-          <img id="info" src="/img/help.svg" alt="Info" *ngIf="!isClicked">
+          <img id="info" src="/img/help.svg" alt="Info">
         </a>
 
         <div class="user-icon">
-          <div class="avatar-circle" *ngIf="!isClicked" (click)="toggleMenu()"> {{getInitials()}}</div>
+          <div class="avatar-circle" (click)="toggleMenu()"> {{getInitials()}}</div>
 
 
           <div class="hamburger-menu" *ngIf="isMenuOpen">
@@ -27,7 +27,7 @@
 <div class="mobile-header">
   <img class="mobile-logo" src="/img/mobile-logo.svg" alt="Join Logo">
   <div class="user-icon">
-    <div class="avatar-circle" *ngIf="!isClicked" (click)="toggleMenu()"> {{getInitials()}}</div>
+    <div class="avatar-circle" (click)="toggleMenu()"> {{getInitials()}}</div>
   </div>
 
   <div class="hamburger-menu-mobile" *ngIf="isMenuOpen">

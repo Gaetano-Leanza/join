@@ -1,19 +1,9 @@
 <section id="navbar">
   <div id="navbar_content">
     <img id="logo" src="/img/Capa 2.svg" alt="Join logo" />
-    <nav *ngIf="isSignupLogIn">
-
-      <a routerLink="/">
-        <div>
-          <img src="img/Icons (3).svg" alt="Log-in"> <span id="log-id-text">Log In</span>
-
-        </div>
-      </a>
 
 
-    </nav>
-
-    <nav *ngIf="!isSignupPolicyOrLegalPage">
+    <nav>
       <a routerLink="/summary" routerLinkActive="active">
         <div>
           <img src="/img/Vector.svg" alt="Summary" />

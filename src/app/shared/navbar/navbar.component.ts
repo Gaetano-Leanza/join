@@ -33,13 +33,5 @@ export class NavbarComponent {
     this.isClicked = true;
   }
 
-    get isSignupPolicyOrLegalPage(): boolean {
-  const url = this.router.url;
-   return url === '/privacy-policy' || url === '/legal-notice';
-}
-
-   get isSignupLogIn(): boolean {
-  const url = this.router.url;
-   return url === '/privacy-policy' || url === '/legal-notice';
-}
+ 
 }

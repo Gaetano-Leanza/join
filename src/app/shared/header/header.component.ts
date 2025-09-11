@@ -21,7 +21,6 @@ export class HeaderComponent implements OnInit {
   /**
    * @description Whether a button or element in the header has been clicked.
    */
-  isClicked = false;
   /**
    * @description Whether the header menu is currently open.
    */
@@ -47,14 +46,7 @@ export class HeaderComponent implements OnInit {
    */
 
   constructor(private router: Router) {
-    this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        if (event.url !== '/privacy-policy' && event.url !== '/legal-notice') {
-          this.isClicked = false;
-        }
-        this.isMenuOpen = false;
-      });
+    
   }
   /**
    * @description Toggles the menu status.
@@ -70,7 +62,6 @@ export class HeaderComponent implements OnInit {
 
   closeMenu(): void {
     this.isMenuOpen = false;
-    this.isClicked = true;
   }
   /**
    * @description Checks if the current page is the info page.
@@ -90,8 +81,5 @@ export class HeaderComponent implements OnInit {
     return getInitials(username);
   }
 
-  get isSignupPolicyOrLegalPage(): boolean {
-  const url = this.router.url;
-  // Prüft, ob du auf /signup/privacy-policy oder /signup/legal-notice bist
- return url === '/privacy-policy' || url === '/legal-notice';}
+
 }
