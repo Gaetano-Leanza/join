@@ -42,15 +42,10 @@
 
     <ng-template #loginNav>
       <nav>
-        <a (click)="navigateToLogin(); closeMenu()">
+        <a [routerLink]="''" (click)="closeMenu()">
           <div class="login-link-container">
+            <img src="/img/loginlink.png" alt="Login Icon" class="loginImg" />
             <p class="login-link">Log in</p>
-
-            <img
-              src="/img/loginlink.png"
-              alt="Login Icon"
-              class="loginImg"
-            />
           </div>
         </a>
       </nav>
