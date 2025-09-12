@@ -3,18 +3,31 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class UserStateService {
-  /** Observable für Zugriff auf geschützte Links */
+  /**
+   * BehaviorSubject that holds the current access state for the summary.
+   * Initialized with `false` (no access).
+   */
   private _hasAccessToSummary = new BehaviorSubject<boolean>(false);
+
+  /**
+   * Observable that emits the current access state for the summary.
+   * Components can subscribe to this to react to access changes.
+   */
   hasAccessToSummary$ = this._hasAccessToSummary.asObservable();
 
-  /** Zugriff setzen (nach Login oder GuestLogin) */
-  setAccess(value: boolean) {
+  /**
+   * Updates the user's access state for the summary.
+   *
+   * @param value - `true` if the user should have access, otherwise `false`.
+   */
+  setAccess(value: boolean): void {
     this._hasAccessToSummary.next(value);
   }
 
-  /** Logout: Zugriff auf geschützte Links entfernen */
-  logout() {
-    console.log('[UserStateService] logout aufgerufen');
-    this._hasAccessToSummary.next(false); // Navbar bekommt sofort update
+  /**
+   * Logs the user out by resetting their access state to `false`.
+   */
+  logout(): void {
+    this._hasAccessToSummary.next(false); 
   }
 }
