@@ -12,13 +12,34 @@ import { UserStateService } from '../../services/userstate.service';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+  /**
+   * Controls the state of the mobile menu (open/closed).
+   */
   isMenuOpen = false;
+
+  /**
+   * Tracks whether a menu item was clicked.
+   */
   isClicked = true;
 
+  /**
+   * Whether the user currently has access to the summary section.
+   */
   hasAccessToSummary = false;
+
+  /**
+   * Stores the current active route.
+   */
   currentRoute = '';
 
+  /**
+   * Subscription for user state changes.
+   */
   private userStateSub!: Subscription;
+
+  /**
+   * Subscription for router navigation events.
+   */
   private routerSub!: Subscription;
 
   constructor(
@@ -26,35 +47,36 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private userStateService: UserStateService
   ) {}
 
-  ngOnInit() {
-    console.log('[Navbar] ngOnInit gestartet');
-
-    // Subscription auf UserState
+  /**
+   * Initializes subscriptions for user state and route changes.
+   */
+  ngOnInit(): void {
     this.userStateSub = this.userStateService.hasAccessToSummary$.subscribe(
       (access) => {
-        console.log('[Navbar] UserState update (hasAccessToSummary$):', access);
         this.hasAccessToSummary = access;
       }
     );
 
     this.currentRoute = this.router.url;
-    console.log('[Navbar] initial currentRoute:', this.currentRoute);
 
-    // Router-Events
     this.routerSub = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         this.currentRoute = event.url;
-        console.log('[Navbar] route changed:', this.currentRoute);
       });
   }
 
-  ngOnDestroy() {
+  /**
+   * Cleans up active subscriptions to prevent memory leaks.
+   */
+  ngOnDestroy(): void {
     if (this.userStateSub) this.userStateSub.unsubscribe();
     if (this.routerSub) this.routerSub.unsubscribe();
   }
 
-  /** Prüft, ob aktuelle Seite Policy ist */
+  /**
+   * Determines if the user is currently on a policy-related page.
+   */
   get isOnPolicyPage(): boolean {
     return (
       this.currentRoute.includes('/privacy-policy') ||
@@ -62,25 +84,35 @@ export class NavbarComponent implements OnInit, OnDestroy {
     );
   }
 
-  /** App-Navigation anzeigen? */
+  /**
+   * Whether app-related links should be shown in the navbar.
+   */
   get showAppLinks(): boolean {
-    return this.hasAccessToSummary; // Policy-Seiten werden hier nicht ausgeschlossen
+    return this.hasAccessToSummary;
   }
 
-  /** Login-Link anzeigen? */
+  /**
+   * Whether the login link should be shown in the navbar.
+   */
   get showLoginLink(): boolean {
     return !this.hasAccessToSummary && !this.isOnPolicyPage;
   }
 
-  navigateToLogin() {
+  /**
+   * Navigates the user to the login page.
+   * If navigation fails, the user is redirected to the home page.
+   */
+  navigateToLogin(): void {
     this.router.navigate(['/login']).then((success) => {
       if (!success) {
-        console.error('Navigation to login failed');
         this.router.navigate(['/']);
       }
     });
   }
 
+  /**
+   * Closes the mobile menu and resets click state.
+   */
   closeMenu(): void {
     this.isMenuOpen = false;
     this.isClicked = true;
