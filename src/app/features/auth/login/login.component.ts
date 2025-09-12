@@ -14,23 +14,47 @@ import { UserStateService } from '../../../services/userstate.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  /**
+   * The user's email input value.
+   */
   email = '';
+
+  /**
+   * The user's password input value.
+   */
   password = '';
+
+  /**
+   * Holds error messages related to login attempts.
+   */
   errorMessage = '';
+
+  /**
+   * Controls whether the splash screen is displayed.
+   */
   showSplash = true;
 
   constructor(
     private router: Router,
     private firebaseService: FirebaseService,
-    private userState: UserStateService // <-- hinzugefügt
+    private userState: UserStateService
   ) {}
 
-  ngOnInit() {
+  /**
+   * Lifecycle hook that hides the splash screen after a delay.
+   */
+  ngOnInit(): void {
     setTimeout(() => {
       this.showSplash = false;
     }, 1200);
   }
 
+  /**
+   * Attempts to log the user in with the provided email and password.
+   * If successful, stores user data in session storage, updates user state,
+   * and navigates to the summary page.
+   * If unsuccessful, sets an appropriate error message.
+   */
   async login(): Promise<void> {
     this.errorMessage = '';
 
@@ -46,15 +70,11 @@ export class LoginComponent implements OnInit {
       );
 
       if (userData) {
-        // SessionStorage setzen
         sessionStorage.setItem('username', userData.name);
         sessionStorage.setItem('userEmail', userData.email);
         sessionStorage.setItem('userId', userData.id);
 
-        // UserStateService benachrichtigen
         this.userState.setAccess(true);
-
-        // Navigation
         this.router.navigate(['/summary']);
       } else {
         this.errorMessage =
@@ -62,22 +82,23 @@ export class LoginComponent implements OnInit {
       }
     } catch (error) {
       this.errorMessage = 'Login error. Please try again later.';
-      console.error('Login error:', error);
     }
   }
 
+  /**
+   * Navigates back to the home page.
+   */
   goBack(): void {
     this.router.navigate(['/']);
   }
 
-  guestLogin() {
-    // GuestLogin in SessionStorage
+  /**
+   * Logs the user in as a guest by setting a temporary username
+   * and granting access, then navigates to the summary page.
+   */
+  guestLogin(): void {
     sessionStorage.setItem('username', 'Guest');
-
-    // UserStateService benachrichtigen
     this.userState.setAccess(true);
-
-    // Navigation
     this.router.navigate(['/summary']);
   }
 }
