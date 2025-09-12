@@ -7,35 +7,51 @@ import { Observable, BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
+  /**
+   * Subject that holds the login state of the user.
+   */
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
+
+  /**
+   * Observable emitting the current login state.
+   * Components can subscribe to react to login or logout events.
+   */
   isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
+
+  /**
+   * Observable emitting the current Firebase user or null if logged out.
+   */
   currentUser$: Observable<User | null>;
 
   constructor(
     private auth: Auth,
     private router: Router
   ) {
-    console.log('[AuthService] constructor initialized');
-
-    // Firebase liefert hier den aktuellen User-Stream
+    /**
+     * The current Firebase authentication state stream.
+     */
     this.currentUser$ = authState(this.auth);
 
-    // Reagiere auf Login/Logout
+    // Update login state based on authentication changes
     this.currentUser$.subscribe(user => {
-      console.log('[AuthService] user state changed:', user);
       this.isLoggedInSubject.next(!!user);
     });
   }
 
-  async logout() {
-    console.log('[AuthService] logout called');
+  /**
+   * Logs the user out and navigates to the login page.
+   */
+  async logout(): Promise<void> {
     await this.auth.signOut();
-    console.log('[AuthService] user signed out');
     this.router.navigate(['/login']);
   }
 
+  /**
+   * Returns the current login state synchronously.
+   *
+   * @returns `true` if the user is logged in, otherwise `false`.
+   */
   getCurrentAuthState(): boolean {
-    console.log('[AuthService] getCurrentAuthState:', this.isLoggedInSubject.value);
     return this.isLoggedInSubject.value;
   }
 }
