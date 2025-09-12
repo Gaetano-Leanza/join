@@ -1,7 +1,7 @@
 .splash-wrapper {
     position: fixed;
     inset: 0;
-    background-color: white;
+    background-color: #f6f7f8;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -9,9 +9,9 @@
 }
 
 .splash-logo {
-    width: 250px;
-    height: 250px;
-    animation: logo-move 1.2s cubic-bezier(0.7, 0.2, 0.2, 1) forwards;
+    width: 280px;
+    height: auto;
+    animation: logo-move 1.2s cubic-bezier(0.5, 0.2, 0.2, 1) forwards;
 
 }
 
@@ -22,28 +22,140 @@
     }
 
     80% {
-        transform: translate(-42vw, -34vh) scale(0.5);
+        transform: translate(-35.5vw, -40vh) scale(0.5);
         opacity: 1;
     }
 
     100% {
-        transform: translate(-42vw, -34vh) scale(0.5);
+        transform: translate(-35.5vw, -40vh) scale(0.5);
         opacity: 1;
     }
 }
 
-
-
-@media (max-width: 650px) {
+/* Große Bildschirme (z.B. 2K, 4K) */
+@media (min-width: 1600px) {
     .splash-logo {
-        width: 70%;
-        height: auto;
+        width: 250px;
+        height: 250px;
+    }
+
+    @keyframes logo-move {
+        0% {
+            transform: translate(0, 0) scale(2);
+            opacity: 1;
+        }
+
+
+        100% {
+            transform: translate(-40vw, -40vh) scale(0.5);
+            opacity: 1;
+        }
     }
 }
 
-@media (max-width: 550px) {
+@media (max-width: 1400px),
+(min-width: 1201px) {
     .splash-logo {
-        width: 40%;
+        width: 220px;
+        height: 220px;
+    }
+
+    @keyframes logo-move {
+        0% {
+            transform: translate(0, 0) scale(1.8);
+            opacity: 1;
+        }
+
+
+
+        100% {
+            transform: translate(-40vw, -34vh) scale(0.5);
+            opacity: 0;
+        }
+    }
+}
+
+/* Standard-Desktop */
+@media (max-width: 1200px) {
+    .splash-logo {
+        width: 200px;
+        height: 200px;
+    }
+
+    @keyframes logo-move {
+        0% {
+            transform: translate(0, 0) scale(1.7);
+            opacity: 1;
+        }
+
+        100% {
+            transform: translate(-23vw, -38vh) scale(0.6);
+            opacity: 1;
+        }
+    }
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+    .splash-logo {
+        width: 150px;
+        height: 150px;
+    }
+
+    @keyframes logo-move {
+        0% {
+            transform: translate(0, 0) scale(1.4);
+            opacity: 1;
+        }
+
+
+        100% {
+            transform: translate(-22vw, -28vh) scale(0.7);
+            opacity: 1;
+        }
+    }
+}
+
+/* Mobile quer */
+@media (max-width: 650px) {
+    .splash-logo {
+        width: 100px;
         height: auto;
+    }
+
+    @keyframes logo-move {
+        0% {
+            transform: translate(0, 0) scale(1.2);
+            opacity: 1;
+        }
+
+
+
+        100% {
+            transform: translate(-12vw, -20vh) scale(0.5);
+            opacity: 0;
+        }
+    }
+}
+
+/* Mobile hoch */
+@media (max-width: 500px) {
+    .splash-logo {
+        width: 80px;
+        height: auto;
+    }
+
+    @keyframes logo-move {
+        0% {
+            transform: translate(0, 0) scale(1);
+            opacity: 1;
+        }
+
+
+
+        100% {
+            transform: translate(-24vw, -20vh) scale(0.5) !important;
+            opacity: 0;
+        }
     }
 }
