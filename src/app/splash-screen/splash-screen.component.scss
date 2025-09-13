@@ -19,7 +19,7 @@
 }
 
 .splash-logo {
-  position: fixed; /* oder absolute */
+  position: fixed;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%) scale(2);
@@ -79,46 +79,6 @@
     100% {
       transform: translate(-40vw, -34vh) scale(0.5);
       opacity: 0;
-    }
-  }
-}
-
-/* Standard-Desktop */
-@media (max-width: 1200px) {
-  .splash-logo {
-    width: 200px;
-    height: 200px;
-  }
-
-  @keyframes logo-move {
-    0% {
-      transform: translate(0, 0) scale(1.7);
-      opacity: 1;
-    }
-
-    100% {
-      transform: translate(-23vw, -38vh) scale(0.6);
-      opacity: 1;
-    }
-  }
-}
-
-/* Tablet */
-@media (max-width: 900px) {
-  .splash-logo {
-    width: 150px;
-    height: 150px;
-  }
-
-  @keyframes logo-move {
-    0% {
-      transform: translate(0, 0) scale(1.4);
-      opacity: 1;
-    }
-
-    100% {
-      transform: translate(-22vw, -28vh) scale(0.7);
-      opacity: 1;
     }
   }
 }
