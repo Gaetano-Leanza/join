@@ -1,23 +1,44 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 
-/**
- * @description A component that displays a splash screen, typically shown during application startup.
- */
 @Component({
   selector: 'app-splash-screen',
   standalone: true,
   imports: [],
   templateUrl: './splash-screen.component.html',
-  styleUrl: './splash-screen.component.scss',
+  styleUrls: ['./splash-screen.component.scss'],
 })
-export class SplashScreenComponent {
-  /**
-   * @description A boolean flag to control the visibility of the splash screen.
-   */
+export class SplashScreenComponent implements AfterViewInit {
   showSplash = true;
 
-  /**
-   * @description Creates an instance of the SplashScreenComponent.
-   */
-  constructor() {}
+  @ViewChild('splashLogo') splashLogo!: ElementRef<HTMLElement>;
+  @ViewChild('finalLogo') finalLogo!: ElementRef<HTMLElement>;
+
+  ngAfterViewInit() {
+    const splash = this.splashLogo.nativeElement;
+    const target = this.finalLogo.nativeElement;
+
+    const splashRect = splash.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+
+    const dx = targetRect.left - splashRect.left;
+    const dy = targetRect.top - splashRect.top;
+    const scale = targetRect.width / splashRect.width;
+
+    splash.animate(
+      [
+        { transform: 'translate(0, 0) scale(2)', opacity: 1 },
+        { transform: `translate(${dx}px, ${dy}px) scale(${scale})`, opacity: 1 },
+      ],
+      {
+        duration: 1200,
+        easing: 'cubic-bezier(0.5, 0.2, 0.2, 1)',
+        fill: 'forwards',
+      }
+    );
+
+    // Nach der Animation Splash ausblenden
+    setTimeout(() => {
+      this.showSplash = false;
+    }, 1200);
+  }
 }
