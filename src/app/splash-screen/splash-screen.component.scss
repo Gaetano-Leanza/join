@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   z-index: 9999;
-  animation: fadeBackground 1s ease 1.1s forwards; /* 0.5s delay, dann 0.5s fade */
+  animation: fadeBackground 1s ease 1.1s forwards;
 }
 
 @keyframes fadeBackground {
@@ -25,7 +25,13 @@
   transform: translate(-50%, -50%) scale(2);
   width: 280px;
   height: auto;
-  animation: logo-move 1.2s cubic-bezier(0.5, 0.2, 0.2, 1) forwards;
+
+  /* Standardwerte (können von Media Queries überschrieben werden) */
+  --logo-left: 50px;
+  --logo-top: 132px;
+  --logo-transform: translate(0, -50%) scale(0.61);
+
+  animation: logo-move 1.2s linear forwards;
 }
 
 @keyframes logo-move {
@@ -35,90 +41,53 @@
     transform: translate(-50%, -50%) scale(2);
     opacity: 1;
   }
-
   100% {
-    left: 50px;
-    top: 132px;
-    transform: translate(0, -50%) scale(0.61);
+    left: var(--logo-left);
+    top: var(--logo-top);
+    transform: var(--logo-transform);
     opacity: 1;
   }
 }
+
+/* Mobile (max 768px) */
+@media (max-width: 768px) {
+  .splash-logo {
+    width: 220px;
+    height: 220px;
+    --logo-left: 10px;
+    --logo-top: 70px;
+    --logo-transform: translate(0%, -50%) scale(0.5);
+  }
+}
+
+@media (max-width: 500px) {
+  .splash-logo {
+    width: 220px;
+    height: 220px;
+    --logo-left: -40px;
+    --logo-top: 70px;
+    --logo-transform: translate(0%, -50%) scale(0.5);
+  }
+}
+
+@media (max-width: 390px) {
+  .splash-logo {
+    width: 100px;
+    height: 100px;
+    --logo-left: -3px;
+    --logo-top: 25px;
+    --logo-transform: translate(0%, -50%) scale(0.5);
+  }
+}
+
 
 /* Große Bildschirme (z.B. 2K, 4K) */
 @media (min-width: 1600px) {
   .splash-logo {
     width: 250px;
     height: 250px;
-  }
-
-  @keyframes logo-move {
-    0% {
-      transform: translate(0, 0) scale(2);
-      opacity: 1;
-    }
-
-    100% {
-      transform: translate(-40vw, -40vh) scale(0.5);
-      opacity: 1;
-    }
-  }
-}
-
-@media (max-width: 1400px), (min-width: 1201px) {
-  .splash-logo {
-    width: 220px;
-    height: 220px;
-  }
-
-  @keyframes logo-move {
-    0% {
-      transform: translate(0, 0) scale(1.8);
-      opacity: 1;
-    }
-
-    100% {
-      transform: translate(-40vw, -34vh) scale(0.5);
-      opacity: 0;
-    }
-  }
-}
-
-/* Mobile quer */
-@media (max-width: 650px) {
-  .splash-logo {
-    width: 100px;
-    height: auto;
-  }
-
-  @keyframes logo-move {
-    0% {
-      transform: translate(0, 0) scale(1.2);
-      opacity: 1;
-    }
-
-    100% {
-      transform: translate(-12vw, -20vh) scale(0.5);
-      opacity: 0;
-    }
-  }
-}
-
-/* Mobile hoch */
-@media (max-width: 500px) {
-  .splash-logo {
-    width: 80px;
-    height: auto;
-  }
-
-  @keyframes logo-move {
-    0% {
-      transform: translate(0, 0) scale(1);
-      opacity: 1;
-    }
-
-    100% {
-      transform: translate(-24vw, -20vh) scale(0.5) !important;
-      opacity: 0;
-    }
+    --logo-left: auto; /* wird nicht gebraucht */
+    --logo-top: auto;  /* wird nicht gebraucht */
+    --logo-transform: translate(-40vw, -40vh) scale(0.5);
   }
 }

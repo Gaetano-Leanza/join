@@ -312,12 +312,12 @@ form {
     width: 80%;
   }
 
-.splash-logo {
-  padding-left: 105px;
-  width: 216px;
-  height: auto;
-}
-
+  .splash-logo {
+    padding-left: 50px;
+    margin-top: -16px;
+    width: 130px;
+    height: auto;
+  }
 }
 
 @media (max-width: 650px) {
@@ -335,16 +335,6 @@ form {
     width: 80%;
     padding: 10px;
   }
-
-  #logo-move {
-    width: 70%;
-    height: 70%;
-  }
-
-  #mobile-header {
-    top: 20px;
-    left: 20px;
-  }
 }
 
 @media (max-width: 600px) {
@@ -359,16 +349,6 @@ form {
   .login-container {
     width: 85%;
   }
-
-  #logo-move {
-    width: 40%;
-    height: 40%;
-  }
-
-  #mobile-header {
-    top: 0;
-    left: 10px;
-  }
 }
 
 @media (max-width: 500px) {
@@ -378,6 +358,13 @@ form {
 
   form {
     width: 80%;
+  }
+
+  .splash-logo {
+    padding-left: 0px;
+    margin-top: -16px;
+    width: 80px;
+    height: auto;
   }
 }
 
@@ -391,12 +378,19 @@ form {
   }
 }
 
-@media (max-width: 380px), (max-height: 700px) {
+@media (max-width: 390px) {
   .signUp-container-mobile {
     margin-top: 30px;
   }
 
   .login-container {
     height: 450px;
+  }
+
+  .splash-logo {
+    padding-left: 0px;
+    margin-top: -30px;
+    width: 45px;
+    height: auto;
   }
 }
