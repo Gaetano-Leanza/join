@@ -33,6 +33,7 @@ export class HeaderComponent implements OnInit {
     this.userStateSub = this.userState.hasAccessToSummary$.subscribe(
       (status) => {
         this.isLoggedIn = status;
+        console.log('[Header] Login-Status:', this.isLoggedIn);
       }
     );
   }
