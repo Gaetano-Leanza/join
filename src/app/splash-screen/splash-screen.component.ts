@@ -1,13 +1,5 @@
 import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 
-/**
- * @component SplashScreenComponent
- * @description
- * Displays an animated splash screen that transitions a logo
- * from a centered position to its final location in the layout.
- *
- * The splash screen fades out after the animation completes.
- */
 @Component({
   selector: 'app-splash-screen',
   standalone: true,
@@ -16,46 +8,35 @@ import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
   styleUrls: ['./splash-screen.component.scss'],
 })
 export class SplashScreenComponent implements AfterViewInit {
-  /**
-   * Controls visibility of the splash screen.
-   * @default true
-   */
+  /** Controls whether the splash screen is visible */
   showSplash = true;
 
-  /**
-   * Reference to the splash logo element.
-   * Used as the animation's starting point.
-   */
-  @ViewChild('splashLogo', { static: false }) splashLogo?: ElementRef<HTMLElement>;
+  /** Reference to the splash logo element in the template */
+  @ViewChild('splashLogo', { static: false })
+  splashLogo?: ElementRef<HTMLElement>;
+
+  /** Reference to the final logo element in the template (for animation target) */
+  @ViewChild('finalLogo', { static: false })
+  finalLogo?: ElementRef<HTMLElement>;
 
   /**
-   * Reference to the final logo element in the layout.
-   * Used as the animation's target position and size.
-   */
-  @ViewChild('finalLogo', { static: false }) finalLogo?: ElementRef<HTMLElement>;
-
-  /**
-   * Lifecycle hook that runs after the view has been fully initialized.
-   * Calculates position/size differences between the splash and final logos
-   * and animates the transition using the Web Animations API.
-   *
-   * @returns {void}
+   * Angular lifecycle hook called after the view has been initialized
+   * Starts the splash screen animation
    */
   ngAfterViewInit(): void {
-    // Kurze Verzögerung um sicherzustellen, dass das DOM vollständig gerendert ist
     setTimeout(() => {
       this.initializeAnimation();
     }, 0);
   }
 
   /**
-   * Initialisiert die Animation nachdem sichergestellt wurde, dass das DOM bereit ist
+   * Initializes the splash screen animation
+   * Determines whether to perform a full animation or a simple fallback animation
+   * @private
    */
   private initializeAnimation(): void {
-    // Defensive Programmierung: Prüfen ob alle benötigten Elemente verfügbar sind
     const splash = this.splashLogo?.nativeElement;
-    
-    // Versuche das finale Logo über document.querySelector zu finden
+
     const target = document.querySelector('#logo-move') as HTMLElement;
 
     if (!splash) {
@@ -68,48 +49,47 @@ export class SplashScreenComponent implements AfterViewInit {
       return;
     }
 
-    // Beide Elemente sind verfügbar - normale Animation ausführen
     this.performFullAnimation(splash, target);
   }
 
   /**
-   * Führt die vollständige Animation zwischen splash und target Element aus
-   * @param splash - Das Splash Logo Element
-   * @param target - Das Ziel Logo Element
+   * Performs the full animation of the splash logo moving and scaling to the target logo
+   * @param splash The splash logo HTMLElement to animate
+   * @param target The target HTMLElement where the splash logo should move
+   * @private
    */
   private performFullAnimation(splash: HTMLElement, target: HTMLElement): void {
-    // Get bounding rectangles for both elements
     const splashRect = splash.getBoundingClientRect();
     const targetRect = target.getBoundingClientRect();
 
-    // Calculate translation distances and scaling ratio
     const dx = targetRect.left - splashRect.left;
     const dy = targetRect.top - splashRect.top;
     const scale = targetRect.width / splashRect.width;
 
-    // Animate splash logo from center to target position/scale
     splash.animate(
       [
         { transform: 'translate(0, 0) scale(2)', opacity: 1 },
-        { transform: `translate(${dx}px, ${dy}px) scale(${scale})`, opacity: 1 },
+        {
+          transform: `translate(${dx}px, ${dy}px) scale(${scale})`,
+          opacity: 1,
+        },
       ],
       {
         duration: 1200,
-        easing: 'cubic-bezier(0.5, 0.2, 0.2, 1)', // Smooth easing curve
-        fill: 'forwards', // Retain end state after animation
+        easing: 'cubic-bezier(0.5, 0.2, 0.2, 1)',
+        fill: 'forwards',
       }
     );
 
-    // Hide splash screen after animation completes
     this.hideSplashScreen();
   }
 
   /**
-   * Führt eine einfache Fade-Animation aus, falls das Ziel-Element nicht verfügbar ist
-   * @param splash - Das Splash Logo Element
+   * Shows a simple scale animation for the splash logo when no target is present
+   * @param splash The splash logo HTMLElement to animate
+   * @private
    */
   private showSimpleAnimation(splash: HTMLElement): void {
-    // Einfache Fade-out Animation
     splash.animate(
       [
         { transform: 'scale(2)', opacity: 1 },
@@ -126,7 +106,9 @@ export class SplashScreenComponent implements AfterViewInit {
   }
 
   /**
-   * Versteckt den Splash Screen nach der Animation
+   * Hides the splash screen after the animation completes
+   * Sets `showSplash` to false after a timeout
+   * @private
    */
   private hideSplashScreen(): void {
     setTimeout(() => {

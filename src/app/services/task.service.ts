@@ -27,37 +27,26 @@ export interface Subtask {
 export interface Task {
   /** The unique identifier of the task. */
   id: string;
-
   /** The title of the task. */
   title: string;
-
   /** The description of the task. */
   description: string;
-
   /** The due date of the task as an ISO string. */
   dueDate: string;
-
   /** The priority of the task. */
   priority: 'low' | 'medium' | 'urgent';
-
   /** The progress status of the task. */
   progress: 'toDo' | 'inProgress' | 'awaitFeedback' | 'done';
-
   /** The category of the task. */
   category: string;
-
   /** The color associated with the category for UI purposes. */
   categoryColor: string;
-
   /** The name of the person or people assigned to the task. */
   assignedTo: string;
-
   /** A list of contacts assigned to the task. */
   contacts: string[];
-
   /** A list of subtasks associated with the task. */
   subtasks: Subtask[];
-
   /** An optional status for additional labeling. */
   status?: string;
 }
@@ -80,20 +69,16 @@ export interface TaskUpdate {
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
-  /** The Firestore instance. */
-  private firestore: Firestore = inject(Firestore);
-
-  /** A reference to the 'tasks' collection in Firestore. */
-  private taskCollection = collection(this.firestore, 'tasks');
+  /** The Firestore instance injected by Angular. */
+  private firestore = inject(Firestore);
 
   /**
    * @description Fetches all tasks from Firestore as an Observable for real-time updates.
    * @returns An Observable list of all tasks.
    */
   getTasks(): Observable<Task[]> {
-    return collectionData(this.taskCollection, { idField: 'id' }) as Observable<
-      Task[]
-    >;
+    const taskCollection = collection(this.firestore, 'tasks');
+    return collectionData(taskCollection, { idField: 'id' }) as Observable<Task[]>;
   }
 
   /**
@@ -112,7 +97,8 @@ export class TaskService {
    * @returns A Promise with the reference of the created document.
    */
   addTask(task: Task) {
-    return addDoc(this.taskCollection, task);
+    const taskCollection = collection(this.firestore, 'tasks');
+    return addDoc(taskCollection, task);
   }
 
   /**
