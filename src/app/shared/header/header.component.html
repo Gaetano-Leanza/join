@@ -12,7 +12,7 @@
             {{ getInitials() }}
           </div>
 
-          <div class="hamburger-menu" *ngIf="isMenuOpen">
+          <div class="hamburger-menu" *ngIf="isMenuOpen" (mouseleave)="closeMenu()">
             <a routerLink="/legal-notice" (click)="closeMenu()">Legal Notice</a>
             <a routerLink="/privacy-policy" (click)="closeMenu()">Privacy Policy</a>
             <a (click)="logout()">Log out</a>
@@ -29,7 +29,7 @@
     <div class="avatar-circle" (click)="toggleMenu()">{{ getInitials() }}</div>
   </div>
 
-  <div class="hamburger-menu-mobile" *ngIf="isMenuOpen">
+  <div class="hamburger-menu-mobile" *ngIf="isMenuOpen" (mouseleave)="closeMenu()">
     <a routerLink="/info" (click)="closeMenu()">Help </a>
     <a routerLink="/legal-notice" (click)="closeMenu()">Legal Notice </a>
     <a routerLink="/privacy-policy" (click)="closeMenu()">Privacy Policy</a>
