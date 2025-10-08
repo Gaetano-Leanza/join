@@ -918,12 +918,3 @@ body {
   }
 }
 
-@media screen and (max-height: 700px) {
-  .content-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    height: 80vh;
-    overflow-x: hidden;
-  }
-}
