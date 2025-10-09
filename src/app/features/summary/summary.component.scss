@@ -1,321 +1,302 @@
 @font-face {
-    font-family: 'Inter';
-    src: url('/fonts/Inter/Inter-Regular.ttf') format('ttf');
-    font-weight: 700;
-    font-style: normal;
+  font-family: "Inter";
+  src: url("/fonts/Inter/Inter-Regular.ttf") format("ttf");
+  font-weight: 700;
+  font-style: normal;
 }
 
 #line {
-    display: none;
+  display: none;
 }
 
 body {
-    background-color: #f6f7f8;
+  background-color: #f6f7f8;
 }
 
 .spalsch-screen {
-    position: fixed;
-    inset: 0;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999999999;
-    flex-direction: column;
-    gap: 32px;
+  position: fixed;
+  inset: 0;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999999999;
+  flex-direction: column;
+  gap: 32px;
 }
 
-
 .splash-greeting {
-    font-size: 2rem;
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    color: #2A3647;
-    text-align: center;
+  font-size: 2rem;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  color: #2a3647;
+  text-align: center;
 }
 
 #summary-wrapper {
-    width: calc(100vw - 230px);
-    height: calc(100vh - 96px);
-    border: none;
-    padding: 0;
-    margin: 0;
-    overflow-y: auto;
-    max-width: 1500px;
-    overflow: hidden;
+  width: calc(100vw - 230px);
+  height: calc(100vh - 96px);
+  border: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+
+  overflow: auto;
 }
 
 #headline-wrapper {
-    width: 100%;
-    max-width: 625px;
-    height: 73px;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    margin-top: 100px;
-    margin-left: 60px;
-    margin-bottom: 50px;
-    gap: 30px;
+  width: 100%;
+  max-width: 625px;
+  height: 73px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-top: 100px;
+  margin-left: 60px;
+  margin-bottom: 50px;
+  gap: 30px;
 }
 
 h3 {
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-style: normal;
-    font-size: 61px;
-    line-height: 120%;
-    letter-spacing: 0;
-
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 61px;
+  line-height: 120%;
+  letter-spacing: 0;
 }
 
 h4 {
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 27px;
-    line-height: 120%;
-    letter-spacing: 0;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 27px;
+  line-height: 120%;
+  letter-spacing: 0;
 }
 
 h5 {
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-style: normal;
-    font-size: 47px;
-    line-height: 120%;
-    letter-spacing: 0;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 47px;
+  line-height: 120%;
+  letter-spacing: 0;
 }
 
-
 #content-wrapper {
-    display: flex;
-    width: 100%;
-    max-width: calc(100vw - 240px - 173px);
-    height: calc(100vh - 96px - 230px);
-    margin-left: 60px;
-    gap: 20px;
-
+  display: flex;
+  width: 100%;
+  max-width: calc(100vw - 240px - 173px);
+  height: calc(100vh - 96px - 230px);
+  margin-left: 60px;
+  gap: 20px;
 }
 
 #left-content {
-    width: 45%;
-    height: calc(100vh - 96px - 250px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+  width: 45%;
+  max-width: 750px;
+  height: 570px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
 #right-content {
-    width: 45%;
-    float: left;
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    padding-bottom: 80px;
-    height: calc(100vh - 96px - 250px);
-
-
+  width: 45%;
+  max-width: 750px;
+  max-height: 570px;
+  float: left;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding-bottom: 80px;
+  height: calc(100vh - 96px - 280px);
 }
 
 #tasks-todo-done,
 #progress-overview,
 #board-overview {
-    width: 100%;
-    height: 33%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
+  width: 100%;
+  height: 33%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 #tasks-todo-done,
 #progress-overview {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
 }
 
 #board-overview {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 10px;
-    gap: 20px;
-
-
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  gap: 20px;
 }
 
 #to-do,
 #done {
-    width: 46%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    height: 80%;
-    gap: 10px;
-    border-radius: 30px;
-    background-color: white;
-
+  width: 45%;
+  height: 160px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 30px;
+  background-color: white;
 }
 
 .task-number {
-    font-size: 64px;
+  font-size: 64px;
 }
 
 #to-do-cont,
 #done-cont {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: end;
-
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: end;
 }
-
 
 #to-do:hover,
 #done:hover {
-    background-color: #2A3647;
-    cursor: pointer;
-    transition: transform 125ms ease;
-    transform: scale(1.03);
-    color: white;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
-
+  background-color: #2a3647;
+  cursor: pointer;
+  transition: transform 125ms ease;
+  transform: scale(1.03);
+  color: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
 }
-
-
 
 #to-do:hover svg,
 #done:hover svg {
-    color: #ffffff;
-    stroke: #2A3647;
-    stroke-width: 2px;
-    transition: fill 125ms, stroke 125ms;
+  color: #ffffff;
+  stroke: #2a3647;
+  stroke-width: 2px;
+  transition: fill 125ms, stroke 125ms;
 }
 
 #to-do svg,
 #done svg {
-    color: #2A3647;
-    max-width: 60px;
-
+  color: #2a3647;
+  max-width: 60px;
 }
 
 #done:hover svg path {
-    stroke: #2A3647;
+  stroke: #2a3647;
 }
 
 #board-tasks,
 #progress-cont,
 #awaiting-cont {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 33%;
-    background-color: white;
-    border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 33%;
+  background-color: white;
+  border-radius: 30px;
 }
 
 #board-tasks:hover,
 #progress-cont:hover,
 #awaiting-cont:hover {
-    color: white;
-    background-color: #2A3647;
-    cursor: pointer;
-    transition: transform 125ms ease;
-    transform: scale(1.03);
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
-
-
+  color: white;
+  background-color: #2a3647;
+  cursor: pointer;
+  transition: transform 125ms ease;
+  transform: scale(1.03);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 #progress-overview {
-    padding: 15px 5px;
-    background-color: white;
+  padding: 15px 5px;
+  background-color: white;
 }
 
 #progress-overview:hover {
-    background-color: #2A3647;
-    color: white;
-    transition: transform 125ms ease;
-    transform: scale(1.03);
-    cursor: pointer;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
-
+  background-color: #2a3647;
+  color: white;
+  transition: transform 125ms ease;
+  transform: scale(1.03);
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .urgent-icon {
-    width: 60px;
-    height: 60px;
-    color: #fff;
-    margin-top: -5px;
+  width: 60px;
+  height: 60px;
+  color: #fff;
+  margin-top: -5px;
 }
 
 #urgent-container {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: #FF3D00;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #ff3d00;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #urgent {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
 }
 
 #urgent-number {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .category {
-    font-size: 20px;
-    font-weight: 400;
+  font-size: 20px;
+  font-weight: 400;
 }
 
 .text-deadline {
-    font-size: 1.2rem;
+  font-size: 1.2rem;
 }
 
 #upcoming-deadline {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  font-size: 16px;
 }
 
 .datum {
-    font-size: 21px;
-    font-weight: 700;
+  font-size: 21px;
+  font-weight: 700;
 }
 
 #progress-overview {
-    width: 95%;
-    height: 25%;
-    border-radius: 30px;
-
+  width: 95%;
+  height: 25%;
+  border-radius: 30px;
 }
 
-
-
 #divider {
-    width: 2px;
-    height: 60%;
-    background-color: #D1D1D1;
-    margin: 0 20px;
+  width: 2px;
+  height: 60%;
+  background-color: #d1d1d1;
+  margin: 0 20px;
 }
 
 .splash-username,
 #username {
-    color: #29ABE2;
-    font-size: 64px;
-    font-weight: 700;
-    inline-size: 0.5rem;
+  color: #29abe2;
+  font-size: 64px;
+  font-weight: 700;
+  inline-size: 0.5rem;
 }

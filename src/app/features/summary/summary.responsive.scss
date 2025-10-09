@@ -228,3 +228,19 @@
         padding: 0;
     }
 }
+
+
+
+@media (max-height: 600px) {
+
+
+
+     .task-number {
+        font-size: 40px;
+    }
+
+    circle {
+        height: 20px;
+        width: auto;
+    }
+}
