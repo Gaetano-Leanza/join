@@ -1,246 +1,258 @@
 @media (max-width: 1360px) {
+  #right-content {
+    display: none;
+  }
 
-    #right-content {
-        display: none;
-    }
+  #content-wrapper {
+    justify-content: center;
+    max-width: 80vw;
+    margin-left: 10px;
+    overflow: hidden;
+  }
 
-    #content-wrapper {
-        justify-content: center;
-        max-width: 80vw;
-        margin-left: 10px;
-        overflow-y: visible;
-
-    }
-
-    #left-content {
-        width: 90%;
-    }
+  #left-content {
+    width: 90%;
+  }
 }
 
-
 @media (max-width: 940px) {
+  #headline-wrapper {
+    flex-direction: column;
+    gap: 0;
+    align-items: start;
+    margin-left: 20px;
+  }
 
-    #headline-wrapper {
-        flex-direction: column;
-        gap: 0;
-        align-items: start;
-        margin-left: 20px;
-    }
+  #divider-vertical {
+    display: none;
+  }
 
+  #line {
+    display: block;
+    margin-top: -5px;
+  }
 
-    #divider-vertical {
-        display: none;
-    }
+  .divider-horizontal {
+    width: 130px !important;
+    height: auto;
+  }
 
-    #line {
-        display: block;
-        margin-top: -5px;
-    }
+  h3 {
+    font-size: 56px;
+  }
 
-    .divider-horizontal {
-        width: 130px !important;
-        height: auto;
-    }
+  h4 {
+    font-size: 26px;
+  }
 
-    h3 {
-        font-size: 56px;
-    }
-
-    h4 {
-        font-size: 26px;
-    }
-
-    .task-number {
-        font-size: 46px;
-    }
-
-
+  .task-number {
+    font-size: 46px;
+  }
 }
 
 @media (max-width: 768px) {
+  #summary-wrapper {
+    width: 100%;
+    height: calc(100vh - 170px);
+    overflow: hidden;
+  }
 
-    #summary-wrapper {
-        width: 100vw;
-        height: calc(100vh - 170px);
-        overflow-y: hidden;
-    }
+  #content-wrapper {
+    max-width: 95%;
+  }
 
-    #content-wrapper {
-        max-width: 95vw;
-    }
+  #headline-wrapper {
+    margin-top: 0;
+    padding-top: 20px;
+    margin-left: 20px;
+  }
 
-    #headline-wrapper {
-        margin-top: 0;
-        padding-top: 20px;
-        margin-left: 20px;
-    }
+  h3 {
+    font-size: 50px;
+  }
 
-    h3 {
-        font-size: 50px;
-    }
+  h4 {
+    font-size: 24px;
+  }
 
-    h4 {
-        font-size: 24px;
-    }
-
-    .task-number {
-        font-size: 40px;
-    }
+  .task-number {
+    font-size: 40px;
+  }
 }
 
 @media (max-width: 700px) {
-
-    #board-tasks,
-    #progress-cont,
-    #awaiting-cont {
-        height: 80%;
-        padding: 0 20px;
-    }
+  #board-tasks,
+  #progress-cont,
+  #awaiting-cont {
+    height: 80%;
+    padding: 0 20px;
+  }
 }
-
 
 @media (max-width: 500px) {
-    #headline-wrapper {
-        margin-left: 20px;
-        margin-top: 10px;
-        gap: 8px;
-    }
+  #headline-wrapper {
+    margin-left: 20px;
+    margin-top: 10px;
+    gap: 8px;
+  }
 
-    h3 {
-        font-size: 36px;
-    }
+  h3 {
+    font-size: 36px;
+  }
 
-    h4 {
-        font-size: 16px;
-    }
+  h4 {
+    font-size: 16px;
+  }
 
-    .task-number {
-        font-size: 32px;
-    }
+  .task-number {
+    font-size: 32px;
+  }
 
-    .datum,
-    .category,
-    .text-deadline {
-        font-size: 18px;
-    }
+  .datum,
+  .category,
+  .text-deadline {
+    font-size: 18px;
+  }
 
-    .divider-horizontal {
-        width: 80px !important;
-    }
+  .divider-horizontal {
+    width: 80px !important;
+  }
 
-    svg,
-    #urgent-container {
-        width: 40px;
-        height: 40px;
-    }
+  svg,
+  #urgent-container {
+    width: 40px;
+    height: 40px;
+  }
 
-    #to-do,
-    #done {
-        height: 70%;
-    }
+  #to-do,
+  #done {
+    height: 70%;
+  }
 
-    #board-tasks,
-    #progress-cont,
-    #awaiting-cont {
-        height: 90%;
-        width: 30%;
-        gap: 5px;
-
-    }
-
-
-
+  #board-tasks,
+  #progress-cont,
+  #awaiting-cont {
+    height: 90%;
+    width: 30%;
+    gap: 5px;
+  }
 }
-
-
 
 @media (max-width: 400px) {
+  #tasks-todo-done {
+    gap: 20px;
+  }
 
-    #tasks-todo-done {
-        gap: 20px;
+  #board-overview {
+    gap: 10px;
+  }
 
-    }
+  #board-tasks,
+  #progress-cont,
+  #awaiting-cont {
+    height: 80%;
+    width: 30%;
+    padding: 0 5px;
+  }
 
-    #board-overview {
-        gap: 10px;
-    }
+  h3 {
+    font-size: 30px;
+  }
 
-    #board-tasks,
-    #progress-cont,
-    #awaiting-cont {
-        height: 80%;
-        width: 30%;
-        padding: 0 5px;
-    }
+  h4 {
+    font-size: 14px;
+  }
 
+  .task-number {
+    font-size: 28px;
+  }
 
+  .datum,
+  .category,
+  .text-deadline {
+    font-size: 16px;
+  }
 
-    h3 {
-        font-size: 30px;
-    }
-
-    h4 {
-        font-size: 14px;
-    }
-
-    .task-number {
-        font-size: 28px;
-    }
-
-    .datum,
-    .category,
-    .text-deadline {
-        font-size: 16px;
-    }
-
-    .divider-horizontal {
-        width: 80px !important;
-    }
+  .divider-horizontal {
+    width: 80px !important;
+  }
 }
-
 
 @media (max-width: 350px) {
+  #left-content {
+    gap: 10px;
+    border-radius: 20px;
+  }
 
+  #progress-overview {
+    height: 35%;
+  }
 
+  #board-tasks,
+  #progress-cont,
+  #awaiting-cont {
+    width: 33%;
+  }
 
-    #left-content {
-        gap: 10px;
-        border-radius: 20px;
+  #to-do,
+  #done {
+    width: 45%;
+  }
 
-    }
-
-    #progress-overview {
-        height: 35%;
-    }
-
-    #board-tasks,
-    #progress-cont,
-    #awaiting-cont {
-        width: 33%;
-    }
-
-    #to-do,
-    #done {
-        width: 45%;
-    }
-
-    #board-overview {
-        padding: 0;
-    }
+  #board-overview {
+    padding: 0;
+  }
 }
 
+@media (max-height: 800px) {
+  .task-number {
+    font-size: 40px;
+  }
 
+  circle {
+    height: 20px;
+    width: auto;
+  }
 
-@media (max-height: 600px) {
+  #to-do,
+  #done {
+    width: 45%;
+    height: 95%;
+  }
 
+  #board-tasks,
+  #progress-cont,
+  #awaiting-cont {
+    height: 95%;
+  }
 
+  .category,
+  .text-deadline,
+  .datum {
+    font-size: 18px;
+  }
+}
 
-     .task-number {
-        font-size: 40px;
-    }
+@media (max-height: 700px) {
+  .task-number {
+    font-size: 36px;
+  }
 
-    circle {
-        height: 20px;
-        width: auto;
-    }
+  #to-do,
+  #done {
+    width: 45%;
+    height: 95%;
+  }
+
+  #board-tasks,
+  #progress-cont,
+  #awaiting-cont {
+    height: 95%;
+  }
+
+  .category,
+  .text-deadline,
+  .datum {
+    font-size: 15px;
+  }
 }
