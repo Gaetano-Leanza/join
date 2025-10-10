@@ -228,7 +228,8 @@ img {
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    filter: brightness(0) saturate(100%) invert(31%) sepia(90%) saturate(3341%) hue-rotate(178deg) brightness(93%) contrast(91%);
+    filter: brightness(0) saturate(100%) invert(31%) sepia(90%) saturate(3341%)
+      hue-rotate(178deg) brightness(93%) contrast(91%);
   }
 }
 
@@ -251,14 +252,6 @@ img {
   fill: white;
 }
 
-.avatar-placeholder img {
-  width: 140px;
-  height: 140px;
-  object-fit: contain;
-  margin-top: 150px;
-  margin-left: 58px;
-}
-
 .avatar-preview {
   display: flex;
   justify-content: center;
@@ -278,13 +271,21 @@ img {
   margin-top: 140px;
 }
 
+.avatar-placeholder img {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  margin-top: 150px;
+  margin-left: 58px;
+}
+
 .success-info-modal {
   position: fixed;
   bottom: 10%;
   right: 40%;
   width: 300px;
   height: 100px;
-  background-color: #2A3647;
+  background-color: #2a3647;
   color: #fff;
   padding: 14px 32px;
   border-radius: 8px;

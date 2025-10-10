@@ -24,7 +24,6 @@ import { ContactService } from '../contact-service/contact.service';
   styleUrls: [
     './modal2.component.scss',
     './modal2.responsive.scss',
-    './modal2.responsive2.scss',
   ],
   animations: [slideInModal, fadeInOutInfo],
   imports: [CommonModule, FormsModule],
