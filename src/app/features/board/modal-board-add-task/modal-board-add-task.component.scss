@@ -15,18 +15,17 @@
   background: #fff;
   position: relative;
   min-width: 300px;
-  max-width: 1200px;
+  max-width: 950px;
   width: 95%;
   border-radius: 30px;
-  max-height: 800px;
+  max-height: 650px;
   box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.1);
   scrollbar-width: none;
 }
 
 .modal-content app-add-task {
   display: block;
-  transform: scale(0.9) translateY(-60px);
-  padding-left: 75px;
+  transform: scale(0.8) translateY(-90px) translateX(-60px);
   transform-origin: center;
 }
 
@@ -55,23 +54,34 @@ button:hover {
   cursor: pointer;
 }
 
-
-
-
 @media (max-width: 1200px) {
   .modal-content app-add-task {
     display: block;
-    transform: scale(0.95) translateY(-50px);
-    padding-left: 95px;
+    transform: scale(0.8) translateY(-90px) translateX(-0px);
     transform-origin: center;
   }
 }
 
 @media (max-width: 1060px) {
-  .modal-content app-add-task {
+.modal-content app-add-task {
     display: block;
-    transform: scale(1) translateY(-50px);
-    padding-left: 95px;
+    transform: scale(0.8) translateY(-90px) translateX(50px);
+    transform-origin: center;
+  }
+}
+
+@media (max-width: 1020px) {
+.modal-content app-add-task {
+    display: block;
+    transform: scale(0.8) translateY(-90px) translateX(80px);
+    transform-origin: center;
+  }
+}
+
+@media (max-width: 975px) {
+.modal-content app-add-task {
+    display: block;
+    transform: scale(0.8) translateY(-90px) translateX(100px);
     transform-origin: center;
   }
 }

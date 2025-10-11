@@ -22,6 +22,15 @@ h5 {
   overflow-x: hidden;
   overflow-y: auto;
   max-height: 100vh;
+  -webkit-overflow-scrolling: touch;
+}
+
+.content::-webkit-scrollbar {
+  display: none;
+}
+
+.content {
+  scrollbar-width: none;
 }
 
 .content-wrapper {
