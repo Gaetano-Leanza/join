@@ -26,12 +26,12 @@
 button {
   position: relative;
   border: none;
-  left: 97%;
+  left: 0%;
   top: 2%;
 }
 
 button:hover {
-  transform: scale(1.2) translateY(0px);
+  transform: scale(1.1) translateY(0px);
   transition: transform ease 0.2s;
   cursor: pointer;
 }
@@ -50,7 +50,7 @@ button:hover {
 
 h3 {
   font-size: 50px;
-  padding-left: 100px;
+  padding-left: 60px;
   padding-top: 40px;
   padding-bottom: 30px;
 }
@@ -123,7 +123,7 @@ h5 {
 .left-side {
   height: 330px;
   width: 460px;
-  padding-left: 100px;
+  padding-left: 60px;
 }
 
 .left-side input {
@@ -137,6 +137,13 @@ h5 {
   border-color: rgb(206, 203, 203);
 }
 
+.middle {
+  height: 330px;
+  width: 2px;
+  border-radius: 8px;
+  background-color: rgb(177, 177, 177);
+}
+
 .right-side {
   display: flex;
   flex-direction: column;
@@ -144,13 +151,6 @@ h5 {
   gap: 15px;
   height: 330px;
   width: 400px;
-}
-
-.middle {
-  height: 330px;
-  width: 2px;
-  border-radius: 8px;
-  background-color: rgb(177, 177, 177);
 }
 
 .content-bottom {
@@ -166,77 +166,6 @@ h5 {
 
 .content-bottom-mobile {
   display: none;
-}
-
-.placeholder2 {
-  font-family: "Inter", sans-serif;
-  font-weight: 400;
-  padding: 8px;
-  width: 360px;
-  height: 100px;
-  border-radius: 8px;
-  text-align: left;
-  vertical-align: top;
-  margin-bottom: 10px;
-  border: 2px solid #b3b3b3;
-}
-
-.placeholder3 {
-  background: url("/img/date-icon.svg") no-repeat right 10px center;
-  background-size: 20px;
-  padding-right: 35px;
-  border: 2px solid #b3b3b3;
-}
-
-.placeholder4,
-.placeholder5,
-.placeholder6 {
-  border-radius: 8px;
-  height: 45px;
-  width: 130px;
-
-  &.input-focused {
-    border: 1px solid #007bff !important;
-    outline: none;
-  }
-}
-
-.placeholder7,
-.placeholder8,
-.placeholder9 {
-  padding-left: 8px;
-  font-family: "Inter", sans-serif;
-  border-radius: 8px;
-  height: 35px;
-  width: 378px;
-
-  &.input-focused {
-    border: 1px solid #007bff !important;
-    outline: none;
-  }
-}
-
-.placeholder1,
-.placeholder9 {
-  border: 2px solid #b3b3b3;
-}
-
-.placeholder7,
-.placeholder8 {
-  padding-right: 40px;
-  border: 2px solid #b3b3b3;
-}
-
-.placeholder5::placeholder {
-  color: white;
-  opacity: 1;
-}
-
-.placeholder7::placeholder,
-.placeholder8::placeholder,
-.placeholder9::placeholder {
-  color: gray;
-  opacity: 1;
 }
 
 .create-task-button {
@@ -635,6 +564,77 @@ h5 {
   height: 18px;
 }
 
+.placeholder2 {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  padding: 8px;
+  width: 360px;
+  height: 100px;
+  border-radius: 8px;
+  text-align: left;
+  vertical-align: top;
+  margin-bottom: 10px;
+  border: 2px solid #b3b3b3;
+}
+
+.placeholder3 {
+  background: url("/img/date-icon.svg") no-repeat right 10px center;
+  background-size: 20px;
+  padding-right: 35px;
+  border: 2px solid #b3b3b3;
+}
+
+.placeholder4,
+.placeholder5,
+.placeholder6 {
+  border-radius: 8px;
+  height: 45px;
+  width: 130px;
+
+  &.input-focused {
+    border: 1px solid #007bff !important;
+    outline: none;
+  }
+}
+
+.placeholder7,
+.placeholder8,
+.placeholder9 {
+  padding-left: 8px;
+  font-family: "Inter", sans-serif;
+  border-radius: 8px;
+  height: 35px;
+  width: 378px;
+
+  &.input-focused {
+    border: 1px solid #007bff !important;
+    outline: none;
+  }
+}
+
+.placeholder1,
+.placeholder9 {
+  border: 2px solid #b3b3b3;
+}
+
+.placeholder7,
+.placeholder8 {
+  padding-right: 40px;
+  border: 2px solid #b3b3b3;
+}
+
+.placeholder5::placeholder {
+  color: white;
+  opacity: 1;
+}
+
+.placeholder7::placeholder,
+.placeholder8::placeholder,
+.placeholder9::placeholder {
+  color: gray;
+  opacity: 1;
+}
+
 .left-side .placeholder1.input-focused {
   border: 2px solid #007bff !important;
   outline: none;
@@ -871,24 +871,67 @@ h5 {
 
 .row1 {
   display: flex;
-  flex-direction: row;
   justify-content: flex-start;
+  align-items: center;
   gap: 12px;
   height: 50px;
-  width: 600px;
+  width: 400px;
   background-color: #007bff;
+}
+
+.row1 > div {
+  margin: 0;
+  padding: 0;
+}
+
+.buttons {
+  background-color: red;
+  height: 50px;
+}
+
+.image-button-left {
+  width: 119px;
+  height: 49px;
+  background: transparent;
+  border: none;
+  border-left: 2px solid #ccc;
+  border-right: 2px solid #ccc;
+  border-bottom: 4px solid #999;
+  border-radius: 10px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.image-button-middle,
+.image-button-right {
+  width: 119px;
+  height: 49px;
+  background: transparent;
+  border: none;
+  border-left: 2px solid #ccc;
+  border-right: 2px solid #ccc;
+  border-bottom: 4px solid #999;
+  border-radius: 10px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
 .image-button-left svg,
 .image-button-middle svg,
 .image-button-right svg {
   width: 145px;
-  height: 64px;
-  display: block;
-}
-
-.image-button-middle svg {
-  width: 245px !important;
   height: 64px;
   display: block;
 }
@@ -912,52 +955,6 @@ h5 {
   transition: fill 0.3s ease;
 }
 
-.image-button-middle svg {
-  transform: scale(0.97);
-  transform-origin: center;
-}
-
-.image-button-left,
-.image-button-right {
-  width: 119px;
-  background: darkblue;
-  border: none;
-  border-left: 2px solid #ccc;
-  border-right: 2px solid #ccc;
-  border-bottom: 4px solid #999;
-  border-radius: 10px;
-  padding: 0;
-  cursor: pointer;
-  transition: box-shadow 0.2s ease;
-}
-
-.image-button-middle {
-  width: 116px;
-  height: 49px;
-  background-color: none;
-  border: none;
-  border-left: 2px solid #ccc;
-  border-right: 2px solid #ccc;
-  border-bottom: 4px solid #999;
-  border-radius: 10px;
-  padding: 0;
-  cursor: pointer;
-  transition: box-shadow 0.2s ease;
-}
-
-.image-button-left,
-.image-button-middle,
-.image-button-right {
-  background: darkblue;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s ease, filter 0.2s ease;
-}
-
 .image-button-right.active {
   svg rect {
     fill: #7ae229 !important;
@@ -969,10 +966,6 @@ h5 {
 }
 
 .image-button-left.active:hover {
-  box-shadow: none;
-}
-
-.image-button-right.active:hover {
   box-shadow: none;
 }
 
@@ -1002,4 +995,8 @@ h5 {
 
 .image-button-middle.active g path {
   fill: white;
+}
+
+.image-button-right.active:hover {
+  box-shadow: none;
 }
