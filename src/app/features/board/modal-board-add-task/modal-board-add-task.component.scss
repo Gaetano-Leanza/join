@@ -50,7 +50,7 @@ button:hover {
 
 h3 {
   font-size: 50px;
-  padding-left: 60px;
+  padding-left: 35px;
   padding-top: 40px;
   padding-bottom: 30px;
 }
@@ -115,7 +115,7 @@ h5 {
 .text-bottom {
   display: flex;
   flex-direction: row;
-  padding-left: 100px;
+  padding-left: 35px;
   gap: 2px;
   line-height: 0;
 }
@@ -123,7 +123,7 @@ h5 {
 .left-side {
   height: 330px;
   width: 460px;
-  padding-left: 60px;
+  padding-left: 35px;
 }
 
 .left-side input {
@@ -568,7 +568,7 @@ h5 {
   font-family: "Inter", sans-serif;
   font-weight: 400;
   padding: 8px;
-  width: 360px;
+  width: 425px;
   height: 100px;
   border-radius: 8px;
   text-align: left;
@@ -876,7 +876,6 @@ h5 {
   gap: 12px;
   height: 50px;
   width: 400px;
-  background-color: #007bff;
 }
 
 .row1 > div {
@@ -885,7 +884,6 @@ h5 {
 }
 
 .buttons {
-  background-color: red;
   height: 50px;
 }
 
@@ -939,7 +937,7 @@ h5 {
 .image-button-left:hover,
 .image-button-middle:hover,
 .image-button-right:hover {
-  transform: scale(1.05);
+  transform: scale(1.01);
   filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.15));
 }
 
@@ -999,4 +997,25 @@ h5 {
 
 .image-button-right.active:hover {
   box-shadow: none;
+}
+
+.image-button-left svg,
+.image-button-middle svg,
+.image-button-right svg {
+  width: 145px;
+  height: 64px;
+  display: block;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3)); 
+  transition: filter 0.3s ease;
+}
+
+.image-button-left:hover svg,
+.image-button-middle:hover svg,
+.image-button-right:hover svg {
+  filter: drop-shadow(
+    3px 3px 6px rgba(0, 0, 0, 0.4)
+  ); 
+}
+
+@media (min-width: 1030px) {
 }
