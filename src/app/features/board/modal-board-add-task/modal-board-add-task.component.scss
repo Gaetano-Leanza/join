@@ -31,7 +31,7 @@ button {
 }
 
 button:hover {
-  transform: scale(1.1) translateY(0px);
+  transform: scale(1.03) translateY(0px);
   transition: transform ease 0.2s;
   cursor: pointer;
 }
@@ -166,58 +166,6 @@ h5 {
 
 .content-bottom-mobile {
   display: none;
-}
-
-.create-task-button {
-  height: 50px;
-  width: 165px;
-  border-radius: 10px;
-  margin-bottom: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: none;
-}
-
-.create-task-button svg {
-  transform: translateX(-12px) translateY(1px);
-  height: 50px;
-}
-
-.create-task-button:hover svg rect {
-  fill: #007cee;
-  stroke: #007cee;
-}
-
-.cancel-button {
-  height: 50px;
-  width: 95px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  background-color: transparent;
-}
-
-.cancel-button svg {
-  transform: translateX(-9px) translateY(-0px);
-  height: 50px;
-}
-
-.cancel-button:hover svg text {
-  fill: #007cee;
-  stroke: none;
-}
-
-.cancel-button:hover svg rect,
-.cancel-button:hover svg path,
-.cancel-button:hover svg circle {
-  stroke: #007cee;
-}
-
-.cancel-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  transition: all 0.3s ease;
 }
 
 .input-wrapper {
@@ -1005,17 +953,62 @@ h5 {
   width: 145px;
   height: 64px;
   display: block;
-  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3)); 
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
   transition: filter 0.3s ease;
 }
 
 .image-button-left:hover svg,
 .image-button-middle:hover svg,
 .image-button-right:hover svg {
-  filter: drop-shadow(
-    3px 3px 6px rgba(0, 0, 0, 0.4)
-  ); 
+  filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.4));
 }
+
+.create-task-button {
+  height: 50px;
+  width: 165px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.create-task-button svg {
+  transform: translateX(-12px) translateY(1px);
+  height: 50px;
+}
+
+.create-task-button:hover svg rect {
+  fill: #007cee;
+  stroke: #007cee;
+}
+
+.cancel-button {
+  height: 50px;
+  width: 95px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: transparent;
+}
+
+.cancel-button svg {
+  transform: translateX(-9px) translateY(-0px);
+  height: 50px;
+}
+
+.cancel-button:hover svg text {
+  fill: #007cee;
+  stroke: none;
+}
+
+.cancel-button:hover svg rect,
+.cancel-button:hover svg path,
+.cancel-button:hover svg circle {
+  stroke: #007cee;
+}
+
 
 @media (min-width: 1030px) {
 }
