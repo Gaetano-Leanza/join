@@ -457,7 +457,7 @@ h5 {
 .selected-contacts {
   display: flex;
   gap: 8px;
-  margin-top: 10px;
+  margin-top: -14px;
 }
 
 .selected-avatar {
@@ -1008,7 +1008,6 @@ h5 {
 .cancel-button:hover svg circle {
   stroke: #007cee;
 }
-
 
 @media (min-width: 1030px) {
 }
