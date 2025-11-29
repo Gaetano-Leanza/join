@@ -283,13 +283,13 @@
                 </button>
               </div>
             </div>
-            
           </div>
 
           <div class="row2">
             <h4 class="headline">Assigned to</h4>
 
             <div class="input-wrapper">
+              <!-- Input öffnet Dropdown -->
               <input
                 class="placeholder7"
                 type="text"
@@ -300,11 +300,14 @@
                 [class.input-focused]="isAssignDropdownOpen"
               />
 
+              <!-- Icon öffnet / schließt Dropdown -->
               <span
                 class="icon-category"
                 [class.open]="isAssignDropdownOpen"
                 (click)="toggleAssignDropdown($event)"
               ></span>
+
+              <!-- DROPDOWN -->
               <div *ngIf="isAssignDropdownOpen" class="assign-dropdown">
                 <div class="contact-list-wrapper">
                   <div
@@ -313,6 +316,7 @@
                     (click)="toggleContactSelection(contact)"
                     [class.selected]="isContactChecked(contact)"
                   >
+                    <!-- Avatar -->
                     <div class="contact-avatar">
                       <div
                         class="avatar"
@@ -321,7 +325,13 @@
                         {{ getInitials(contact.name) }}
                       </div>
                     </div>
-                    <div class="contact-name">{{ contact.name }}</div>
+
+                    <!-- Name -->
+                    <div class="contact-name">
+                      {{ contact.name }}
+                    </div>
+
+                    <!-- Checkbox -->
                     <div class="contact-checkbox">
                       <input
                         type="checkbox"
@@ -330,7 +340,6 @@
                           $event.stopPropagation();
                           toggleContactSelection(contact)
                         "
-                        [class.input-focused]="isCategoryDropdownOpen"
                       />
                     </div>
                   </div>

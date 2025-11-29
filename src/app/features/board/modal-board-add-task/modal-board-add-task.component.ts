@@ -216,31 +216,37 @@ export class ModalBoardAddTaskComponent implements OnInit, OnDestroy {
    * Handles global click events to close dropdowns when clicking outside.
    * @param {MouseEvent} event - The mouse event.
    */
-  private handleDocumentClick(event: MouseEvent) {
-    if (this.isAssignDropdownOpen && this.dropdownElement) {
-      const target = event.target as HTMLElement;
-      const clickedInside = this.dropdownElement.contains(target);
-      const isInput = target.closest('.placeholder7');
-      const isIcon = target.closest('.icon-category');
-      if (!clickedInside && !isInput && !isIcon) {
-        this.isAssignDropdownOpen = false;
-      }
-    }
+private handleDocumentClick(event: MouseEvent) {
+  const target = event.target as HTMLElement;
 
-    if (this.isCategoryDropdownOpen) {
-      const target = event.target as HTMLElement;
-      const categoryDropdown = document.querySelector('.category-modal');
-      const clickedInsideCategory = categoryDropdown?.contains(target);
-      const isCategoryInput = target.closest('.placeholder8');
-      const isCategoryIcon = target.closest('.icon-category');
+  // --- ASSIGN DROPDOWN ---
+  const assignDropdown = document.querySelector('.assign-dropdown');
+  const assignInput = document.querySelector('.placeholder7');
+  const assignIcon = document.querySelector('.icon-category');
 
-      if (!clickedInsideCategory && !isCategoryInput && !isCategoryIcon) {
-        this.isCategoryDropdownOpen = false;
-        this.isCategoryInputFocused = false;
-        this.validateField('category');
-      }
-    }
+  const clickedInsideAssign =
+    assignDropdown?.contains(target) ||
+    assignInput?.contains(target) ||
+    assignIcon?.contains(target);
+
+  if (!clickedInsideAssign) {
+    this.isAssignDropdownOpen = false;
   }
+
+  // --- CATEGORY DROPDOWN ---
+  const categoryDropdown = document.querySelector('.category-modal');
+  const categoryInput = document.querySelector('.placeholder8');
+
+  const clickedInsideCategory =
+    categoryDropdown?.contains(target) ||
+    categoryInput?.contains(target);
+
+  if (!clickedInsideCategory) {
+    this.isCategoryDropdownOpen = false;
+    this.isCategoryInputFocused = false;
+  }
+}
+
 
   /**
    * Toggles the visibility of the category dropdown.
@@ -488,3 +494,5 @@ export class ModalBoardAddTaskComponent implements OnInit, OnDestroy {
     this.router.navigate(['/board']);
   }
 }
+
+
