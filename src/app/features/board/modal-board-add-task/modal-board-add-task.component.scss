@@ -1011,13 +1011,11 @@ h5 {
 
 @media (max-width: 1020px) {
   .left-side {
-    background-color: #7ae229;
     padding-left: 0px;
     width: 380px;
   }
 
   .right-side {
-    background-color: #007bff;
     padding-right: 0px;
     width: 380px;
   }
@@ -1041,21 +1039,97 @@ h5 {
 
 @media (max-width: 950px) {
   .left-side {
+    width: 360px;
+  }
+
+  .right-side {
+    width: 360px;
+  }
+
+  .placeholder2 {
+    width: 360px;
+  }
+
+  .placeholder7,
+  .placeholder8,
+  .placeholder9 {
+    padding-right: 0px;
+    width: 360px;
+  }
+}
+
+@media (max-width: 900px) {
+  .left-side {
+    width: 340px;
+  }
+
+  .right-side {
+    width: 340px;
+  }
+
+  .placeholder2 {
+    width: 340px;
+  }
+
+  .placeholder7,
+  .placeholder8,
+  .placeholder9 {
+    padding-right: 0px;
+    width: 340px;
+  }
+}
+
+@media (max-width: 850px) {
+  .left-side {
+    width: 320px;
+  }
+
+  .right-side {
+    width: 320px;
+  }
+
+  .placeholder2 {
+    width: 320px;
+  }
+
+  .placeholder7,
+  .placeholder8,
+  .placeholder9 {
+    padding-right: 0px;
+    width: 320px;
+  }
+}
+
+@media (max-width: 800px) {
+  .left-side,
+  .right-side,
+  .placeholder2,
+  .placeholder7,
+  .placeholder8,
+  .placeholder9 {
+    width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .left-side {
     background-color: #7ae229;
-    width: 380px;
+    width: 300px;
   }
 
   .right-side {
     background-color: #007bff;
-    width: 380px;
+    width: 300px;
   }
 
   .placeholder2 {
-    width: 380px;
+    width: 300px;
   }
 
-  .content-wrapper {
-    display: flex;
-    justify-content: center;
+  .placeholder7,
+  .placeholder8,
+  .placeholder9 {
+    padding-right: 0px;
+    width: 300px;
   }
 }
