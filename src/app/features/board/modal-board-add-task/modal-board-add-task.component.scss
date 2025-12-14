@@ -1038,64 +1038,51 @@ h5 {
 }
 
 @media (max-width: 950px) {
-  .left-side {
-    width: 360px;
-  }
-
-  .right-side {
-    width: 360px;
-  }
-
-  .placeholder2 {
-    width: 360px;
-  }
-
+  .left-side,
+  .right-side,
+  .placeholder2,
   .placeholder7,
   .placeholder8,
   .placeholder9 {
-    padding-right: 0px;
     width: 360px;
+  }
+
+  .buttons {
+    height: 45px;
+    width: 112px;
+  }
+
+  .image-button-left,
+  .image-button-right {
+    height: 43px;
+    width: 115px;
+  }
+
+  .image-button-middle {
+    height: 45px;
+    width: 110px;
+    margin-left: 3px;
   }
 }
 
 @media (max-width: 900px) {
-  .left-side {
-    width: 340px;
-  }
-
-  .right-side {
-    width: 340px;
-  }
-
-  .placeholder2 {
-    width: 340px;
-  }
-
+  .left-side,
+  .right-side,
+  .placeholder2,
   .placeholder7,
   .placeholder8,
   .placeholder9 {
-    padding-right: 0px;
     width: 340px;
   }
 }
 
 @media (max-width: 850px) {
-  .left-side {
-    width: 320px;
-  }
-
-  .right-side {
-    width: 320px;
-  }
-
-  .placeholder2 {
-    width: 320px;
-  }
-
+  .left-side,
+  .right-side,
+  .placeholder2,
   .placeholder7,
   .placeholder8,
   .placeholder9 {
-    padding-right: 0px;
     width: 320px;
   }
 }
