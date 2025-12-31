@@ -1035,6 +1035,11 @@ h5 {
     display: flex;
     justify-content: center;
   }
+
+  .content-bottom {
+    width: 100%;
+    padding-right: 30px;
+  }
 }
 
 @media (max-width: 950px) {
