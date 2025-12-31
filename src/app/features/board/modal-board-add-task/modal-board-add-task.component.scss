@@ -1074,6 +1074,22 @@ h5 {
   .placeholder9 {
     width: 340px;
   }
+
+  .buttons {
+    height: 45px;
+    width: 104px;
+  }
+
+  .image-button-left,
+  .image-button-right {
+    height: 43px;
+    width: 109px;
+  }
+
+  .image-button-middle {
+    height: 45px;
+    width: 104px;
+  }
 }
 
 @media (max-width: 850px) {
@@ -1085,6 +1101,22 @@ h5 {
   .placeholder9 {
     width: 320px;
   }
+
+  .buttons {
+    height: 45px;
+    width: 96px;
+  }
+
+  .image-button-left,
+  .image-button-right {
+    height: 43px;
+    width: 101px;
+  }
+
+  .image-button-middle {
+    height: 45px;
+    width: 96px;
+  }
 }
 
 @media (max-width: 800px) {
@@ -1095,6 +1127,22 @@ h5 {
   .placeholder8,
   .placeholder9 {
     width: 300px;
+  }
+
+  .buttons {
+    height: 45px;
+    width: 91px;
+  }
+
+  .image-button-left,
+  .image-button-right {
+    height: 43px;
+    width: 96px;
+  }
+
+  .image-button-middle {
+    height: 45px;
+    width: 91px;
   }
 }
 
