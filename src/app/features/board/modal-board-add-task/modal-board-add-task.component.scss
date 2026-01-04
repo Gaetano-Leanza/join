@@ -1152,24 +1152,295 @@ h5 {
 }
 
 @media (max-width: 768px) {
-  .left-side {
-    background-color: #7ae229;
+  .text-bottom,
+  .content-bottom {
+    display: none;
+  }
+
+  .text-bottom-mobile {
+    display: flex;
+    padding-bottom: 0px;
+    height: 130px;
     width: 300px;
+    overflow-x: hidden;
+  }
+
+  .text-wrapper {
+    display: none;
+  }
+
+  .text-wrapper-mobile {
+    display: flex;
+  }
+
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+    height: 680px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    /* Versteckt die Scrollleiste für Chrome, Safari und Opera */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Versteckt die Scrollleiste für Firefox */
+    scrollbar-width: none;
+
+    /* Versteckt die Scrollleiste für Internet Explorer und Edge */
+    -ms-overflow-style: none;
+  }
+
+  .content-bottom,
+  .text-bottom {
+    display: none;
+  }
+
+  .content {
+    overflow: visible;
+  }
+
+  .row5 {
+    overflow-x: hidden;
+    height: 100px;
+    width: 100%;
+  }
+
+  h3 {
+    padding-top: 50px;
+    padding-left: 30px;
+  }
+
+  .middle {
+    display: none;
+  }
+
+  .left-side {
+    padding-left: 30px;
+    height: 490px;
+    width: 96%;
   }
 
   .right-side {
-    background-color: #007bff;
-    width: 300px;
+    padding-left: 30px;
+    height: 150px;
+    width: 96%;
   }
 
-  .placeholder2 {
-    width: 300px;
-  }
-
+  .placeholder2,
   .placeholder7,
   .placeholder8,
   .placeholder9 {
-    padding-right: 0px;
-    width: 300px;
+    width: 100%;
+  }
+
+  .input-wrapper {
+    width: 100%;
+  }
+
+  .row1 {
+    width: 100%;
+    gap: 30px;
+  }
+
+  .row3 {
+    padding-top: 10px;
+  }
+
+  .row4 {
+    padding-bottom: 30px;
+  }
+
+  .content-bottom-mobile {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: 70px;
+    width: 94%;
+    gap: 20px;
+    padding-top: 0px;
+    transform: translateX(0px) translateY(-10px);
+  }
+
+  .image-button-left,
+  .image-button-middle,
+  .image-button-right {
+    height: 45px;
+    width: 108px;
+  }
+
+  .image-button-left svg {
+    height: 49px;
+    width: 114px;
+  }
+
+  .image-button-middle svg {
+    height: 43px;
+    width: 105px;
+  }
+
+  .image-button-right svg {
+    height: 49px;
+    width: 114px;
+  }
+
+  .success-info-modal {
+    bottom: 104px;
+    width: 500px;
+    height: 100px;
+    position: fixed;
+    top: 50%;
+    left: 0%;
+    transform: translate(-50%, -0%);
+  }
+
+  .cancel-button {
+    height: 38px;
+    width: 77px;
+  }
+
+  .subtask-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .subtask-bullet {
+    width: 6px;
+    height: 6px;
+    background-color: #000;
+    border-radius: 50%;
+    margin-right: 12px;
+    display: inline-block;
+  }
+
+  .subtask-text {
+    flex-grow: 1;
+    cursor: pointer;
+
+    &.done {
+      text-decoration: line-through;
+      color: #888;
+    }
+  }
+
+  .subtask-remove {
+    color: #ff0000;
+    cursor: pointer;
+    margin-left: 10px;
+    font-weight: bold;
+  }
+
+  .input-wrapper {
+    position: relative;
+    margin-bottom: 10px;
+  }
+
+  .placeholder9 {
+    padding-right: 40px;
+  }
+
+  .icon-subtask {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background: url("/img/Subtasks-icon.svg") no-repeat center;
+    background-size: 20px;
+    cursor: pointer;
+    transition: background-image 0.3s;
+    z-index: 5;
+  }
+
+  .icon-subtask:hover {
+    background-image: url("/img/Subtasks-icon-hover.svg");
+  }
+
+  .icon-subtask-wrapper {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    transform: translateY(-50%);
+    background: white;
+    border-radius: 4px;
+    padding: 2px;
+    cursor: pointer;
+    z-index: 5; // Stellt sicher, dass das Icon über dem Input bleibt
+  }
+
+  .subtask-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 100px;
+    overflow-y: auto;
+    margin-top: 5px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 4;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
+
+      &:hover {
+        background: #555;
+      }
+    }
+  }
+
+  .subtask-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .input-wrapper {
+    position: relative;
+    margin-bottom: 10px;
+    min-height: 40px;
+  }
+
+  .input-error {
+    border: 2px solid #ff0000 !important;
+    outline: none;
+  }
+
+  .error-message {
+    color: #ff0000;
+    font-size: 14px;
+    margin-top: -15px;
+    display: block;
+    text-align: left;
   }
 }
