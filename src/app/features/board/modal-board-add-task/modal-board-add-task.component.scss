@@ -1444,3 +1444,65 @@ h5 {
     text-align: left;
   }
 }
+
+@media (max-width: 430px) {
+  .row1 {
+    gap: 15px;
+  }
+
+  .buttons {
+    height: 45px;
+    width: 101px;
+  }
+
+  .image-button-left,
+  .image-button-right {
+    height: 43px;
+    width: 106px;
+  }
+
+  .image-button-middle {
+    height: 45px;
+    width: 101px;
+  }
+}
+
+@media (max-width: 420px) {
+  .buttons {
+    height: 45px;
+    width: 95px;
+  }
+
+  .image-button-left,
+  .image-button-right {
+    height: 43px;
+    width: 100px;
+  }
+
+  .image-button-middle {
+    height: 45px;
+    width: 95px;
+  }
+}
+
+@media (max-width: 410px) {
+  .row1 {
+    gap: 14px;
+  }
+
+  .buttons {
+    height: 45px;
+    width: 93px;
+  }
+
+  .image-button-left,
+  .image-button-right {
+    height: 43px;
+    width: 98px;
+  }
+
+  .image-button-middle {
+    height: 45px;
+    width: 93px;
+  }
+}
