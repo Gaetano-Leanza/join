@@ -1220,6 +1220,7 @@ h5 {
 
   .left-side {
     padding-left: 30px;
+    padding-right: 30px;
     height: 300px;
     width: 96%;
   }
@@ -1227,7 +1228,7 @@ h5 {
   .right-side {
     padding-left: 30px;
     height: 150px;
-    width: 96%;
+    width: 100%;
   }
 
   .placeholder2,
@@ -1446,6 +1447,10 @@ h5 {
 }
 
 @media (max-width: 430px) {
+  h3 {
+    font-size: 47px;
+  }
+
   .row1 {
     gap: 15px;
   }
