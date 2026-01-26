@@ -851,7 +851,9 @@ h5 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s ease, filter 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
 }
 
 .image-button-middle,
@@ -871,7 +873,9 @@ h5 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s ease, filter 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
 }
 
 .image-button-left svg,
@@ -1222,11 +1226,12 @@ h5 {
     padding-left: 30px;
     padding-right: 30px;
     height: 300px;
-    width: 96%;
+    width: 100%;
   }
 
   .right-side {
     padding-left: 30px;
+    padding-right: 30px;
     height: 150px;
     width: 100%;
   }
@@ -1244,7 +1249,7 @@ h5 {
 
   .row1 {
     width: 100%;
-    gap: 30px;
+    gap: 25px;
   }
 
   .row3 {
@@ -1253,18 +1258,6 @@ h5 {
 
   .row4 {
     padding-bottom: 30px;
-  }
-
-  .content-bottom-mobile {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: flex-end;
-    height: 70px;
-    width: 100%;
-    gap: 20px;
-    padding-top: 0px;
-    transform: translateX(0px) translateY(-10px);
   }
 
   .image-button-left,
@@ -1281,12 +1274,30 @@ h5 {
 
   .image-button-middle svg {
     height: 43px;
-    width: 105px;
+    width: 104px;
+    transform: translateX(-3px) translateY(0px);
   }
 
   .image-button-right svg {
     height: 49px;
     width: 114px;
+  }
+
+  .buttons {
+    width: 107px;
+    background-color: red;
+  }
+
+  .content-bottom-mobile {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: 70px;
+    width: 100%;
+    gap: 20px;
+    padding-top: 0px;
+    transform: translateX(0px) translateY(-10px);
   }
 
   .success-info-modal {
@@ -1446,13 +1457,31 @@ h5 {
   }
 }
 
+@media (max-width: 450px) {
+  .row1 {
+    gap: 10px;
+  }
+
+  .buttons {
+    height: 45px;
+    width: 101px;
+  }
+
+  .image-button-left,
+  .image-button-right {
+    height: 43px;
+    width: 106px;
+  }
+
+  .image-button-middle {
+    height: 45px;
+    width: 101px;
+  }
+}
+
 @media (max-width: 430px) {
   h3 {
     font-size: 47px;
-  }
-
-  .row1 {
-    gap: 15px;
   }
 
   .buttons {
@@ -1491,10 +1520,6 @@ h5 {
 }
 
 @media (max-width: 410px) {
-  .row1 {
-    gap: 14px;
-  }
-
   .buttons {
     height: 45px;
     width: 93px;
@@ -1509,5 +1534,41 @@ h5 {
   .image-button-middle {
     height: 45px;
     width: 93px;
+  }
+}
+
+@media (max-width: 400px) {
+  .buttons {
+    height: 45px;
+    width: 90px;
+  }
+
+  .image-button-left,
+  .image-button-right {
+    height: 43px;
+    width: 95px;
+  }
+
+  .image-button-middle {
+    height: 45px;
+    width: 90px;
+  }
+}
+
+@media (max-width: 387px) {
+  .buttons {
+    height: 45px;
+    width: 90px;
+  }
+
+  .image-button-left,
+  .image-button-right {
+    height: 43px;
+    width: 95px;
+  }
+
+  .image-button-middle {
+    height: 45px;
+    width: 90px;
   }
 }
