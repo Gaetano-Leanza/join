@@ -1464,7 +1464,6 @@ h5 {
   .buttons {
     height: 45px;
     width: 101px;
-    background-color: red;
   }
 
   .image-button-left,
@@ -1509,6 +1508,16 @@ h5 {
 @media (max-width: 420px) {
   .row1 {
     gap: 10px;
+  }
+
+  .left-side {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .right-side {
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
   .buttons {
@@ -1590,36 +1599,22 @@ h5 {
 
 @media (max-width: 370px) {
   .buttons {
-    height: 35px;
-    width: 80px;
+    height: 32px;
+    width: 78px;
   }
 
   .image-button-left,
   .image-button-right {
     height: 43px;
     width: 85px;
+    padding-bottom: 12.282px;
+    padding-right: 6px;
   }
 
   .image-button-middle {
     height: 45px;
     width: 80px;
-  }
-}
-
-@media (max-width: 352px) {
-  .buttons {
-    height: 35px;
-    width: 77px;
-  }
-
-  .image-button-left,
-  .image-button-right {
-    height: 43px;
-    width: 82px;
-  }
-
-  .image-button-middle {
-    height: 45px;
-    width: 77px;
+    padding-bottom: 14px;
+    padding-right: 4px;
   }
 }
