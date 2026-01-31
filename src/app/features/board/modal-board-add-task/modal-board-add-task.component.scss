@@ -1285,7 +1285,6 @@ h5 {
 
   .buttons {
     width: 107px;
-    background-color: red;
   }
 
   .content-bottom-mobile {
@@ -1457,20 +1456,22 @@ h5 {
   }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 471px) {
   .row1 {
-    gap: 10px;
+    gap: 20px;
   }
 
   .buttons {
     height: 45px;
     width: 101px;
+    background-color: red;
   }
 
   .image-button-left,
   .image-button-right {
     height: 43px;
     width: 106px;
+    padding-right: 5px;
   }
 
   .image-button-middle {
@@ -1479,7 +1480,11 @@ h5 {
   }
 }
 
-@media (max-width: 430px) {
+@media (max-width: 450px) {
+  .row1 {
+    gap: 15px;
+  }
+
   h3 {
     font-size: 47px;
   }
@@ -1502,27 +1507,33 @@ h5 {
 }
 
 @media (max-width: 420px) {
+  .row1 {
+    gap: 10px;
+  }
+
   .buttons {
-    height: 45px;
-    width: 95px;
+    height: 40px;
+    width: 94px;
   }
 
   .image-button-left,
   .image-button-right {
     height: 43px;
     width: 100px;
+    padding-bottom: 4px;
   }
 
   .image-button-middle {
     height: 45px;
     width: 95px;
+    padding-bottom: 5px;
   }
 }
 
 @media (max-width: 410px) {
   .buttons {
-    height: 45px;
-    width: 93px;
+    height: 39px;
+    width: 94px;
   }
 
   .image-button-left,
@@ -1534,12 +1545,14 @@ h5 {
   .image-button-middle {
     height: 45px;
     width: 93px;
+    padding-left: 2px;
+    padding-bottom: 6px;
   }
 }
 
 @media (max-width: 400px) {
   .buttons {
-    height: 45px;
+    height: 38px;
     width: 90px;
   }
 
@@ -1547,28 +1560,66 @@ h5 {
   .image-button-right {
     height: 43px;
     width: 95px;
+    padding-bottom: 7px;
   }
 
   .image-button-middle {
     height: 45px;
     width: 90px;
+    padding-bottom: 8px;
   }
 }
 
 @media (max-width: 387px) {
   .buttons {
-    height: 45px;
-    width: 90px;
+    height: 37px;
+    width: 85px;
   }
 
   .image-button-left,
   .image-button-right {
     height: 43px;
-    width: 95px;
+    width: 90px;
   }
 
   .image-button-middle {
     height: 45px;
-    width: 90px;
+    width: 85px;
+  }
+}
+
+@media (max-width: 370px) {
+  .buttons {
+    height: 35px;
+    width: 80px;
+  }
+
+  .image-button-left,
+  .image-button-right {
+    height: 43px;
+    width: 85px;
+  }
+
+  .image-button-middle {
+    height: 45px;
+    width: 80px;
+  }
+}
+
+@media (max-width: 352px) {
+  .buttons {
+    height: 35px;
+    width: 77px;
+  }
+
+  .image-button-left,
+  .image-button-right {
+    height: 43px;
+    width: 82px;
+  }
+
+  .image-button-middle {
+    height: 45px;
+    width: 77px;
   }
 }
