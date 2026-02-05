@@ -1537,6 +1537,37 @@ h5 {
     width: 95px;
     padding-bottom: 5px;
   }
+
+  .create-task-button {
+    height: 45px;
+    width: 145px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+  }
+
+  .create-task-button svg {
+    transform: translateX(-17px) translateY(0px);
+    height: 45px;
+  }
+
+  .cancel-button {
+    height: 45px;
+    width: 90px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: transparent;
+  }
+
+  .cancel-button svg {
+    transform: translateX(-9px) translateY(-0px);
+    height: 45px;
+  }
 }
 
 @media (max-width: 410px) {
@@ -1594,6 +1625,37 @@ h5 {
   .image-button-middle {
     height: 45px;
     width: 85px;
+  }
+
+  .create-task-button {
+    height: 40px;
+    width: 125px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+  }
+
+  .create-task-button svg {
+    transform: translateX(-25px) translateY(0px);
+    height: 40px;
+  }
+
+  .cancel-button {
+    height: 40px;
+    width: 80px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: transparent;
+  }
+
+  .cancel-button svg {
+    transform: translateX(-14px) translateY(-0px);
+    height: 40px;
   }
 }
 
