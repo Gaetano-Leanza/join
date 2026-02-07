@@ -1156,15 +1156,10 @@ h5 {
 }
 
 @media (max-width: 768px) {
-  .text-bottom,
-  .content-bottom {
-    display: none;
-  }
-
   .text-bottom-mobile {
     display: flex;
     padding-bottom: 0px;
-    height: 130px;
+    height: 30px;
     width: 300px;
     overflow-x: hidden;
   }
@@ -1257,7 +1252,7 @@ h5 {
   }
 
   .row4 {
-    padding-bottom: 30px;
+    padding-bottom: 0px;
   }
 
   .image-button-left,
@@ -1297,6 +1292,7 @@ h5 {
     gap: 20px;
     padding-top: 0px;
     transform: translateX(0px) translateY(-10px);
+    padding-top: 200px;
   }
 
   .success-info-modal {
@@ -1607,6 +1603,14 @@ h5 {
     height: 45px;
     width: 90px;
     padding-bottom: 8px;
+  }
+
+  .content-wrapper {
+    height: 600px;
+  }
+
+  .content {
+    height: 600px;
   }
 }
 
